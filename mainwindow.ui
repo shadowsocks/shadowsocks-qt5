@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>340</width>
+    <height>254</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>340</width>
+    <height>250</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Shadowsocks-Qt5</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/icon/colourful_icon.png</normaloff>:/icon/colourful_icon.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="0">
+       <widget class="QLabel" name="serverPortLabel">
+        <property name="text">
+         <string>Server Port</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="serverLabel">
+        <property name="text">
+         <string>Server</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="timeoutLabel">
+        <property name="text">
+         <string>Timeout</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="pwdLabel">
+        <property name="text">
+         <string>Password</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QToolButton" name="addProfileButton">
+        <property name="text">
+         <string>Add</string>
+        </property>
+        <property name="icon">
+         <iconset theme="list-add">
+          <normaloff/>
+         </iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="sslocalLabel">
+        <property name="text">
+         <string>ss-local Path</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="methodLabel">
+        <property name="text">
+         <string>Encryption Method</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="serverComboBox">
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="proxyPortLabel">
+        <property name="text">
+         <string>SOCKS 5 Proxy Port</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QToolButton" name="delProfileButton">
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset theme="list-remove">
+          <normaloff/>
+         </iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QToolButton" name="sslocalToolButton">
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset theme="document-open">
+          <normaloff/>
+         </iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="2">
+       <widget class="QLineEdit" name="sslocalEdit">
+        <property name="placeholderText">
+         <string>Full path to ss-local</string>
+        </property>
+        <property name="clearButtonEnabled" stdset="0">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="3">
+       <widget class="QLineEdit" name="serverPortEdit"/>
+      </item>
+      <item row="3" column="1" colspan="3">
+       <widget class="QLineEdit" name="pwdEdit">
+        <property name="echoMode">
+         <enum>QLineEdit::PasswordEchoOnEdit</enum>
+        </property>
+        <property name="clearButtonEnabled" stdset="0">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1" colspan="3">
+       <widget class="QLineEdit" name="proxyPortEdit"/>
+      </item>
+      <item row="5" column="1" colspan="3">
+       <widget class="QComboBox" name="methodComboBox">
+        <item>
+         <property name="text">
+          <string notr="true">Table (default)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">RC4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">AES-128-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">AES-192-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">AES-256-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">BF-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">CAMELLIA-128-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">CAMELLIA-192-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">CAMELLIA-256-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">CAST5-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">DES-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">IDEA-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">RC2-CFB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">SEED-CFB</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="6" column="1" colspan="3">
+       <widget class="QSpinBox" name="timeoutSpinBox">
+        <property name="correctionMode">
+         <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
+        </property>
+        <property name="suffix">
+         <string notr="true"> second(s)</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>3600</number>
+        </property>
+        <property name="singleStep">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="revertButton">
+        <property name="text">
+         <string>Revert</string>
+        </property>
+        <property name="icon">
+         <iconset theme="document-revert">
+          <normaloff/>
+         </iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="startButton">
+        <property name="text">
+         <string>Start</string>
+        </property>
+        <property name="icon">
+         <iconset theme="run-build">
+          <normaloff/>
+         </iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="saveButton">
+        <property name="text">
+         <string>Save</string>
+        </property>
+        <property name="icon">
+         <iconset theme="document-save">
+          <normaloff/>
+         </iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="logButton">
+        <property name="text">
+         <string>Log</string>
+        </property>
+        <property name="icon">
+         <iconset theme="text-x-log">
+          <normaloff/>
+         </iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>
