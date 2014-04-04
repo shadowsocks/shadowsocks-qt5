@@ -1,3 +1,10 @@
+/*
+ * Shadowsocks Process Class
+ *
+ * Used to interact with the backend.
+ *
+ * Copyright 2014 William Wong <librehat@outlook.com>
+ */
 #include <QObject>
 #include <QString>
 #include <QProcess>

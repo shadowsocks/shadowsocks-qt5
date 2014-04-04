@@ -1,3 +1,11 @@
+/*
+ * Multi-Profile (so just call it Profiles) class
+ * - read from file
+ * - manage profiles
+ * - write to file
+ *
+ * Copyright 2014 William Wong <librehat@outlook.com>
+ */
 #include <QFile>
 #include <QString>
 #include <QStringList>

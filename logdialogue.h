@@ -1,3 +1,7 @@
+/*
+ * LogDialogue is the class of log dialog. (kind of nonsense)
+ * Copyright 2014 William Wong <librehat@outlook.com>
+ */
 #ifndef LOGDIALOGUE_H
 #define LOGDIALOGUE_H
 
