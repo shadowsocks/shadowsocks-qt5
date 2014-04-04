@@ -48,6 +48,7 @@ target.path = $$binary_path
 unix: gui_conf.path = $$(HOME)/.config/shadowsocks
 else: gui_conf.path = target.path
 gui_conf.files = gui-config.json
+unix:gui_conf.extra = chown $$(USER):$$(USER) -R $$(HOME)/.config/shadowsocks
 
 INSTALLS += target \
             gui_conf
