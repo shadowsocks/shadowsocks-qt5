@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
     connect(ui->saveButton, &QToolButton::clicked, this, &MainWindow::savebuttonPressed);
     connect(ui->startButton, &QToolButton::clicked, this, &MainWindow::startbuttonPressed);
+    connect(ui->revertButton, &QToolButton::clicked, this, &MainWindow::revertbuttonPressed);
     connect(ui->logButton, &QToolButton::clicked, this, &MainWindow::showLogDialogue);
     connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
     connect(this, &MainWindow::currentProfileChanged, this, &MainWindow::oncurrentProfileChanged);
@@ -40,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     systrayMenu.addAction("Show/Hide", this, SLOT(showorhideWindow()));
     systrayMenu.addAction("Start/Stop", this, SLOT(startbuttonPressed()));
     systrayMenu.addAction("Exit", this, SLOT(close()));
-    systray.setIcon(QIcon(":/icon/grey_icon.png"));
+    systray.setIcon(QIcon(":/icon/mono_icon.png"));
     systray.setContextMenu(&systrayMenu);
     systray.show();
 
@@ -86,6 +87,8 @@ void MainWindow::addProfileDialogue(bool enforce = false)
         m_profile->addProfile(server);
         current_profile = m_profile->lastProfile();
         ui->serverComboBox->insertItem(ui->serverComboBox->count(), server);
+
+        //change serverComboBox, let it emit currentIndexChanged signal.
         ui->serverComboBox->setCurrentIndex(ui->serverComboBox->count() - 1);
     }
     else if (enforce) {
@@ -146,7 +149,14 @@ void MainWindow::showLogDialogue()
 
 void MainWindow::revertbuttonPressed()
 {
-    //TODO
+    ss_local.stop();
+    m_profile->revert();
+    ui->sslocalEdit->setText(detectSSLocal());
+    disconnect(ui->serverComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
+    ui->serverComboBox->clear();
+    connect(ui->serverComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
+    ui->serverComboBox->insertItems(0, m_profile->getserverList());
+    ui->serverComboBox->setCurrentIndex(m_profile->getIndex());
 }
 
 void MainWindow::deleteProfile()
@@ -182,7 +192,7 @@ void MainWindow::processStarted()
     ui->startButton->setText("Stop");
     ui->startButton->setIcon(QIcon::fromTheme("process-stop"));
 
-    systray.setIcon(QIcon(":/icon/colourful_icon.png"));
+    systray.setIcon(QIcon(":/icon/running_icon.png"));
 }
 
 void MainWindow::processStopped()
@@ -191,7 +201,7 @@ void MainWindow::processStopped()
     ui->startButton->setText("Start");
     ui->startButton->setIcon(QIcon::fromTheme("run-build"));
 
-    systray.setIcon(QIcon(":/icon/grey_icon.png"));
+    systray.setIcon(QIcon(":/icon/mono_icon.png"));
 }
 
 void MainWindow::showorhideWindow()

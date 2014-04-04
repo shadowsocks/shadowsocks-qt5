@@ -32,14 +32,7 @@ public:
     QStringList getserverList();
     SSProfile getProfile(int index);
     SSProfile lastProfile();
-    /*
-    QString getSever(int index);
-    QString getPassword(int index);
-    QString getServer_port(int index);
-    QString getLocal_port(int index);
-    QString getMethod(int index);
-    QString getTimeout(int index);
-    */
+    void revert();
     void addProfile(QString s);
     void saveProfile(int index, SSProfile p);
     //void saveProfile(int index, QString s, QString sport, QString pwd, QString lport, QString m, QString t);

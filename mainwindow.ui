@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>340</width>
-    <height>254</height>
+    <height>252</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -149,7 +149,7 @@
        <widget class="QComboBox" name="methodComboBox">
         <item>
          <property name="text">
-          <string notr="true">Table (default)</string>
+          <string notr="true" extracomment="Default">Table</string>
          </property>
         </item>
         <item>

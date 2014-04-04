@@ -24,6 +24,7 @@ void Profiles::setJSONFile(QString file)
 
     JSONObj = JSONDoc.object();
     CONFArray = JSONObj["configs"].toArray();
+    profileList.clear();//clear list before
 
     for (int i = 0; i< CONFArray.count(); i++) {
         QJsonObject json = CONFArray.at(i).toObject();
@@ -64,38 +65,6 @@ SSProfile Profiles::lastProfile()
 {
     return profileList.last();
 }
-
-/*
-QString Profiles::getLocal_port(int index)
-{
-    return profileList.at(index).local_port;
-}
-
-QString Profiles::getMethod(int index)
-{
-    return profileList.at(index).method;
-}
-
-QString Profiles::getPassword(int index)
-{
-    return profileList.at(index).password;
-}
-
-QString Profiles::getServer_port(int index)
-{
-    return profileList.at(index).server_port;
-}
-
-QString Profiles::getSever(int index)
-{
-    return profileList.at(index).server;
-}
-
-QString Profiles::getTimeout(int index)
-{
-    return profileList.at(index).timeout;
-}
-*/
 
 void Profiles::addProfile(QString s)
 {
@@ -165,6 +134,7 @@ void Profiles::saveProfileToJSON()
     else {
         qWarning() << "Warning: file is not writable!";
     }
+    JSONFile.close();
 }
 
 void Profiles::setIndex(int index)
@@ -175,4 +145,9 @@ void Profiles::setIndex(int index)
 int Profiles::getIndex()
 {
     return m_index;
+}
+
+void Profiles::revert()
+{
+    setJSONFile(m_file);
 }
