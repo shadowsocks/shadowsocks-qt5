@@ -3,5 +3,6 @@
         <file>icon/shadowsocks-qt5.png</file>
         <file>icon/mono_icon.png</file>
         <file>icon/running_icon.png</file>
+		<file>icon/black_icon.png</file>
     </qresource>
 </RCC>

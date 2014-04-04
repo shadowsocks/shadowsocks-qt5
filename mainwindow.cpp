@@ -42,7 +42,11 @@ MainWindow::MainWindow(QWidget *parent) :
     systrayMenu.addAction("Show/Hide", this, SLOT(showorhideWindow()));
     systrayMenu.addAction("Start/Stop", this, SLOT(startbuttonPressed()));
     systrayMenu.addAction("Exit", this, SLOT(close()));
+#ifdef _WIN32
+    systray.setIcon(QIcon(":/icon/black_icon.png"));
+#else
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
+#endif
     systray.setToolTip(QString("Shadowsocks-Qt5"));
     systray.setContextMenu(&systrayMenu);
     systray.show();
@@ -184,7 +188,11 @@ void MainWindow::processStopped()
     ui->startButton->setText("Start");
     ui->startButton->setIcon(QIcon::fromTheme("run-build"));
 
+#ifdef _WIN32
+    systray.setIcon(QIcon(":/icon/black_icon.png"));
+#else
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
+#endif
 }
 
 void MainWindow::showorhideWindow()
