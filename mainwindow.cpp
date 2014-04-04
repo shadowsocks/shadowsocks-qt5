@@ -1,3 +1,4 @@
+#include <QDesktopWidget>
 #include <QFileDialog>
 #include <QFile>
 #include <QStandardPaths>
@@ -30,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #ifdef _WIN32
     jsonconfigFile = QCoreApplication::applicationDirPath() + "/gui-config.json";
 #else
-    jsonconfigFile = "/etc/shadowsocks/gui-config.json";
+    jsonconfigFile = QDir::homePath() + "/.config/shadowsocks/gui-config.json";
 #endif
     m_profile = new Profiles(jsonconfigFile);
     ui->sslocalEdit->setText(detectSSLocal());
@@ -42,10 +43,12 @@ MainWindow::MainWindow(QWidget *parent) :
     systrayMenu.addAction("Start/Stop", this, SLOT(startbuttonPressed()));
     systrayMenu.addAction("Exit", this, SLOT(close()));
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
+    systray.setToolTip(QString("Shadowsocks-Qt5"));
     systray.setContextMenu(&systrayMenu);
     systray.show();
 
-    autoStartSSLocal();
+    //Move to the center of the screen
+    this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 }
 
 MainWindow::~MainWindow()
@@ -166,26 +169,6 @@ void MainWindow::deleteProfile()
     ui->serverComboBox->removeItem(i);
 }
 
-/*
- * autostart if there is a valid profile activated already.
- * then minimize itself into systray.
- */
-void MainWindow::autoStartSSLocal()
-{
-    //validate first
-    //TODO: more accurate
-    if (current_profile.local_port.toInt() > 0 &&
-            current_profile.method != NULL &&
-            current_profile.password != NULL &&
-            current_profile.server != NULL &&
-            current_profile.server_port.toInt() > 0 &&
-            current_profile.timeout.toInt() > 0)
-    {
-        ss_local.start(current_profile);
-        hide();
-    }
-}
-
 void MainWindow::processStarted()
 {
     ui->startButton->setUserData(0, (QObjectUserData *)1);
@@ -207,10 +190,13 @@ void MainWindow::processStopped()
 void MainWindow::showorhideWindow()
 {
     if (this->isVisible()) {
-        hide();
+        this->hide();
     }
     else {
-        show();
+        this->show();
+        this->setWindowState(Qt::WindowActive);
+        this->activateWindow();
+        ui->logButton->setFocus();
     }
 }
 
@@ -218,5 +204,12 @@ void MainWindow::systrayActivated(QSystemTrayIcon::ActivationReason r)
 {
     if (r != 1) {
         showorhideWindow();
+    }
+}
+
+void MainWindow::changeEvent(QEvent *e)
+{
+    if (e->type()==QEvent::WindowStateChange && this->isMinimized()) {
+        this->hide();
     }
 }

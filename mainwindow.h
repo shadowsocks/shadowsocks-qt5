@@ -19,7 +19,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    QProcess sslocal;
+    SS_Process ss_local;
+    SSProfile current_profile;
 
 signals:
     void currentProfileChanged(int);
@@ -33,7 +34,6 @@ public slots:
     void showLogDialogue();
     void deleteProfile();
     void revertbuttonPressed();
-    void autoStartSSLocal();
     void processStarted();
     void processStopped();
     void systrayActivated(QSystemTrayIcon::ActivationReason);
@@ -44,11 +44,12 @@ private:
     LogDialogue logdlg;
     QString detectSSLocal();
     QString jsonconfigFile;
-    SSProfile current_profile;
     Profiles *m_profile;
-    SS_Process ss_local;
     QSystemTrayIcon systray;
     QMenu systrayMenu;
+
+protected:
+    void changeEvent(QEvent *);
 };
 
 #endif // MAINWINDOW_H

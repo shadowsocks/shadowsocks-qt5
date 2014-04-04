@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>340</width>
-    <height>252</height>
+    <height>250</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
-    <normaloff>:/icon/colourful_icon.png</normaloff>:/icon/colourful_icon.png</iconset>
+    <normaloff>:/icon/shadowsocks-qt5.png</normaloff>:/icon/shadowsocks-qt5.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">

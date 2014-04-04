@@ -9,7 +9,7 @@ The odd minor version number (0.**X**) indicates development version. And the ev
 
 - This is not a standalone programme. It works along with ss-local binary from [shadowsocks-libev project](https://github.com/madeye/shadowsocks-libev).
 - The gui-config.json file is compatible with [shadowsocks-gui](https://github.com/shadowsocks/shadowsocks-gui). But add a new value named "app" to specify `ss-local` programme.
-- gui-config.json is located under /etc/shadowsocks/ for UNIX users, but under this app's directory for Windows users.
+- gui-config.json is located under ~/.config/shadowsocks for UNIX users, but under this app's directory for Windows users.
 - Although it's recommended to use both 64-bit ss-local and ss-qt5 if you're running 64-bit OS. Feel free to use 32-bit ss-local together with 64-bit ss-qt5, vice versa.
 
 ## BUILD FROM SOURCE ##

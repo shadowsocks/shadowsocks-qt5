@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Shadowsocks-Qt5
+GenericName=Shadowsocks-Qt5
+Comment=A GUI Client for Shadowsocks
+Exec=ss-qt5
+Icon=shadowsocks-qt5
+Terminal=false
+Type=Application
+Categories=Network;
+StartupNotify=true
