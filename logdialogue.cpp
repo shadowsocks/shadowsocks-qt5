@@ -6,6 +6,11 @@ LogDialogue::LogDialogue(QWidget *parent) :
     ui(new Ui::LogDialogue)
 {
     ui->setupUi(this);
+
+#ifdef _WIN32
+    ui->text->append(QString("Because of the buffer, log prints slower than it occurs."));
+    ui->text->append(QString("---------------------------------------------------------"));
+#endif
 }
 
 LogDialogue::~LogDialogue()

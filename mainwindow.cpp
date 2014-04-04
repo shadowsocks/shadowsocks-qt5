@@ -109,7 +109,7 @@ QString MainWindow::detectSSLocal()
     #ifdef _WIN32
         QString bundled_sslocal = QCoreApplication::applicationDirPath() + "/ss-local.exe";
         if(QFile::exists(bundled_sslocal)) {
-            return bundled_sslocal;
+            return QDir::toNativeSeparators(bundled_sslocal);
         }
         else
             return QString("");
@@ -117,7 +117,7 @@ QString MainWindow::detectSSLocal()
         return QStandardPaths::findExecutable("ss-local");
     }
     else
-        return m_profile->app;
+        return QDir::toNativeSeparators(m_profile->app);
 }
 
 void MainWindow::savebuttonPressed()

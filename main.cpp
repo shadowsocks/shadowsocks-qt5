@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-
+    w.show();
     /*
      * autostart if there is a valid profile activated already.
      * and don't show the mainwindow
@@ -21,10 +21,9 @@ int main(int argc, char *argv[])
             w.current_profile.server_port.toInt() > 0 &&
             w.current_profile.timeout.toInt() > 0) {
         w.ss_local.start(w.current_profile);
+        w.hide();
      }
-     else {//profile is not valid
-        w.show();
-     }
+     //do nothing if profile is not valid
 
     return a.exec();
 }

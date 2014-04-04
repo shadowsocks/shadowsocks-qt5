@@ -32,8 +32,16 @@ void SS_Process::start(SSProfile p)
 void SS_Process::start(const QString args)
 {
     stop();
+    qDebug() << args;
+#ifdef _WIN32
+    proc.setProgram(app_path);
+    proc.setNativeArguments(args);
+    proc.start();
+#else
     //setNativeArguments is not available except Windows and Symbian
     proc.start(app_path + QString(" ") + args);
+#endif
+    proc.waitForStarted(1000);//wait for at most 1 second
 }
 
 void SS_Process::start(QString server, QString pwd, QString s_port, QString l_port, QString method, QString timeout)
