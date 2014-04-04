@@ -52,8 +52,8 @@ void SS_Process::start(QString server, QString pwd, QString s_port, QString l_po
     args.append(QString(" -l ") + l_port);
     args.append(QString(" -k \"") + pwd + QString("\""));
     args.append(QString(" -m ") + method.toLower());
-    args.append(QString(" -t ") + timeout);
-    args.append(QString(" -v"));
+    args.append(QString(" -t ") + timeout);//shadowsocks-go doesn't support this argument
+    args.append(QString(" -v"));//shadowsocks-go uses "-d=true"
 
     start(args);
 }

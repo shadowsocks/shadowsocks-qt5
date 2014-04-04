@@ -58,7 +58,7 @@
       <item row="1" column="2">
        <widget class="QToolButton" name="addProfileButton">
         <property name="text">
-         <string>Add</string>
+         <string>+</string>
         </property>
         <property name="icon">
          <iconset theme="list-add">
@@ -82,11 +82,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="serverComboBox">
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-       </widget>
+       <widget class="QComboBox" name="serverComboBox"/>
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="proxyPortLabel">
@@ -98,7 +94,7 @@
       <item row="1" column="3">
        <widget class="QToolButton" name="delProfileButton">
         <property name="text">
-         <string>...</string>
+         <string>-</string>
         </property>
         <property name="icon">
          <iconset theme="list-remove">
@@ -124,7 +120,7 @@
         <property name="placeholderText">
          <string>Full path to ss-local</string>
         </property>
-        <property name="clearButtonEnabled" stdset="0">
+        <property name="clearButtonEnabled">
          <bool>true</bool>
         </property>
        </widget>
@@ -137,7 +133,7 @@
         <property name="echoMode">
          <enum>QLineEdit::PasswordEchoOnEdit</enum>
         </property>
-        <property name="clearButtonEnabled" stdset="0">
+        <property name="clearButtonEnabled">
          <bool>true</bool>
         </property>
        </widget>
