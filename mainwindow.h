@@ -7,11 +7,18 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDesktopWidget>
+#include <QAbstractButton>
+#include <QPushButton>
+#include <QDebug>
 #include <QSystemTrayIcon>
 #include <QMenu>
+#include <QFileDialog>
+#include <QFile>
+#include <QStandardPaths>
+#include <QInputDialog>
 #include "profiles.h"
 #include "ss_process.h"
-#include "logdialogue.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,23 +37,22 @@ public:
 signals:
     void currentProfileChanged(int);
 
-public slots:
+private slots:
     void oncurrentProfileChanged(int);
     void getSSLocalPath();
     void addProfileDialogue(bool enforce);
-    void startbuttonPressed();
-    void savebuttonPressed();
-    void showLogDialogue();
+    void profileEditButtonClicked(QAbstractButton *b);
+    void apply_abort_Accepted();
+    void apply_abort_Rejected();
     void deleteProfile();
-    void revertbuttonPressed();
     void processStarted();
     void processStopped();
     void systrayActivated(QSystemTrayIcon::ActivationReason);
     void showorhideWindow();
+    void onreadReadyProcess(const QByteArray &o);
 
 private:
     Ui::MainWindow *ui;
-    LogDialogue logdlg;
     QString detectSSLocal();
     QString jsonconfigFile;
     Profiles *m_profile;

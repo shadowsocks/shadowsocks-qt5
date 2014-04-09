@@ -13,16 +13,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     profiles.cpp \
-    ss_process.cpp \
-    logdialogue.cpp
+    ss_process.cpp
 
 HEADERS  += mainwindow.h \
     profiles.h \
-    ss_process.h \
-    logdialogue.h
+    ss_process.h
 
-FORMS    += mainwindow.ui \
-    logdialogue.ui
+FORMS    += mainwindow.ui
 
 OTHER_FILES += README.md \
     gui-config.json \

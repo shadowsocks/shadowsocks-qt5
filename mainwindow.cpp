@@ -1,8 +1,3 @@
-#include <QDesktopWidget>
-#include <QFileDialog>
-#include <QFile>
-#include <QStandardPaths>
-#include <QInputDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -13,16 +8,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //SIGNALs and SLOTs
-    connect(ui->sslocalToolButton, &QToolButton::clicked, this, &MainWindow::getSSLocalPath);
-    connect(ui->serverComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
+    connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::getSSLocalPath);
+    connect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
     connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
-    connect(ui->saveButton, &QToolButton::clicked, this, &MainWindow::savebuttonPressed);
-    connect(ui->startButton, &QToolButton::clicked, this, &MainWindow::startbuttonPressed);
-    connect(ui->revertButton, &QToolButton::clicked, this, &MainWindow::revertbuttonPressed);
-    connect(ui->logButton, &QToolButton::clicked, this, &MainWindow::showLogDialogue);
+    connect(ui->apply_abort, &QDialogButtonBox::rejected, this, &MainWindow::apply_abort_Rejected);
+    connect(ui->apply_abort, &QDialogButtonBox::accepted, this, &MainWindow::apply_abort_Accepted);
+    connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::profileEditButtonClicked);
     connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
     connect(this, &MainWindow::currentProfileChanged, this, &MainWindow::oncurrentProfileChanged);
-    connect(&ss_local, &SS_Process::readReadyProcess, &logdlg, &LogDialogue::onreadReadyProcess);
+    connect(&ss_local, &SS_Process::readReadyProcess, this, &MainWindow::onreadReadyProcess);
     connect(&ss_local, &SS_Process::sigstart, this, &MainWindow::processStarted);
     connect(&ss_local, &SS_Process::sigstop, this, &MainWindow::processStopped);
     connect(&systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
@@ -34,14 +28,17 @@ MainWindow::MainWindow(QWidget *parent) :
     jsonconfigFile = QDir::homePath() + "/.config/shadowsocks/gui-config.json";
 #endif
     m_profile = new Profiles(jsonconfigFile);
-    ui->sslocalEdit->setText(detectSSLocal());
-    ui->serverComboBox->insertItems(0, m_profile->getserverList());
-    ui->serverComboBox->setCurrentIndex(m_profile->getIndex());
+    ui->backendEdit->setText(detectSSLocal());
+    ui->profileComboBox->insertItems(0, m_profile->getserverList());
+    ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
 
     //desktop systray
     systrayMenu.addAction("Show/Hide", this, SLOT(showorhideWindow()));
-    systrayMenu.addAction("Start/Stop", this, SLOT(startbuttonPressed()));
+    systrayMenu.addAction("Start", this, SLOT(apply_abort_Accepted()));
+    systrayMenu.addAction("Stop", this, SLOT(apply_abort_Rejected()));
     systrayMenu.addAction("Exit", this, SLOT(close()));
+    systrayMenu.actions().at(1)->setEnabled(false);
+    systrayMenu.actions().at(2)->setEnabled(false);
 #ifdef _WIN32
     systray.setIcon(QIcon(":/icon/black_icon.png"));
 #else
@@ -64,7 +61,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::getSSLocalPath()
 {
-    ui->sslocalEdit->setText(QFileDialog::getOpenFileName());
+    ui->backendEdit->setText(QFileDialog::getOpenFileName());
 }
 
 void MainWindow::oncurrentProfileChanged(int i)
@@ -78,10 +75,10 @@ void MainWindow::oncurrentProfileChanged(int i)
     m_profile->setIndex(i);
     current_profile = m_profile->getProfile(i);
 
-    ui->serverComboBox->setCurrentText(current_profile.server);
-    ui->serverPortEdit->setText(current_profile.server_port);
+    ui->profileComboBox->setCurrentText(current_profile.server);
+    ui->sportEdit->setText(current_profile.server_port);
     ui->pwdEdit->setText(current_profile.password);
-    ui->proxyPortEdit->setText(current_profile.local_port);
+    ui->lportEdit->setText(current_profile.local_port);
     ui->methodComboBox->setCurrentText(current_profile.method);
     ui->timeoutSpinBox->setValue(current_profile.timeout.toInt());
 }
@@ -93,15 +90,15 @@ void MainWindow::addProfileDialogue(bool enforce = false)
     if (ok) {
         m_profile->addProfile(server);
         current_profile = m_profile->lastProfile();
-        ui->serverComboBox->insertItem(ui->serverComboBox->count(), server);
+        ui->profileComboBox->insertItem(ui->profileComboBox->count(), server);
 
         //change serverComboBox, let it emit currentIndexChanged signal.
-        ui->serverComboBox->setCurrentIndex(ui->serverComboBox->count() - 1);
+        ui->profileComboBox->setCurrentIndex(ui->profileComboBox->count() - 1);
     }
     else if (enforce) {
         m_profile->addProfile("");
         current_profile = m_profile->lastProfile();
-        ui->serverComboBox->insertItem(ui->serverComboBox->count(), "");
+        ui->profileComboBox->insertItem(ui->profileComboBox->count(), "");
         //since there was no item previously, serverComboBox would change itself automatically.
         //we don't need to emit the signal again.
     }
@@ -124,69 +121,65 @@ QString MainWindow::detectSSLocal()
         return QDir::toNativeSeparators(m_profile->app);
 }
 
-void MainWindow::savebuttonPressed()
+void MainWindow::profileEditButtonClicked(QAbstractButton *b)
 {
-    current_profile.server = ui->serverComboBox->currentText();
-    current_profile.server_port = ui->serverPortEdit->text();
-    current_profile.password = ui->pwdEdit->text();
-    current_profile.local_port = ui->proxyPortEdit->text();
-    current_profile.method = ui->methodComboBox->currentText();
-    current_profile.timeout = ui->timeoutSpinBox->cleanText();
-    m_profile->app = ui->sslocalEdit->text();
-    m_profile->saveProfile(ui->serverComboBox->currentIndex(), current_profile);
-    m_profile->saveProfileToJSON();
-}
-
-void MainWindow::startbuttonPressed()
-{
-    if ((QObjectUserData*)ui->startButton->userData(0) == 0) {
-        ss_local.setapp(ui->sslocalEdit->text());
-        ss_local.start(current_profile);
+    if (ui->profileEditButtonBox->standardButton(b) == QDialogButtonBox::Save) {
+        current_profile.server = ui->profileComboBox->currentText();
+        current_profile.server_port = ui->sportEdit->text();
+        current_profile.password = ui->pwdEdit->text();
+        current_profile.local_port = ui->lportEdit->text();
+        current_profile.method = ui->methodComboBox->currentText();
+        current_profile.timeout = ui->timeoutSpinBox->cleanText();
+        m_profile->app = ui->backendEdit->text();
+        m_profile->saveProfile(ui->profileComboBox->currentIndex(), current_profile);
+        m_profile->saveProfileToJSON();
     }
-    else {
+    else {//reset
         ss_local.stop();
+        m_profile->revert();
+        ui->backendEdit->setText(detectSSLocal());
+        disconnect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
+        ui->profileComboBox->clear();
+        connect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
+        ui->profileComboBox->insertItems(0, m_profile->getserverList());
+        ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
     }
 }
 
-void MainWindow::showLogDialogue()
+void MainWindow::apply_abort_Accepted()
 {
-    logdlg.show();
-    logdlg.exec();
+    ss_local.setapp(ui->backendEdit->text());
+    ss_local.start(current_profile);
 }
 
-void MainWindow::revertbuttonPressed()
+void MainWindow::apply_abort_Rejected()
 {
     ss_local.stop();
-    m_profile->revert();
-    ui->sslocalEdit->setText(detectSSLocal());
-    disconnect(ui->serverComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
-    ui->serverComboBox->clear();
-    connect(ui->serverComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
-    ui->serverComboBox->insertItems(0, m_profile->getserverList());
-    ui->serverComboBox->setCurrentIndex(m_profile->getIndex());
 }
 
 void MainWindow::deleteProfile()
 {
-    int i = ui->serverComboBox->currentIndex();
+    int i = ui->profileComboBox->currentIndex();
     m_profile->deleteProfile(i);
-    ui->serverComboBox->removeItem(i);
+    ui->profileComboBox->removeItem(i);
 }
 
 void MainWindow::processStarted()
 {
-    ui->startButton->setUserData(0, (QObjectUserData *)1);
-    ui->startButton->setText("Stop");
-    ui->startButton->setIcon(QIcon::fromTheme("process-stop"));
+    systrayMenu.actions().at(1)->setEnabled(false);
+    systrayMenu.actions().at(2)->setEnabled(true);
+    ui->apply_abort->button(QDialogButtonBox::Abort)->setEnabled(true);
+    ui->apply_abort->button(QDialogButtonBox::Apply)->setEnabled(false);
 
     systray.setIcon(QIcon(":/icon/running_icon.png"));
 }
 
 void MainWindow::processStopped()
 {
-    ui->startButton->setUserData(0, (QObjectUserData *)0);
-    ui->startButton->setText("Start");
-    ui->startButton->setIcon(QIcon::fromTheme("run-build"));
+    systrayMenu.actions().at(1)->setEnabled(true);
+    systrayMenu.actions().at(2)->setEnabled(false);
+    ui->apply_abort->button(QDialogButtonBox::Abort)->setEnabled(false);
+    ui->apply_abort->button(QDialogButtonBox::Apply)->setEnabled(true);
 
 #ifdef _WIN32
     systray.setIcon(QIcon(":/icon/black_icon.png"));
@@ -204,7 +197,7 @@ void MainWindow::showorhideWindow()
         this->show();
         this->setWindowState(Qt::WindowActive);
         this->activateWindow();
-        ui->logButton->setFocus();
+        ui->apply_abort->setFocus();
     }
 }
 
@@ -220,4 +213,11 @@ void MainWindow::changeEvent(QEvent *e)
     if (e->type()==QEvent::WindowStateChange && this->isMinimized()) {
         this->hide();
     }
+}
+
+void MainWindow::onreadReadyProcess(const QByteArray &o)
+{
+    ui->logBrowser->moveCursor(QTextCursor::End);
+    ui->logBrowser->append(o);
+    ui->logBrowser->moveCursor(QTextCursor::End);
 }
