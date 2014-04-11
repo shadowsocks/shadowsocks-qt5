@@ -1,4 +1,5 @@
 #include <QtDebug>
+#include <QDir>
 #include "profiles.h"
 
 Profiles::Profiles(QString file)
@@ -13,12 +14,23 @@ Profiles::~Profiles()
 
 void Profiles::setJSONFile(QString file)
 {
-    m_file = file;
+    m_file = QDir::toNativeSeparators(file);
     QFile JSONFile(m_file);
     JSONFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    JSONDoc = QJsonDocument::fromJson(JSONFile.readAll());
+
+    if (!JSONFile.isOpen()) {
+        qWarning("Cannot open gui-config.json!");
+    }
+
+    QJsonParseError pe;
+    JSONDoc = QJsonDocument::fromJson(JSONFile.readAll(), &pe);
+
+    if (pe.error != QJsonParseError::NoError) {
+        qWarning() << pe.errorString();
+    }
 
     if (JSONDoc.isEmpty()) {
+        qDebug() << m_file;
         qWarning("JSON Document is empty!");
     }
 
@@ -29,6 +41,7 @@ void Profiles::setJSONFile(QString file)
     for (int i = 0; i< CONFArray.count(); i++) {
         QJsonObject json = CONFArray.at(i).toObject();
         SSProfile p;
+        p.profileName = json["profile"].toString();
         p.server = json["server"].toString();
         p.password = json["password"].toString();
         p.server_port = json["server_port"].toString();
@@ -47,11 +60,11 @@ int Profiles::count()
     return profileList.count();
 }
 
-QStringList Profiles::getserverList()
+QStringList Profiles::getProfileList()
 {
     QStringList s;
     for (int i = 0; i < profileList.count(); i++) {
-        s.append(profileList.at(i).server);
+        s.append(profileList.at(i).profileName);
     }
     return s;
 }
@@ -66,14 +79,14 @@ SSProfile Profiles::lastProfile()
     return profileList.last();
 }
 
-void Profiles::addProfile(QString s)
+void Profiles::addProfile(QString p)
 {
     SSProfile n;
-    n.server = s;
+    n.profileName = p;
     profileList.append(n);
 
     QJsonObject json;
-    json["server"] = QJsonValue(n.server);
+    json["profile"] = QJsonValue(n.profileName);
     CONFArray.append(QJsonValue(json));
 }
 
@@ -82,6 +95,7 @@ void Profiles::saveProfile(int index, SSProfile p)
     profileList.replace(index, p);
 
     QJsonObject json;
+    json["profile"] = QJsonValue(p.profileName);
     json["server"] = QJsonValue(p.server);
     json["server_port"] = QJsonValue(p.server_port);
     json["password"] = QJsonValue(p.password);
@@ -90,27 +104,6 @@ void Profiles::saveProfile(int index, SSProfile p)
     json["timeout"] = QJsonValue(p.timeout);
     CONFArray.replace(index, QJsonValue(json));
 }
-/*
-void Profiles::saveProfile(int index, QString s, QString sport, QString pwd, QString lport, QString m, QString t)
-{
-    SSProfile p;
-    p.server = s;
-    p.server_port = sport;
-    p.password = pwd;
-    p.local_port = lport;
-    p.method = m;
-    p.timeout = t;
-    profileList.replace(index, p);
-
-    QJsonObject json;
-    json["server"] = QJsonValue(s);
-    json["server_port"] = QJsonValue(sport);
-    json["password"] = QJsonValue(pwd);
-    json["local_port"] = QJsonValue(lport);
-    json["method"] = QJsonValue(m.toLower());//lower-case in config
-    json["timeout"] = QJsonValue(t);
-    CONFArray.replace(index, QJsonValue(json));
-}*/
 
 void Profiles::deleteProfile(int index)
 {

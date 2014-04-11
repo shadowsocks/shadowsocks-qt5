@@ -32,6 +32,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     SS_Process ss_local;
+    Profiles *m_profile;
     SSProfile current_profile;
 
 signals:
@@ -42,8 +43,8 @@ private slots:
     void getSSLocalPath();
     void addProfileDialogue(bool enforce);
     void profileEditButtonClicked(QAbstractButton *b);
-    void apply_abort_Accepted();
-    void apply_abort_Rejected();
+    void startButtonPressed();
+    void stopButtonPressed();
     void deleteProfile();
     void processStarted();
     void processStopped();
@@ -55,7 +56,6 @@ private:
     Ui::MainWindow *ui;
     QString detectSSLocal();
     QString jsonconfigFile;
-    Profiles *m_profile;
     QSystemTrayIcon systray;
     QMenu systrayMenu;
 

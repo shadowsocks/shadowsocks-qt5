@@ -40,8 +40,8 @@
        <attribute name="title">
         <string>General</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
+       <layout class="QGridLayout" name="gridLayout_2" rowstretch="10,1">
+        <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_l">
           <item row="0" column="3">
            <widget class="QToolButton" name="addProfileButton">
@@ -127,23 +127,36 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="5">
-           <widget class="QDialogButtonBox" name="apply_abort">
-            <property name="standardButtons">
-             <set>QDialogButtonBox::Abort|QDialogButtonBox::Apply</set>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="startButton">
+            <property name="text">
+             <string>Start</string>
+            </property>
+            <property name="autoDefault">
+             <bool>true</bool>
+            </property>
+            <property name="default">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopButton">
+            <property name="text">
+             <string>Stop</string>
+            </property>
+            <property name="autoDefault">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
          </layout>
         </item>
-        <item>
-         <widget class="Line" name="vLine">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
+        <item row="0" column="2" rowspan="2">
          <layout class="QGridLayout" name="gridLayout_r">
           <item row="4" column="1">
            <widget class="QComboBox" name="methodComboBox">
@@ -301,12 +314,22 @@
           </item>
           <item row="6" column="0" colspan="2">
            <widget class="QDialogButtonBox" name="profileEditButtonBox">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="standardButtons">
              <set>QDialogButtonBox::Reset|QDialogButtonBox::Save</set>
             </property>
            </widget>
           </item>
          </layout>
+        </item>
+        <item row="0" column="1" rowspan="2">
+         <widget class="Line" name="vLine">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

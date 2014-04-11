@@ -19,6 +19,7 @@
 #define PROFILES_H
 
 typedef struct {
+    QString profileName;
     QString server;
     QString server_port;
     QString password;
@@ -34,16 +35,15 @@ public:
     ~Profiles();
     QString app;
     void setJSONFile(QString file);
-    void setIndex(int index);
+    void setIndex(int);
     int getIndex();
     int count();
-    QStringList getserverList();
-    SSProfile getProfile(int index);
+    QStringList getProfileList();
+    SSProfile getProfile(int);
     SSProfile lastProfile();
     void revert();
-    void addProfile(QString s);
-    void saveProfile(int index, SSProfile p);
-    //void saveProfile(int index, QString s, QString sport, QString pwd, QString lport, QString m, QString t);
+    void addProfile(QString);
+    void saveProfile(int, SSProfile);
     void deleteProfile(int index);
     void saveProfileToJSON();
 private:

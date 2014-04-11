@@ -9,10 +9,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //SIGNALs and SLOTs
     connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::getSSLocalPath);
-    connect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
+    connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::oncurrentProfileChanged);
     connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
-    connect(ui->apply_abort, &QDialogButtonBox::rejected, this, &MainWindow::apply_abort_Rejected);
-    connect(ui->apply_abort, &QDialogButtonBox::accepted, this, &MainWindow::apply_abort_Accepted);
+    connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
+    connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
     connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::profileEditButtonClicked);
     connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
     connect(this, &MainWindow::currentProfileChanged, this, &MainWindow::oncurrentProfileChanged);
@@ -29,15 +29,15 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
     m_profile = new Profiles(jsonconfigFile);
     ui->backendEdit->setText(detectSSLocal());
-    ui->profileComboBox->insertItems(0, m_profile->getserverList());
+    ui->profileComboBox->insertItems(0, m_profile->getProfileList());
     ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
+    ui->stopButton->setEnabled(false);
 
     //desktop systray
     systrayMenu.addAction("Show/Hide", this, SLOT(showorhideWindow()));
-    systrayMenu.addAction("Start", this, SLOT(apply_abort_Accepted()));
-    systrayMenu.addAction("Stop", this, SLOT(apply_abort_Rejected()));
+    systrayMenu.addAction("Start", this, SLOT(startButtonPressed()));
+    systrayMenu.addAction("Stop", this, SLOT(stopButtonPressed()));
     systrayMenu.addAction("Exit", this, SLOT(close()));
-    systrayMenu.actions().at(1)->setEnabled(false);
     systrayMenu.actions().at(2)->setEnabled(false);
 #ifdef _WIN32
     systray.setIcon(QIcon(":/icon/black_icon.png"));
@@ -50,6 +50,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Move to the center of the screen
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
+
+#ifdef _WIN32
+    ui->logBrowser->append(QString("Because of buffer, log print would be delayed."));
+    ui->logBrowser->append(QString("----------------------------------------------"));
+#endif
 }
 
 MainWindow::~MainWindow()
@@ -75,7 +80,8 @@ void MainWindow::oncurrentProfileChanged(int i)
     m_profile->setIndex(i);
     current_profile = m_profile->getProfile(i);
 
-    ui->profileComboBox->setCurrentText(current_profile.server);
+    ui->profileComboBox->setCurrentText(current_profile.profileName);
+    ui->serverEdit->setText(current_profile.server);
     ui->sportEdit->setText(current_profile.server_port);
     ui->pwdEdit->setText(current_profile.password);
     ui->lportEdit->setText(current_profile.local_port);
@@ -86,11 +92,11 @@ void MainWindow::oncurrentProfileChanged(int i)
 void MainWindow::addProfileDialogue(bool enforce = false)
 {
     bool ok;
-    QString server = QInputDialog::getText(this, this->windowTitle(), "Server IP or Domain", QLineEdit::Normal, NULL, &ok);
+    QString profile = QInputDialog::getText(this, this->windowTitle(), "Profile Name", QLineEdit::Normal, NULL, &ok);
     if (ok) {
-        m_profile->addProfile(server);
+        m_profile->addProfile(profile);
         current_profile = m_profile->lastProfile();
-        ui->profileComboBox->insertItem(ui->profileComboBox->count(), server);
+        ui->profileComboBox->insertItem(ui->profileComboBox->count(), profile);
 
         //change serverComboBox, let it emit currentIndexChanged signal.
         ui->profileComboBox->setCurrentIndex(ui->profileComboBox->count() - 1);
@@ -107,18 +113,17 @@ void MainWindow::addProfileDialogue(bool enforce = false)
 QString MainWindow::detectSSLocal()
 {
     if (m_profile->app.isEmpty()) {
-    #ifdef _WIN32
+#ifdef _WIN32
         QString bundled_sslocal = QCoreApplication::applicationDirPath() + "/ss-local.exe";
         if(QFile::exists(bundled_sslocal)) {
-            return QDir::toNativeSeparators(bundled_sslocal);
+            m_profile->app = QDir::toNativeSeparators(bundled_sslocal);
         }
-        else
-            return QString("");
-    #endif
-        return QStandardPaths::findExecutable("ss-local");
+#else
+        m_profile->app = QStandardPaths::findExecutable("ss-local");
+#endif
     }
-    else
-        return QDir::toNativeSeparators(m_profile->app);
+
+    return QDir::toNativeSeparators(m_profile->app);
 }
 
 void MainWindow::profileEditButtonClicked(QAbstractButton *b)
@@ -141,18 +146,18 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
         disconnect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
         ui->profileComboBox->clear();
         connect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
-        ui->profileComboBox->insertItems(0, m_profile->getserverList());
+        ui->profileComboBox->insertItems(0, m_profile->getProfileList());
         ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
     }
 }
 
-void MainWindow::apply_abort_Accepted()
+void MainWindow::startButtonPressed()
 {
     ss_local.setapp(ui->backendEdit->text());
     ss_local.start(current_profile);
 }
 
-void MainWindow::apply_abort_Rejected()
+void MainWindow::stopButtonPressed()
 {
     ss_local.stop();
 }
@@ -168,8 +173,8 @@ void MainWindow::processStarted()
 {
     systrayMenu.actions().at(1)->setEnabled(false);
     systrayMenu.actions().at(2)->setEnabled(true);
-    ui->apply_abort->button(QDialogButtonBox::Abort)->setEnabled(true);
-    ui->apply_abort->button(QDialogButtonBox::Apply)->setEnabled(false);
+    ui->stopButton->setEnabled(true);
+    ui->startButton->setEnabled(false);
 
     systray.setIcon(QIcon(":/icon/running_icon.png"));
 }
@@ -178,8 +183,8 @@ void MainWindow::processStopped()
 {
     systrayMenu.actions().at(1)->setEnabled(true);
     systrayMenu.actions().at(2)->setEnabled(false);
-    ui->apply_abort->button(QDialogButtonBox::Abort)->setEnabled(false);
-    ui->apply_abort->button(QDialogButtonBox::Apply)->setEnabled(true);
+    ui->stopButton->setEnabled(false);
+    ui->startButton->setEnabled(true);
 
 #ifdef _WIN32
     systray.setIcon(QIcon(":/icon/black_icon.png"));
@@ -197,7 +202,7 @@ void MainWindow::showorhideWindow()
         this->show();
         this->setWindowState(Qt::WindowActive);
         this->activateWindow();
-        ui->apply_abort->setFocus();
+        ui->startButton->setFocus();
     }
 }
 

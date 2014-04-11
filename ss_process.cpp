@@ -8,7 +8,7 @@ SS_Process::SS_Process(QObject *parent) :
     proc.setReadChannelMode(QProcess::MergedChannels);
     connect(&proc, &QProcess::readyRead, this, &SS_Process::autoemitreadReadyProcess);
     connect(&proc, &QProcess::started, this, &SS_Process::started);
-    connect(&proc, SIGNAL(finished(int)), this, SLOT(exited(int)));
+    connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), this, &SS_Process::exited);
 }
 
 SS_Process::~SS_Process()
@@ -29,7 +29,7 @@ void SS_Process::start(SSProfile p)
     start(p.server, p.password, p.server_port, p.local_port, p.method, p.timeout);
 }
 
-void SS_Process::start(const QString args)
+void SS_Process::start(const QString &args)
 {
     stop();
     qDebug() << args;

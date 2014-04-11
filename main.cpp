@@ -14,12 +14,14 @@ int main(int argc, char *argv[])
      */
      //validate first
      //TODO: more accurate
-     if (w.current_profile.local_port.toInt() > 0 &&
-            w.current_profile.method != NULL &&
-            w.current_profile.password != NULL &&
-            w.current_profile.server != NULL &&
-            w.current_profile.server_port.toInt() > 0 &&
-            w.current_profile.timeout.toInt() > 0) {
+     if (!w.m_profile->app.isEmpty() &&
+         w.current_profile.local_port.toInt() > 0 &&
+         w.current_profile.method != NULL &&
+         w.current_profile.password != NULL &&
+         w.current_profile.server != NULL &&
+         w.current_profile.server_port.toInt() > 0 &&
+         w.current_profile.timeout.toInt() > 0) {
+
         w.ss_local.start(w.current_profile);
         w.hide();
      }

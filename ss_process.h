@@ -22,7 +22,7 @@ public:
     ~SS_Process();
     void setapp(QString a);
     void start(QString server, QString pwd, QString s_port, QString l_port, QString method, QString timeout);
-    void start(const QString args);
+    void start(const QString &args);
     void start(SSProfile p);
     void stop();
     bool isRunning();
