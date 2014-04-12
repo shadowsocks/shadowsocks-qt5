@@ -57,6 +57,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //update current profile
     ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
+    /*
+     * If there is only one config in gui-config.json, then the function above wouldn't emit signal.
+     * Therefore, we have to emit a signal manually.
+     */
+    emit ui->profileComboBox->currentIndexChanged(m_profile->getIndex());
 
     //connect signals and slots when config changed
     //Profile
@@ -114,7 +119,7 @@ void MainWindow::onCurrentProfileChanged(int i)
     m_profile->setIndex(i);
     current_profile = m_profile->getProfile(i);
 
-    ui->profileComboBox->setCurrentText(current_profile.profileName);
+    //ui->profileComboBox->setCurrentText(current_profile.profileName);
     ui->serverEdit->setText(current_profile.server);
     ui->sportEdit->setText(current_profile.server_port);
     ui->pwdEdit->setText(current_profile.password);
