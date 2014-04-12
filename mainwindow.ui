@@ -239,7 +239,9 @@
              <string>Start</string>
             </property>
             <property name="icon">
-             <iconset theme="run-build"/>
+             <iconset theme="run-build">
+              <normaloff/>
+             </iconset>
             </property>
            </widget>
           </item>
@@ -262,7 +264,9 @@
              <string>Stop</string>
             </property>
             <property name="icon">
-             <iconset theme="process-stop"/>
+             <iconset theme="process-stop">
+              <normaloff/>
+             </iconset>
             </property>
            </widget>
           </item>
@@ -360,7 +364,7 @@
           <property name="font">
            <font>
             <family>Monospace</family>
-            <italic>true</italic>
+            <italic>false</italic>
            </font>
           </property>
          </widget>
@@ -419,7 +423,9 @@
            <string>Save</string>
           </property>
           <property name="icon">
-           <iconset theme="document-save"/>
+           <iconset theme="document-save">
+            <normaloff/>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -429,7 +435,9 @@
            <string>About</string>
           </property>
           <property name="icon">
-           <iconset theme="help-about"/>
+           <iconset theme="help-about">
+            <normaloff/>
+           </iconset>
           </property>
          </widget>
         </item>
