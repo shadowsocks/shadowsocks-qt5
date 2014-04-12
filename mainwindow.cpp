@@ -391,5 +391,5 @@ void MainWindow::checkIfSaved()
 
 void MainWindow::aboutButtonClicked()
 {
-    QMessageBox::about(this, QString("About Shadowsocks-Qt5"), QString("<h3>Platform-Cross GUI Client for Shadowsocks.</h3><p>Version: 0.2.0</p><p>Licensed Under LGPLv3<br />This software is hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a>.</p>"));
+    QMessageBox::about(this, QString("About Shadowsocks-Qt5"), QString("<h3>Platform-Cross GUI Client for Shadowsocks.</h3><p>Version: 0.2.0</p><p>Licensed under LGPLv3<br />This software is hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a>.</p>"));
 }
