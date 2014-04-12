@@ -73,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->methodComboBox, &QComboBox::currentTextChanged, this, &MainWindow::methodChanged);
     connect(ui->timeoutSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MainWindow::timeoutChanged);
     connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::profileEditButtonClicked);
+
     //Misc
     connect(this, &MainWindow::miscConfigurationChanged, this, &MainWindow::onMiscConfigurationChanged);
     connect(ui->autohideCheck, &QCheckBox::stateChanged, this, &MainWindow::autoHideChecked);
@@ -97,8 +98,9 @@ void MainWindow::getSSLocalPath()
         ui->backendEdit->setText(m_profile->getBackend());
         emit configurationChanged();
     }
-    this->raise();
-    ui->backendEdit->setFocus();
+    this->setWindowState(Qt::WindowActive);
+    this->activateWindow();
+    ui->backendLabel->setFocus();
 }
 
 void MainWindow::onProfileComboBoxActivated(int i)
@@ -156,24 +158,27 @@ void MainWindow::addProfileDialogue(bool enforce = false)
 
 QString MainWindow::detectSSLocal()
 {
+    QString sslocal;
+
     if (m_profile->getBackend().isEmpty()) {
 #ifdef _WIN32
-        QString sslocal = QCoreApplication::applicationDirPath() + "/ss-local.exe";
-        if(QFile::exists(sslocal)) {
-            m_profile->setBackend(sslocal);
-        }
-        else {
+        sslocal = QCoreApplication::applicationDirPath() + "/ss-local.exe";
+        if(!QFile::exists(sslocal)) {
             sslocal = QStandardPaths::findExecutable("ss-local.exe");
-            if(!sslocal.isEmpty()) {
-                m_profile->setBackend(sslocal);
-            }
         }
 #else
-        m_profile->setBackend(QStandardPaths::findExecutable("ss-local"));
+        sslocal = QStandardPaths::findExecutable("ss-local");
 #endif
     }
 
-    return m_profile->getBackend();
+    if(!sslocal.isEmpty()) {
+        m_profile->setBackend(sslocal);
+        emit configurationChanged();
+        return m_profile->getBackend();
+    }
+    else {
+        return QString("");
+    }
 }
 
 void MainWindow::saveProfile()
@@ -205,6 +210,7 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
         ui->profileComboBox->insertItems(0, m_profile->getProfileList());
         connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
+        emit ui->profileComboBox->currentIndexChanged(m_profile->getIndex());//same in MainWindow's constructor
         emit onConfigurationChanged(true);
     }
 }

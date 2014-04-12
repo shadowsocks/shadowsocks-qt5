@@ -310,8 +310,11 @@
           </item>
           <item row="1" column="1" colspan="3">
            <widget class="QLineEdit" name="backendEdit">
-            <property name="clearButtonEnabled" stdset="0">
+            <property name="readOnly">
              <bool>true</bool>
+            </property>
+            <property name="clearButtonEnabled" stdset="0">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
