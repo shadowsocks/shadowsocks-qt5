@@ -25,6 +25,13 @@ Note
 - It's recommended to use both 64-bit `ss-local` and `ss-qt5` if you're running 64-bit OS. But you can still use 32-bit `ss-local` together with 64-bit `ss-qt5`, and vice versa.
 - It's not stable as you expected. Don't be panic but feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Run from terminal/cmd and paste the output when you file a bug.
 
+ScreenShots
+-----------
+
+![image](https://github.com/librehat/shadowsocks-qt5/raw/master/screenshots/linux_main.jpeg)
+
+![image](https://github.com/librehat/shadowsocks-qt5/raw/master/screenshots/linux_about.jpeg)
+
 Installation
 ------------
 
