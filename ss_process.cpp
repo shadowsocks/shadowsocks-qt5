@@ -4,7 +4,6 @@
 SS_Process::SS_Process(QObject *parent) :
     QObject(parent)
 {
-    app_path = "ss-local";
     proc.setReadChannelMode(QProcess::MergedChannels);
     connect(&proc, &QProcess::readyRead, this, &SS_Process::autoemitreadReadyProcess);
     connect(&proc, &QProcess::started, this, &SS_Process::started);
@@ -32,7 +31,6 @@ void SS_Process::start(SSProfile &p, bool debug)
 void SS_Process::start(const QString &args)
 {
     stop();
-    qDebug() << args;
 #ifdef _WIN32
     proc.setProgram(app_path);
     proc.setNativeArguments(args);
@@ -41,6 +39,7 @@ void SS_Process::start(const QString &args)
     //setNativeArguments is not available except Windows and Symbian
     proc.start(app_path + QString(" ") + args);
 #endif
+    qDebug() << "Backend arguments are " << args;
     proc.waitForStarted(1000);//wait for at most 1 second
 }
 
@@ -75,13 +74,13 @@ void SS_Process::autoemitreadReadyProcess()
 void SS_Process::started()
 {
     running = true;
-    qDebug() << "ss_local started";
+    qDebug() << "Backend started";
     emit sigstart();
 }
 
 void SS_Process::exited(int e)
 {
-    qDebug() << "ss-local exited. Exit Code: " << e;
+    qDebug() << "Backend exited. Exit Code: " << e;
     running = false;
     emit sigstop();
 }

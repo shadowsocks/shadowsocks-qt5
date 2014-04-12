@@ -3,8 +3,15 @@
 
 Profiles::Profiles(QString file)
 {
-    if (!file.isEmpty()) {
+    if (QFile::exists(file)) {
         setJSONFile(file);
+    }
+    else {
+        qWarning("Warning: gui-config.json does not exist! Check your installation.");
+        m_index = -1;
+        debugLog = false;
+        autoStart = false;
+        autoHide = false;
     }
 }
 
@@ -25,10 +32,14 @@ void Profiles::setJSONFile(const QString &file)
 {
     m_file = QDir::toNativeSeparators(file);
     QFile JSONFile(m_file);
+    if(!JSONFile.isReadable()) {
+        qWarning("Critical Error: cannot read gui-config.json!");
+    }
+
     JSONFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
     if (!JSONFile.isOpen()) {
-        qWarning("Cannot open gui-config.json!");
+        qWarning("Critical Error: cannot open gui-config.json!");
     }
 
     QJsonParseError pe;
@@ -40,7 +51,7 @@ void Profiles::setJSONFile(const QString &file)
 
     if (JSONDoc.isEmpty()) {
         qDebug() << m_file;
-        qWarning("JSON Document is empty!");
+        qWarning("Warning: JSON Document is empty!");
     }
 
     JSONObj = JSONDoc.object();
