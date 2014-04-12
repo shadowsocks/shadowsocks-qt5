@@ -66,10 +66,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect signals and slots when config changed
     //Profile
     connect(this, &MainWindow::configurationChanged, this, &MainWindow::onConfigurationChanged);
-    connect(ui->serverEdit, &QLineEdit::editingFinished, this, &MainWindow::serverEditFinished);
-    connect(ui->sportEdit, &QLineEdit::editingFinished, this, &MainWindow::sportEditFinished);
-    connect(ui->pwdEdit, &QLineEdit::editingFinished, this, &MainWindow::pwdEditFinished);
-    connect(ui->lportEdit, &QLineEdit::editingFinished, this, &MainWindow::lportEditFinished);
+    connect(ui->serverEdit, &QLineEdit::textChanged, this, &MainWindow::serverEditFinished);
+    connect(ui->sportEdit, &QLineEdit::textChanged, this, &MainWindow::sportEditFinished);
+    connect(ui->pwdEdit, &QLineEdit::textChanged, this, &MainWindow::pwdEditFinished);
+    connect(ui->lportEdit, &QLineEdit::textChanged, this, &MainWindow::lportEditFinished);
     connect(ui->methodComboBox, &QComboBox::currentTextChanged, this, &MainWindow::methodChanged);
     connect(ui->timeoutSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MainWindow::timeoutChanged);
     connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::profileEditButtonClicked);
@@ -117,11 +117,10 @@ void MainWindow::onCurrentProfileChanged(int i)
         return;
     }
 
-    ss_local.stop();
+    ss_local.stop();//Q: should we stop the backend when profile changed?
     m_profile->setIndex(i);
     current_profile = m_profile->getProfile(i);
 
-    //ui->profileComboBox->setCurrentText(current_profile.profileName);
     ui->serverEdit->setText(current_profile.server);
     ui->sportEdit->setText(current_profile.server_port);
     ui->pwdEdit->setText(current_profile.password);
@@ -158,9 +157,8 @@ void MainWindow::addProfileDialogue(bool enforce = false)
 
 QString MainWindow::detectSSLocal()
 {
-    QString sslocal;
-
     if (m_profile->getBackend().isEmpty()) {
+        QString sslocal;
 #ifdef _WIN32
         sslocal = QCoreApplication::applicationDirPath() + "/ss-local.exe";
         if(!QFile::exists(sslocal)) {
@@ -169,15 +167,17 @@ QString MainWindow::detectSSLocal()
 #else
         sslocal = QStandardPaths::findExecutable("ss-local");
 #endif
-    }
-
-    if(!sslocal.isEmpty()) {
-        m_profile->setBackend(sslocal);
-        emit configurationChanged();
-        return m_profile->getBackend();
+        if(!sslocal.isEmpty()) {
+            m_profile->setBackend(sslocal);
+            emit configurationChanged();
+            return m_profile->getBackend();
+        }
+        else {
+            return QString("");
+        }
     }
     else {
-        return QString("");
+        return m_profile->getBackend();
     }
 }
 
@@ -202,14 +202,13 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
         saveProfile();
     }
     else {//reset
-        ss_local.stop();
         m_profile->revert();
         ui->backendEdit->setText(detectSSLocal());
         disconnect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         ui->profileComboBox->clear();
         ui->profileComboBox->insertItems(0, m_profile->getProfileList());
-        connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
+        connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         emit ui->profileComboBox->currentIndexChanged(m_profile->getIndex());//same in MainWindow's constructor
         emit onConfigurationChanged(true);
     }
@@ -308,27 +307,27 @@ void MainWindow::onMiscConfigurationChanged(bool saved)
     ui->miscSaveButton->setEnabled(!saved);
 }
 
-void MainWindow::serverEditFinished()
+void MainWindow::serverEditFinished(const QString &str)
 {
-    current_profile.server = ui->serverEdit->text();
+    current_profile.server = str;
     emit configurationChanged();
 }
 
-void MainWindow::sportEditFinished()
+void MainWindow::sportEditFinished(const QString &str)
 {
-    current_profile.server_port = ui->sportEdit->text();
+    current_profile.server_port = str;
     emit configurationChanged();
 }
 
-void MainWindow::pwdEditFinished()
+void MainWindow::pwdEditFinished(const QString &str)
 {
-    current_profile.password = ui->pwdEdit->text();
+    current_profile.password = str;
     emit configurationChanged();
 }
 
-void MainWindow::lportEditFinished()
+void MainWindow::lportEditFinished(const QString &str)
 {
-    current_profile.local_port = ui->lportEdit->text();
+    current_profile.local_port = str;
     emit configurationChanged();
 }
 

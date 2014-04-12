@@ -56,10 +56,10 @@ private slots:
     void onReadReadyProcess(const QByteArray &o);
     void onConfigurationChanged(bool);
     void onMiscConfigurationChanged(bool);
-    void serverEditFinished();
-    void sportEditFinished();
-    void pwdEditFinished();
-    void lportEditFinished();
+    void serverEditFinished(const QString&);
+    void sportEditFinished(const QString&);
+    void pwdEditFinished(const QString&);
+    void lportEditFinished(const QString&);
     void methodChanged(const QString&);
     void timeoutChanged(int);
     void autoHideChecked(int);
