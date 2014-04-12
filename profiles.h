@@ -10,6 +10,7 @@
 #include <QString>
 #include <QStringList>
 #include <QList>
+#include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -33,21 +34,35 @@ class Profiles
 public:
     Profiles(QString file = QString());
     ~Profiles();
-    QString app;
-    void setJSONFile(QString file);
+    void setBackend(const QString&);
+    QString getBackend();
+    void setJSONFile(const QString&);
     void setIndex(int);
     int getIndex();
+    void setAutoStart(bool);
+    bool isAutoStart();
+    void setAutoHide(bool);
+    bool isAutoHide();
+    void setDebug(bool);
+    bool isDebug();
     int count();
     QStringList getProfileList();
     SSProfile getProfile(int);
     SSProfile lastProfile();
     void revert();
-    void addProfile(QString);
-    void saveProfile(int, SSProfile);
-    void deleteProfile(int index);
+    void addProfile(const QString&);
+    void saveProfile(int, SSProfile&);
+    //void saveAllProfile();
+    void deleteProfile(int);
     void saveProfileToJSON();
+    bool isValidate(SSProfile&);//check backend as well as profile
+
 private:
+    QString backend;
     int m_index;
+    bool debugLog;
+    bool autoHide;
+    bool autoStart;
     QList<SSProfile> profileList;
     QString m_file;
     QJsonDocument JSONDoc;

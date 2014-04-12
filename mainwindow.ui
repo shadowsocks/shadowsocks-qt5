@@ -39,7 +39,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="generalTab">
        <attribute name="title">
@@ -60,6 +60,9 @@
          <layout class="QGridLayout" name="gridLayout_r">
           <item row="4" column="1">
            <widget class="QComboBox" name="methodComboBox">
+            <property name="currentText">
+             <string notr="true">Table</string>
+            </property>
             <item>
              <property name="text">
               <string notr="true" extracomment="Default">Table</string>
@@ -191,7 +194,10 @@
              <number>3600</number>
             </property>
             <property name="singleStep">
-             <number>1</number>
+             <number>30</number>
+            </property>
+            <property name="value">
+             <number>600</number>
             </property>
            </widget>
           </item>
@@ -210,7 +216,11 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="serverEdit"/>
+           <widget class="QLineEdit" name="serverEdit">
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -223,26 +233,32 @@
         </item>
         <item row="2" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>9</number>
+          </property>
           <item>
            <widget class="QPushButton" name="startButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Start</string>
-            </property>
-            <property name="autoDefault">
-             <bool>true</bool>
-            </property>
-            <property name="default">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="stopButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Stop</string>
-            </property>
-            <property name="autoDefault">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -286,9 +302,6 @@
           </item>
           <item row="1" column="1" colspan="3">
            <widget class="QLineEdit" name="backendEdit">
-            <property name="placeholderText">
-             <string>Full path to ss-local</string>
-            </property>
             <property name="clearButtonEnabled">
              <bool>true</bool>
             </property>
@@ -313,11 +326,6 @@
             <item>
              <property name="text">
               <string>Shadowsocks-libev</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Shadowsocks-Go</string>
              </property>
             </item>
            </widget>
@@ -353,41 +361,10 @@
         <string>Misc</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="5" column="1">
-         <widget class="QRadioButton" name="roundedRadio">
-          <property name="text">
-           <string>Rounded</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="2">
-         <widget class="QRadioButton" name="triangularRadio">
-          <property name="text">
-           <string>Triangular</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="tabStyleLabel">
-          <property name="text">
-           <string>Tab Style</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="3">
-         <widget class="QCheckBox" name="autostartCheck">
-          <property name="text">
-           <string>Autostart if profile is valid.</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0" colspan="3" alignment="Qt::AlignBottom">
-         <widget class="QDialogButtonBox" name="miscButtonBox">
-          <property name="standardButtons">
-           <set>QDialogButtonBox::Reset|QDialogButtonBox::Save</set>
+        <item row="7" column="0" colspan="3">
+         <widget class="Line" name="hLine">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -404,6 +381,53 @@
            <string>Auto hide main window when started.</string>
           </property>
          </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QCheckBox" name="autostartCheck">
+          <property name="text">
+           <string>Autostart if profile is valid.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="8" column="2">
+         <widget class="QPushButton" name="miscSaveButton">
+          <property name="text">
+           <string>Save</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QPushButton" name="aboutButton">
+          <property name="text">
+           <string>About</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="3">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>

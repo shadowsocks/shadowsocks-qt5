@@ -6,7 +6,7 @@ Introduction
 
 Shadowsocks-Qt5 aims to be a fast and platform-cross GUI Client for [Shadowsocks](http://shadowsocks.org).
 
-Latest Development Version: 0.1.0
+Latest Development Version: 0.2.0
 
 Features
 --------
@@ -64,4 +64,4 @@ Clicking minimise button would hide the main window. Close button is used to exi
 
 All output of `ss-local` can be viewed in **Log** tab.
 
-Once you click the **Save** button, the configuration would be written into file. Before that, you can click **Reset** button to restore the previous values.
+Once you click the **Save** button, the configuration would be written into file. Before that, you can click **Reset** button to restore the previous values stored in `gui-config.json`.

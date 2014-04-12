@@ -14,7 +14,7 @@ SS_Process::SS_Process(QObject *parent) :
 SS_Process::~SS_Process()
 {}
 
-void SS_Process::setapp(QString a)
+void SS_Process::setapp(const QString &a)
 {
     app_path = a;
 }
@@ -24,9 +24,9 @@ bool SS_Process::isRunning()
     return running;
 }
 
-void SS_Process::start(SSProfile p)
+void SS_Process::start(SSProfile &p, bool debug)
 {
-    start(p.server, p.password, p.server_port, p.local_port, p.method, p.timeout);
+    start(p.server, p.password, p.server_port, p.local_port, p.method, p.timeout, debug);
 }
 
 void SS_Process::start(const QString &args)
@@ -44,7 +44,7 @@ void SS_Process::start(const QString &args)
     proc.waitForStarted(1000);//wait for at most 1 second
 }
 
-void SS_Process::start(QString server, QString pwd, QString s_port, QString l_port, QString method, QString timeout)
+void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_port, const QString &method, const QString &timeout, bool debug)
 {
     QString args;
     args.append(QString("-s ") + server);
@@ -53,7 +53,9 @@ void SS_Process::start(QString server, QString pwd, QString s_port, QString l_po
     args.append(QString(" -k \"") + pwd + QString("\""));
     args.append(QString(" -m ") + method.toLower());
     args.append(QString(" -t ") + timeout);//shadowsocks-go doesn't support this argument
-    args.append(QString(" -v"));//shadowsocks-go uses "-d=true"
+    if (debug) {
+        args.append(QString(" -v"));//shadowsocks-go uses "-d=true"
+    }
 
     start(args);
 }

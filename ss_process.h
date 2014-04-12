@@ -20,10 +20,10 @@ class SS_Process : public QObject
 public:
     SS_Process(QObject *parent = 0);
     ~SS_Process();
-    void setapp(QString a);
-    void start(QString server, QString pwd, QString s_port, QString l_port, QString method, QString timeout);
+    void setapp(const QString&);
+    void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false);
     void start(const QString &args);
-    void start(SSProfile p);
+    void start(SSProfile&, bool debug = false);
     void stop();
     bool isRunning();
 

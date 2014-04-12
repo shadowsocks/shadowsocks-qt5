@@ -10,13 +10,13 @@
 #include <QDesktopWidget>
 #include <QAbstractButton>
 #include <QPushButton>
-#include <QDebug>
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QFileDialog>
 #include <QFile>
 #include <QStandardPaths>
 #include <QInputDialog>
+#include <QMessageBox>
 #include "profiles.h"
 #include "ss_process.h"
 
@@ -31,33 +31,54 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    SS_Process ss_local;
     Profiles *m_profile;
-    SSProfile current_profile;
 
 signals:
-    void currentProfileChanged(int);
+    //void currentProfileChanged(int);
+    void configurationChanged(bool saved = false);
+    void miscConfigurationChanged(bool saved = false);
+
+public slots:
+    void startButtonPressed();
 
 private slots:
-    void oncurrentProfileChanged(int);
+    void onProfileComboBoxActivated(int);
+    void onCurrentProfileChanged(int);
     void getSSLocalPath();
-    void addProfileDialogue(bool enforce);
-    void profileEditButtonClicked(QAbstractButton *b);
-    void startButtonPressed();
+    void addProfileDialogue(bool);
+    void profileEditButtonClicked(QAbstractButton*);
     void stopButtonPressed();
     void deleteProfile();
     void processStarted();
     void processStopped();
     void systrayActivated(QSystemTrayIcon::ActivationReason);
     void showorhideWindow();
-    void onreadReadyProcess(const QByteArray &o);
+    void onReadReadyProcess(const QByteArray &o);
+    void onConfigurationChanged(bool);
+    void onMiscConfigurationChanged(bool);
+    void serverEditFinished();
+    void sportEditFinished();
+    void pwdEditFinished();
+    void lportEditFinished();
+    void methodChanged(const QString&);
+    void timeoutChanged(int);
+    void autoHideChecked(int);
+    void autoStartChecked(int);
+    void debugChecked(int);
+    void miscButtonBoxClicked();
+    void aboutButtonClicked();
 
 private:
     Ui::MainWindow *ui;
+    SS_Process ss_local;
+    SSProfile current_profile;
     QString detectSSLocal();
     QString jsonconfigFile;
     QSystemTrayIcon systray;
     QMenu systrayMenu;
+    void saveProfile();
+    void saveMiscConfig();
+    void checkIfSaved();
 
 protected:
     void changeEvent(QEvent *);

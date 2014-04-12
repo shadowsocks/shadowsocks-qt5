@@ -7,20 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //SIGNALs and SLOTs
-    connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::getSSLocalPath);
-    connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::oncurrentProfileChanged);
-    connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
-    connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
-    connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
-    connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::profileEditButtonClicked);
-    connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
-    connect(this, &MainWindow::currentProfileChanged, this, &MainWindow::oncurrentProfileChanged);
-    connect(&ss_local, &SS_Process::readReadyProcess, this, &MainWindow::onreadReadyProcess);
-    connect(&ss_local, &SS_Process::sigstart, this, &MainWindow::processStarted);
-    connect(&ss_local, &SS_Process::sigstop, this, &MainWindow::processStopped);
-    connect(&systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
-
     //initialisation
 #ifdef _WIN32
     jsonconfigFile = QCoreApplication::applicationDirPath() + "/gui-config.json";
@@ -30,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     m_profile = new Profiles(jsonconfigFile);
     ui->backendEdit->setText(detectSSLocal());
     ui->profileComboBox->insertItems(0, m_profile->getProfileList());
-    ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
     ui->stopButton->setEnabled(false);
 
     //desktop systray
@@ -52,9 +37,44 @@ MainWindow::MainWindow(QWidget *parent) :
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
 #ifdef _WIN32
-    ui->logBrowser->append(QString("Because of buffer, log print would be delayed."));
-    ui->logBrowser->append(QString("----------------------------------------------"));
+    ui->logBrowser->setPlaceholderText(QString("Because of buffer, log print would be delayed."));
 #endif
+
+    //SIGNALs and SLOTs
+    //connect(this, &MainWindow::currentProfileChanged, this, &MainWindow::onCurrentProfileChanged);
+    connect(&ss_local, &SS_Process::readReadyProcess, this, &MainWindow::onReadReadyProcess);
+    connect(&ss_local, &SS_Process::sigstart, this, &MainWindow::processStarted);
+    connect(&ss_local, &SS_Process::sigstop, this, &MainWindow::processStopped);
+    connect(&systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
+
+    connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::getSSLocalPath);
+    connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
+    connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::highlighted), this, &MainWindow::onProfileComboBoxActivated);
+    connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
+    connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
+    connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
+    connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
+
+    //update current profile
+    ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
+
+    //connect signals and slots when config changed
+    //Profile
+    connect(this, &MainWindow::configurationChanged, this, &MainWindow::onConfigurationChanged);
+    connect(ui->serverEdit, &QLineEdit::editingFinished, this, &MainWindow::serverEditFinished);
+    connect(ui->sportEdit, &QLineEdit::editingFinished, this, &MainWindow::sportEditFinished);
+    connect(ui->pwdEdit, &QLineEdit::editingFinished, this, &MainWindow::pwdEditFinished);
+    connect(ui->lportEdit, &QLineEdit::editingFinished, this, &MainWindow::lportEditFinished);
+    connect(ui->methodComboBox, &QComboBox::currentTextChanged, this, &MainWindow::methodChanged);
+    connect(ui->timeoutSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MainWindow::timeoutChanged);
+    connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::profileEditButtonClicked);
+    //Misc
+    connect(this, &MainWindow::miscConfigurationChanged, this, &MainWindow::onMiscConfigurationChanged);
+    connect(ui->autohideCheck, &QCheckBox::stateChanged, this, &MainWindow::autoHideChecked);
+    connect(ui->autostartCheck, &QCheckBox::stateChanged, this, &MainWindow::autoStartChecked);
+    connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::debugChecked);
+    connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::miscButtonBoxClicked);
+    connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::aboutButtonClicked);
 }
 
 MainWindow::~MainWindow()
@@ -66,10 +86,24 @@ MainWindow::~MainWindow()
 
 void MainWindow::getSSLocalPath()
 {
-    ui->backendEdit->setText(QFileDialog::getOpenFileName());
+    QString backend = QFileDialog::getOpenFileName();
+    if (!backend.isEmpty()) {
+        m_profile->setBackend(backend);
+        ui->backendEdit->setText(m_profile->getBackend());
+        emit configurationChanged();
+    }
+    this->raise();
+    ui->backendEdit->setFocus();
 }
 
-void MainWindow::oncurrentProfileChanged(int i)
+void MainWindow::onProfileComboBoxActivated(int i)
+{
+    if (i != ui->profileComboBox->currentIndex()) {//user was trying to change profile
+        checkIfSaved();
+    }
+}
+
+void MainWindow::onCurrentProfileChanged(int i)
 {
     if (i < 0) {//there is no profile
         addProfileDialogue(true);//enforce
@@ -87,6 +121,11 @@ void MainWindow::oncurrentProfileChanged(int i)
     ui->lportEdit->setText(current_profile.local_port);
     ui->methodComboBox->setCurrentText(current_profile.method);
     ui->timeoutSpinBox->setValue(current_profile.timeout.toInt());
+    ui->debugCheck->setChecked(m_profile->isDebug());
+    ui->autohideCheck->setChecked(m_profile->isAutoHide());
+    ui->autostartCheck->setChecked(m_profile->isAutoStart());
+
+    emit configurationChanged();
 }
 
 void MainWindow::addProfileDialogue(bool enforce = false)
@@ -112,48 +151,69 @@ void MainWindow::addProfileDialogue(bool enforce = false)
 
 QString MainWindow::detectSSLocal()
 {
-    if (m_profile->app.isEmpty()) {
+    if (m_profile->getBackend().isEmpty()) {
 #ifdef _WIN32
-        QString bundled_sslocal = QCoreApplication::applicationDirPath() + "/ss-local.exe";
-        if(QFile::exists(bundled_sslocal)) {
-            m_profile->app = QDir::toNativeSeparators(bundled_sslocal);
+        QString sslocal = QCoreApplication::applicationDirPath() + "/ss-local.exe";
+        if(QFile::exists(sslocal)) {
+            m_profile->setBackend(sslocal);
+        }
+        else {
+            sslocal = QStandardPaths::findExecutable("ss-local.exe");
+            if(!sslocal.isEmpty()) {
+                m_profile->setBackend(sslocal);
+            }
         }
 #else
-        m_profile->app = QStandardPaths::findExecutable("ss-local");
+        m_profile->setBackend(QStandardPaths::findExecutable("ss-local"));
 #endif
     }
 
-    return QDir::toNativeSeparators(m_profile->app);
+    return m_profile->getBackend();
+}
+
+void MainWindow::saveProfile()
+{
+    m_profile->saveProfile(ui->profileComboBox->currentIndex(), current_profile);
+    m_profile->saveProfileToJSON();
+    emit onConfigurationChanged(true);
+    emit miscConfigurationChanged(true);
+}
+
+void MainWindow::saveMiscConfig()
+{
+    m_profile->saveProfileToJSON();
+    emit miscConfigurationChanged(true);
+    emit onConfigurationChanged(true);
 }
 
 void MainWindow::profileEditButtonClicked(QAbstractButton *b)
 {
     if (ui->profileEditButtonBox->standardButton(b) == QDialogButtonBox::Save) {
-        current_profile.server = ui->profileComboBox->currentText();
-        current_profile.server_port = ui->sportEdit->text();
-        current_profile.password = ui->pwdEdit->text();
-        current_profile.local_port = ui->lportEdit->text();
-        current_profile.method = ui->methodComboBox->currentText();
-        current_profile.timeout = ui->timeoutSpinBox->cleanText();
-        m_profile->app = ui->backendEdit->text();
-        m_profile->saveProfile(ui->profileComboBox->currentIndex(), current_profile);
-        m_profile->saveProfileToJSON();
+        saveProfile();
     }
     else {//reset
         ss_local.stop();
         m_profile->revert();
         ui->backendEdit->setText(detectSSLocal());
-        disconnect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
+        disconnect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         ui->profileComboBox->clear();
-        connect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(oncurrentProfileChanged(int)));
         ui->profileComboBox->insertItems(0, m_profile->getProfileList());
+        connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
+        emit onConfigurationChanged(true);
     }
 }
 
 void MainWindow::startButtonPressed()
 {
-    ss_local.setapp(ui->backendEdit->text());
+    checkIfSaved();
+
+    if (!m_profile->isValidate(current_profile)) {
+        QMessageBox::critical(this, "Error", "Invalid profile or configuration.");
+        return;
+    }
+
+    ss_local.setapp(m_profile->getBackend());
     ss_local.start(current_profile);
 }
 
@@ -220,9 +280,111 @@ void MainWindow::changeEvent(QEvent *e)
     }
 }
 
-void MainWindow::onreadReadyProcess(const QByteArray &o)
+void MainWindow::onReadReadyProcess(const QByteArray &o)
 {
     ui->logBrowser->moveCursor(QTextCursor::End);
     ui->logBrowser->append(o);
     ui->logBrowser->moveCursor(QTextCursor::End);
+}
+
+void MainWindow::onConfigurationChanged(bool saved)
+{
+    ui->profileEditButtonBox->setEnabled(!saved);
+}
+
+void MainWindow::onMiscConfigurationChanged(bool saved)
+{
+    ui->miscSaveButton->setEnabled(!saved);
+}
+
+void MainWindow::serverEditFinished()
+{
+    current_profile.server = ui->serverEdit->text();
+    emit configurationChanged();
+}
+
+void MainWindow::sportEditFinished()
+{
+    current_profile.server_port = ui->sportEdit->text();
+    emit configurationChanged();
+}
+
+void MainWindow::pwdEditFinished()
+{
+    current_profile.password = ui->pwdEdit->text();
+    emit configurationChanged();
+}
+
+void MainWindow::lportEditFinished()
+{
+    current_profile.local_port = ui->lportEdit->text();
+    emit configurationChanged();
+}
+
+void MainWindow::methodChanged(const QString &m)
+{
+    current_profile.method = m;
+    emit configurationChanged();
+}
+
+void MainWindow::timeoutChanged(int t)
+{
+    current_profile.timeout = QString::number(t);
+    emit configurationChanged();
+}
+
+void MainWindow::autoHideChecked(int c)
+{
+    if (c == Qt::Checked) {
+        m_profile->setAutoHide(true);
+    }
+    else
+        m_profile->setAutoHide(false);
+
+    emit miscConfigurationChanged();
+}
+
+void MainWindow::autoStartChecked(int c)
+{
+    if (c == Qt::Checked) {
+        m_profile->setAutoStart(true);
+    }
+    else
+        m_profile->setAutoStart(false);
+
+    emit miscConfigurationChanged();
+}
+
+void MainWindow::debugChecked(int c)
+{
+    if (c == Qt::Checked) {
+        m_profile->setDebug(true);
+    }
+    else
+        m_profile->setDebug(false);
+
+    emit miscConfigurationChanged();
+}
+
+void MainWindow::miscButtonBoxClicked()
+{
+    saveMiscConfig();
+}
+
+void MainWindow::checkIfSaved()
+{
+    if (ui->profileEditButtonBox->isEnabled()) {
+        QMessageBox::StandardButton save = QMessageBox::question(this, "Unsaved Profile", "Current profile is not saved yet.\nDo you want to save it now?", QMessageBox::Save|QMessageBox::No, QMessageBox::Save);
+        if (save == QMessageBox::Save) {
+            saveProfile();
+        }
+        else {
+            emit configurationChanged(true);
+        }
+    }
+}
+
+void MainWindow::aboutButtonClicked()
+{
+    QMessageBox::about(this, QString("About Shadowsocks-Qt5"), QString("<h3>Platform-Cross GUI Client for Shadowsocks.</h3><p>Version: 0.2.0</p><p>Licensed Under LGPLv3<br />This software is hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a>.</p>"));
 }

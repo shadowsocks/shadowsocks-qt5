@@ -1,14 +1,18 @@
 {
-  "configs": [
-    {
-      "server": "SERVER IP or Domain",
-      "server_port": "S_PORT",
-      "password": "",
-      "local_port": "L_PORT",
-      "method": "table",
-      "timeout": "600"
-    }
-  ],
-  "index": 0,
-  "app": ""
+    "autoHide": true,
+    "autoStart": true,
+    "backend": "",
+    "configs": [
+        {
+            "local_port": "",
+            "method": "table",
+            "password": "",
+            "profile": "Default",
+            "server": "",
+            "server_port": "",
+            "timeout": "600"
+        }
+    ],
+    "debug": false,
+    "index": 0
 }

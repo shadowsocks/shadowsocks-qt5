@@ -8,6 +8,7 @@ QT       += core gui widgets
 
 TARGET   = ss-qt5
 TEMPLATE = app
+VERSION  = 0.2.0
 
 
 SOURCES += main.cpp\
