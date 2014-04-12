@@ -1,6 +1,6 @@
 {
-    "autoHide": true,
-    "autoStart": true,
+    "autoHide": false,
+    "autoStart": false,
     "backend": "",
     "configs": [
         {
