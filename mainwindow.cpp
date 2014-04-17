@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->logBrowser->setPlaceholderText(QString("Because of buffer, log print would be delayed."));
 #endif
 
+    ui->backendTypeCombo->setCurrentText(m_profile->getBackendType());
+
     //SIGNALs and SLOTs
     //connect(this, &MainWindow::currentProfileChanged, this, &MainWindow::onCurrentProfileChanged);
     connect(&ss_local, &SS_Process::readReadyProcess, this, &MainWindow::onReadReadyProcess);
@@ -47,9 +49,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&ss_local, &SS_Process::sigstop, this, &MainWindow::processStopped);
     connect(&systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
 
-    connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::getSSLocalPath);
+    connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::onBackendToolButtonPressed);
     connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
     connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::highlighted), this, &MainWindow::onProfileComboBoxActivated);
+    connect(ui->backendTypeCombo, &QComboBox::currentTextChanged, this, &MainWindow::backendTypeChanged);
     connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
@@ -90,7 +93,7 @@ MainWindow::~MainWindow()
     delete m_profile;
 }
 
-void MainWindow::getSSLocalPath()
+void MainWindow::onBackendToolButtonPressed()
 {
     QString backend = QFileDialog::getOpenFileName();
     if (!backend.isEmpty()) {
@@ -100,7 +103,13 @@ void MainWindow::getSSLocalPath()
     }
     this->setWindowState(Qt::WindowActive);
     this->activateWindow();
-    ui->backendLabel->setFocus();
+    ui->backendEdit->setFocus();
+}
+
+void MainWindow::backendTypeChanged(const QString &type)
+{
+    m_profile->setBackendType(type);
+    emit configurationChanged();
 }
 
 void MainWindow::onProfileComboBoxActivated(int i)
@@ -158,14 +167,22 @@ void MainWindow::addProfileDialogue(bool enforce = false)
 QString MainWindow::detectSSLocal()
 {
     if (m_profile->getBackend().isEmpty()) {
-        QString sslocal;
+        QString execName, sslocal;
+        switch (m_profile->getBackendTypeID()) {
+        case 1:
+            execName = "sslocal";
+            break;
+        default:
+            execName = "ss-local";
+        }
+
 #ifdef _WIN32
-        sslocal = QCoreApplication::applicationDirPath() + "/ss-local.exe";
+        sslocal = QCoreApplication::applicationDirPath() + "/" + execName;
         if(!QFile::exists(sslocal)) {
-            sslocal = QStandardPaths::findExecutable("ss-local.exe");
+            sslocal = QStandardPaths::findExecutable(execName);
         }
 #else
-        sslocal = QStandardPaths::findExecutable("ss-local");
+        sslocal = QStandardPaths::findExecutable(execName);
 #endif
         if(!sslocal.isEmpty()) {
             m_profile->setBackend(sslocal);
@@ -224,6 +241,7 @@ void MainWindow::startButtonPressed()
     }
 
     ss_local.setapp(m_profile->getBackend());
+    ss_local.setTypeID(m_profile->getBackendTypeID());
     ss_local.start(current_profile);
 }
 

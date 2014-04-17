@@ -44,7 +44,8 @@ public slots:
 private slots:
     void onProfileComboBoxActivated(int);
     void onCurrentProfileChanged(int);
-    void getSSLocalPath();
+    void onBackendToolButtonPressed();
+    void backendTypeChanged(const QString &);
     void addProfileDialogue(bool);
     void profileEditButtonClicked(QAbstractButton*);
     void stopButtonPressed();

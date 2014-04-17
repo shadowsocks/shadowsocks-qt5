@@ -34,9 +34,12 @@ class Profiles
 public:
     Profiles(QString file = QString());
     ~Profiles();
-    void setBackend(const QString&);
+    void setBackend(const QString &);
     QString getBackend();
-    void setJSONFile(const QString&);
+    void setBackendType(const QString &);
+    QString getBackendType();
+    int getBackendTypeID();
+    void setJSONFile(const QString &);
     void setIndex(int);
     int getIndex();
     void setAutoStart(bool);
@@ -50,15 +53,16 @@ public:
     SSProfile getProfile(int);
     SSProfile lastProfile();
     void revert();
-    void addProfile(const QString&);
-    void saveProfile(int, SSProfile&);
+    void addProfile(const QString &);
+    void saveProfile(int, SSProfile &);
     //void saveAllProfile();
     void deleteProfile(int);
     void saveProfileToJSON();
-    bool isValidate(SSProfile&);//check backend as well as profile
+    bool isValidate(SSProfile &);//check backend as well as profile
 
 private:
     QString backend;
+    QString backendType;
     int m_index;
     bool debugLog;
     bool autoHide;

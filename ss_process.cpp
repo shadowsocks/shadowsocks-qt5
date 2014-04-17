@@ -18,6 +18,11 @@ void SS_Process::setapp(const QString &a)
     app_path = a;
 }
 
+void SS_Process::setTypeID(int i)
+{
+    backendTypeID = i;
+}
+
 bool SS_Process::isRunning()
 {
     return running;
@@ -51,7 +56,9 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
     args.append(QString(" -l ") + l_port);
     args.append(QString(" -k \"") + pwd + QString("\""));
     args.append(QString(" -m ") + method.toLower());
-    args.append(QString(" -t ") + timeout);//shadowsocks-go doesn't support this argument
+    if (backendTypeID == 0) {//shadowsocks-nodejs doesn't support this argument
+        args.append(QString(" -t ") + timeout);
+    }
     if (debug) {
         args.append(QString(" -v"));//shadowsocks-go uses "-d=true"
     }

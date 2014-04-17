@@ -21,6 +21,7 @@ public:
     SS_Process(QObject *parent = 0);
     ~SS_Process();
     void setapp(const QString&);
+    void setTypeID(int);
     void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false);
     void start(const QString &args);
     void start(SSProfile&, bool debug = false);
@@ -34,6 +35,7 @@ signals:
 
 private:
     bool running;
+    int backendTypeID;
     QString app_path;
     QProcess proc;
 

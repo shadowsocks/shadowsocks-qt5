@@ -14,5 +14,6 @@
         }
     ],
     "debug": false,
-    "index": 0
+    "index": 0,
+    "type": "Shadowsocks-libev"
 }

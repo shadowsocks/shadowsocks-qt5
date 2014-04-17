@@ -18,28 +18,18 @@ Profiles::Profiles(QString file)
 Profiles::~Profiles()
 {}
 
-void Profiles::setBackend(const QString &a)
-{
-    backend = QDir::toNativeSeparators(a);
-}
-
-QString Profiles::getBackend()
-{
-    return backend;
-}
-
 void Profiles::setJSONFile(const QString &file)
 {
     m_file = QDir::toNativeSeparators(file);
     QFile JSONFile(m_file);
-    if(!JSONFile.isReadable()) {
-        qWarning("Critical Error: cannot read gui-config.json!");
-    }
-
     JSONFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
     if (!JSONFile.isOpen()) {
         qWarning("Critical Error: cannot open gui-config.json!");
+    }
+
+    if(!JSONFile.isReadable()) {
+        qWarning("Critical Error: cannot read gui-config.json!");
     }
 
     QJsonParseError pe;
@@ -72,6 +62,7 @@ void Profiles::setJSONFile(const QString &file)
     }
     m_index = JSONObj["index"].toInt();
     backend = JSONObj["backend"].toString();
+    backendType = JSONObj["type"].toString();
     debugLog = JSONObj["debug"].toBool();
     autoHide = JSONObj["autoHide"].toBool();
     autoStart = JSONObj["autoStart"].toBool();
@@ -157,6 +148,7 @@ void Profiles::saveProfileToJSON()
 {
     JSONObj["index"] = QJsonValue(m_index);
     JSONObj["backend"] = QJsonValue(backend);
+    JSONObj["type"] = QJsonValue(backendType);
     JSONObj["debug"] = QJsonValue(debugLog);
     JSONObj["autoHide"] = QJsonValue(autoHide);
     JSONObj["autoStart"] = QJsonValue(autoStart);
@@ -173,6 +165,36 @@ void Profiles::saveProfileToJSON()
         qWarning() << "Warning: file is not writable!";
     }
     JSONFile.close();
+}
+
+void Profiles::setBackend(const QString &a)
+{
+    backend = QDir::toNativeSeparators(a);
+}
+
+QString Profiles::getBackend()
+{
+    return backend;
+}
+
+void Profiles::setBackendType(const QString &t)
+{
+    backendType = t;
+}
+
+QString Profiles::getBackendType()
+{
+    return backendType;
+}
+
+int Profiles::getBackendTypeID()
+{
+    if (backendType == QString("Shadowsocks-Nodejs")) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 void Profiles::setIndex(int index)
