@@ -46,7 +46,6 @@ public:
     void revert();
     void addProfile(const QString &);
     void saveProfile(int, SSProfile &);
-    //void saveAllProfile();
     void deleteProfile(int);
     void saveProfileToJSON();
     bool isValidate(const SSProfile &);//check backend as well as profile
