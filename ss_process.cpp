@@ -1,4 +1,6 @@
 #include <QtDebug>
+#include <QFileInfo>
+#include <QDir>
 #include "ss_process.h"
 
 SS_Process::SS_Process(QObject *parent) :
@@ -33,16 +35,29 @@ void SS_Process::start(SSProfile &p, bool debug)
     start(p.server, p.password, p.server_port, p.local_addr, p.local_port, p.method, p.timeout, debug);
 }
 
-void SS_Process::start(const QString &args)
+void SS_Process::start(QString &args)
 {
     stop();
+    QString sslocalbin = QFileInfo(app_path).dir().canonicalPath();
+    sslocalbin.append("/node_modules/shadowsocks/bin/sslocal");
+    switch (backendTypeID) {
+    case 0:
+        proc.setProgram(app_path);
+        break;
+    case 1:
+        proc.setProgram("node");
+        args.prepend(QDir::toNativeSeparators(sslocalbin));
+        break;
+    default:
+        qWarning("Aborted: Invalid Backend Type.");
+        return;
+    }
+
 #ifdef _WIN32
-    proc.setProgram(app_path);
     proc.setNativeArguments(args);
     proc.start();
 #else
-    //setNativeArguments is not available except Windows and Symbian
-    proc.start(app_path + QString(" ") + args);
+    proc.start(proc.program() + QString(" ") + args);
 #endif
     qDebug() << "Backend arguments are " << args;
     proc.waitForStarted(1000);//wait for at most 1 second
@@ -51,7 +66,7 @@ void SS_Process::start(const QString &args)
 void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, bool debug)
 {
     QString args;
-    args.append(QString("-s ") + server);
+    args.append(QString(" -s ") + server);
     args.append(QString(" -p ") + s_port);
     args.append(QString(" -b ") + l_addr);
     args.append(QString(" -l ") + l_port);
@@ -82,7 +97,7 @@ void SS_Process::autoemitreadReadyProcess()
 void SS_Process::started()
 {
     running = true;
-    qDebug() << "Backend started";
+    qDebug() << "Backend started. PID: %d" <<proc.pid();
     emit sigstart();
 }
 

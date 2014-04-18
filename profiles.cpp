@@ -197,8 +197,11 @@ int Profiles::getBackendTypeID()
     else if (backendType == QString("Shadowsocks-Python")) {
         return 2;
     }
+    else if (backendType == QString("Shadowsocks-Go")) {
+        return 3;
+    }
     else {
-        return 0;
+        return 0;//Shadowsocks-libev
     }
 }
 
