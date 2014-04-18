@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     jsonconfigFile = QDir::homePath() + "/.config/shadowsocks/gui-config.json";
 #endif
     m_profile = new Profiles(jsonconfigFile);
-    ui->backendEdit->setText(detectSSLocal());
+
     ui->profileComboBox->insertItems(0, m_profile->getProfileList());
     ui->stopButton->setEnabled(false);
 
@@ -40,8 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->logBrowser->setPlaceholderText(QString("Because of buffer, log print would be delayed."));
 #endif
 
-    ui->backendTypeCombo->setCurrentText(m_profile->getBackendType());
-
     //SIGNALs and SLOTs
     //connect(this, &MainWindow::currentProfileChanged, this, &MainWindow::onCurrentProfileChanged);
     connect(&ss_local, &SS_Process::readReadyProcess, this, &MainWindow::onReadReadyProcess);
@@ -58,13 +56,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
     connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
 
-    //update current profile
+    //update current configuration
     ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
+    ui->backendTypeCombo->setCurrentText(m_profile->getBackendType());
     /*
      * If there is only one config in gui-config.json, then the function above wouldn't emit signal.
      * Therefore, we have to emit a signal manually.
      */
     emit ui->profileComboBox->currentIndexChanged(m_profile->getIndex());
+    emit ui->backendTypeCombo->currentTextChanged(m_profile->getBackendType());
 
     //connect signals and slots when config changed
     //Profile
@@ -72,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->serverEdit, &QLineEdit::textChanged, this, &MainWindow::serverEditFinished);
     connect(ui->sportEdit, &QLineEdit::textChanged, this, &MainWindow::sportEditFinished);
     connect(ui->pwdEdit, &QLineEdit::textChanged, this, &MainWindow::pwdEditFinished);
+    connect(ui->laddrEdit, &QLineEdit::textChanged, this, &MainWindow::laddrEditFinished);
     connect(ui->lportEdit, &QLineEdit::textChanged, this, &MainWindow::lportEditFinished);
     connect(ui->methodComboBox, &QComboBox::currentTextChanged, this, &MainWindow::methodChanged);
     connect(ui->timeoutSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MainWindow::timeoutChanged);
@@ -109,6 +110,11 @@ void MainWindow::onBackendToolButtonPressed()
 void MainWindow::backendTypeChanged(const QString &type)
 {
     m_profile->setBackendType(type);
+
+    if (ui->backendEdit->text().isEmpty()) {
+        ui->backendEdit->setText(detectSSLocal());
+    }
+
     emit configurationChanged();
 }
 
@@ -133,6 +139,7 @@ void MainWindow::onCurrentProfileChanged(int i)
     ui->serverEdit->setText(current_profile.server);
     ui->sportEdit->setText(current_profile.server_port);
     ui->pwdEdit->setText(current_profile.password);
+    ui->laddrEdit->setText(current_profile.local_addr);
     ui->lportEdit->setText(current_profile.local_port);
     ui->methodComboBox->setCurrentText(current_profile.method);
     ui->timeoutSpinBox->setValue(current_profile.timeout.toInt());
@@ -341,6 +348,12 @@ void MainWindow::sportEditFinished(const QString &str)
 void MainWindow::pwdEditFinished(const QString &str)
 {
     current_profile.password = str;
+    emit configurationChanged();
+}
+
+void MainWindow::laddrEditFinished(const QString &str)
+{
+    current_profile.local_addr = str;
     emit configurationChanged();
 }
 

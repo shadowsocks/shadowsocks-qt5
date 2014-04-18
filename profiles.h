@@ -19,15 +19,19 @@
 #ifndef PROFILES_H
 #define PROFILES_H
 
-typedef struct {
+struct SSProfile {
     QString profileName;
     QString server;
     QString server_port;
     QString password;
+    QString local_addr;
     QString local_port;
     QString method;
     QString timeout;
-} SSProfile;
+
+    SSProfile() : server_port("8388") ,local_port("1080"), local_addr("127.0.0.1"),
+        method("aes-256-cfb"), timeout("600") {}
+};
 
 class Profiles
 {
@@ -58,7 +62,7 @@ public:
     //void saveAllProfile();
     void deleteProfile(int);
     void saveProfileToJSON();
-    bool isValidate(SSProfile &);//check backend as well as profile
+    bool isValidate(const SSProfile &);//check backend as well as profile
 
 private:
     QString backend;

@@ -58,7 +58,94 @@
         </item>
         <item row="0" column="2" rowspan="2">
          <layout class="QGridLayout" name="gridLayout_r">
+          <item row="4" column="0">
+           <widget class="QLabel" name="lportLabel">
+            <property name="text">
+             <string>Local Port</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="sportLabel">
+            <property name="text">
+             <string>Server Port</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="pwdEdit">
+            <property name="echoMode">
+             <enum>QLineEdit::PasswordEchoOnEdit</enum>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="pwdLabel">
+            <property name="text">
+             <string>Password</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="timeoutLabel">
+            <property name="text">
+             <string>Timeout</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="sportEdit"/>
+          </item>
           <item row="4" column="1">
+           <widget class="QLineEdit" name="lportEdit"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSpinBox" name="timeoutSpinBox">
+            <property name="correctionMode">
+             <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
+            </property>
+            <property name="suffix">
+             <string notr="true"> second(s)</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>3600</number>
+            </property>
+            <property name="singleStep">
+             <number>30</number>
+            </property>
+            <property name="value">
+             <number>600</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="serverLabel">
+            <property name="text">
+             <string>Server Domain/IP</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="serverEdit">
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="methodLabel">
+            <property name="text">
+             <string>Encryption Method</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
            <widget class="QComboBox" name="methodComboBox">
             <property name="currentText">
              <string notr="true">Table</string>
@@ -135,88 +222,15 @@
             </item>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="methodLabel">
+          <item row="3" column="0">
+           <widget class="QLabel" name="laddrLabel">
             <property name="text">
-             <string>Encryption Method</string>
+             <string>Local Address</string>
             </property>
            </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="sportLabel">
-            <property name="text">
-             <string>Server Port</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="pwdEdit">
-            <property name="echoMode">
-             <enum>QLineEdit::PasswordEchoOnEdit</enum>
-            </property>
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="pwdLabel">
-            <property name="text">
-             <string>Password</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="timeoutLabel">
-            <property name="text">
-             <string>Timeout</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="sportEdit"/>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="lportEdit"/>
-          </item>
-          <item row="5" column="1">
-           <widget class="QSpinBox" name="timeoutSpinBox">
-            <property name="correctionMode">
-             <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
-            </property>
-            <property name="suffix">
-             <string notr="true"> second(s)</string>
-            </property>
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <number>3600</number>
-            </property>
-            <property name="singleStep">
-             <number>30</number>
-            </property>
-            <property name="value">
-             <number>600</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lportLabel">
-            <property name="text">
-             <string>Local Port</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="serverLabel">
-            <property name="text">
-             <string>Server Domain/IP</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="serverEdit">
+           <widget class="QLineEdit" name="laddrEdit">
             <property name="clearButtonEnabled">
              <bool>true</bool>
             </property>
@@ -246,7 +260,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_2">
+           <spacer name="horizontalSpacerStartStop">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>

@@ -30,7 +30,7 @@ bool SS_Process::isRunning()
 
 void SS_Process::start(SSProfile &p, bool debug)
 {
-    start(p.server, p.password, p.server_port, p.local_port, p.method, p.timeout, debug);
+    start(p.server, p.password, p.server_port, p.local_addr, p.local_port, p.method, p.timeout, debug);
 }
 
 void SS_Process::start(const QString &args)
@@ -48,15 +48,16 @@ void SS_Process::start(const QString &args)
     proc.waitForStarted(1000);//wait for at most 1 second
 }
 
-void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_port, const QString &method, const QString &timeout, bool debug)
+void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, bool debug)
 {
     QString args;
     args.append(QString("-s ") + server);
     args.append(QString(" -p ") + s_port);
+    args.append(QString(" -b ") + l_addr);
     args.append(QString(" -l ") + l_port);
     args.append(QString(" -k \"") + pwd + QString("\""));
     args.append(QString(" -m ") + method.toLower());
-    if (backendTypeID == 0) {//shadowsocks-nodejs doesn't support this argument
+    if (backendTypeID == 0) {//shadowsocks-nodejs and shadowsocks-python did't support this argument
         args.append(QString(" -t ") + timeout);
     }
     if (debug) {

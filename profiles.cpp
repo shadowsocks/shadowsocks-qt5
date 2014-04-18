@@ -55,6 +55,7 @@ void Profiles::setJSONFile(const QString &file)
         p.server = json["server"].toString();
         p.password = json["password"].toString();
         p.server_port = json["server_port"].toString();
+        p.local_addr = json["local_address"].toString();
         p.local_port = json["local_port"].toString();
         p.method = json["method"].toString().toUpper();//using Upper-case in GUI
         p.timeout = json["timeout"].toString();
@@ -113,6 +114,7 @@ void Profiles::saveProfile(int index, SSProfile &p)
     json["server"] = QJsonValue(p.server);
     json["server_port"] = QJsonValue(p.server_port);
     json["password"] = QJsonValue(p.password);
+    json["local_address"] = QJsonValue(p.local_addr);
     json["local_port"] = QJsonValue(p.local_port);
     json["method"] = QJsonValue(p.method.isEmpty() ? QString("table") : p.method.toLower());//lower-case in config
     json["timeout"] = QJsonValue(p.timeout);
@@ -192,6 +194,9 @@ int Profiles::getBackendTypeID()
     if (backendType == QString("Shadowsocks-Nodejs")) {
         return 1;
     }
+    else if (backendType == QString("Shadowsocks-Python")) {
+        return 2;
+    }
     else {
         return 0;
     }
@@ -242,10 +247,10 @@ void Profiles::revert()
     setJSONFile(m_file);
 }
 
-bool Profiles::isValidate(SSProfile &sp)
+bool Profiles::isValidate(const SSProfile &sp)
 {
     //TODO: more accurate
-    if (sp.server.isEmpty() || sp.server_port.toInt() < 1 || sp.local_port.toInt() < 1 || sp.method.isEmpty() || sp.timeout.toInt() < 1 || backend.isEmpty()) {
+    if (sp.server.isEmpty() || sp.server_port.toInt() < 1 || sp.local_addr.isEmpty() || sp.local_port.toInt() < 1 || sp.method.isEmpty() || sp.timeout.toInt() < 1 || backend.isEmpty()) {
         return false;
     }
     else

@@ -4,6 +4,7 @@
     "backend": "",
     "configs": [
         {
+            "local_address": "127.0.0.1",
             "local_port": "",
             "method": "table",
             "password": "",
