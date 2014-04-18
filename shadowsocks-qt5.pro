@@ -18,7 +18,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     profiles.h \
-    ss_process.h
+    ss_process.h \
+    ssprofile.h
 
 FORMS    += mainwindow.ui
 

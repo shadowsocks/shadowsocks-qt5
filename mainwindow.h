@@ -17,6 +17,7 @@
 #include <QStandardPaths>
 #include <QInputDialog>
 #include <QMessageBox>
+#include "ssprofile.h"
 #include "profiles.h"
 #include "ss_process.h"
 

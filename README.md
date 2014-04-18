@@ -68,6 +68,8 @@ Usage
 
 You may have to specify the `ss-local` or `sslocal` (depends on which port of Shadowsocks you use) if `ss-qt5` didn't find it.
 
+For Shadowsocks-Nodejs port backend, the backend path need to be set to `sslocal` script or `sslocal.cmd`. In most cases, you don't have to worry about it, because it should have been automatically found in *PATH*.
+
 Clicking minimise button would hide the main window. Close button is used to exit. Meanwhile, Systray icon is always visible.
 
 All output of `ss-local` or `sslocal` can be viewed in **Log** tab.
