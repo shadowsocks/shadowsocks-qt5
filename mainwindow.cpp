@@ -263,6 +263,7 @@ void MainWindow::processStarted()
     systrayMenu.actions().at(2)->setEnabled(true);
     ui->stopButton->setEnabled(true);
     ui->startButton->setEnabled(false);
+    ui->logBrowser->clear();
 
     systray.setIcon(QIcon(":/icon/running_icon.png"));
 }
