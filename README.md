@@ -6,7 +6,7 @@ Introduction
 
 Shadowsocks-Qt5 aims to be a fast and platform-cross GUI Client for [Shadowsocks](http://shadowsocks.org).
 
-Latest Development Version: 0.2.0
+Latest Development Version: 0.3.0
 
 Features
 --------
@@ -22,6 +22,7 @@ The `gui-config.json` file is partially compatible with [shadowsocks-gui](https:
 Note
 ----
 
+- Shadowsocks-Nodejs port is highly recommended to serve as backend for its better I/O performance.
 - It's recommended to use both 64-bit `ss-local` and `ss-qt5` if you're running 64-bit OS. But you can still use 32-bit `ss-local` together with 64-bit `ss-qt5`, and vice versa.
 - It's not stable as you expected. Don't be panic but feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Run from terminal/cmd and paste the output when you file a bug.
 
@@ -65,10 +66,10 @@ make install
 Usage
 -----
 
-You may have to specify the `ss-local` path if application didn't find it.
+You may have to specify the `ss-local` or `sslocal` (depends on which port of Shadowsocks you use) if `ss-qt5` didn't find it.
 
 Clicking minimise button would hide the main window. Close button is used to exit. Meanwhile, Systray icon is always visible.
 
-All output of `ss-local` can be viewed in **Log** tab.
+All output of `ss-local` or `sslocal` can be viewed in **Log** tab.
 
 Once you click the **Save** button, the configuration would be written into file. Before that, you can click **Reset** button to restore the previous values stored in `gui-config.json`.
