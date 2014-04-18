@@ -76,7 +76,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
         args.append(QString(" -t ") + timeout);
     }
     if (debug) {
-        args.append(QString(" -v"));//shadowsocks-go uses "-d=true"
+        args.append(" -v");//shadowsocks-go uses "-d=true"
     }
 
     start(args);

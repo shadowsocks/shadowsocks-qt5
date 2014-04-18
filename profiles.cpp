@@ -121,25 +121,6 @@ void Profiles::saveProfile(int index, SSProfile &p)
     CONFArray.replace(index, QJsonValue(json));
 }
 
-/*
-void Profiles::saveAllProfile()
-{
-    auto cit = CONFArray.begin();
-    for (auto it = profileList.begin(); it != profileList.end(); ++it) {
-        QJsonObject json;
-        json["profile"] = QJsonValue((*it).profileName);
-        json["server"] = QJsonValue((*it).server);
-        json["server_port"] = QJsonValue((*it).server_port);
-        json["password"] = QJsonValue((*it).password);
-        json["local_port"] = QJsonValue((*it).local_port);
-        json["method"] = QJsonValue((*it).method.toLower());//lower-case in config
-        json["timeout"] = QJsonValue((*it).timeout);
-        *cit = QJsonValue(json);
-        ++cit;
-    }
-}
-*/
-
 void Profiles::deleteProfile(int index)
 {
     profileList.removeAt(index);
