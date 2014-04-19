@@ -20,6 +20,8 @@
 #include "ssprofile.h"
 #include "profiles.h"
 #include "ss_process.h"
+#include "ip4validator.h"
+#include "portvalidator.h"
 
 namespace Ui {
 class MainWindow;
@@ -77,6 +79,8 @@ private:
     SSProfile current_profile;
     QString detectSSLocal();
     QString jsonconfigFile;
+    IP4Validator ipv4addrValidator;
+    PortValidator portValidator;
     QSystemTrayIcon systray;
     QMenu systrayMenu;
     void saveProfile();

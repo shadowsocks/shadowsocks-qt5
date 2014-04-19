@@ -14,12 +14,16 @@ VERSION  = 0.3.0
 SOURCES  += main.cpp\
             mainwindow.cpp \
             profiles.cpp \
-            ss_process.cpp
+            ss_process.cpp \
+    ip4validator.cpp \
+    portvalidator.cpp
 
 HEADERS  += mainwindow.h \
             profiles.h \
             ss_process.h \
-            ssprofile.h
+            ssprofile.h \
+    ip4validator.h \
+    portvalidator.h
 
 FORMS    += mainwindow.ui
 

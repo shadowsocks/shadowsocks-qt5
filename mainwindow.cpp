@@ -21,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->profileComboBox->insertItems(0, m_profile->getProfileList());
     ui->stopButton->setEnabled(false);
+    ui->laddrEdit->setValidator(&ipv4addrValidator);
+    ui->sportEdit->setValidator(&portValidator);
+    ui->lportEdit->setValidator(&portValidator);
 
     //desktop systray
     systrayMenu.addAction("Show/Hide", this, SLOT(showorhideWindow()));
