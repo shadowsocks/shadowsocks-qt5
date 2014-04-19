@@ -38,6 +38,7 @@ void SS_Process::start(SSProfile &p, bool debug)
 void SS_Process::start(QString &args)
 {
     stop();
+#ifdef _WIN32
     QString sslocalbin = QFileInfo(app_path).dir().canonicalPath();
     sslocalbin.append("/node_modules/shadowsocks/bin/sslocal");
     switch (backendTypeID) {
@@ -52,12 +53,10 @@ void SS_Process::start(QString &args)
         qWarning("Aborted: Invalid Backend Type.");
         return;
     }
-
-#ifdef _WIN32
     proc.setNativeArguments(args);
     proc.start();
 #else
-    proc.start(proc.program() + QString(" ") + args);
+    proc.start(app_path + QString(" ") + args);
 #endif
     qDebug() << "Backend arguments are " << args;
     proc.waitForStarted(1000);//wait for at most 1 second
