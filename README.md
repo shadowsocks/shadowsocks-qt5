@@ -13,17 +13,15 @@ Latest Development Version: 0.3.0
 Features
 --------
 
-Shadowsocks-Qt5 is written in pure C++ with Qt5 magic. It is not a standalone programme. But only works along with ss-local binary from [shadowsocks-libev project](https://github.com/madeye/shadowsocks-libev).
-
-An intuitive and native UI. And JUST a **GUI**. Keep your favourite Shadowsocks port as backend.
-
-The `gui-config.json` file is partially compatible with [shadowsocks-gui](https://github.com/shadowsocks/shadowsocks-gui). In order to serve better, some new values have been added.
-
-`gui-config.json` is located under ~/.config/shadowsocks for UNIX users, or under the main programme's directory for Windows users.
+- Shadowsocks-Qt5 is written in pure C++ with Qt5 magic.
+- An intuitive and native UI. And JUST a **GUI**. Keep your favourite Shadowsocks port as backend.
+- The `gui-config.json` file is partially compatible with [shadowsocks-gui](https://github.com/shadowsocks/shadowsocks-gui). In order to serve better, some new values have been added.
+- `gui-config.json` is located under ~/.config/shadowsocks for UNIX users, or under the main programme's directory for Windows users.
 
 Note
 ----
 
+- It is not a standalone programme. By default, `ss-qt5` works along with `ss-local` from [shadowsocks-libev project](https://github.com/madeye/shadowsocks-libev). While it also supports using other shadowsocks ports as backend such as [Shadowsocks-Nodejs](https://github.com/clowwindy/shadowsocks-nodejs).
 - Shadowsocks-Nodejs port is highly recommended to serve as backend for its better I/O performance.
 - Don't be panic if you encounter a bug. Feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Remember to run from terminal or `cmd` and paste the output.
 
@@ -63,16 +61,3 @@ qmake INSTALL_PREFIX=/usr
 make
 make install
 ```
-
-Usage
------
-
-You may have to specify the `ss-local` or `sslocal` (depends on which port of Shadowsocks you use) if `ss-qt5` didn't find it.
-
-For Shadowsocks-Nodejs port backend, the backend path need to be set to `sslocal` script or `sslocal.cmd`. In most cases, you don't have to worry about it, because it should have been automatically found in *PATH*.
-
-Clicking minimise button would hide the main window. Close button is used to exit. Meanwhile, Systray icon is always visible.
-
-All output of `ss-local` or `sslocal` can be viewed in **Log** tab.
-
-Once you click the **Save** button, the configuration would be written into file. Before that, you can click **Reset** button to restore the previous values stored in `gui-config.json`.
