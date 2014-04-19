@@ -1,6 +1,8 @@
 Shadowsocks-Qt5
 ===============
 
+[中文用户指南](https://github.com/librehat/shadowsocks-qt5/wiki/%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97)
+
 Introduction
 ------------
 
@@ -13,7 +15,7 @@ Features
 
 Shadowsocks-Qt5 is written in pure C++ with Qt5 magic. It is not a standalone programme. But only works along with ss-local binary from [shadowsocks-libev project](https://github.com/madeye/shadowsocks-libev).
 
-An intuitive and native UI. You don't need to install the huge node.js just to run shadowsocks. It's time to forget about the terminal emulator and command prompt.
+An intuitive and native UI. And JUST a **GUI**. Keep your favourite Shadowsocks port as backend.
 
 The `gui-config.json` file is partially compatible with [shadowsocks-gui](https://github.com/shadowsocks/shadowsocks-gui). In order to serve better, some new values have been added.
 
@@ -23,8 +25,7 @@ Note
 ----
 
 - Shadowsocks-Nodejs port is highly recommended to serve as backend for its better I/O performance.
-- It's recommended to use both 64-bit `ss-local` and `ss-qt5` if you're running 64-bit OS. But you can still use 32-bit `ss-local` together with 64-bit `ss-qt5`, and vice versa.
-- It's not stable as you expected. Don't be panic but feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Run from terminal/cmd and paste the output when you file a bug.
+- Don't be panic if you encounter a bug. Feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Remember to run from terminal or `cmd` and paste the output.
 
 ScreenShots
 -----------

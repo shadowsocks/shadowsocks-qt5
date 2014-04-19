@@ -8,24 +8,24 @@ QT       += core gui widgets
 
 TARGET   = ss-qt5
 TEMPLATE = app
-VERSION  = 0.2.0
+VERSION  = 0.3.0
 
 
-SOURCES += main.cpp\
-    mainwindow.cpp \
-    profiles.cpp \
-    ss_process.cpp
+SOURCES  += main.cpp\
+            mainwindow.cpp \
+            profiles.cpp \
+            ss_process.cpp
 
 HEADERS  += mainwindow.h \
-    profiles.h \
-    ss_process.h \
-    ssprofile.h
+            profiles.h \
+            ss_process.h \
+            ssprofile.h
 
 FORMS    += mainwindow.ui
 
 OTHER_FILES += README.md \
-    gui-config.json \
-    shadowsocks-qt5.desktop
+                gui-config.json \
+                shadowsocks-qt5.desktop
 
 binary_path = /usr/bin
 desktop.path = /usr/share/applications
