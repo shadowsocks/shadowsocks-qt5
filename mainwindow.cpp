@@ -11,10 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
 #ifdef _WIN32
     jsonconfigFile = QCoreApplication::applicationDirPath() + "/gui-config.json";
 #else
-    QDir ssConfig = QDir::homePath() + "/.config/shadowsocks";
-    jsonconfigFile = ssConfig.absolutePath() + "/gui-config.json";
-    if (!ssConfig.exists()) {
-        ssConfig.mkpath(ssConfig.absolutePath());
+    QDir ssConfigDir = QDir::homePath() + "/.config/shadowsocks";
+    jsonconfigFile = ssConfigDir.absolutePath() + "/gui-config.json";
+    if (!ssConfigDir.exists()) {
+        ssConfigDir.mkpath(ssConfigDir.absolutePath());
     }
 #endif
     m_profile = new Profiles(jsonconfigFile);

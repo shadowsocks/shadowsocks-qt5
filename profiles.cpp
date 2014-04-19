@@ -1,13 +1,14 @@
 #include <QDir>
 #include "profiles.h"
 
-Profiles::Profiles(QString file)
+Profiles::Profiles(const QString &file)
 {
     if (QFile::exists(file)) {
         setJSONFile(file);
     }
     else {
-        qWarning("Warning: gui-config.json does not exist! Check your installation.");
+        qWarning("Warning: gui-config.json does not exist!");
+        m_file = QDir::toNativeSeparators(file);
         m_index = -1;
         debugLog = false;
         autoStart = false;

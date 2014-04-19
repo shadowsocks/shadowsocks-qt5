@@ -23,7 +23,7 @@
 class Profiles
 {
 public:
-    Profiles(QString file = QString());
+    Profiles(const QString &file);
     ~Profiles();
     void setBackend(const QString &);
     QString getBackend();
