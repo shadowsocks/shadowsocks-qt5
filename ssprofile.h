@@ -1,3 +1,4 @@
+#include <QString>
 #ifndef SSPROFILE_H
 #define SSPROFILE_H
 struct SSProfile {
@@ -10,7 +11,6 @@ struct SSProfile {
     QString method;
     QString timeout;
 
-    SSProfile() : server_port("8388") ,local_port("1080"), local_addr("127.0.0.1"),
-        method("aes-256-cfb"), timeout("600") {}
+    SSProfile() : profileName(), server(), server_port("8388"), password(), local_addr("127.0.0.1"), local_port("1080"),  method("aes-256-cfb"), timeout("600") {}
 };
 #endif // SSPROFILE_H
