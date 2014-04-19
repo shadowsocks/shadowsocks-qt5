@@ -234,8 +234,18 @@ void Profiles::revert()
 
 bool Profiles::isValidate(const SSProfile &sp)
 {
+    bool ok;
+    int port = sp.server_port.toInt(&ok);
+    if (!ok || port < 1 || port > 65535) {
+        return false;
+    }
+    port = sp.local_port.toInt(&ok);
+    if (!ok || port < 1 || port > 65535) {
+        return false;
+    }
+
     //TODO: more accurate
-    if (sp.server.isEmpty() || sp.server_port.toInt() < 1 || sp.local_addr.isEmpty() || sp.local_port.toInt() < 1 || sp.method.isEmpty() || sp.timeout.toInt() < 1 || backend.isEmpty()) {
+    if (sp.server.isEmpty() || sp.local_addr.isEmpty() || sp.method.isEmpty() || sp.timeout.toInt() < 1 || backend.isEmpty() || backendType.isEmpty()) {
         return false;
     }
     else
