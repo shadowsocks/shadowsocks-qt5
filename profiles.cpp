@@ -245,7 +245,7 @@ bool Profiles::isValidate(const SSProfile &sp)
     }
 
     //TODO: more accurate
-    if (sp.server.isEmpty() || sp.local_addr.isEmpty() || sp.method.isEmpty() || sp.timeout.toInt() < 1 || backend.isEmpty() || backendType.isEmpty()) {
+    if (sp.server.isEmpty() || sp.local_addr.isEmpty() || sp.method.isEmpty() || sp.timeout.toInt() < 1 || backend.isEmpty()) {
         return false;
     }
     else

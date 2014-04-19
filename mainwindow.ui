@@ -399,15 +399,22 @@
          <widget class="QTextBrowser" name="logBrowser">
           <property name="font">
            <font>
-            <family>Monospace</family>
-            <italic>false</italic>
+            <family>monospace</family>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(236, 236, 236);
+background-color: rgb(0, 0, 0);
+font-family: &quot;monospace&quot;;</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
+          </property>
+          <property name="lineWidth">
+           <number>0</number>
           </property>
          </widget>
         </item>
