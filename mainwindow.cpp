@@ -118,9 +118,8 @@ void MainWindow::backendTypeChanged(const QString &type)
 {
     m_profile->setBackendType(type);
 
-    if (ui->backendEdit->text().isEmpty()) {
-        ui->backendEdit->setText(detectSSLocal());
-    }
+    //detect backend again no matter empty or not
+    ui->backendEdit->setText(detectSSLocal());
 
     emit configurationChanged();
 }
@@ -180,36 +179,33 @@ void MainWindow::addProfileDialogue(bool enforce = false)
 
 QString MainWindow::detectSSLocal()
 {
-    if (m_profile->getBackend().isEmpty()) {
-        QString execName, sslocal;
-        switch (m_profile->getBackendTypeID()) {
-        case 1:
-            execName = "sslocal";
-            break;
-        default:
-            execName = "ss-local";
-        }
+    /*
+     * TODO
+     * detect whether current backend type matches the one user selected
+     * if not, then detect backend from PATH. otherwise keep the old value.
+     */
+    QString execName, sslocal;
+    switch (m_profile->getBackendTypeID()) {
+    case 1:
+        execName = "sslocal";
+        break;
+    default:
+        execName = "ss-local";
+    }
 
 #ifdef _WIN32
-        sslocal = QCoreApplication::applicationDirPath() + "/" + execName;
-        if(!QFile::exists(sslocal)) {
-            sslocal = QStandardPaths::findExecutable(execName);
-        }
-#else
+    sslocal = QCoreApplication::applicationDirPath() + "/" + execName;
+    if(!QFile::exists(sslocal)) {
         sslocal = QStandardPaths::findExecutable(execName);
+    }
+#else
+    sslocal = QStandardPaths::findExecutable(execName);
 #endif
-        if(!sslocal.isEmpty()) {
-            m_profile->setBackend(sslocal);
-            emit configurationChanged();
-            return m_profile->getBackend();
-        }
-        else {
-            return QString("");
-        }
+    if(!sslocal.isEmpty()) {
+        m_profile->setBackend(sslocal);
     }
-    else {
-        return m_profile->getBackend();
-    }
+
+    return m_profile->getBackend();
 }
 
 void MainWindow::saveProfile()
@@ -234,7 +230,7 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
     }
     else {//reset
         m_profile->revert();
-        ui->backendEdit->setText(detectSSLocal());
+        ui->backendTypeCombo->setCurrentText(m_profile->getBackendType());
         disconnect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         ui->profileComboBox->clear();
         ui->profileComboBox->insertItems(0, m_profile->getProfileList());
