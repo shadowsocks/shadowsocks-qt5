@@ -194,11 +194,13 @@ QString MainWindow::detectSSLocal()
     }
 
 #ifdef _WIN32
-    sslocal = QCoreApplication::applicationDirPath() + "/" + execName;
-    if(!QFile::exists(sslocal)) {
+    QStringList findPathsList(QCoreApplication::applicationDirPath());
+    sslocal = QStandardPaths::findExecutable(execName, findPathsList);//search ss-qt5 directory first
+    if(sslocal.isEmpty()) {//if not found then search system's PATH
         sslocal = QStandardPaths::findExecutable(execName);
     }
 #else
+    //just search $PATH on UNIX platforms
     sslocal = QStandardPaths::findExecutable(execName);
 #endif
     if(!sslocal.isEmpty()) {

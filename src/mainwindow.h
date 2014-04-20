@@ -7,6 +7,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QCoreApplication>
 #include <QDesktopWidget>
 #include <QAbstractButton>
 #include <QPushButton>
