@@ -15,15 +15,15 @@ SOURCES  += main.cpp\
             mainwindow.cpp \
             profiles.cpp \
             ss_process.cpp \
-    ip4validator.cpp \
-    portvalidator.cpp
+            ip4validator.cpp \
+            portvalidator.cpp
 
 HEADERS  += mainwindow.h \
             profiles.h \
             ss_process.h \
             ssprofile.h \
-    ip4validator.h \
-    portvalidator.h
+            ip4validator.h \
+            portvalidator.h
 
 FORMS    += mainwindow.ui
 
@@ -48,15 +48,13 @@ ssicon.files = icon/shadowsocks-qt5.png
 
 target.path = $$binary_path
 
-unix: gui_conf.path = $$(HOME)/.config/shadowsocks
-else: gui_conf.path = target.path
+win32: {
+    gui_conf.path = target.path
+    gui_conf.files = gui-config.json
+    INSTALLS += gui_conf
+}
 
-gui_conf.files = gui-config.json
-
-unix: gui_conf.extra = chown $$(USER):$$(USER) -R $$(HOME)/.config/shadowsocks
-
-INSTALLS += target \
-            gui_conf
+INSTALLS += target
 
 !mac:unix: INSTALLS += desktop ssicon
 
