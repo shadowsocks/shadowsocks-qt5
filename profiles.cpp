@@ -3,17 +3,7 @@
 
 Profiles::Profiles(const QString &file)
 {
-    if (QFile::exists(file)) {
-        setJSONFile(file);
-    }
-    else {
-        qWarning("Warning: gui-config.json does not exist!");
-        m_file = QDir::toNativeSeparators(file);
-        m_index = -1;
-        debugLog = false;
-        autoStart = false;
-        autoHide = false;
-    }
+    setJSONFile(file);
 }
 
 Profiles::~Profiles()
@@ -23,6 +13,18 @@ void Profiles::setJSONFile(const QString &file)
 {
     m_file = QDir::toNativeSeparators(file);
     QFile JSONFile(m_file);
+
+    if (!JSONFile.exists()) {
+        qWarning("Warning: gui-config.json does not exist!");
+        backend.clear();
+        backendType.clear();
+        m_index = -1;
+        debugLog = false;
+        autoStart = false;
+        autoHide = false;
+        return;
+    }
+
     JSONFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
     if (!JSONFile.isOpen()) {

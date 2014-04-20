@@ -96,7 +96,7 @@ void SS_Process::autoemitreadReadyProcess()
 void SS_Process::started()
 {
     running = true;
-    qDebug() << "Backend started. PID: %d" <<proc.pid();
+    qDebug() << "Backend started. PID: " <<proc.pid();
     emit sigstart();
 }
 

@@ -230,7 +230,7 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
     }
     else {//reset
         m_profile->revert();
-        ui->backendTypeCombo->setCurrentText(m_profile->getBackendType());
+        ui->backendTypeCombo->setCurrentIndex(m_profile->getBackendTypeID());
         disconnect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         ui->profileComboBox->clear();
         ui->profileComboBox->insertItems(0, m_profile->getProfileList());
