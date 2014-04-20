@@ -50,7 +50,7 @@ void SS_Process::start(QString &args)
         args.prepend(QDir::toNativeSeparators(sslocalbin));
         break;
     default:
-        qWarning("Aborted: Invalid Backend Type.");
+        qWarning() << "Aborted: Invalid Backend Type." << backendTypeID;
         return;
     }
     proc.setNativeArguments(args);
