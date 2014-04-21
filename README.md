@@ -8,7 +8,7 @@ Introduction
 
 Shadowsocks-Qt5 aims to be a fast and platform-cross GUI Client for [Shadowsocks](http://shadowsocks.org).
 
-Latest Development Version: 0.3.0
+Latest Stable Version: 0.3.0
 
 Features
 --------
@@ -24,13 +24,6 @@ Note
 - It is not a standalone programme. By default, `ss-qt5` works along with `ss-local` from [shadowsocks-libev project](https://github.com/madeye/shadowsocks-libev). While it also supports using other shadowsocks ports as backend such as [Shadowsocks-Nodejs](https://github.com/clowwindy/shadowsocks-nodejs).
 - Shadowsocks-Nodejs port is highly recommended to serve as backend for its better I/O performance.
 - Don't be panic if you encounter a bug. Feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Remember to run from terminal or `cmd` and paste the output.
-
-ScreenShots
------------
-
-![image](https://github.com/librehat/shadowsocks-qt5/raw/master/screenshots/linux_main.jpeg)
-
-![image](https://github.com/librehat/shadowsocks-qt5/raw/master/screenshots/linux_about.jpeg)
 
 Installation
 ------------
