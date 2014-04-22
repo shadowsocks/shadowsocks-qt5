@@ -38,7 +38,6 @@ public:
     Profiles *m_profile;
 
 signals:
-    //void currentProfileChanged(int);
     void configurationChanged(bool saved = false);
     void miscConfigurationChanged(bool saved = false);
 

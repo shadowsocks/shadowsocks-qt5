@@ -359,6 +359,9 @@
           </item>
           <item row="1" column="1" colspan="4">
            <widget class="QComboBox" name="backendTypeCombo">
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
             <item>
              <property name="text">
               <string>Shadowsocks-libev</string>
@@ -367,6 +370,16 @@
             <item>
              <property name="text">
               <string>Shadowsocks-Nodejs</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Shadowsocks-Go</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Shadowsocks-Python</string>
              </property>
             </item>
            </widget>
@@ -438,6 +451,9 @@ font-family: &quot;monospace&quot;;</string>
         </item>
         <item row="8" column="2">
          <widget class="QPushButton" name="miscSaveButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Save</string>
           </property>

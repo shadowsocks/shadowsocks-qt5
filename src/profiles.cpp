@@ -155,6 +155,17 @@ void Profiles::saveProfileToJSON()
 
 void Profiles::setBackend(const QString &a)
 {
+#ifdef _WIN32
+    if (getBackendTypeID() == 3) {
+        QDir python(a);
+        python.cdUp();
+        QString s(python.absolutePath() + QString("/Scripts/sslocal-script.py"));
+        if (QFile::exists(s)) {
+            backend = QDir::toNativeSeparators(s);
+        }
+        return;
+    }
+#endif
     backend = QDir::toNativeSeparators(a);
 }
 
@@ -178,10 +189,10 @@ int Profiles::getBackendTypeID()
     if (backendType == QString("Shadowsocks-Nodejs")) {
         return 1;
     }
-    else if (backendType == QString("Shadowsocks-Python")) {
+    else if (backendType == QString("Shadowsocks-Go")) {
         return 2;
     }
-    else if (backendType == QString("Shadowsocks-Go")) {
+    else if (backendType == QString("Shadowsocks-Python")) {
         return 3;
     }
     else {

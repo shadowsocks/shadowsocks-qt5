@@ -43,11 +43,16 @@ void SS_Process::start(QString &args)
     sslocalbin.append("/node_modules/shadowsocks/bin/sslocal");
     switch (backendTypeID) {
     case 0:
+    case 2:
         proc.setProgram(app_path);
         break;
     case 1:
         proc.setProgram("node");
         args.prepend(QDir::toNativeSeparators(sslocalbin));
+        break;
+    case 3:
+        proc.setProgram("python");
+        args.prepend(QDir::toNativeSeparators(app_path));
         break;
     default:
         qWarning() << "Aborted: Invalid Backend Type." << backendTypeID;
@@ -71,11 +76,16 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
     args.append(QString(" -l ") + l_port);
     args.append(QString(" -k \"") + pwd + QString("\""));
     args.append(QString(" -m ") + method.toLower());
-    if (backendTypeID == 0) {//shadowsocks-nodejs and shadowsocks-python did't support this argument
+    if (backendTypeID == 0) {//only libev port supports this argument
         args.append(QString(" -t ") + timeout);
     }
     if (debug) {
-        args.append(" -v");//shadowsocks-go uses "-d=true"
+        if(backendTypeID == 2) {
+            args.append("-d=true");//shadowsocks-go
+        }
+        else if (backendTypeID == 0 || backendTypeID == 1) {
+            args.append(" -v");
+        }
     }
 
     start(args);

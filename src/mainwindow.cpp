@@ -25,6 +25,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->sportEdit->setValidator(&portValidator);
     ui->lportEdit->setValidator(&portValidator);
 
+    ui->debugCheck->setChecked(m_profile->isDebug());
+    ui->autohideCheck->setChecked(m_profile->isAutoHide());
+    ui->autostartCheck->setChecked(m_profile->isAutoStart());
+
     //desktop systray
     systrayMenu.addAction("Show/Hide", this, SLOT(showorhideWindow()));
     systrayMenu.addAction("Start", this, SLOT(startButtonPressed()));
@@ -43,12 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Move to the center of the screen
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
-#ifdef _WIN32
-    ui->logBrowser->setPlaceholderText(QString("Because of buffer, log print would be delayed."));
-#endif
-
     //SIGNALs and SLOTs
-    //connect(this, &MainWindow::currentProfileChanged, this, &MainWindow::onCurrentProfileChanged);
     connect(&ss_local, &SS_Process::readReadyProcess, this, &MainWindow::onReadReadyProcess);
     connect(&ss_local, &SS_Process::sigstart, this, &MainWindow::processStarted);
     connect(&ss_local, &SS_Process::sigstop, this, &MainWindow::processStopped);
@@ -149,9 +148,6 @@ void MainWindow::onCurrentProfileChanged(int i)
     ui->lportEdit->setText(current_profile.local_port);
     ui->methodComboBox->setCurrentText(current_profile.method);
     ui->timeoutSpinBox->setValue(current_profile.timeout.toInt());
-    ui->debugCheck->setChecked(m_profile->isDebug());
-    ui->autohideCheck->setChecked(m_profile->isAutoHide());
-    ui->autostartCheck->setChecked(m_profile->isAutoStart());
 
     emit configurationChanged();
 }
@@ -186,10 +182,20 @@ QString MainWindow::detectSSLocal()
      */
     QString execName, sslocal;
     switch (m_profile->getBackendTypeID()) {
-    case 1:
+    case 1://nodejs
         execName = "sslocal";
         break;
-    default:
+    case 2://go
+        execName = "shadowsocks-local";
+        break;
+    case 3:
+#ifdef _WIN32
+        execName = "python";//detect python to avoid the conflict with sslocal.cmd of nodejs
+#else
+        execName = "sslocal";
+#endif
+        break;
+    default://including 0. libev
         execName = "ss-local";
     }
 
