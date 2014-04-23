@@ -72,6 +72,9 @@ void Profiles::setJSONFile(const QString &file)
     }
     backend = JSONObj["backend"].toString();
     backendType = JSONObj["type"].toString();
+    if (backendType.isEmpty()) {
+        backendType = "Shadowsocks-libev";
+    }
     debugLog = JSONObj["debug"].toBool();
     autoHide = JSONObj["autoHide"].toBool();
     autoStart = JSONObj["autoStart"].toBool();
@@ -102,14 +105,20 @@ SSProfile Profiles::lastProfile()
     return profileList.last();
 }
 
-void Profiles::addProfile(const QString &p)
+void Profiles::addProfile(const QString &pName)
 {
-    SSProfile n;
-    n.profileName = p;
-    profileList.append(n);
+    SSProfile p;
+    p.profileName = pName;
+    profileList.append(p);
 
     QJsonObject json;
-    json["profile"] = QJsonValue(n.profileName);
+    json["profile"] = QJsonValue(p.profileName);
+    //below are using default values
+    json["server_port"] = QJsonValue(p.server_port);
+    json["local_address"] = QJsonValue(p.local_addr);
+    json["local_port"] = QJsonValue(p.local_port);
+    json["method"] = QJsonValue(p.method);
+    json["timeout"] = QJsonValue(p.timeout);
     CONFArray.append(QJsonValue(json));
 }
 
@@ -132,6 +141,10 @@ void Profiles::addProfileFromSSURI(const QString &name, QString uri)
     json["password"] = QJsonValue(p.password);
     json["method"] = QJsonValue(p.method.toLower());
     json["server_port"] = QJsonValue(p.server_port);
+    //below are using default values
+    json["local_address"] = QJsonValue(p.local_addr);
+    json["local_port"] = QJsonValue(p.local_port);
+    json["timeout"] = QJsonValue(p.timeout);
     profileList.append(p);
     CONFArray.append(QJsonValue(json));
 }
