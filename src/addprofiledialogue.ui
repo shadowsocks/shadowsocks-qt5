@@ -118,5 +118,21 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>ssuriCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>buttonBox</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>168</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>168</x>
+     <y>129</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
