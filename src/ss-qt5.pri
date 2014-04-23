@@ -4,7 +4,8 @@ SOURCES   += src/main.cpp\
              src/ss_process.cpp \
              src/ip4validator.cpp \
              src/portvalidator.cpp \
-    src/addprofiledialogue.cpp
+             src/addprofiledialogue.cpp \
+             src/ssvalidator.cpp
 
 HEADERS   += src/mainwindow.h \
              src/profiles.h \
@@ -12,10 +13,11 @@ HEADERS   += src/mainwindow.h \
              src/ssprofile.h \
              src/ip4validator.h \
              src/portvalidator.h \
-    src/addprofiledialogue.h
+             src/addprofiledialogue.h \
+             src/ssvalidator.h
 
 FORMS     += src/mainwindow.ui \
-    src/addprofiledialogue.ui
+             src/addprofiledialogue.ui
 
 RESOURCES += src/icons.qrc
 

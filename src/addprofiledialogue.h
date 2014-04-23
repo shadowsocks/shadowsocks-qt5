@@ -26,6 +26,7 @@ private:
     bool enforce;
 
 private slots:
+    void checkBase64SSURI(const QString &str);
     void onAccepted();
     void onRejected();
 };

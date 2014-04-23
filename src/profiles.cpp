@@ -1,5 +1,6 @@
 #include <QDir>
 #include "profiles.h"
+#include "ssvalidator.h"
 
 Profiles::Profiles(const QString &file)
 {
@@ -113,21 +114,13 @@ void Profiles::addProfileFromSSURI(const QString &name, QString uri)
     SSProfile p;
     p.profileName = name;
 
-    if (uri.startsWith("ss://")) {
-        uri.remove(0, 5);
-    }
     QStringList resultList = QString(QByteArray::fromBase64(uri.toLatin1())).split(':');
     p.method = resultList.first();
     p.server_port = resultList.last();
     QStringList ser = resultList.at(1).split('@');
-    if (ser.size() < 1) {
-        qWarning() << "Invalid Base64 String.";
-    }
-    else {
-        p.server = ser.last();
-        ser.removeLast();
-        p.password = ser.join('@');//incase there is a '@' in password
-    }
+    p.server = ser.last();
+    ser.removeLast();
+    p.password = ser.join('@');//incase there is a '@' in password
 
     QJsonObject json;
     json["profile"] = QJsonValue(p.profileName);
@@ -278,18 +271,13 @@ void Profiles::revert()
 
 bool Profiles::isValidate(const SSProfile &sp)
 {
-    bool ok;
-    int port = sp.server_port.toInt(&ok);
-    if (!ok || port < 1 || port > 65535) {
-        return false;
-    }
-    port = sp.local_port.toInt(&ok);
-    if (!ok || port < 1 || port > 65535) {
-        return false;
-    }
+    bool valid;
+
+    valid = SSValidator::validatePort(sp.server_port) && SSValidator::validatePort(sp.local_port);
+    valid = valid && SSValidator::validateMethod(sp.method);
 
     //TODO: more accurate
-    if (sp.server.isEmpty() || sp.local_addr.isEmpty() || sp.method.isEmpty() || sp.timeout.toInt() < 1 || backend.isEmpty()) {
+    if (sp.server.isEmpty() || sp.local_addr.isEmpty() || sp.timeout.toInt() < 1 || backend.isEmpty() || !valid) {
         return false;
     }
     else
