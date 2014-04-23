@@ -101,6 +101,8 @@ MainWindow::~MainWindow()
     delete m_profile;
 }
 
+const QString MainWindow::aboutText = QString("<h3>Platform-Cross GUI Client for Shadowsocks</h3><p>Version: 0.3.1</p><p>Copyright © 2014 William Wong (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>");
+
 void MainWindow::onBackendToolButtonPressed()
 {
     QString backend = QFileDialog::getOpenFileName();
@@ -449,5 +451,5 @@ void MainWindow::checkIfSaved()
 
 void MainWindow::aboutButtonClicked()
 {
-    QMessageBox::about(this, QString("About Shadowsocks-Qt5"), QString("<h3>Platform-Cross GUI Client for Shadowsocks.</h3><p>Version: 0.3.0</p><p>Copyright © 2014 William Wong</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a>.</p>"));
+    QMessageBox::about(this, "About Shadowsocks-Qt5", aboutText);
 }

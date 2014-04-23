@@ -89,6 +89,7 @@ private:
     void saveProfile();
     void saveMiscConfig();
     void checkIfSaved();
+    static const QString aboutText;
 
 protected:
     void changeEvent(QEvent *);
