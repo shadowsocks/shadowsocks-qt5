@@ -68,11 +68,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
     ui->backendTypeCombo->setCurrentText(m_profile->getBackendType());
     /*
-     * If there is only one config in gui-config.json, then the function above wouldn't emit signal.
+     * If there is no gui-config file, or the index is 0, then the function above wouldn't emit signal.
      * Therefore, we have to emit a signal manually.
      */
-    emit ui->profileComboBox->currentIndexChanged(m_profile->getIndex());
-    emit ui->backendTypeCombo->currentTextChanged(m_profile->getBackendType());
+    if (m_profile->getIndex() <= 0) {
+        emit ui->profileComboBox->currentIndexChanged(m_profile->getIndex());
+        emit ui->backendTypeCombo->currentTextChanged(m_profile->getBackendType());
+    }
 
     //connect signals and slots when config changed
     //Profile
