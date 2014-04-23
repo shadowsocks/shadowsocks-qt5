@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->laddrEdit->setValidator(&ipv4addrValidator);
     ui->sportEdit->setValidator(&portValidator);
     ui->lportEdit->setValidator(&portValidator);
+    ui->methodComboBox->addItems(SSValidator::supportedMethod);
 
     ui->debugCheck->setChecked(m_profile->isDebug());
     ui->autohideCheck->setChecked(m_profile->isAutoHide());

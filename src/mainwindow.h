@@ -21,6 +21,7 @@
 #include "ssprofile.h"
 #include "profiles.h"
 #include "ss_process.h"
+#include "ssvalidator.h"
 #include "ip4validator.h"
 #include "portvalidator.h"
 #include "addprofiledialogue.h"

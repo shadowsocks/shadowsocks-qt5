@@ -1,6 +1,6 @@
 #include "ssvalidator.h"
 
-const QStringList SSValidator::supportedMethod = QStringList() << "table" << "rc4" << "aes-128-cfb" << "aes-192-cfb" << "aes-256-cfb" << "bf-cfb" << "camellia-128-cfb" << "camellia-192-cfb" << "camellia-256-cfb" << "cast5-cfb" << "des-cfb" << "idea-cfb" << "rc2-cfb" << "seed-cfb";
+const QStringList SSValidator::supportedMethod = QStringList() << "Table" << "RC4" << "AES-128-CFB" << "AES-192-CFB" << "AES-256-CFB" << "BF-CFB" << "CAMELLIA-128-CFB" << "CAMELLIA-192-CFB" << "CAMELLIA-256-CFB" << "CAST5-CFB" << "DES-CFB" << "IDEA-CFB" << "RC2-CFB" << "SEED-CFB";
 
 SSValidator::SSValidator()
 {}
