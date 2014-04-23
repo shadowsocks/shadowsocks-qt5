@@ -86,8 +86,8 @@ int Profiles::count()
 QStringList Profiles::getProfileList()
 {
     QStringList s;
-    for (int i = 0; i < profileList.count(); i++) {
-        s.append(profileList.at(i).profileName);
+    for (QList<SSProfile>::iterator it = profileList.begin(); it != profileList.end(); ++it) {
+        s.append((*it).profileName);
     }
     return s;
 }
