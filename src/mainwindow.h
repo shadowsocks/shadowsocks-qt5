@@ -46,7 +46,7 @@ public slots:
     void startButtonPressed();
 
 private slots:
-    void onProfileComboBoxActivated(int);
+    //void onProfileComboBoxActivated(int);
     void onCurrentProfileChanged(int);
     void onBackendToolButtonPressed();
     void backendTypeChanged(const QString &);

@@ -55,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::onBackendToolButtonPressed);
     connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
-    connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::highlighted), this, &MainWindow::onProfileComboBoxActivated);
+    //connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::highlighted), this, &MainWindow::onProfileComboBoxActivated);
     connect(ui->backendTypeCombo, &QComboBox::currentTextChanged, this, &MainWindow::backendTypeChanged);
     connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
     connect(&addProfileDlg, &AddProfileDialogue::inputAccepted, this, &MainWindow::onAddProfileDialogueAccepted);
@@ -125,12 +125,14 @@ void MainWindow::backendTypeChanged(const QString &type)
     emit configurationChanged();
 }
 
+/*
 void MainWindow::onProfileComboBoxActivated(int i)
 {
     if (i != ui->profileComboBox->currentIndex()) {//user was trying to change profile
         checkIfSaved();
     }
 }
+*/
 
 void MainWindow::onCurrentProfileChanged(int i)
 {
@@ -446,9 +448,11 @@ void MainWindow::checkIfSaved()
         if (save == QMessageBox::Save) {
             saveProfile();
         }
+        /*
         else {
             emit configurationChanged(true);
         }
+        */
     }
 }
 
