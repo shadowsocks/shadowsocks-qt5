@@ -11,6 +11,7 @@ AddProfileDialogue::AddProfileDialogue(QWidget *parent) :
     connect(ui->ssuriEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::checkBase64SSURI);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AddProfileDialogue::onAccepted);
     connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &AddProfileDialogue::onRejected);
+    this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);//no min/max/close buttons
 }
 
 AddProfileDialogue::~AddProfileDialogue()
@@ -27,6 +28,7 @@ void AddProfileDialogue::clear()
 {
     ui->profileNameEdit->clear();
     ui->ssuriEdit->clear();
+    ui->ssuriEdit->setStyleSheet("");
     ui->ssuriCheckBox->setChecked(false);
 }
 

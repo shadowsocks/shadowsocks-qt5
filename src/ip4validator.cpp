@@ -4,9 +4,8 @@ IP4Validator::IP4Validator(QObject *parent)
     : QValidator(parent)
 {}
 
-QValidator::State IP4Validator::validate(QString &input, int &pos) const
+QValidator::State IP4Validator::validate(QString &input, int &) const
 {
-    Q_UNUSED(pos);
     if (input.isEmpty()) {
         return Acceptable;
     }

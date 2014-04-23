@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>Add Profile</string>
   </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="profileNameLabel">
