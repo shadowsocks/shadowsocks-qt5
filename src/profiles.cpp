@@ -304,7 +304,17 @@ bool Profiles::isValidate(const SSProfile &sp)
 int Profiles::detectBackendTypeID(const QString &filename)
 {
     QFile file(filename);
+    if (!file.exists()) {
+        qWarning() << "Detecting backend does not exist.";
+        return -1;
+    }
+
     file.open(QIODevice::ReadOnly | QIODevice::Text);
+    if (!file.isReadable() || !file.isOpen()) {
+        qWarning() << "Cannot read from detecting backend.";
+        return -1;
+    }
+
     QString ident(file.readLine());
     if (ident.contains("node")) {
         return 1;
