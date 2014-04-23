@@ -45,6 +45,7 @@ public:
     SSProfile lastProfile();
     void revert();
     void addProfile(const QString &);
+    void addProfileFromSSURI(const QString &, QString);
     void saveProfile(int, SSProfile &);
     void deleteProfile(int);
     void saveProfileToJSON();

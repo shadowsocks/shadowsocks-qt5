@@ -58,6 +58,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::highlighted), this, &MainWindow::onProfileComboBoxActivated);
     connect(ui->backendTypeCombo, &QComboBox::currentTextChanged, this, &MainWindow::backendTypeChanged);
     connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
+    connect(&addProfileDlg, &AddProfileDialogue::inputAccepted, this, &MainWindow::onAddProfileDialogueAccepted);
+    connect(&addProfileDlg, &AddProfileDialogue::inputRejected, this, &MainWindow::onAddProfileDialogueRejected);
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
     connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
@@ -154,17 +156,30 @@ void MainWindow::onCurrentProfileChanged(int i)
 
 void MainWindow::addProfileDialogue(bool enforce = false)
 {
-    bool ok;
-    QString profile = QInputDialog::getText(this, this->windowTitle(), "Profile Name", QLineEdit::Normal, NULL, &ok);
-    if (ok) {
-        m_profile->addProfile(profile);
-        current_profile = m_profile->lastProfile();
-        ui->profileComboBox->insertItem(ui->profileComboBox->count(), profile);
+    addProfileDlg.setEnforceMode(enforce);
+    addProfileDlg.clear();
+    addProfileDlg.show();
+    addProfileDlg.exec();
+}
 
-        //change serverComboBox, let it emit currentIndexChanged signal.
-        ui->profileComboBox->setCurrentIndex(ui->profileComboBox->count() - 1);
+void MainWindow::onAddProfileDialogueAccepted(const QString &name, bool u, const QString &uri)
+{
+    if(u) {
+        m_profile->addProfileFromSSURI(name, uri);
     }
-    else if (enforce) {
+    else {
+        m_profile->addProfile(name);
+    }
+    current_profile = m_profile->lastProfile();
+    ui->profileComboBox->insertItem(ui->profileComboBox->count(), current_profile.profileName);
+
+    //change serverComboBox, let it emit currentIndexChanged signal.
+    ui->profileComboBox->setCurrentIndex(ui->profileComboBox->count() - 1);
+}
+
+void MainWindow::onAddProfileDialogueRejected(bool enforce)
+{
+    if (enforce) {
         m_profile->addProfile("");
         current_profile = m_profile->lastProfile();
         ui->profileComboBox->insertItem(ui->profileComboBox->count(), "");

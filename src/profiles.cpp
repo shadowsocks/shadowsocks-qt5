@@ -108,6 +108,37 @@ void Profiles::addProfile(const QString &p)
     CONFArray.append(QJsonValue(json));
 }
 
+void Profiles::addProfileFromSSURI(const QString &name, QString uri)
+{
+    SSProfile p;
+    p.profileName = name;
+
+    if (uri.startsWith("ss://")) {
+        uri.remove(0, 5);
+    }
+    QStringList resultList = QString(QByteArray::fromBase64(uri.toLatin1())).split(':');
+    p.method = resultList.first();
+    p.server_port = resultList.last();
+    QStringList ser = resultList.at(1).split('@');
+    if (ser.size() < 1) {
+        qWarning() << "Invalid Base64 String.";
+    }
+    else {
+        p.server = ser.last();
+        ser.removeLast();
+        p.password = ser.join('@');//incase there is a '@' in password
+    }
+
+    QJsonObject json;
+    json["profile"] = QJsonValue(p.profileName);
+    json["server"] = QJsonValue(p.server);
+    json["password"] = QJsonValue(p.password);
+    json["method"] = QJsonValue(p.method.toLower());
+    json["server_port"] = QJsonValue(p.server_port);
+    profileList.append(p);
+    CONFArray.append(QJsonValue(json));
+}
+
 void Profiles::saveProfile(int index, SSProfile &p)
 {
     profileList.replace(index, p);

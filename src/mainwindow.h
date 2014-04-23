@@ -23,6 +23,7 @@
 #include "ss_process.h"
 #include "ip4validator.h"
 #include "portvalidator.h"
+#include "addprofiledialogue.h"
 
 namespace Ui {
 class MainWindow;
@@ -50,6 +51,8 @@ private slots:
     void onBackendToolButtonPressed();
     void backendTypeChanged(const QString &);
     void addProfileDialogue(bool);
+    void onAddProfileDialogueAccepted(const QString &, bool, const QString &);
+    void onAddProfileDialogueRejected(bool enforce = false);
     void profileEditButtonClicked(QAbstractButton*);
     void stopButtonPressed();
     void deleteProfile();
@@ -83,6 +86,7 @@ private:
     PortValidator portValidator;
     QSystemTrayIcon systray;
     QMenu systrayMenu;
+    AddProfileDialogue addProfileDlg;
     void saveProfile();
     void saveMiscConfig();
     void checkIfSaved();
