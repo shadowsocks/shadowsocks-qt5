@@ -93,6 +93,7 @@ private:
 
 protected:
     void changeEvent(QEvent *);
+    void closeEvent(QCloseEvent *);
 };
 
 #endif // MAINWINDOW_H

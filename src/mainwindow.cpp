@@ -339,9 +339,15 @@ void MainWindow::systrayActivated(QSystemTrayIcon::ActivationReason r)
 
 void MainWindow::changeEvent(QEvent *e)
 {
-    if (e->type()==QEvent::WindowStateChange && this->isMinimized()) {
+    if (e->type() == QEvent::WindowStateChange && this->isMinimized()) {
         this->hide();
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+    checkIfSaved();
+    QWidget::closeEvent(e);
 }
 
 void MainWindow::onReadReadyProcess(const QByteArray &o)
