@@ -44,28 +44,32 @@ void Profiles::setJSONFile(const QString &file)
     }
 
     if (JSONDoc.isEmpty()) {
-        qDebug() << m_file;
-        qWarning("Warning: JSON Document is empty!");
+        qWarning() << "Warning: JSON Document" << m_file << "is empty!";
     }
 
     JSONObj = JSONDoc.object();
     CONFArray = JSONObj["configs"].toArray();
     profileList.clear();//clear list before
-
-    for (QJsonArray::iterator it = CONFArray.begin(); it != CONFArray.end(); ++it) {
-        QJsonObject json = (*it).toObject();
-        SSProfile p;
-        p.profileName = json["profile"].toString();
-        p.server = json["server"].toString();
-        p.password = json["password"].toString();
-        p.server_port = json["server_port"].toString();
-        p.local_addr = json["local_address"].toString();
-        p.local_port = json["local_port"].toString();
-        p.method = json["method"].toString().toUpper();//using Upper-case in GUI
-        p.timeout = json["timeout"].toString();
-        profileList.append(p);
+    if (CONFArray.isEmpty()) {
+        qWarning() << "configs is empty. Please check your gui-config.json";
+        m_index = -1;//apparently m_index is invalid.
     }
-    m_index = JSONObj["index"].toInt();
+    else {
+        for (QJsonArray::iterator it = CONFArray.begin(); it != CONFArray.end(); ++it) {
+            QJsonObject json = (*it).toObject();
+            SSProfile p;
+            p.profileName = json["profile"].toString();
+            p.server = json["server"].toString();
+            p.password = json["password"].toString();
+            p.server_port = json["server_port"].toString();
+            p.local_addr = json["local_address"].toString();
+            p.local_port = json["local_port"].toString();
+            p.method = json["method"].toString().toUpper();//using Upper-case in GUI
+            p.timeout = json["timeout"].toString();
+            profileList.append(p);
+        }
+        m_index = JSONObj["index"].toInt();
+    }
     backend = JSONObj["backend"].toString();
     backendType = JSONObj["type"].toString();
     debugLog = JSONObj["debug"].toBool();
