@@ -50,6 +50,8 @@ public:
     void saveProfileToJSON();
     bool isValidate(const SSProfile &);//check backend as well as profile
 
+    static int detectBackendTypeID(const QString &filename);
+
 private:
     QString backend;
     QString backendType;

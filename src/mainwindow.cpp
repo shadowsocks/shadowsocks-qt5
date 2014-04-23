@@ -175,11 +175,11 @@ void MainWindow::addProfileDialogue(bool enforce = false)
 
 QString MainWindow::detectSSLocal()
 {
-    /*
-     * TODO
-     * detect whether current backend type matches the one user selected
-     * if not, then detect backend from PATH. otherwise keep the old value.
-     */
+    //Check if backendType matches current one
+    if (Profiles::detectBackendTypeID(m_profile->getBackend()) == m_profile->getBackendTypeID()) {
+        return m_profile->getBackend();
+    }
+
     QString execName, sslocal;
     switch (m_profile->getBackendTypeID()) {
     case 1://nodejs
@@ -201,14 +201,14 @@ QString MainWindow::detectSSLocal()
 
 #ifdef _WIN32
     QStringList findPathsList(QCoreApplication::applicationDirPath());
+#else
+    QStringList findPathsList(QDir::homePath() + "/.config/shadowsocks/bin");
+#endif
     sslocal = QStandardPaths::findExecutable(execName, findPathsList);//search ss-qt5 directory first
     if(sslocal.isEmpty()) {//if not found then search system's PATH
         sslocal = QStandardPaths::findExecutable(execName);
     }
-#else
-    //just search $PATH on UNIX platforms
-    sslocal = QStandardPaths::findExecutable(execName);
-#endif
+
     if(!sslocal.isEmpty()) {
         m_profile->setBackend(sslocal);
     }

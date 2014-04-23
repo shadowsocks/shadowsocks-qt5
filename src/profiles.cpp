@@ -264,3 +264,23 @@ bool Profiles::isValidate(const SSProfile &sp)
     else
         return true;
 }
+
+int Profiles::detectBackendTypeID(const QString &filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    QString ident(file.readLine());
+    if (ident.contains("node")) {
+        return 1;
+    }
+    else if (ident.contains("python")) {
+        return 3;
+    }
+    else {
+        if (filename.contains("ss-local")) {
+            return 0;
+        }
+        else
+            return 2;
+    }
+}
