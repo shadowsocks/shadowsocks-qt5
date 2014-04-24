@@ -126,6 +126,14 @@ void MainWindow::backendTypeChanged(const QString &type)
     //detect backend again no matter empty or not
     ui->backendEdit->setText(detectSSLocal());
 
+    if (m_profile->getBackendTypeID() == 0) {//other ports don't support timeout argument for now
+        ui->timeoutSpinBox->setVisible(true);
+        ui->timeoutLabel->setVisible(true);
+    }
+    else {
+        ui->timeoutSpinBox->setVisible(false);
+        ui->timeoutLabel->setVisible(false);
+    }
     emit configurationChanged();
 }
 
