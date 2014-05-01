@@ -356,7 +356,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::onReadReadyProcess(const QByteArray &o)
 {
     ui->logBrowser->moveCursor(QTextCursor::End);
-    ui->logBrowser->append(o);
+    ui->logBrowser->append(QString::fromLocal8Bit(o));
     ui->logBrowser->moveCursor(QTextCursor::End);
 }
 
