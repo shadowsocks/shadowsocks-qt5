@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->sportEdit->setValidator(&portValidator);
     ui->lportEdit->setValidator(&portValidator);
     ui->methodComboBox->addItems(SSValidator::supportedMethod);
+    ui->tfoCheckBox->setVisible(false);
 
     ui->debugCheck->setChecked(m_profile->isDebug());
     ui->autohideCheck->setChecked(m_profile->isAutoHide());
@@ -96,6 +97,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::debugChecked);
     connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::miscButtonBoxClicked);
     connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::aboutButtonClicked);
+#ifdef _LINUX_
+    //TODO determine kernel version
+    ui->tfoCheckBox->setVisible(true);
+#endif
 }
 
 MainWindow::~MainWindow()

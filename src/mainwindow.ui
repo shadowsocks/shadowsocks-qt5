@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>564</width>
-    <height>330</height>
+    <height>380</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>564</width>
-    <height>330</height>
+    <height>380</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>564</width>
-    <height>330</height>
+    <height>380</height>
    </size>
   </property>
   <property name="font">
@@ -36,6 +36,18 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
@@ -45,7 +57,7 @@
        <attribute name="title">
         <string>General</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_2" rowstretch="10,1,0">
+       <layout class="QGridLayout" name="gridLayout_2" rowstretch="10,0,0">
         <item row="2" column="2" alignment="Qt::AlignBottom">
          <widget class="QDialogButtonBox" name="profileEditButtonBox">
           <property name="enabled">
@@ -65,10 +77,10 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="sportLabel">
+          <item row="2" column="0">
+           <widget class="QLabel" name="pwdLabel">
             <property name="text">
-             <string>Server Port</string>
+             <string>Password</string>
             </property>
            </widget>
           </item>
@@ -82,25 +94,25 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="pwdLabel">
+          <item row="1" column="0">
+           <widget class="QLabel" name="sportLabel">
             <property name="text">
-             <string>Password</string>
+             <string>Server Port</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="timeoutLabel">
-            <property name="text">
-             <string>Timeout</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="sportEdit"/>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="laddrEdit"/>
           </item>
           <item row="4" column="1">
            <widget class="QLineEdit" name="lportEdit"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="serverLabel">
+            <property name="text">
+             <string>Server Address</string>
+            </property>
+           </widget>
           </item>
           <item row="6" column="1">
            <widget class="QSpinBox" name="timeoutSpinBox">
@@ -124,15 +136,25 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="serverLabel">
+          <item row="3" column="0">
+           <widget class="QLabel" name="laddrLabel">
             <property name="text">
-             <string>Server Domain/IP</string>
+             <string>Local Address</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="timeoutLabel">
+            <property name="text">
+             <string>Timeout</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
            <widget class="QLineEdit" name="serverEdit">
+            <property name="toolTip">
+             <string>Domain or IP Address</string>
+            </property>
             <property name="maxLength">
              <number>200</number>
             </property>
@@ -140,6 +162,9 @@
              <bool>true</bool>
             </property>
            </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="sportEdit"/>
           </item>
           <item row="5" column="0">
            <widget class="QLabel" name="methodLabel">
@@ -155,61 +180,14 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="laddrLabel">
+          <item row="7" column="0" colspan="2">
+           <widget class="QCheckBox" name="tfoCheckBox">
+            <property name="toolTip">
+             <string>Only available in Linux with Kernel &gt; 3.7
+Not every port of Shadowsocks support this option.</string>
+            </property>
             <property name="text">
-             <string>Local Address</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="laddrEdit"/>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="1" rowspan="3">
-         <widget class="Line" name="vLine">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QPushButton" name="startButton">
-            <property name="text">
-             <string>Start</string>
-            </property>
-            <property name="icon">
-             <iconset theme="run-build">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacerStartStop">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stopButton">
-            <property name="text">
-             <string>Stop</string>
-            </property>
-            <property name="icon">
-             <iconset theme="process-stop">
-              <normaloff/>
-             </iconset>
+             <string>Use TCP Fast Open if available</string>
             </property>
            </widget>
           </item>
@@ -316,6 +294,54 @@
           </item>
          </layout>
         </item>
+        <item row="2" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="startButton">
+            <property name="text">
+             <string>Start</string>
+            </property>
+            <property name="icon">
+             <iconset theme="run-build">
+              <normaloff/>
+             </iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacerStartStop">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopButton">
+            <property name="text">
+             <string>Stop</string>
+            </property>
+            <property name="icon">
+             <iconset theme="process-stop">
+              <normaloff/>
+             </iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1" rowspan="3">
+         <widget class="Line" name="vLine">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="logTab">
@@ -355,6 +381,9 @@ background-color: rgb(0, 0, 0);</string>
           <property name="lineWidth">
            <number>0</number>
           </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
        </layout>
@@ -364,19 +393,25 @@ background-color: rgb(0, 0, 0);</string>
         <string>Misc</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="4" column="0" colspan="3">
-         <widget class="QCheckBox" name="autostartCheck">
-          <property name="text">
-           <string>Autostart if profile is valid</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="3">
+        <item row="2" column="0" colspan="3">
          <widget class="QCheckBox" name="debugCheck">
           <property name="text">
            <string>Debug-level log</string>
           </property>
          </widget>
+        </item>
+        <item row="6" column="0" colspan="3">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item row="8" column="2">
          <widget class="QPushButton" name="miscSaveButton">
@@ -405,19 +440,6 @@ background-color: rgb(0, 0, 0);</string>
           </property>
          </widget>
         </item>
-        <item row="6" column="0" colspan="3">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item row="8" column="1">
          <spacer name="horizontalSpacer">
           <property name="orientation">
@@ -431,7 +453,17 @@ background-color: rgb(0, 0, 0);</string>
           </property>
          </spacer>
         </item>
-        <item row="5" column="0" colspan="3">
+        <item row="3" column="0" colspan="3">
+         <widget class="QCheckBox" name="autostartCheck">
+          <property name="toolTip">
+           <string>Start backend automatically when started and the current profile is valid.</string>
+          </property>
+          <property name="text">
+           <string>Autostart if profile is valid</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="3">
          <widget class="QCheckBox" name="autohideCheck">
           <property name="text">
            <string>Auto hide main window when started</string>

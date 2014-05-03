@@ -22,9 +22,9 @@ public:
     ~SS_Process();
     void setapp(const QString&);
     void setTypeID(int);
-    void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false);
+    void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false, bool tfo = false);
     void start(QString &args);
-    void start(SSProfile&, bool debug = false);
+    void start(SSProfile&, bool debug = false, bool tfo = false);
     void stop();
     bool isRunning();
 

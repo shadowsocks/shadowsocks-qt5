@@ -30,9 +30,9 @@ bool SS_Process::isRunning()
     return running;
 }
 
-void SS_Process::start(SSProfile &p, bool debug)
+void SS_Process::start(SSProfile &p, bool debug, bool tfo)
 {
-    start(p.server, p.password, p.server_port, p.local_addr, p.local_port, p.method, p.timeout, debug);
+    start(p.server, p.password, p.server_port, p.local_addr, p.local_port, p.method, p.timeout, debug, tfo);
 }
 
 void SS_Process::start(QString &args)
@@ -67,7 +67,7 @@ void SS_Process::start(QString &args)
     proc.waitForStarted(1000);//wait for at most 1 second
 }
 
-void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, bool debug)
+void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, bool debug, bool tfo)
 {
     QString args;
     args.append(QString(" -s ") + server);
@@ -79,6 +79,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
     if (backendTypeID == 0) {//only libev port supports this argument
         args.append(QString(" -t ") + timeout);
     }
+
     if (debug) {
         if(backendTypeID == 2) {
             args.append("-d=true");//shadowsocks-go
@@ -86,6 +87,10 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
         else if (backendTypeID == 0 || backendTypeID == 1) {
             args.append(" -v");
         }
+    }
+
+    if (tfo) {//TCP Fast Open
+        //TODO
     }
 
     start(args);
