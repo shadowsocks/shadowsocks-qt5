@@ -16,7 +16,7 @@ void Profiles::setJSONFile(const QString &file)
     QFile JSONFile(m_file);
 
     if (!JSONFile.exists()) {
-        qWarning("Warning: gui-config.json does not exist!");
+        qWarning() << "Warning: gui-config.json does not exist!";
         backend.clear();
         backendType.clear();
         m_index = -1;
@@ -29,11 +29,11 @@ void Profiles::setJSONFile(const QString &file)
     JSONFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
     if (!JSONFile.isOpen()) {
-        qWarning("Critical Error: cannot open gui-config.json!");
+        qWarning() << "Critical Error: cannot open gui-config.json!";
     }
 
     if(!JSONFile.isReadable()) {
-        qWarning("Critical Error: cannot read gui-config.json!");
+        qWarning() << "Critical Error: cannot read gui-config.json!";
     }
 
     QJsonParseError pe;

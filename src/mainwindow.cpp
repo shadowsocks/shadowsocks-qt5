@@ -31,17 +31,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->autostartCheck->setChecked(m_profile->isAutoStart());
 
     //desktop systray
-    systrayMenu.addAction("Show/Hide", this, SLOT(showorhideWindow()));
-    systrayMenu.addAction("Start", this, SLOT(startButtonPressed()));
-    systrayMenu.addAction("Stop", this, SLOT(stopButtonPressed()));
-    systrayMenu.addAction("Exit", this, SLOT(close()));
+    systrayMenu.addAction(tr("Show/Hide"), this, SLOT(showorhideWindow()));
+    systrayMenu.addAction(tr("Start"), this, SLOT(startButtonPressed()));
+    systrayMenu.addAction(tr("Stop"), this, SLOT(stopButtonPressed()));
+    systrayMenu.addAction(tr("Exit"), this, SLOT(close()));
     systrayMenu.actions().at(2)->setEnabled(false);
 #ifdef _WIN32
     systray.setIcon(QIcon(":/icon/black_icon.png"));
 #else
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
 #endif
-    systray.setToolTip(QString("Shadowsocks-Qt5"));
+    systray.setToolTip(tr("Shadowsocks-Qt5"));
     systray.setContextMenu(&systrayMenu);
     systray.show();
 
@@ -104,7 +104,7 @@ MainWindow::~MainWindow()
     delete m_profile;
 }
 
-const QString MainWindow::aboutText = QString("<h3>Platform-Cross GUI Client for Shadowsocks</h3><p>Version: 0.3.1</p><p>Copyright © 2014 William Wong (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>");
+const QString MainWindow::aboutText = tr("<h3>Platform-Cross GUI Client for Shadowsocks</h3><p>Version: 0.3.1</p><p>Copyright © 2014 William Wong (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>");
 
 void MainWindow::onBackendToolButtonPressed()
 {
@@ -274,7 +274,7 @@ void MainWindow::startButtonPressed()
     checkIfSaved();
 
     if (!m_profile->isValidate(current_profile)) {
-        QMessageBox::critical(this, "Error", "Invalid profile or configuration.");
+        QMessageBox::critical(this, tr("Error"), tr("Invalid profile or configuration."));
         return;
     }
 
@@ -453,7 +453,7 @@ void MainWindow::miscButtonBoxClicked()
 void MainWindow::checkIfSaved()
 {
     if (ui->profileEditButtonBox->isEnabled()) {
-        QMessageBox::StandardButton save = QMessageBox::question(this, "Unsaved Profile", "Current profile is not saved yet.\nDo you want to save it now?", QMessageBox::Save|QMessageBox::No, QMessageBox::Save);
+        QMessageBox::StandardButton save = QMessageBox::question(this, tr("Unsaved Profile"), tr("Current profile is not saved yet.\nDo you want to save it now?"), QMessageBox::Save|QMessageBox::No, QMessageBox::Save);
         if (save == QMessageBox::Save) {
             saveProfile();
         }
@@ -462,5 +462,5 @@ void MainWindow::checkIfSaved()
 
 void MainWindow::aboutButtonClicked()
 {
-    QMessageBox::about(this, "About Shadowsocks-Qt5", aboutText);
+    QMessageBox::about(this, tr("About Shadowsocks-Qt5"), aboutText);
 }

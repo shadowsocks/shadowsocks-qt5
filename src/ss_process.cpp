@@ -55,7 +55,7 @@ void SS_Process::start(QString &args)
         args.prepend(app_path);
         break;
     default:
-        qWarning() << "Aborted: Invalid Backend Type." << backendTypeID;
+        qWarning() << tr("Aborted: Invalid Backend Type.") << backendTypeID;
         return;
     }
     proc.setNativeArguments(args);
@@ -63,7 +63,7 @@ void SS_Process::start(QString &args)
 #else
     proc.start(app_path + QString(" ") + args);
 #endif
-    qDebug() << "Backend arguments are " << args;
+    qDebug() << tr("Backend arguments are ") << args;
     proc.waitForStarted(1000);//wait for at most 1 second
 }
 
@@ -106,13 +106,13 @@ void SS_Process::autoemitreadReadyProcess()
 void SS_Process::started()
 {
     running = true;
-    qDebug() << "Backend started. PID: " <<proc.pid();
+    qDebug() << tr("Backend started. PID: ") <<proc.pid();
     emit sigstart();
 }
 
 void SS_Process::exited(int e)
 {
-    qDebug() << "Backend exited. Exit Code: " << e;
+    qDebug() << tr("Backend exited. Exit Code: ") << e;
     running = false;
     emit sigstop();
 }
