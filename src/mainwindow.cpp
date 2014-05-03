@@ -58,11 +58,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
     connect(ui->backendTypeCombo, &QComboBox::currentTextChanged, this, &MainWindow::backendTypeChanged);
     connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
+    connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
     connect(&addProfileDlg, &AddProfileDialogue::inputAccepted, this, &MainWindow::onAddProfileDialogueAccepted);
     connect(&addProfileDlg, &AddProfileDialogue::inputRejected, this, &MainWindow::onAddProfileDialogueRejected);
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
-    connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
 
     //update current configuration
     ui->profileComboBox->setCurrentIndex(m_profile->getIndex());

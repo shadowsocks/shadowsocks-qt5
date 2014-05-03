@@ -368,7 +368,7 @@ font-family: &quot;monospace&quot;;</string>
         <item row="4" column="0" colspan="3">
          <widget class="QCheckBox" name="autostartCheck">
           <property name="text">
-           <string>Autostart if profile is valid.</string>
+           <string>Autostart if profile is valid</string>
           </property>
          </widget>
         </item>
@@ -435,7 +435,7 @@ font-family: &quot;monospace&quot;;</string>
         <item row="5" column="0" colspan="3">
          <widget class="QCheckBox" name="autohideCheck">
           <property name="text">
-           <string>Auto hide main window when started.</string>
+           <string>Auto hide main window when started</string>
           </property>
          </widget>
         </item>

@@ -42,17 +42,17 @@ void SS_Process::start(QString &args)
     QString sslocalbin = QFileInfo(app_path).dir().canonicalPath();
     sslocalbin.append("/node_modules/shadowsocks/bin/sslocal");
     switch (backendTypeID) {
-    case 0:
-    case 2:
+    case 0://libev
+    case 2://go
         proc.setProgram(app_path);
         break;
-    case 1:
+    case 1://nodejs
         proc.setProgram("node");
         args.prepend(QDir::toNativeSeparators(sslocalbin));
         break;
-    case 3:
+    case 3://python
         proc.setProgram("python");
-        args.prepend(QDir::toNativeSeparators(app_path));
+        args.prepend(app_path);
         break;
     default:
         qWarning() << "Aborted: Invalid Backend Type." << backendTypeID;
