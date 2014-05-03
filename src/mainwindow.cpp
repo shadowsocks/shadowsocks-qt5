@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     systrayMenu.addAction(tr("Stop"), this, SLOT(stopButtonPressed()));
     systrayMenu.addAction(tr("Exit"), this, SLOT(close()));
     systrayMenu.actions().at(2)->setEnabled(false);
+    systrayMenu.setFont(this->font());
 #ifdef _WIN32
     systray.setIcon(QIcon(":/icon/black_icon.png"));
 #else
