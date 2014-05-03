@@ -2,10 +2,22 @@
 #include "profiles.h"
 #include "ss_process.h"
 #include <QApplication>
+#include <QTranslator>
+#include <QLibraryInfo>
+#include <QLocale>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    QTranslator t;
+    t.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(&t);
+
+    QTranslator ssqt5t;
+    ssqt5t.load("ssqt5_" + QLocale::system().name(), QCoreApplication::applicationDirPath());
+    a.installTranslator(&ssqt5t);
+
     MainWindow w;
     w.show();
 
@@ -15,6 +27,5 @@ int main(int argc, char *argv[])
     if (w.m_profile->isAutoHide()) {
         w.hide();
     }
-
     return a.exec();
 }

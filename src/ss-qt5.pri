@@ -21,5 +21,7 @@ FORMS     += src/mainwindow.ui \
 
 RESOURCES += src/icons.qrc
 
+TRANSLATIONS  = src/i18n/ssqt5_zh_CN.ts
+
 win32: RC_FILE = src/ss-qt5.rc
 mac:   ICON    = src/ss-qt5.icns
