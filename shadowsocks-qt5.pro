@@ -8,7 +8,7 @@ QT      += core gui widgets
 
 TARGET   = ss-qt5
 TEMPLATE = app
-VERSION  = 0.3.1
+VERSION  = 0.4.0
 
 include(src/ss-qt5.pri)
 
