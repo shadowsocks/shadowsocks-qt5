@@ -10,6 +10,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+#ifdef _WIN32
+    if (QLocale::system().country() == QLocale::China) {
+        a.setFont(QFont("Microsoft Yahei", 9, QFont::Normal, false));
+    }
+#endif
+
     QTranslator t;
     t.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     a.installTranslator(&t);

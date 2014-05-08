@@ -22,11 +22,6 @@
     <height>380</height>
    </size>
   </property>
-  <property name="font">
-   <font>
-    <family>微软雅黑</family>
-   </font>
-  </property>
   <property name="windowTitle">
    <string>Shadowsocks-Qt5</string>
   </property>
