@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#ifdef _WIN32
+#include <QtWin>
+#endif
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -46,6 +50,16 @@ MainWindow::MainWindow(QWidget *parent) :
     systray.setToolTip(tr("Shadowsocks-Qt5"));
     systray.setContextMenu(&systrayMenu);
     systray.show();
+
+    //Windows Extras
+#ifdef _WIN32
+    QtWin::enableBlurBehindWindow(this);
+    QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
+    setAttribute(Qt::WA_TranslucentBackground);
+    QtWin::enableBlurBehindWindow(&addProfileDlg);
+    QtWin::extendFrameIntoClientArea(&addProfileDlg, -1, -1, -1, -1);
+    addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);
+#endif
 
     //Move to the center of the screen
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
@@ -97,10 +111,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::debugChecked);
     connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::miscButtonBoxClicked);
     connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::aboutButtonClicked);
+/*
 #ifdef _LINUX_
     //TODO determine kernel version
     ui->tfoCheckBox->setVisible(true);
 #endif
+*/
 }
 
 MainWindow::~MainWindow()

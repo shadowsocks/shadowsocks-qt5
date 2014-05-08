@@ -37,16 +37,16 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
-     <number>0</number>
+     <number>4</number>
     </property>
     <property name="topMargin">
-     <number>0</number>
+     <number>4</number>
     </property>
     <property name="rightMargin">
-     <number>0</number>
+     <number>4</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
+     <number>4</number>
     </property>
     <item>
      <widget class="QTabWidget" name="tabWidget">
@@ -393,14 +393,17 @@ background-color: rgb(0, 0, 0);</string>
         <string>Misc</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="2" column="0" colspan="3">
-         <widget class="QCheckBox" name="debugCheck">
+        <item row="3" column="0" colspan="3">
+         <widget class="QCheckBox" name="autostartCheck">
+          <property name="toolTip">
+           <string>Start backend automatically when started and the current profile is valid.</string>
+          </property>
           <property name="text">
-           <string>Debug-level log</string>
+           <string>Autostart if profile is valid</string>
           </property>
          </widget>
         </item>
-        <item row="6" column="0" colspan="3">
+        <item row="5" column="0" colspan="3">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -413,7 +416,7 @@ background-color: rgb(0, 0, 0);</string>
           </property>
          </spacer>
         </item>
-        <item row="8" column="2">
+        <item row="7" column="2">
          <widget class="QPushButton" name="miscSaveButton">
           <property name="enabled">
            <bool>false</bool>
@@ -428,7 +431,7 @@ background-color: rgb(0, 0, 0);</string>
           </property>
          </widget>
         </item>
-        <item row="8" column="0">
+        <item row="7" column="0">
          <widget class="QPushButton" name="aboutButton">
           <property name="text">
            <string>About</string>
@@ -440,7 +443,14 @@ background-color: rgb(0, 0, 0);</string>
           </property>
          </widget>
         </item>
-        <item row="8" column="1">
+        <item row="4" column="0" colspan="3">
+         <widget class="QCheckBox" name="autohideCheck">
+          <property name="text">
+           <string>Auto hide main window when started</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -453,20 +463,10 @@ background-color: rgb(0, 0, 0);</string>
           </property>
          </spacer>
         </item>
-        <item row="3" column="0" colspan="3">
-         <widget class="QCheckBox" name="autostartCheck">
-          <property name="toolTip">
-           <string>Start backend automatically when started and the current profile is valid.</string>
-          </property>
+        <item row="2" column="0" colspan="3">
+         <widget class="QCheckBox" name="debugCheck">
           <property name="text">
-           <string>Autostart if profile is valid</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0" colspan="3">
-         <widget class="QCheckBox" name="autohideCheck">
-          <property name="text">
-           <string>Auto hide main window when started</string>
+           <string>Debug-level log</string>
           </property>
          </widget>
         </item>
