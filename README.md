@@ -6,15 +6,15 @@ Shadowsocks-Qt5
 Introduction
 ------------
 
-Shadowsocks-Qt5 aims to be a fast and platform-cross GUI Client for [Shadowsocks](http://shadowsocks.org).
+Shadowsocks-Qt5 is a fast, reliable and platform-cross GUI fronted for [Shadowsocks](http://shadowsocks.org).
 
-Latest Stable Version: 0.3.0
+Latest Stable Version: 0.4.0
 
 Features
 --------
 
-- Shadowsocks-Qt5 is written in pure C++ with Qt5 magic.
-- An intuitive and native UI. And JUST a **GUI**. Keep your favourite Shadowsocks port as backend.
+- Shadowsocks-Qt5 is written in C++/Qt5.
+- An intuitive and native UI. And JUST a **GUI fronted**. Keep your favourite Shadowsocks port as backend.
 - The `gui-config.json` file is partially compatible with [shadowsocks-gui](https://github.com/shadowsocks/shadowsocks-gui). In order to serve better, some new values have been added.
 - `gui-config.json` is located under ~/.config/shadowsocks for UNIX users, or under the main programme's directory for Windows users.
 
@@ -22,7 +22,7 @@ Note
 ----
 
 - It is not a standalone programme. By default, `ss-qt5` works along with `ss-local` from [shadowsocks-libev project](https://github.com/madeye/shadowsocks-libev). While it also supports using other shadowsocks ports as backend such as [Shadowsocks-Nodejs](https://github.com/clowwindy/shadowsocks-nodejs).
-- Shadowsocks-Nodejs port is highly recommended to serve as backend for its better I/O performance.
+- Shadowsocks-Nodejs port is highly recommended to serve as backend for better performance.
 - Don't be panic if you encounter a bug. Feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Remember to run from terminal or `cmd` and paste the output.
 
 Installation
