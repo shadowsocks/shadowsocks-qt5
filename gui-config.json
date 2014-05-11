@@ -5,12 +5,12 @@
     "configs": [
         {
             "local_address": "127.0.0.1",
-            "local_port": "",
+            "local_port": "1080",
             "method": "table",
             "password": "",
             "profile": "Default",
-            "server": "",
-            "server_port": "",
+            "server": "127.0.0.1",
+            "server_port": "8338",
             "timeout": "600"
         }
     ],
