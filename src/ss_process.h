@@ -20,10 +20,6 @@ class SS_Process : public QObject
 public:
     SS_Process(QObject *parent = 0);
     ~SS_Process();
-    void setapp(const QString&);
-    void setTypeID(int);
-    void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false, bool tfo = false);
-    void start(QString &args);
     void start(SSProfile&, bool debug = false, bool tfo = false);
     void stop();
     bool isRunning();
@@ -38,6 +34,9 @@ private:
     int backendTypeID;
     QString app_path;
     QProcess proc;
+
+    void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false, bool tfo = false);
+    void start(QString &args);
 
 private slots:
     void autoemitreadReadyProcess();

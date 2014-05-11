@@ -1,9 +1,9 @@
 {
     "autoHide": false,
     "autoStart": false,
-    "backend": "",
     "configs": [
         {
+            "backend": "",
             "local_address": "127.0.0.1",
             "local_port": "1080",
             "method": "table",
@@ -11,10 +11,11 @@
             "profile": "Default",
             "server": "127.0.0.1",
             "server_port": "8338",
-            "timeout": "600"
+            "timeout": "600",
+            "type": "Shadowsocks-libev"
+
         }
     ],
     "debug": false,
     "index": 0,
-    "type": "Shadowsocks-libev"
 }

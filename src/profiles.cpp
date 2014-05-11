@@ -17,8 +17,6 @@ void Profiles::setJSONFile(const QString &file)
 
     if (!JSONFile.exists()) {
         qWarning() << "Warning: gui-config.json does not exist!";
-        backend.clear();
-        backendType.clear();
         m_index = -1;
         debugLog = false;
         autoStart = false;
@@ -58,6 +56,8 @@ void Profiles::setJSONFile(const QString &file)
         for (QJsonArray::iterator it = CONFArray.begin(); it != CONFArray.end(); ++it) {
             QJsonObject json = (*it).toObject();
             SSProfile p;
+            p.backend = json["backend"].toString();
+            p.type = json["type"].toString();
             p.profileName = json["profile"].toString();
             p.server = json["server"].toString();
             p.password = json["password"].toString();
@@ -69,11 +69,6 @@ void Profiles::setJSONFile(const QString &file)
             profileList.append(p);
         }
         m_index = JSONObj["index"].toInt();
-    }
-    backend = JSONObj["backend"].toString();
-    backendType = JSONObj["type"].toString();
-    if (backendType.isEmpty()) {
-        backendType = "Shadowsocks-libev";
     }
     debugLog = JSONObj["debug"].toBool();
     autoHide = JSONObj["autoHide"].toBool();
@@ -95,16 +90,6 @@ QStringList Profiles::getProfileList()
     return s;
 }
 
-SSProfile Profiles::getProfile(int index)
-{
-    return profileList.at(index);
-}
-
-SSProfile Profiles::lastProfile()
-{
-    return profileList.last();
-}
-
 void Profiles::addProfile(const QString &pName)
 {
     SSProfile p;
@@ -114,6 +99,7 @@ void Profiles::addProfile(const QString &pName)
     QJsonObject json;
     json["profile"] = QJsonValue(p.profileName);
     //below are using default values
+    json["type"] = QJsonValue(p.type);
     json["server_port"] = QJsonValue(p.server_port);
     json["local_address"] = QJsonValue(p.local_addr);
     json["local_port"] = QJsonValue(p.local_port);
@@ -142,6 +128,7 @@ void Profiles::addProfileFromSSURI(const QString &name, QString uri)
     json["method"] = QJsonValue(p.method.toLower());
     json["server_port"] = QJsonValue(p.server_port);
     //below are using default values
+    json["type"] = QJsonValue(p.type);
     json["local_address"] = QJsonValue(p.local_addr);
     json["local_port"] = QJsonValue(p.local_port);
     json["timeout"] = QJsonValue(p.timeout);
@@ -154,6 +141,8 @@ void Profiles::saveProfile(int index, SSProfile &p)
     profileList.replace(index, p);
 
     QJsonObject json;
+    json["backend"] = QJsonValue(p.backend);
+    json["type"] = QJsonValue(p.type);
     json["profile"] = QJsonValue(p.profileName);
     json["server"] = QJsonValue(p.server);
     json["server_port"] = QJsonValue(p.server_port);
@@ -174,8 +163,6 @@ void Profiles::deleteProfile(int index)
 void Profiles::saveProfileToJSON()
 {
     JSONObj["index"] = QJsonValue(m_index);
-    JSONObj["backend"] = QJsonValue(backend);
-    JSONObj["type"] = QJsonValue(backendType);
     JSONObj["debug"] = QJsonValue(debugLog);
     JSONObj["autoHide"] = QJsonValue(autoHide);
     JSONObj["autoStart"] = QJsonValue(autoStart);
@@ -192,53 +179,6 @@ void Profiles::saveProfileToJSON()
         qWarning() << "Warning: file is not writable!";
     }
     JSONFile.close();
-}
-
-void Profiles::setBackend(const QString &a)
-{
-#ifdef _WIN32
-    if (getBackendTypeID() == 3) {
-        QDir python(a);
-        python.cdUp();
-        QString s(python.absolutePath() + QString("/Scripts/sslocal-script.py"));
-        if (QFile::exists(s)) {
-            backend = QDir::toNativeSeparators(s);
-        }
-        return;
-    }
-#endif
-    backend = QDir::toNativeSeparators(a);
-}
-
-QString Profiles::getBackend()
-{
-    return backend;
-}
-
-void Profiles::setBackendType(const QString &t)
-{
-    backendType = t;
-}
-
-QString Profiles::getBackendType()
-{
-    return backendType;
-}
-
-int Profiles::getBackendTypeID()
-{
-    if (backendType == QString("Shadowsocks-Nodejs")) {
-        return 1;
-    }
-    else if (backendType == QString("Shadowsocks-Go")) {
-        return 2;
-    }
-    else if (backendType == QString("Shadowsocks-Python")) {
-        return 3;
-    }
-    else {
-        return 0;//Shadowsocks-libev
-    }
 }
 
 void Profiles::setIndex(int index)
@@ -294,39 +234,9 @@ bool Profiles::isValidate(const SSProfile &sp)
     valid = valid && SSValidator::validateMethod(sp.method);
 
     //TODO: more accurate
-    if (sp.server.isEmpty() || sp.local_addr.isEmpty() || sp.timeout.toInt() < 1 || backend.isEmpty() || !valid) {
+    if (sp.server.isEmpty() || sp.local_addr.isEmpty() || sp.timeout.toInt() < 1 || sp.backend.isEmpty() || !valid) {
         return false;
     }
     else
         return true;
-}
-
-int Profiles::detectBackendTypeID(const QString &filename)
-{
-    QFile file(filename);
-    if (!file.exists()) {
-        qWarning() << "Detecting backend does not exist.";
-        return -1;
-    }
-
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    if (!file.isReadable() || !file.isOpen()) {
-        qWarning() << "Cannot read from detecting backend.";
-        return -1;
-    }
-
-    QString ident(file.readLine());
-    if (ident.contains("node")) {
-        return 1;
-    }
-    else if (ident.contains("python")) {
-        return 3;
-    }
-    else {
-        if (filename.contains("ss-local")) {
-            return 0;
-        }
-        else
-            return 2;
-    }
 }

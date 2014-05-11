@@ -81,14 +81,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //update current configuration
     ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
-    ui->backendTypeCombo->setCurrentText(m_profile->getBackendType());
+    ui->backendTypeCombo->setCurrentText(current_profile.backend);
     /*
      * If there is no gui-config file, or the index is 0, then the function above wouldn't emit signal.
      * Therefore, we have to emit a signal manually.
      */
     if (m_profile->getIndex() <= 0) {
         emit ui->profileComboBox->currentIndexChanged(m_profile->getIndex());
-        emit ui->backendTypeCombo->currentTextChanged(m_profile->getBackendType());
     }
 
     //connect signals and slots when config changed
@@ -131,31 +130,13 @@ void MainWindow::onBackendToolButtonPressed()
 {
     QString backend = QFileDialog::getOpenFileName();
     if (!backend.isEmpty()) {
-        m_profile->setBackend(backend);
-        ui->backendEdit->setText(m_profile->getBackend());
+        current_profile.setBackend(backend);
+        ui->backendEdit->setText(current_profile.backend);
         emit configurationChanged();
     }
     this->setWindowState(Qt::WindowActive);
     this->activateWindow();
     ui->backendEdit->setFocus();
-}
-
-void MainWindow::backendTypeChanged(const QString &type)
-{
-    m_profile->setBackendType(type);
-
-    //detect backend again no matter empty or not
-    ui->backendEdit->setText(detectSSLocal());
-
-    if (m_profile->getBackendTypeID() == 0) {//other ports don't support timeout argument for now
-        ui->timeoutSpinBox->setVisible(true);
-        ui->timeoutLabel->setVisible(true);
-    }
-    else {
-        ui->timeoutSpinBox->setVisible(false);
-        ui->timeoutLabel->setVisible(false);
-    }
-    emit configurationChanged();
 }
 
 void MainWindow::onCurrentProfileChanged(int i)
@@ -167,8 +148,10 @@ void MainWindow::onCurrentProfileChanged(int i)
 
     ss_local.stop();//Q: should we stop the backend when profile changed?
     m_profile->setIndex(i);
-    current_profile = m_profile->getProfile(i);
+    current_profile = m_profile->rCurrentProfile();
 
+    ui->backendTypeCombo->setCurrentIndex(current_profile.getBackendTypeID());
+    ui->backendEdit->setText(current_profile.backend);
     ui->serverEdit->setText(current_profile.server);
     ui->sportEdit->setText(current_profile.server_port);
     ui->pwdEdit->setText(current_profile.password);
@@ -196,7 +179,7 @@ void MainWindow::onAddProfileDialogueAccepted(const QString &name, bool u, const
     else {
         m_profile->addProfile(name);
     }
-    current_profile = m_profile->lastProfile();
+    current_profile = m_profile->rLastProfile();
     ui->profileComboBox->insertItem(ui->profileComboBox->count(), current_profile.profileName);
 
     //change serverComboBox, let it emit currentIndexChanged signal.
@@ -207,7 +190,7 @@ void MainWindow::onAddProfileDialogueRejected(bool enforce)
 {
     if (enforce) {
         m_profile->addProfile("");
-        current_profile = m_profile->lastProfile();
+        current_profile = m_profile->rLastProfile();
         ui->profileComboBox->insertItem(ui->profileComboBox->count(), "");
         //since there was no item previously, serverComboBox would change itself automatically.
         //we don't need to emit the signal again.
@@ -217,44 +200,10 @@ void MainWindow::onAddProfileDialogueRejected(bool enforce)
 QString MainWindow::detectSSLocal()
 {
     //Check if backendType matches current one
-    if (Profiles::detectBackendTypeID(m_profile->getBackend()) == m_profile->getBackendTypeID()) {
-        return m_profile->getBackend();
+    if (!current_profile.isBackendMatchType()) {
+        current_profile.setBackend();
     }
-
-    QString execName, sslocal;
-    switch (m_profile->getBackendTypeID()) {
-    case 1://nodejs
-        execName = "sslocal";
-        break;
-    case 2://go
-        execName = "shadowsocks-local";
-        break;
-    case 3:
-#ifdef _WIN32
-        execName = "python";//detect python to avoid the conflict with sslocal.cmd of nodejs
-#else
-        execName = "sslocal";
-#endif
-        break;
-    default://including 0. libev
-        execName = "ss-local";
-    }
-
-#ifdef _WIN32
-    QStringList findPathsList(QCoreApplication::applicationDirPath());
-#else
-    QStringList findPathsList(QDir::homePath() + "/.config/shadowsocks/bin");
-#endif
-    sslocal = QStandardPaths::findExecutable(execName, findPathsList);//search ss-qt5 directory first
-    if(sslocal.isEmpty()) {//if not found then search system's PATH
-        sslocal = QStandardPaths::findExecutable(execName);
-    }
-
-    if(!sslocal.isEmpty()) {
-        m_profile->setBackend(sslocal);
-    }
-
-    return m_profile->getBackend();
+    return current_profile.backend;
 }
 
 void MainWindow::saveProfile()
@@ -279,7 +228,6 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
     }
     else {//reset
         m_profile->revert();
-        ui->backendTypeCombo->setCurrentIndex(m_profile->getBackendTypeID());
         disconnect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         ui->profileComboBox->clear();
         ui->profileComboBox->insertItems(0, m_profile->getProfileList());
@@ -299,8 +247,6 @@ void MainWindow::startButtonPressed()
         return;
     }
 
-    ss_local.setapp(m_profile->getBackend());
-    ss_local.setTypeID(m_profile->getBackendTypeID());
     ss_local.start(current_profile);
 }
 
@@ -389,6 +335,24 @@ void MainWindow::onConfigurationChanged(bool saved)
 void MainWindow::onMiscConfigurationChanged(bool saved)
 {
     ui->miscSaveButton->setEnabled(!saved);
+}
+
+void MainWindow::backendTypeChanged(const QString &type)
+{
+    current_profile.type = type;
+
+    //detect backend again no matter empty or not
+    ui->backendEdit->setText(detectSSLocal());
+
+    if (current_profile.getBackendTypeID() == 0) {//other ports don't support timeout argument for now
+        ui->timeoutSpinBox->setVisible(true);
+        ui->timeoutLabel->setVisible(true);
+    }
+    else {
+        ui->timeoutSpinBox->setVisible(false);
+        ui->timeoutLabel->setVisible(false);
+    }
+    emit configurationChanged();
 }
 
 void MainWindow::serverEditFinished(const QString &str)

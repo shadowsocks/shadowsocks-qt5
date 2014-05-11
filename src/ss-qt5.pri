@@ -5,7 +5,8 @@ SOURCES   += src/main.cpp\
              src/ip4validator.cpp \
              src/portvalidator.cpp \
              src/addprofiledialogue.cpp \
-             src/ssvalidator.cpp
+             src/ssvalidator.cpp \
+    src/ssprofile.cpp
 
 HEADERS   += src/mainwindow.h \
              src/profiles.h \

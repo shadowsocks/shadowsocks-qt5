@@ -15,16 +15,6 @@ SS_Process::SS_Process(QObject *parent) :
 SS_Process::~SS_Process()
 {}
 
-void SS_Process::setapp(const QString &a)
-{
-    app_path = a;
-}
-
-void SS_Process::setTypeID(int i)
-{
-    backendTypeID = i;
-}
-
 bool SS_Process::isRunning()
 {
     return running;
@@ -32,6 +22,8 @@ bool SS_Process::isRunning()
 
 void SS_Process::start(SSProfile &p, bool debug, bool tfo)
 {
+    app_path = p.backend;
+    backendTypeID = p.getBackendTypeID();
     start(p.server, p.password, p.server_port, p.local_addr, p.local_port, p.method, p.timeout, debug, tfo);
 }
 
