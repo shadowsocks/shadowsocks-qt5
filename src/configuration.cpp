@@ -26,6 +26,7 @@ void Configuration::setJSONFile(const QString &file)
         debugLog = false;
         autoStart = false;
         autoHide = false;
+        translucent = true;
         return;
     }
 
