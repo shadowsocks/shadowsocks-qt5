@@ -81,7 +81,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //update current configuration
     ui->profileComboBox->setCurrentIndex(m_conf->getIndex());
-    ui->backendTypeCombo->setCurrentText(current_profile->backend);
     /*
      * If there is no gui-config file, or the index is 0, then the function above wouldn't emit signal.
      * Therefore, we have to emit a signal manually.
