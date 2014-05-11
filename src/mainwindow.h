@@ -41,7 +41,6 @@ public:
 
 signals:
     void configurationChanged(bool saved = false);
-    void miscConfigurationChanged(bool saved = false);
 
 public slots:
     void startButtonPressed();
@@ -62,7 +61,6 @@ private slots:
     void showorhideWindow();
     void onReadReadyProcess(const QByteArray &o);
     void onConfigurationChanged(bool);
-    void onMiscConfigurationChanged(bool);
     void serverEditFinished(const QString &);
     void sportEditFinished(const QString &);
     void pwdEditFinished(const QString &);

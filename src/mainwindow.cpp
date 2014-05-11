@@ -103,7 +103,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::profileEditButtonClicked);
 
     //Misc
-    connect(this, &MainWindow::miscConfigurationChanged, this, &MainWindow::onMiscConfigurationChanged);
     connect(ui->autohideCheck, &QCheckBox::stateChanged, this, &MainWindow::autoHideToggled);
     connect(ui->autostartCheck, &QCheckBox::stateChanged, this, &MainWindow::autoStartToggled);
     connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::debugToggled);
@@ -209,8 +208,7 @@ QString MainWindow::detectSSLocal()
 
 void MainWindow::saveConfig()
 {
-    m_conf->saveProfileToJSON();
-    emit miscConfigurationChanged(true);
+    m_conf->save();
     emit onConfigurationChanged(true);
 }
 
@@ -321,10 +319,6 @@ void MainWindow::onReadReadyProcess(const QByteArray &o)
 void MainWindow::onConfigurationChanged(bool saved)
 {
     ui->profileEditButtonBox->setEnabled(!saved);
-}
-
-void MainWindow::onMiscConfigurationChanged(bool saved)
-{
     ui->miscSaveButton->setEnabled(!saved);
 }
 
@@ -391,25 +385,25 @@ void MainWindow::timeoutChanged(int t)
 void MainWindow::autoHideToggled(bool c)
 {
     m_conf->setAutoHide(c);
-    emit miscConfigurationChanged();
+    emit configurationChanged();
 }
 
 void MainWindow::autoStartToggled(bool c)
 {
     m_conf->setAutoStart(c);
-    emit miscConfigurationChanged();
+    emit configurationChanged();
 }
 
 void MainWindow::debugToggled(bool c)
 {
     m_conf->setDebug(c);
-    emit miscConfigurationChanged();
+    emit configurationChanged();
 }
 
 void MainWindow::transculentToggled(bool c)
 {
     m_conf->setTranslucent(c);
-    emit miscConfigurationChanged();
+    emit configurationChanged();
 }
 
 void MainWindow::checkIfSaved()

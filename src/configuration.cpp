@@ -1,9 +1,11 @@
 #include <QFile>
 #include <QDir>
 #include <QDebug>
+#include <QJsonDocument>
 #include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
 #include "configuration.h"
-#include "ssvalidator.h"
 
 Configuration::Configuration(const QString &file)
 {
@@ -38,7 +40,7 @@ void Configuration::setJSONFile(const QString &file)
     }
 
     QJsonParseError pe;
-    JSONDoc = QJsonDocument::fromJson(JSONFile.readAll(), &pe);
+    QJsonDocument JSONDoc = QJsonDocument::fromJson(JSONFile.readAll(), &pe);
 
     if (pe.error != QJsonParseError::NoError) {
         qWarning() << pe.errorString();
@@ -48,7 +50,7 @@ void Configuration::setJSONFile(const QString &file)
         qWarning() << "Warning: JSON Document" << m_file << "is empty!";
     }
 
-    JSONObj = JSONDoc.object();
+    QJsonObject JSONObj = JSONDoc.object();
     QJsonArray CONFArray = JSONObj["configs"].toArray();
     profileList.clear();//clear list before
     if (CONFArray.isEmpty()) {
@@ -89,7 +91,7 @@ QStringList Configuration::getProfileList()
 {
     QStringList s;
     for (QList<SSProfile>::iterator it = profileList.begin(); it != profileList.end(); ++it) {
-        s << (*it).profileName;
+        s << it->profileName;
     }
     return s;
 }
@@ -143,7 +145,7 @@ void Configuration::deleteProfile(int index)
     profileList.removeAt(index);
 }
 
-void Configuration::saveProfileToJSON()
+void Configuration::save()
 {
     QJsonArray newConfArray;
     for (QList<SSProfile>::iterator it = profileList.begin(); it != profileList.end(); ++it) {
@@ -161,6 +163,7 @@ void Configuration::saveProfileToJSON()
         newConfArray << QJsonValue(json);
     }
 
+    QJsonObject JSONObj;
     JSONObj["index"] = QJsonValue(m_index);
     JSONObj["debug"] = QJsonValue(debugLog);
     JSONObj["autoHide"] = QJsonValue(autoHide);
@@ -168,7 +171,7 @@ void Configuration::saveProfileToJSON()
     JSONObj["translucent"] = QJsonValue(translucent);
     JSONObj["configs"] = QJsonValue(newConfArray);
 
-    JSONDoc.setObject(JSONObj);
+    QJsonDocument JSONDoc(JSONObj);
 
     QFile JSONFile(m_file);
     JSONFile.open(QIODevice::WriteOnly | QIODevice::Text);

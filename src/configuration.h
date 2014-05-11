@@ -4,9 +4,6 @@
 #include <QString>
 #include <QStringList>
 #include <QList>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonValue>
 #include "ssprofile.h"
 
 #ifndef CONFIGURATION_H
@@ -37,7 +34,7 @@ public:
     void addProfile(const QString &);
     void addProfileFromSSURI(const QString &, QString);
     void deleteProfile(int);
-    void saveProfileToJSON();
+    void save();
 
 private:
     int m_index;
@@ -47,8 +44,6 @@ private:
     bool translucent;
     QList<SSProfile> profileList;
     QString m_file;
-    QJsonDocument JSONDoc;
-    QJsonObject JSONObj;
 };
 
 #endif // CONFIGURATION_H
