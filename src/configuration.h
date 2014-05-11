@@ -1,13 +1,12 @@
 /*
  * Copyright 2014 William Wong <librehat@outlook.com>
  */
+#ifndef CONFIGURATION_H
+#define CONFIGURATION_H
 #include <QString>
 #include <QStringList>
 #include <QList>
 #include "ssprofile.h"
-
-#ifndef CONFIGURATION_H
-#define CONFIGURATION_H
 
 class Configuration
 {
@@ -25,6 +24,7 @@ public:
     bool isDebug();
     void setTranslucent(bool);
     bool isTranslucent();
+    bool isTFOAvailable() const;
     int count();
     QStringList getProfileList();
     inline SSProfile *profileAt(int i) { return &profileList[i]; }
@@ -44,6 +44,7 @@ private:
     bool translucent;
     QList<SSProfile> profileList;
     QString m_file;
+    static bool tfo_available;
 };
 
 #endif // CONFIGURATION_H

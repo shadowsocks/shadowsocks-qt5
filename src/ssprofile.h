@@ -1,6 +1,8 @@
-#include <QString>
 #ifndef SSPROFILE_H
 #define SSPROFILE_H
+
+#include <QString>
+
 class SSProfile
 {
 public:
@@ -22,5 +24,6 @@ public:
     QString local_port;
     QString method;
     QString timeout;
+    bool fast_open;
 };
 #endif // SSPROFILE_H

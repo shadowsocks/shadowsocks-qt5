@@ -7,8 +7,24 @@
 #include <QJsonValue>
 #include "configuration.h"
 
+#ifdef __linux__
+#include <sys/utsname.h>
+#endif
+
+bool Configuration::tfo_available = false;
+
 Configuration::Configuration(const QString &file)
 {
+#ifdef __linux__
+    /*
+     * Determine linux kernel version on the run-time
+     * if it's greater than 3.7, then define tcp fast open available.
+     */
+    utsname u;
+    uname(&u);
+    QString linux_release(u.release);
+    tfo_available = (linux_release.mid(2, 2).toInt() >= 7 && linux_release.at(0) == '3') ? true : false;
+#endif
     setJSONFile(file);
 }
 
@@ -72,6 +88,9 @@ void Configuration::setJSONFile(const QString &file)
             p.local_port = json["local_port"].toString();
             p.method = json["method"].toString().toUpper();//using Upper-case in GUI
             p.timeout = json["timeout"].toString();
+            if (tfo_available) {
+                p.fast_open = json["fast_open"].toBool();
+            }
             profileList << p;
         }
         m_index = JSONObj["index"].toInt();
@@ -86,6 +105,11 @@ void Configuration::setJSONFile(const QString &file)
 int Configuration::count()
 {
     return profileList.count();
+}
+
+bool Configuration::isTFOAvailable() const
+{
+    return tfo_available;
 }
 
 QStringList Configuration::getProfileList()
@@ -112,6 +136,9 @@ void Configuration::addProfile(const QString &pName)
     json["local_port"] = QJsonValue(p.local_port);
     json["method"] = QJsonValue(p.method);
     json["timeout"] = QJsonValue(p.timeout);
+    if (tfo_available) {
+        json["fast_open"] = QJsonValue(p.fast_open);
+    }
 }
 
 void Configuration::addProfileFromSSURI(const QString &name, QString uri)
@@ -138,6 +165,9 @@ void Configuration::addProfileFromSSURI(const QString &name, QString uri)
     json["local_address"] = QJsonValue(p.local_addr);
     json["local_port"] = QJsonValue(p.local_port);
     json["timeout"] = QJsonValue(p.timeout);
+    if (tfo_available) {
+        json["fast_open"] = QJsonValue(p.fast_open);
+    }
     profileList << p;
 }
 
@@ -161,6 +191,9 @@ void Configuration::save()
         json["local_port"] = QJsonValue(it->local_port);
         json["method"] = QJsonValue(it->method.isEmpty() ? QString("table") : it->method.toLower());//lower-case in config
         json["timeout"] = QJsonValue(it->timeout);
+        if (tfo_available) {
+            json["fast_open"] = QJsonValue(it->fast_open);
+        }
         newConfArray.append(QJsonValue(json));
     }
 

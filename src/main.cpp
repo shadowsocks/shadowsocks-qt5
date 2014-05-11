@@ -32,5 +32,6 @@ int main(int argc, char *argv[])
     if (w.m_conf->isAutoHide()) {
         w.hide();
     }
+
     return a.exec();
 }

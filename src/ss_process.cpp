@@ -20,11 +20,11 @@ bool SS_Process::isRunning()
     return running;
 }
 
-void SS_Process::start(SSProfile * const p, bool debug, bool tfo)
+void SS_Process::start(SSProfile * const p, bool debug)
 {
     app_path = p->backend;
     backendTypeID = p->getBackendTypeID();
-    start(p->server, p->password, p->server_port, p->local_addr, p->local_port, p->method, p->timeout, debug, tfo);
+    start(p->server, p->password, p->server_port, p->local_addr, p->local_port, p->method, p->timeout, debug, p->fast_open);
 }
 
 void SS_Process::start(QString &args)
@@ -68,7 +68,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
     args.append(QString(" -l ") + l_port);
     args.append(QString(" -k \"") + pwd + QString("\""));
     args.append(QString(" -m ") + method.toLower());
-    if (backendTypeID == 0) {//only libev port supports this argument
+    if (backendTypeID == 0 || backendTypeID == 1) {//only libev and nodejs ports support this argument
         args.append(QString(" -t ") + timeout);
     }
 
@@ -81,9 +81,11 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
         }
     }
 
-    if (tfo) {//TCP Fast Open
-        //TODO
+#ifdef __linux__
+    if ((backendTypeID == 3 || backendTypeID == 0) && tfo) {//only python and libev ports support tfo
+        args.append(" --fast-open");
     }
+#endif
 
     start(args);
 }

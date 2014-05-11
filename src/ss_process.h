@@ -5,13 +5,12 @@
  *
  * Copyright 2014 William Wong <librehat@outlook.com>
  */
+#ifndef SS_PROCESS_H
+#define SS_PROCESS_H
 #include <QObject>
 #include <QString>
 #include <QProcess>
 #include "ssprofile.h"
-
-#ifndef SS_PROCESS_H
-#define SS_PROCESS_H
 
 class SS_Process : public QObject
 {
@@ -20,7 +19,7 @@ class SS_Process : public QObject
 public:
     SS_Process(QObject *parent = 0);
     ~SS_Process();
-    void start(SSProfile * const, bool debug = false, bool tfo = false);
+    void start(SSProfile * const, bool debug = false);
     void stop();
     bool isRunning();
 

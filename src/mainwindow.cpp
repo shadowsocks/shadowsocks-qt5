@@ -29,7 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->sportEdit->setValidator(&portValidator);
     ui->lportEdit->setValidator(&portValidator);
     ui->methodComboBox->addItems(SSValidator::supportedMethod);
-    ui->tfoCheckBox->setVisible(false);
+    if (!m_conf->isTFOAvailable()) {
+        ui->tfoCheckBox->setVisible(false);
+    }
 
     ui->debugCheck->setChecked(m_conf->isDebug());
     ui->autohideCheck->setChecked(m_conf->isAutoHide());
@@ -99,6 +101,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->lportEdit, &QLineEdit::textChanged, this, &MainWindow::lportEditFinished);
     connect(ui->methodComboBox, &QComboBox::currentTextChanged, this, &MainWindow::methodChanged);
     connect(ui->timeoutSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MainWindow::timeoutChanged);
+#ifdef __linux__
+    connect(ui->tfoCheckBox, &QCheckBox::toggled, this, &MainWindow::tcpFastOpenChanged);
+#endif
     connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::profileEditButtonClicked);
 
     //Misc
@@ -108,12 +113,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->translucentCheck, &QCheckBox::toggled, this, &MainWindow::transculentToggled);
     connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::saveConfig);
     connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::aboutButtonClicked);
-/*
-#ifdef _LINUX_
-    //TODO determine kernel version
-    ui->tfoCheckBox->setVisible(true);
-#endif
-*/
 }
 
 MainWindow::~MainWindow()
@@ -165,6 +164,9 @@ void MainWindow::onCurrentProfileChanged(int i)
     ui->lportEdit->setText(current_profile->local_port);
     ui->methodComboBox->setCurrentText(current_profile->method);
     ui->timeoutSpinBox->setValue(current_profile->timeout.toInt());
+#ifdef __linux__
+    ui->tfoCheckBox->setChecked(current_profile->fast_open);
+#endif
 
     emit configurationChanged();
 }
@@ -386,6 +388,14 @@ void MainWindow::timeoutChanged(int t)
     current_profile->timeout = QString::number(t);
     emit configurationChanged();
 }
+
+#ifdef __linux__
+void MainWindow::tcpFastOpenChanged(bool t)
+{
+    current_profile->fast_open = t;
+    emit configurationChanged();
+}
+#endif
 
 void MainWindow::autoHideToggled(bool c)
 {
