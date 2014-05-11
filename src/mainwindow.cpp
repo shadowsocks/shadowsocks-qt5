@@ -148,17 +148,16 @@ void MainWindow::onCurrentProfileChanged(int i)
     ss_local.stop();//Q: should we stop the backend when profile changed?
     m_conf->setIndex(i);
     current_profile = m_conf->currentProfile();
-
-    ui->backendTypeCombo->setCurrentIndex(current_profile->getBackendTypeID());
-    if(current_profile->backend.isEmpty()) {
-        ui->backendEdit->setText(current_profile->getBackend());
-        if(!current_profile->backend.isEmpty()) {
-            emit configurationChanged();
+    if (current_profile->backend.isEmpty()) {
+        current_profile->setBackend();
+        if (!current_profile->backend.isEmpty()) {
+            ui->profileEditButtonBox->setEnabled(true);
+            ui->miscSaveButton->setEnabled(true);
         }
     }
-    else {
-        ui->backendEdit->setText(current_profile->backend);
-    }
+
+    ui->backendTypeCombo->setCurrentIndex(current_profile->getBackendTypeID());
+    ui->backendEdit->setText(current_profile->backend);
     ui->serverEdit->setText(current_profile->server);
     ui->sportEdit->setText(current_profile->server_port);
     ui->pwdEdit->setText(current_profile->password);
@@ -207,7 +206,7 @@ void MainWindow::onAddProfileDialogueRejected(bool enforce)
 void MainWindow::saveConfig()
 {
     m_conf->save();
-    emit onConfigurationChanged(true);
+    emit configurationChanged(true);
 }
 
 void MainWindow::profileEditButtonClicked(QAbstractButton *b)
@@ -223,7 +222,7 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
         ui->profileComboBox->setCurrentIndex(m_conf->getIndex());
         connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         emit ui->profileComboBox->currentIndexChanged(m_conf->getIndex());//same in MainWindow's constructor
-        emit onConfigurationChanged(true);
+        emit configurationChanged(true);
     }
 }
 
