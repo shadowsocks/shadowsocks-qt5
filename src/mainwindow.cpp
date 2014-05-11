@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setAttribute(Qt::WA_TranslucentBackground);
     QtWin::enableBlurBehindWindow(&addProfileDlg);
     QtWin::extendFrameIntoClientArea(&addProfileDlg, -1, -1, -1, -1);
-    addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);
+    //addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);
 #endif
 
     //Move to the center of the screen
