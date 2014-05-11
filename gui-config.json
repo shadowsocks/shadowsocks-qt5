@@ -4,6 +4,7 @@
     "configs": [
         {
             "backend": "",
+            "fast_open": false,
             "local_address": "127.0.0.1",
             "local_port": "1080",
             "method": "table",
@@ -13,10 +14,9 @@
             "server_port": "8338",
             "timeout": "600",
             "type": "Shadowsocks-libev"
-
         }
     ],
     "debug": false,
     "index": 0,
-    "translucent": true
+    "translucent": false
 }
