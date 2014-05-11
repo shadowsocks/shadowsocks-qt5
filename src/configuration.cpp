@@ -161,7 +161,7 @@ void Configuration::save()
         json["local_port"] = QJsonValue(it->local_port);
         json["method"] = QJsonValue(it->method.isEmpty() ? QString("table") : it->method.toLower());//lower-case in config
         json["timeout"] = QJsonValue(it->timeout);
-        newConfArray << QJsonValue(json);
+        newConfArray.append(QJsonValue(json));
     }
 
     QJsonObject JSONObj;
