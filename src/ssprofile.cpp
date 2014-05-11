@@ -42,10 +42,7 @@ void SSProfile::setBackend()
     if(sslocal.isEmpty()) {//if not found then search system's PATH
         sslocal = QStandardPaths::findExecutable(execName);
     }
-
-    if(!sslocal.isEmpty()) {
-        this->setBackend(sslocal);
-    }
+    this->setBackend(sslocal);
 }
 
 void SSProfile::setBackend(const QString &a)
@@ -84,13 +81,13 @@ bool SSProfile::isBackendMatchType()
 {
     QFile file(backend);
     if (!file.exists()) {
-        qWarning() << "Detecting backend does not exist.";
+        qWarning() << "Backend does not exist.";
         return false;
     }
 
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     if (!file.isReadable() || !file.isOpen()) {
-        qWarning() << "Cannot read from detecting backend.";
+        qWarning() << "Cannot read from backend.";
         return false;
     }
 
