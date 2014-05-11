@@ -81,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //update current configuration
     ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
-    ui->backendTypeCombo->setCurrentText(current_profile.backend);
+    ui->backendTypeCombo->setCurrentText(current_profile->backend);
     /*
      * If there is no gui-config file, or the index is 0, then the function above wouldn't emit signal.
      * Therefore, we have to emit a signal manually.
@@ -107,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->autohideCheck, &QCheckBox::stateChanged, this, &MainWindow::autoHideChecked);
     connect(ui->autostartCheck, &QCheckBox::stateChanged, this, &MainWindow::autoStartChecked);
     connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::debugChecked);
-    connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::miscButtonBoxClicked);
+    connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::saveConfig);
     connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::aboutButtonClicked);
 /*
 #ifdef _LINUX_
@@ -130,8 +130,8 @@ void MainWindow::onBackendToolButtonPressed()
 {
     QString backend = QFileDialog::getOpenFileName();
     if (!backend.isEmpty()) {
-        current_profile.setBackend(backend);
-        ui->backendEdit->setText(current_profile.backend);
+        current_profile->setBackend(backend);
+        ui->backendEdit->setText(current_profile->backend);
         emit configurationChanged();
     }
     this->setWindowState(Qt::WindowActive);
@@ -148,17 +148,17 @@ void MainWindow::onCurrentProfileChanged(int i)
 
     ss_local.stop();//Q: should we stop the backend when profile changed?
     m_profile->setIndex(i);
-    current_profile = m_profile->rCurrentProfile();
+    current_profile = m_profile->currentProfile();
 
-    ui->backendTypeCombo->setCurrentIndex(current_profile.getBackendTypeID());
-    ui->backendEdit->setText(current_profile.backend);
-    ui->serverEdit->setText(current_profile.server);
-    ui->sportEdit->setText(current_profile.server_port);
-    ui->pwdEdit->setText(current_profile.password);
-    ui->laddrEdit->setText(current_profile.local_addr);
-    ui->lportEdit->setText(current_profile.local_port);
-    ui->methodComboBox->setCurrentText(current_profile.method);
-    ui->timeoutSpinBox->setValue(current_profile.timeout.toInt());
+    ui->backendTypeCombo->setCurrentIndex(current_profile->getBackendTypeID());
+    ui->backendEdit->setText(current_profile->backend);
+    ui->serverEdit->setText(current_profile->server);
+    ui->sportEdit->setText(current_profile->server_port);
+    ui->pwdEdit->setText(current_profile->password);
+    ui->laddrEdit->setText(current_profile->local_addr);
+    ui->lportEdit->setText(current_profile->local_port);
+    ui->methodComboBox->setCurrentText(current_profile->method);
+    ui->timeoutSpinBox->setValue(current_profile->timeout.toInt());
 
     emit configurationChanged();
 }
@@ -179,8 +179,8 @@ void MainWindow::onAddProfileDialogueAccepted(const QString &name, bool u, const
     else {
         m_profile->addProfile(name);
     }
-    current_profile = m_profile->rLastProfile();
-    ui->profileComboBox->insertItem(ui->profileComboBox->count(), current_profile.profileName);
+    current_profile = m_profile->lastProfile();
+    ui->profileComboBox->insertItem(ui->profileComboBox->count(), current_profile->profileName);
 
     //change serverComboBox, let it emit currentIndexChanged signal.
     ui->profileComboBox->setCurrentIndex(ui->profileComboBox->count() - 1);
@@ -190,7 +190,7 @@ void MainWindow::onAddProfileDialogueRejected(bool enforce)
 {
     if (enforce) {
         m_profile->addProfile("");
-        current_profile = m_profile->rLastProfile();
+        current_profile = m_profile->lastProfile();
         ui->profileComboBox->insertItem(ui->profileComboBox->count(), "");
         //since there was no item previously, serverComboBox would change itself automatically.
         //we don't need to emit the signal again.
@@ -200,21 +200,13 @@ void MainWindow::onAddProfileDialogueRejected(bool enforce)
 QString MainWindow::detectSSLocal()
 {
     //Check if backendType matches current one
-    if (!current_profile.isBackendMatchType()) {
-        current_profile.setBackend();
+    if (!current_profile->isBackendMatchType()) {
+        current_profile->setBackend();
     }
-    return current_profile.backend;
+    return current_profile->backend;
 }
 
-void MainWindow::saveProfile()
-{
-    m_profile->saveProfile(ui->profileComboBox->currentIndex(), current_profile);
-    m_profile->saveProfileToJSON();
-    emit onConfigurationChanged(true);
-    emit miscConfigurationChanged(true);
-}
-
-void MainWindow::saveMiscConfig()
+void MainWindow::saveConfig()
 {
     m_profile->saveProfileToJSON();
     emit miscConfigurationChanged(true);
@@ -224,7 +216,7 @@ void MainWindow::saveMiscConfig()
 void MainWindow::profileEditButtonClicked(QAbstractButton *b)
 {
     if (ui->profileEditButtonBox->standardButton(b) == QDialogButtonBox::Save) {
-        saveProfile();
+        saveConfig();
     }
     else {//reset
         m_profile->revert();
@@ -240,9 +232,7 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
 
 void MainWindow::startButtonPressed()
 {
-    checkIfSaved();
-
-    if (!m_profile->isValidate(current_profile)) {
+    if (!current_profile->isValid()) {
         QMessageBox::critical(this, tr("Error"), tr("Invalid profile or configuration."));
         return;
     }
@@ -339,12 +329,12 @@ void MainWindow::onMiscConfigurationChanged(bool saved)
 
 void MainWindow::backendTypeChanged(const QString &type)
 {
-    current_profile.type = type;
+    current_profile->type = type;
 
     //detect backend again no matter empty or not
     ui->backendEdit->setText(detectSSLocal());
 
-    if (current_profile.getBackendTypeID() == 0) {//other ports don't support timeout argument for now
+    if (current_profile->getBackendTypeID() == 0) {//other ports don't support timeout argument for now
         ui->timeoutSpinBox->setVisible(true);
         ui->timeoutLabel->setVisible(true);
     }
@@ -357,43 +347,43 @@ void MainWindow::backendTypeChanged(const QString &type)
 
 void MainWindow::serverEditFinished(const QString &str)
 {
-    current_profile.server = str;
+    current_profile->server = str;
     emit configurationChanged();
 }
 
 void MainWindow::sportEditFinished(const QString &str)
 {
-    current_profile.server_port = str;
+    current_profile->server_port = str;
     emit configurationChanged();
 }
 
 void MainWindow::pwdEditFinished(const QString &str)
 {
-    current_profile.password = str;
+    current_profile->password = str;
     emit configurationChanged();
 }
 
 void MainWindow::laddrEditFinished(const QString &str)
 {
-    current_profile.local_addr = str;
+    current_profile->local_addr = str;
     emit configurationChanged();
 }
 
 void MainWindow::lportEditFinished(const QString &str)
 {
-    current_profile.local_port = str;
+    current_profile->local_port = str;
     emit configurationChanged();
 }
 
 void MainWindow::methodChanged(const QString &m)
 {
-    current_profile.method = m;
+    current_profile->method = m;
     emit configurationChanged();
 }
 
 void MainWindow::timeoutChanged(int t)
 {
-    current_profile.timeout = QString::number(t);
+    current_profile->timeout = QString::number(t);
     emit configurationChanged();
 }
 
@@ -430,17 +420,12 @@ void MainWindow::debugChecked(int c)
     emit miscConfigurationChanged();
 }
 
-void MainWindow::miscButtonBoxClicked()
-{
-    saveMiscConfig();
-}
-
 void MainWindow::checkIfSaved()
 {
     if (ui->profileEditButtonBox->isEnabled()) {
         QMessageBox::StandardButton save = QMessageBox::question(this, tr("Unsaved Profile"), tr("Current profile is not saved yet.\nDo you want to save it now?"), QMessageBox::Save|QMessageBox::No, QMessageBox::Save);
         if (save == QMessageBox::Save) {
-            saveProfile();
+            saveConfig();
         }
     }
 }

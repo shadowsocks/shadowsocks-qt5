@@ -36,16 +36,14 @@ public:
     bool isDebug();
     int count();
     QStringList getProfileList();
-    inline SSProfile &rProfileAt(int i) { return profileList[i]; }
-    inline SSProfile &rCurrentProfile() { return profileList[m_index]; }
-    inline SSProfile &rLastProfile() { return profileList.last(); }
+    inline SSProfile *profileAt(int i) { return &profileList[i]; }
+    inline SSProfile *currentProfile() { return &profileList[m_index]; }
+    inline SSProfile *lastProfile() { return &profileList.last(); }
     void revert();
     void addProfile(const QString &);
     void addProfileFromSSURI(const QString &, QString);
-    void saveProfile(int, SSProfile &);
     void deleteProfile(int);
     void saveProfileToJSON();
-    bool isValidate(const SSProfile &);//check backend as well as profile
 
 private:
     int m_index;
@@ -56,7 +54,6 @@ private:
     QString m_file;
     QJsonDocument JSONDoc;
     QJsonObject JSONObj;
-    QJsonArray CONFArray;
 };
 
 #endif // PROFILES_H

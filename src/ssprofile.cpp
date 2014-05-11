@@ -4,6 +4,7 @@
 #include <QStandardPaths>
 #include <QCoreApplication>
 #include <QDebug>
+#include "ssvalidator.h"
 #include "ssprofile.h"
 
 SSProfile::SSProfile() :
@@ -110,4 +111,18 @@ bool SSProfile::isBackendMatchType()
     }
 
     return (rType == this->getBackendTypeID());
+}
+
+bool SSProfile::isValid() const
+{
+    bool valid;
+    QFile backendFile(backend);
+    valid = SSValidator::validatePort(server_port) && SSValidator::validatePort(local_port) && SSValidator::validateMethod(method) && backendFile.exists();
+
+    //TODO: more accurate
+    if (server.isEmpty() || local_addr.isEmpty() || timeout.toInt() < 1 || !valid) {
+        return false;
+    }
+    else
+        return true;
 }

@@ -9,6 +9,7 @@ public:
     void setBackend(const QString &a);
     int getBackendTypeID();
     bool isBackendMatchType();
+    bool isValid() const;
 
     QString backend;
     QString type;

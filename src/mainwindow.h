@@ -73,13 +73,13 @@ private slots:
     void autoHideChecked(int);
     void autoStartChecked(int);
     void debugChecked(int);
-    void miscButtonBoxClicked();
     void aboutButtonClicked();
+    void saveConfig();
 
 private:
     Ui::MainWindow *ui;
     SS_Process ss_local;
-    SSProfile current_profile;
+    SSProfile *current_profile;
     QString detectSSLocal();
     QString jsonconfigFile;
     IP4Validator ipv4addrValidator;
@@ -87,8 +87,6 @@ private:
     QSystemTrayIcon systray;
     QMenu systrayMenu;
     AddProfileDialogue addProfileDlg;
-    void saveProfile();
-    void saveMiscConfig();
     void checkIfSaved();
     static const QString aboutText;
 

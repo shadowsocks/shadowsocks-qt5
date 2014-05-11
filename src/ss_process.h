@@ -20,7 +20,7 @@ class SS_Process : public QObject
 public:
     SS_Process(QObject *parent = 0);
     ~SS_Process();
-    void start(SSProfile&, bool debug = false, bool tfo = false);
+    void start(SSProfile * const, bool debug = false, bool tfo = false);
     void stop();
     bool isRunning();
 

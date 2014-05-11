@@ -46,7 +46,7 @@ void Profiles::setJSONFile(const QString &file)
     }
 
     JSONObj = JSONDoc.object();
-    CONFArray = JSONObj["configs"].toArray();
+    QJsonArray CONFArray = JSONObj["configs"].toArray();
     profileList.clear();//clear list before
     if (CONFArray.isEmpty()) {
         qWarning() << "configs is empty. Please check your gui-config.json";
@@ -105,7 +105,6 @@ void Profiles::addProfile(const QString &pName)
     json["local_port"] = QJsonValue(p.local_port);
     json["method"] = QJsonValue(p.method);
     json["timeout"] = QJsonValue(p.timeout);
-    CONFArray << QJsonValue(json);
 }
 
 void Profiles::addProfileFromSSURI(const QString &name, QString uri)
@@ -133,40 +132,36 @@ void Profiles::addProfileFromSSURI(const QString &name, QString uri)
     json["local_port"] = QJsonValue(p.local_port);
     json["timeout"] = QJsonValue(p.timeout);
     profileList << p;
-    CONFArray << QJsonValue(json);
-}
-
-void Profiles::saveProfile(int index, SSProfile &p)
-{
-    profileList.replace(index, p);
-
-    QJsonObject json;
-    json["backend"] = QJsonValue(p.backend);
-    json["type"] = QJsonValue(p.type);
-    json["profile"] = QJsonValue(p.profileName);
-    json["server"] = QJsonValue(p.server);
-    json["server_port"] = QJsonValue(p.server_port);
-    json["password"] = QJsonValue(p.password);
-    json["local_address"] = QJsonValue(p.local_addr);
-    json["local_port"] = QJsonValue(p.local_port);
-    json["method"] = QJsonValue(p.method.isEmpty() ? QString("table") : p.method.toLower());//lower-case in config
-    json["timeout"] = QJsonValue(p.timeout);
-    CONFArray.replace(index, QJsonValue(json));
 }
 
 void Profiles::deleteProfile(int index)
 {
     profileList.removeAt(index);
-    CONFArray.removeAt(index);
 }
 
 void Profiles::saveProfileToJSON()
 {
+    QJsonArray newConfArray;
+    for (QList<SSProfile>::iterator it = profileList.begin(); it != profileList.end(); ++it) {
+        QJsonObject json;
+        json["backend"] = QJsonValue(it->backend);
+        json["type"] = QJsonValue(it->type);
+        json["profile"] = QJsonValue(it->profileName);
+        json["server"] = QJsonValue(it->server);
+        json["server_port"] = QJsonValue(it->server_port);
+        json["password"] = QJsonValue(it->password);
+        json["local_address"] = QJsonValue(it->local_addr);
+        json["local_port"] = QJsonValue(it->local_port);
+        json["method"] = QJsonValue(it->method.isEmpty() ? QString("table") : it->method.toLower());//lower-case in config
+        json["timeout"] = QJsonValue(it->timeout);
+        newConfArray << QJsonValue(json);
+    }
+
     JSONObj["index"] = QJsonValue(m_index);
     JSONObj["debug"] = QJsonValue(debugLog);
     JSONObj["autoHide"] = QJsonValue(autoHide);
     JSONObj["autoStart"] = QJsonValue(autoStart);
-    JSONObj["configs"] = QJsonValue(CONFArray);
+    JSONObj["configs"] = QJsonValue(newConfArray);
 
     JSONDoc.setObject(JSONObj);
 
@@ -224,19 +219,4 @@ bool Profiles::isAutoHide()
 void Profiles::revert()
 {
     setJSONFile(m_file);
-}
-
-bool Profiles::isValidate(const SSProfile &sp)
-{
-    bool valid;
-
-    valid = SSValidator::validatePort(sp.server_port) && SSValidator::validatePort(sp.local_port);
-    valid = valid && SSValidator::validateMethod(sp.method);
-
-    //TODO: more accurate
-    if (sp.server.isEmpty() || sp.local_addr.isEmpty() || sp.timeout.toInt() < 1 || sp.backend.isEmpty() || !valid) {
-        return false;
-    }
-    else
-        return true;
 }

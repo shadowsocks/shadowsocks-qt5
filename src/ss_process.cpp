@@ -20,11 +20,11 @@ bool SS_Process::isRunning()
     return running;
 }
 
-void SS_Process::start(SSProfile &p, bool debug, bool tfo)
+void SS_Process::start(SSProfile * const p, bool debug, bool tfo)
 {
-    app_path = p.backend;
-    backendTypeID = p.getBackendTypeID();
-    start(p.server, p.password, p.server_port, p.local_addr, p.local_port, p.method, p.timeout, debug, tfo);
+    app_path = p->backend;
+    backendTypeID = p->getBackendTypeID();
+    start(p->server, p->password, p->server_port, p->local_addr, p->local_port, p->method, p->timeout, debug, tfo);
 }
 
 void SS_Process::start(QString &args)
