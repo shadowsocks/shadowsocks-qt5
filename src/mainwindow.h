@@ -14,10 +14,10 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QFileDialog>
-#include <QFile>
 #include <QStandardPaths>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QCloseEvent>
 #include "ssprofile.h"
 #include "configuration.h"
 #include "ss_process.h"
@@ -86,7 +86,6 @@ private:
     QSystemTrayIcon systray;
     QMenu systrayMenu;
     AddProfileDialogue addProfileDlg;
-    void checkIfSaved();
     void updateTranslucent(bool translucent);
     static const QString aboutText;
 
