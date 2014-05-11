@@ -31,16 +31,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="leftMargin">
-     <number>4</number>
-    </property>
-    <property name="topMargin">
-     <number>4</number>
-    </property>
-    <property name="rightMargin">
-     <number>4</number>
-    </property>
-    <property name="bottomMargin">
+    <property name="margin">
      <number>4</number>
     </property>
     <item>
@@ -84,7 +75,7 @@
             <property name="echoMode">
              <enum>QLineEdit::PasswordEchoOnEdit</enum>
             </property>
-            <property name="clearButtonEnabled">
+            <property name="clearButtonEnabled" stdset="0">
              <bool>true</bool>
             </property>
            </widget>
@@ -153,7 +144,7 @@
             <property name="maxLength">
              <number>200</number>
             </property>
-            <property name="clearButtonEnabled">
+            <property name="clearButtonEnabled" stdset="0">
              <bool>true</bool>
             </property>
            </widget>
@@ -170,7 +161,7 @@
           </item>
           <item row="5" column="1">
            <widget class="QComboBox" name="methodComboBox">
-            <property name="currentText">
+            <property name="currentText" stdset="0">
              <string notr="true"/>
             </property>
            </widget>
@@ -226,10 +217,16 @@ Not every port of Shadowsocks support this option.</string>
           </item>
           <item row="2" column="1" colspan="3">
            <widget class="QLineEdit" name="backendEdit">
+            <property name="cursor">
+             <cursorShape>ForbiddenCursor</cursorShape>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
-            <property name="clearButtonEnabled">
+            <property name="clearButtonEnabled" stdset="0">
              <bool>false</bool>
             </property>
            </widget>
@@ -344,16 +341,7 @@ Not every port of Shadowsocks support this option.</string>
         <string>Log</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
+        <property name="margin">
          <number>0</number>
         </property>
         <item>
@@ -477,6 +465,12 @@ background-color: rgb(0, 0, 0);</string>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>profileComboBox</tabstop>
+  <tabstop>addProfileButton</tabstop>
+  <tabstop>delProfileButton</tabstop>
+  <tabstop>backendTypeCombo</tabstop>
+  <tabstop>backendEdit</tabstop>
+  <tabstop>backendToolButton</tabstop>
   <tabstop>serverEdit</tabstop>
   <tabstop>sportEdit</tabstop>
   <tabstop>pwdEdit</tabstop>
@@ -485,15 +479,9 @@ background-color: rgb(0, 0, 0);</string>
   <tabstop>methodComboBox</tabstop>
   <tabstop>timeoutSpinBox</tabstop>
   <tabstop>tfoCheckBox</tabstop>
-  <tabstop>profileEditButtonBox</tabstop>
   <tabstop>startButton</tabstop>
   <tabstop>stopButton</tabstop>
-  <tabstop>profileComboBox</tabstop>
-  <tabstop>addProfileButton</tabstop>
-  <tabstop>delProfileButton</tabstop>
-  <tabstop>backendTypeCombo</tabstop>
-  <tabstop>backendEdit</tabstop>
-  <tabstop>backendToolButton</tabstop>
+  <tabstop>profileEditButtonBox</tabstop>
   <tabstop>logBrowser</tabstop>
   <tabstop>debugCheck</tabstop>
   <tabstop>autostartCheck</tabstop>

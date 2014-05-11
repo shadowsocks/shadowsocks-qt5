@@ -131,7 +131,7 @@ void MainWindow::onBackendToolButtonPressed()
     }
     this->setWindowState(Qt::WindowActive);
     this->activateWindow();
-    ui->backendEdit->setFocus();
+    ui->serverEdit->setFocus();
 }
 
 void MainWindow::onCurrentProfileChanged(int i)
