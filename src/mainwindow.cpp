@@ -29,9 +29,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->sportEdit->setValidator(&portValidator);
     ui->lportEdit->setValidator(&portValidator);
     ui->methodComboBox->addItems(SSValidator::supportedMethod);
-    if (!m_conf->isTFOAvailable()) {
-        ui->tfoCheckBox->setVisible(false);
-    }
 
     ui->debugCheck->setChecked(m_conf->isDebug());
     ui->autohideCheck->setChecked(m_conf->isAutoHide());
@@ -336,13 +333,20 @@ void MainWindow::backendTypeChanged(const QString &type)
 
     ui->backendEdit->setText(current_profile->getBackend());
 
-    if (current_profile->getBackendTypeID() == 0) {//other ports don't support timeout argument for now
+    int tID = current_profile->getBackendTypeID();
+    if (tID == 0 || tID == 1) {//other ports don't support timeout argument for now
         ui->timeoutSpinBox->setVisible(true);
         ui->timeoutLabel->setVisible(true);
     }
     else {
         ui->timeoutSpinBox->setVisible(false);
         ui->timeoutLabel->setVisible(false);
+    }
+    if ((tID == 0 || tID == 3) && m_conf->isTFOAvailable()) {
+        ui->tfoCheckBox->setVisible(true);
+    }
+    else {
+        ui->tfoCheckBox->setVisible(false);
     }
     emit configurationChanged();
 }
