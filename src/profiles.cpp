@@ -66,7 +66,7 @@ void Profiles::setJSONFile(const QString &file)
             p.local_port = json["local_port"].toString();
             p.method = json["method"].toString().toUpper();//using Upper-case in GUI
             p.timeout = json["timeout"].toString();
-            profileList.append(p);
+            profileList << p;
         }
         m_index = JSONObj["index"].toInt();
     }
@@ -85,7 +85,7 @@ QStringList Profiles::getProfileList()
 {
     QStringList s;
     for (QList<SSProfile>::iterator it = profileList.begin(); it != profileList.end(); ++it) {
-        s.append((*it).profileName);
+        s << (*it).profileName;
     }
     return s;
 }
@@ -94,7 +94,7 @@ void Profiles::addProfile(const QString &pName)
 {
     SSProfile p;
     p.profileName = pName;
-    profileList.append(p);
+    profileList << p;
 
     QJsonObject json;
     json["profile"] = QJsonValue(p.profileName);
@@ -105,7 +105,7 @@ void Profiles::addProfile(const QString &pName)
     json["local_port"] = QJsonValue(p.local_port);
     json["method"] = QJsonValue(p.method);
     json["timeout"] = QJsonValue(p.timeout);
-    CONFArray.append(QJsonValue(json));
+    CONFArray << QJsonValue(json);
 }
 
 void Profiles::addProfileFromSSURI(const QString &name, QString uri)
@@ -132,8 +132,8 @@ void Profiles::addProfileFromSSURI(const QString &name, QString uri)
     json["local_address"] = QJsonValue(p.local_addr);
     json["local_port"] = QJsonValue(p.local_port);
     json["timeout"] = QJsonValue(p.timeout);
-    profileList.append(p);
-    CONFArray.append(QJsonValue(json));
+    profileList << p;
+    CONFArray << QJsonValue(json);
 }
 
 void Profiles::saveProfile(int index, SSProfile &p)

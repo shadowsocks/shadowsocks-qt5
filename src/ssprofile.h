@@ -4,8 +4,7 @@
 class SSProfile
 {
 public:
-    SSProfile() : backend(), type("Shadowsocks-libev"),  profileName(), server(), server_port("8388"), password(), local_addr("127.0.0.1"), local_port("1080"),  method("aes-256-cfb"), timeout("600") {}
-
+    SSProfile();
     void setBackend();
     void setBackend(const QString &a);
     int getBackendTypeID();
