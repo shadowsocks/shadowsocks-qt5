@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->debugCheck->setChecked(m_profile->isDebug());
     ui->autohideCheck->setChecked(m_profile->isAutoHide());
     ui->autostartCheck->setChecked(m_profile->isAutoStart());
+    ui->translucentCheck->setChecked(m_profile->isTranslucent());
+    updateTranslucent(m_profile->isTranslucent());
 
     //desktop systray
     systrayMenu.addAction(tr("Show/Hide"), this, SLOT(showorhideWindow()));
@@ -54,10 +56,8 @@ MainWindow::MainWindow(QWidget *parent) :
 #ifdef _WIN32
     QtWin::enableBlurBehindWindow(this);
     QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
-    setAttribute(Qt::WA_TranslucentBackground);
     QtWin::enableBlurBehindWindow(&addProfileDlg);
     QtWin::extendFrameIntoClientArea(&addProfileDlg, -1, -1, -1, -1);
-    //addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);
 #endif
 
     //Move to the center of the screen
@@ -104,9 +104,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Misc
     connect(this, &MainWindow::miscConfigurationChanged, this, &MainWindow::onMiscConfigurationChanged);
-    connect(ui->autohideCheck, &QCheckBox::stateChanged, this, &MainWindow::autoHideChecked);
-    connect(ui->autostartCheck, &QCheckBox::stateChanged, this, &MainWindow::autoStartChecked);
-    connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::debugChecked);
+    connect(ui->autohideCheck, &QCheckBox::stateChanged, this, &MainWindow::autoHideToggled);
+    connect(ui->autostartCheck, &QCheckBox::stateChanged, this, &MainWindow::autoStartToggled);
+    connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::debugToggled);
+    connect(ui->translucentCheck, &QCheckBox::toggled, this, &MainWindow::transculentToggled);
     connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::saveConfig);
     connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::aboutButtonClicked);
 /*
@@ -387,36 +388,27 @@ void MainWindow::timeoutChanged(int t)
     emit configurationChanged();
 }
 
-void MainWindow::autoHideChecked(int c)
+void MainWindow::autoHideToggled(bool c)
 {
-    if (c == Qt::Checked) {
-        m_profile->setAutoHide(true);
-    }
-    else
-        m_profile->setAutoHide(false);
-
+    m_profile->setAutoHide(c);
     emit miscConfigurationChanged();
 }
 
-void MainWindow::autoStartChecked(int c)
+void MainWindow::autoStartToggled(bool c)
 {
-    if (c == Qt::Checked) {
-        m_profile->setAutoStart(true);
-    }
-    else
-        m_profile->setAutoStart(false);
-
+    m_profile->setAutoStart(c);
     emit miscConfigurationChanged();
 }
 
-void MainWindow::debugChecked(int c)
+void MainWindow::debugToggled(bool c)
 {
-    if (c == Qt::Checked) {
-        m_profile->setDebug(true);
-    }
-    else
-        m_profile->setDebug(false);
+    m_profile->setDebug(c);
+    emit miscConfigurationChanged();
+}
 
+void MainWindow::transculentToggled(bool c)
+{
+    m_profile->setTranslucent(c);
     emit miscConfigurationChanged();
 }
 
@@ -427,6 +419,14 @@ void MainWindow::checkIfSaved()
         if (save == QMessageBox::Save) {
             saveConfig();
         }
+    }
+}
+
+void MainWindow::updateTranslucent(bool translucent)
+{
+    if (translucent) {
+        this->setAttribute(Qt::WA_TranslucentBackground);
+        addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);
     }
 }
 

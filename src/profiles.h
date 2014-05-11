@@ -34,6 +34,8 @@ public:
     bool isAutoHide();
     void setDebug(bool);
     bool isDebug();
+    void setTranslucent(bool);
+    bool isTranslucent();
     int count();
     QStringList getProfileList();
     inline SSProfile *profileAt(int i) { return &profileList[i]; }
@@ -50,6 +52,7 @@ private:
     bool debugLog;
     bool autoHide;
     bool autoStart;
+    bool translucent;
     QList<SSProfile> profileList;
     QString m_file;
     QJsonDocument JSONDoc;

@@ -70,9 +70,10 @@ private slots:
     void lportEditFinished(const QString &);
     void methodChanged(const QString &);
     void timeoutChanged(int);
-    void autoHideChecked(int);
-    void autoStartChecked(int);
-    void debugChecked(int);
+    void autoHideToggled(bool);
+    void autoStartToggled(bool);
+    void debugToggled(bool);
+    void transculentToggled(bool);
     void aboutButtonClicked();
     void saveConfig();
 
@@ -88,6 +89,7 @@ private:
     QMenu systrayMenu;
     AddProfileDialogue addProfileDlg;
     void checkIfSaved();
+    void updateTranslucent(bool translucent);
     static const QString aboutText;
 
 protected:

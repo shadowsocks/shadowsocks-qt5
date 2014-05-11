@@ -73,6 +73,7 @@ void Profiles::setJSONFile(const QString &file)
     debugLog = JSONObj["debug"].toBool();
     autoHide = JSONObj["autoHide"].toBool();
     autoStart = JSONObj["autoStart"].toBool();
+    translucent = JSONObj["translucent"].toBool();
     JSONFile.close();
 }
 
@@ -161,6 +162,7 @@ void Profiles::saveProfileToJSON()
     JSONObj["debug"] = QJsonValue(debugLog);
     JSONObj["autoHide"] = QJsonValue(autoHide);
     JSONObj["autoStart"] = QJsonValue(autoStart);
+    JSONObj["translucent"] = QJsonValue(translucent);
     JSONObj["configs"] = QJsonValue(newConfArray);
 
     JSONDoc.setObject(JSONObj);
@@ -214,6 +216,16 @@ void Profiles::setAutoHide(bool h)
 bool Profiles::isAutoHide()
 {
     return autoHide;
+}
+
+void Profiles::setTranslucent(bool t)
+{
+    translucent = t;
+}
+
+bool Profiles::isTranslucent()
+{
+    return translucent;
 }
 
 void Profiles::revert()
