@@ -149,17 +149,17 @@
         <translation>日志</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="388"/>
+        <location filename="../mainwindow.ui" line="383"/>
         <source>Misc</source>
         <translation>杂项</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="394"/>
+        <location filename="../mainwindow.ui" line="389"/>
         <source>Start backend automatically when started and the current profile is valid.</source>
         <translation>启动后如果当前配置有效则自动启动后端</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="471"/>
+        <location filename="../mainwindow.ui" line="466"/>
         <source>Use translucent background</source>
         <translation>使用半透明背景</translation>
     </message>
@@ -168,22 +168,22 @@
         <translation type="vanished">当ss-qt5启动后如果当前配置有效则自动启动后端</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="397"/>
+        <location filename="../mainwindow.ui" line="392"/>
         <source>Autostart if profile is valid</source>
         <translation>配置有效则自动启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="464"/>
+        <location filename="../mainwindow.ui" line="459"/>
         <source>Debug-level log</source>
         <translation>除错级别的日志</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="420"/>
+        <location filename="../mainwindow.ui" line="415"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="432"/>
+        <location filename="../mainwindow.ui" line="427"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
@@ -192,7 +192,7 @@
         <translation type="vanished">当ss-qt5启动后自动隐藏主窗口</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="444"/>
+        <location filename="../mainwindow.ui" line="439"/>
         <source>Auto hide main window when started</source>
         <translation>启动后自动隐藏主窗口</translation>
     </message>
@@ -219,33 +219,43 @@ Not every port of Shadowsocks support this option.</source>
         <translation>退出</translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="309"/>
+        <source>Save Changes</source>
+        <translation>保存变更</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="309"/>
+        <source>Configuration has been changed.
+Do you want to save it now?</source>
+        <translation>设置已经被变更。
+你想要现在保存吗？</translation>
+    </message>
+    <message>
         <source>&lt;h3&gt;Platform-Cross GUI Client for Shadowsocks&lt;/h3&gt;&lt;p&gt;Version: 0.3.1&lt;/p&gt;&lt;p&gt;Copyright © 2014 William Wong (&lt;a href=&apos;https://twitter.com/librehat&apos;&gt;@librehat&lt;/a&gt;)&lt;/p&gt;&lt;p&gt;Licensed under LGPLv3&lt;br /&gt;Project Hosted at &lt;a href=&apos;https://github.com/librehat/shadowsocks-qt5&apos;&gt;GitHub&lt;/a&gt;&lt;/p&gt;</source>
         <translation type="vanished">&lt;h3&gt;Shadowsocks的跨平台图形化客户端&lt;/h3&gt;&lt;p&gt;版本： 0.3.1&lt;/p&gt;&lt;p&gt;版权所有 © 2014 William Wong (&lt;a href=&apos;https://twitter.com/librehat&apos;&gt;@librehat&lt;/a&gt;)&lt;/p&gt;&lt;p&gt;以LGPLv3许可证发布&lt;br /&gt;项目托管在&lt;a href=&apos;https://github.com/librehat/shadowsocks-qt5&apos;&gt;GitHub&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="237"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="237"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Invalid profile or configuration.</source>
         <translation>无效的配置或设置</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="418"/>
         <source>Unsaved Profile</source>
-        <translation>配置未保存</translation>
+        <translation type="vanished">配置未保存</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="418"/>
         <source>Current profile is not saved yet.
 Do you want to save it now?</source>
-        <translation>当前的配置暂未保存。
+        <translation type="vanished">当前的配置暂未保存。
 你希望现在就保存吗？</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="435"/>
+        <location filename="../mainwindow.cpp" line="428"/>
         <source>About Shadowsocks-Qt5</source>
         <translation>关于Shadowsocks-Qt5</translation>
     </message>

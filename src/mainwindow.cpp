@@ -306,7 +306,7 @@ void MainWindow::changeEvent(QEvent *e)
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     if (ui->profileEditButtonBox->isEnabled()) {//which means unsaved
-        QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Unsaved Profile"), tr("Current profile is not saved yet.\nDo you want to save it now?"), QMessageBox::Cancel|QMessageBox::Save|QMessageBox::No, QMessageBox::Save);
+        QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Save Changes"), tr("Configuration has been changed.\nDo you want to save it now?"), QMessageBox::Cancel|QMessageBox::Save|QMessageBox::No, QMessageBox::Save);
         if (answer == QMessageBox::Cancel) {
             e->ignore();
             return;
