@@ -24,7 +24,7 @@ public:
     bool isDebug();
     void setTranslucent(bool);
     bool isTranslucent();
-    bool isTFOAvailable() const;
+    inline bool isTFOAvailable() const { return tfo_available; }
     int count();
     QStringList getProfileList();
     inline SSProfile *profileAt(int i) { return &profileList[i]; }

@@ -107,11 +107,6 @@ int Configuration::count()
     return profileList.count();
 }
 
-bool Configuration::isTFOAvailable() const
-{
-    return tfo_available;
-}
-
 QStringList Configuration::getProfileList()
 {
     QStringList s;
