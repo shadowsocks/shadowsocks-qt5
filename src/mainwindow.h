@@ -79,7 +79,6 @@ private:
     Ui::MainWindow *ui;
     SS_Process ss_local;
     SSProfile *current_profile;
-    QString detectSSLocal();
     QString jsonconfigFile;
     IP4Validator ipv4addrValidator;
     PortValidator portValidator;

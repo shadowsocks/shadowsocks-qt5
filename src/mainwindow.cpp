@@ -150,7 +150,15 @@ void MainWindow::onCurrentProfileChanged(int i)
     current_profile = m_conf->currentProfile();
 
     ui->backendTypeCombo->setCurrentIndex(current_profile->getBackendTypeID());
-    ui->backendEdit->setText(current_profile->backend);
+    if(current_profile->backend.isEmpty()) {
+        ui->backendEdit->setText(current_profile->getBackend());
+        if(!current_profile->backend.isEmpty()) {
+            emit configurationChanged();
+        }
+    }
+    else {
+        ui->backendEdit->setText(current_profile->backend);
+    }
     ui->serverEdit->setText(current_profile->server);
     ui->sportEdit->setText(current_profile->server_port);
     ui->pwdEdit->setText(current_profile->password);
@@ -194,15 +202,6 @@ void MainWindow::onAddProfileDialogueRejected(bool enforce)
         //since there was no item previously, serverComboBox would change itself automatically.
         //we don't need to emit the signal again.
     }
-}
-
-QString MainWindow::detectSSLocal()
-{
-    //Check if backendType matches current one
-    if (!current_profile->isBackendMatchType()) {
-        current_profile->setBackend();
-    }
-    return current_profile->backend;
 }
 
 void MainWindow::saveConfig()
@@ -334,8 +333,7 @@ void MainWindow::backendTypeChanged(const QString &type)
 {
     current_profile->type = type;
 
-    //detect backend again no matter empty or not
-    ui->backendEdit->setText(detectSSLocal());
+    ui->backendEdit->setText(current_profile->getBackend());
 
     if (current_profile->getBackendTypeID() == 0) {//other ports don't support timeout argument for now
         ui->timeoutSpinBox->setVisible(true);

@@ -7,6 +7,7 @@ public:
     SSProfile();
     void setBackend();
     void setBackend(const QString &a);
+    QString getBackend();
     int getBackendTypeID();
     bool isBackendMatchType();
     bool isValid() const;

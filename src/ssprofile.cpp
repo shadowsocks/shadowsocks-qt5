@@ -61,6 +61,14 @@ void SSProfile::setBackend(const QString &a)
     backend = QDir::toNativeSeparators(a);
 }
 
+QString SSProfile::getBackend()
+{
+    if (!isBackendMatchType()) {
+        setBackend();
+    }
+    return backend;
+}
+
 int SSProfile::getBackendTypeID()
 {
     if (type == QString("Shadowsocks-Nodejs")) {
