@@ -21,9 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
         ssConfigDir.mkpath(ssConfigDir.absolutePath());
     }
 #endif
-    m_profile = new Profiles(jsonconfigFile);
+    m_conf = new Configuration(jsonconfigFile);
 
-    ui->profileComboBox->insertItems(0, m_profile->getProfileList());
+    ui->profileComboBox->insertItems(0, m_conf->getProfileList());
     ui->stopButton->setEnabled(false);
     ui->laddrEdit->setValidator(&ipv4addrValidator);
     ui->sportEdit->setValidator(&portValidator);
@@ -31,11 +31,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->methodComboBox->addItems(SSValidator::supportedMethod);
     ui->tfoCheckBox->setVisible(false);
 
-    ui->debugCheck->setChecked(m_profile->isDebug());
-    ui->autohideCheck->setChecked(m_profile->isAutoHide());
-    ui->autostartCheck->setChecked(m_profile->isAutoStart());
-    ui->translucentCheck->setChecked(m_profile->isTranslucent());
-    updateTranslucent(m_profile->isTranslucent());
+    ui->debugCheck->setChecked(m_conf->isDebug());
+    ui->autohideCheck->setChecked(m_conf->isAutoHide());
+    ui->autostartCheck->setChecked(m_conf->isAutoStart());
+    ui->translucentCheck->setChecked(m_conf->isTranslucent());
+    updateTranslucent(m_conf->isTranslucent());
 
     //desktop systray
     systrayMenu.addAction(tr("Show/Hide"), this, SLOT(showorhideWindow()));
@@ -80,14 +80,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
 
     //update current configuration
-    ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
+    ui->profileComboBox->setCurrentIndex(m_conf->getIndex());
     ui->backendTypeCombo->setCurrentText(current_profile->backend);
     /*
      * If there is no gui-config file, or the index is 0, then the function above wouldn't emit signal.
      * Therefore, we have to emit a signal manually.
      */
-    if (m_profile->getIndex() <= 0) {
-        emit ui->profileComboBox->currentIndexChanged(m_profile->getIndex());
+    if (m_conf->getIndex() <= 0) {
+        emit ui->profileComboBox->currentIndexChanged(m_conf->getIndex());
     }
 
     //connect signals and slots when config changed
@@ -122,7 +122,7 @@ MainWindow::~MainWindow()
 {
     ss_local.stop();//prevent crashes
     delete ui;
-    delete m_profile;
+    delete m_conf;
 }
 
 const QString MainWindow::aboutText = "<h3>Platform-Cross GUI Client for Shadowsocks</h3><p>Version: 0.4.1</p><p>Copyright © 2014 William Wong (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>";
@@ -148,8 +148,8 @@ void MainWindow::onCurrentProfileChanged(int i)
     }
 
     ss_local.stop();//Q: should we stop the backend when profile changed?
-    m_profile->setIndex(i);
-    current_profile = m_profile->currentProfile();
+    m_conf->setIndex(i);
+    current_profile = m_conf->currentProfile();
 
     ui->backendTypeCombo->setCurrentIndex(current_profile->getBackendTypeID());
     ui->backendEdit->setText(current_profile->backend);
@@ -175,12 +175,12 @@ void MainWindow::addProfileDialogue(bool enforce = false)
 void MainWindow::onAddProfileDialogueAccepted(const QString &name, bool u, const QString &uri)
 {
     if(u) {
-        m_profile->addProfileFromSSURI(name, uri);
+        m_conf->addProfileFromSSURI(name, uri);
     }
     else {
-        m_profile->addProfile(name);
+        m_conf->addProfile(name);
     }
-    current_profile = m_profile->lastProfile();
+    current_profile = m_conf->lastProfile();
     ui->profileComboBox->insertItem(ui->profileComboBox->count(), current_profile->profileName);
 
     //change serverComboBox, let it emit currentIndexChanged signal.
@@ -190,8 +190,8 @@ void MainWindow::onAddProfileDialogueAccepted(const QString &name, bool u, const
 void MainWindow::onAddProfileDialogueRejected(bool enforce)
 {
     if (enforce) {
-        m_profile->addProfile("");
-        current_profile = m_profile->lastProfile();
+        m_conf->addProfile("");
+        current_profile = m_conf->lastProfile();
         ui->profileComboBox->insertItem(ui->profileComboBox->count(), "");
         //since there was no item previously, serverComboBox would change itself automatically.
         //we don't need to emit the signal again.
@@ -209,7 +209,7 @@ QString MainWindow::detectSSLocal()
 
 void MainWindow::saveConfig()
 {
-    m_profile->saveProfileToJSON();
+    m_conf->saveProfileToJSON();
     emit miscConfigurationChanged(true);
     emit onConfigurationChanged(true);
 }
@@ -220,13 +220,13 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
         saveConfig();
     }
     else {//reset
-        m_profile->revert();
+        m_conf->revert();
         disconnect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
         ui->profileComboBox->clear();
-        ui->profileComboBox->insertItems(0, m_profile->getProfileList());
-        ui->profileComboBox->setCurrentIndex(m_profile->getIndex());
+        ui->profileComboBox->insertItems(0, m_conf->getProfileList());
+        ui->profileComboBox->setCurrentIndex(m_conf->getIndex());
         connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
-        emit ui->profileComboBox->currentIndexChanged(m_profile->getIndex());//same in MainWindow's constructor
+        emit ui->profileComboBox->currentIndexChanged(m_conf->getIndex());//same in MainWindow's constructor
         emit onConfigurationChanged(true);
     }
 }
@@ -249,7 +249,7 @@ void MainWindow::stopButtonPressed()
 void MainWindow::deleteProfile()
 {
     int i = ui->profileComboBox->currentIndex();
-    m_profile->deleteProfile(i);
+    m_conf->deleteProfile(i);
     ui->profileComboBox->removeItem(i);
 }
 
@@ -390,25 +390,25 @@ void MainWindow::timeoutChanged(int t)
 
 void MainWindow::autoHideToggled(bool c)
 {
-    m_profile->setAutoHide(c);
+    m_conf->setAutoHide(c);
     emit miscConfigurationChanged();
 }
 
 void MainWindow::autoStartToggled(bool c)
 {
-    m_profile->setAutoStart(c);
+    m_conf->setAutoStart(c);
     emit miscConfigurationChanged();
 }
 
 void MainWindow::debugToggled(bool c)
 {
-    m_profile->setDebug(c);
+    m_conf->setDebug(c);
     emit miscConfigurationChanged();
 }
 
 void MainWindow::transculentToggled(bool c)
 {
-    m_profile->setTranslucent(c);
+    m_conf->setTranslucent(c);
     emit miscConfigurationChanged();
 }
 

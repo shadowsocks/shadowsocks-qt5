@@ -8,7 +8,7 @@
 #include <QObject>
 #include <QString>
 #include <QProcess>
-#include "profiles.h"
+#include "ssprofile.h"
 
 #ifndef SS_PROCESS_H
 #define SS_PROCESS_H

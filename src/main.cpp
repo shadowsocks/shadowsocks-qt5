@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "profiles.h"
 #include "ss_process.h"
 #include <QApplication>
 #include <QTranslator>
@@ -27,10 +26,10 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    if (w.m_profile->isAutoStart()) {
+    if (w.m_conf->isAutoStart()) {
         w.startButtonPressed();
     }
-    if (w.m_profile->isAutoHide()) {
+    if (w.m_conf->isAutoHide()) {
         w.hide();
     }
     return a.exec();

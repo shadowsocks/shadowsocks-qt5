@@ -19,7 +19,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include "ssprofile.h"
-#include "profiles.h"
+#include "configuration.h"
 #include "ss_process.h"
 #include "ssvalidator.h"
 #include "ip4validator.h"
@@ -37,7 +37,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    Profiles *m_profile;
+    Configuration *m_conf;
 
 signals:
     void configurationChanged(bool saved = false);
