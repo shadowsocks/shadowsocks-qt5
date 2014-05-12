@@ -31,7 +31,16 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="margin">
+    <property name="leftMargin">
+     <number>4</number>
+    </property>
+    <property name="topMargin">
+     <number>4</number>
+    </property>
+    <property name="rightMargin">
+     <number>4</number>
+    </property>
+    <property name="bottomMargin">
      <number>4</number>
     </property>
     <item>
@@ -75,7 +84,7 @@
             <property name="echoMode">
              <enum>QLineEdit::PasswordEchoOnEdit</enum>
             </property>
-            <property name="clearButtonEnabled" stdset="0">
+            <property name="clearButtonEnabled">
              <bool>true</bool>
             </property>
            </widget>
@@ -144,7 +153,7 @@
             <property name="maxLength">
              <number>200</number>
             </property>
-            <property name="clearButtonEnabled" stdset="0">
+            <property name="clearButtonEnabled">
              <bool>true</bool>
             </property>
            </widget>
@@ -161,7 +170,7 @@
           </item>
           <item row="5" column="1">
            <widget class="QComboBox" name="methodComboBox">
-            <property name="currentText" stdset="0">
+            <property name="currentText">
              <string notr="true"/>
             </property>
            </widget>
@@ -226,7 +235,7 @@ Not every port of Shadowsocks support this option.</string>
             <property name="readOnly">
              <bool>true</bool>
             </property>
-            <property name="clearButtonEnabled" stdset="0">
+            <property name="clearButtonEnabled">
              <bool>false</bool>
             </property>
            </widget>
@@ -260,7 +269,7 @@ Not every port of Shadowsocks support this option.</string>
           <item row="1" column="1" colspan="4">
            <widget class="QComboBox" name="backendTypeCombo">
             <property name="currentIndex">
-             <number>0</number>
+             <number>-1</number>
             </property>
             <item>
              <property name="text">
@@ -341,7 +350,16 @@ Not every port of Shadowsocks support this option.</string>
         <string>Log</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="margin">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>

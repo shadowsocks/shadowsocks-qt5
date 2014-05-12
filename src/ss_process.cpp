@@ -85,6 +85,8 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
     if ((backendTypeID == 3 || backendTypeID == 0) && tfo) {//only python and libev ports support tfo
         args.append(" --fast-open");
     }
+#else
+    Q_UNUSED(tfo);
 #endif
 
     start(args);
