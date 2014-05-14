@@ -46,7 +46,7 @@ bool SSValidator::validatePort(const QString &port)
 {
     bool ok;
     int portNum = port.toInt(&ok);
-    if (portNum > 1 && portNum < 65535 && ok) {
+    if (portNum >= 0 && portNum <= 65535 && ok) {
         return true;
     }
     else
