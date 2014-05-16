@@ -48,7 +48,7 @@ void SSProfile::setBackend()
 void SSProfile::setBackend(const QString &a)
 {
 #ifdef _WIN32
-    if (type == QString("Shadowsocks-Python")) {
+    if (type.compare("Shadowsocks-Python", Qt::CaseInsensitive) == 0) {
         QDir python(a);
         python.cdUp();
         QString s(python.absolutePath() + QString("/Scripts/sslocal-script.py"));
@@ -71,17 +71,21 @@ QString SSProfile::getBackend()
 
 int SSProfile::getBackendTypeID()
 {
-    if (type == QString("Shadowsocks-Nodejs")) {
+    if (type.compare("Shadowsocks-libev", Qt::CaseInsensitive) == 0) {
+        return 0;
+    }
+    if (type.compare("Shadowsocks-NodeJS", Qt::CaseInsensitive) == 0) {
         return 1;
     }
-    else if (type == QString("Shadowsocks-Go")) {
+    else if (type.compare("Shadowsocks-Go", Qt::CaseInsensitive) == 0) {
         return 2;
     }
-    else if (type == QString("Shadowsocks-Python")) {
+    else if (type.compare("Shadowsocks-Python", Qt::CaseInsensitive) == 0) {
         return 3;
     }
     else {
-        return 0;//Shadowsocks-libev
+        qWarning() << "Error. Unknown backend type.";
+        return -1;
     }
 }
 

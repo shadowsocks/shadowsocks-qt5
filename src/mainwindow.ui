@@ -278,7 +278,7 @@ Not every port of Shadowsocks support this option.</string>
             </item>
             <item>
              <property name="text">
-              <string>Shadowsocks-Nodejs</string>
+              <string>Shadowsocks-NodeJS</string>
              </property>
             </item>
             <item>
