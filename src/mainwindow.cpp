@@ -275,11 +275,16 @@ void MainWindow::processStopped()
 void MainWindow::showorhideWindow()
 {
     if (this->isVisible()) {
-        this->hide();
+        if (this->isActiveWindow()) {
+            this->hide();
+        }
+        else {
+            this->activateWindow();
+            ui->startButton->setFocus();
+        }
     }
     else {
         this->show();
-        this->setWindowState(Qt::WindowActive);
         this->activateWindow();
         ui->startButton->setFocus();
     }
