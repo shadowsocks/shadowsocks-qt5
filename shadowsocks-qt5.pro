@@ -34,12 +34,6 @@ ssicon.files  = icon/shadowsocks-qt5.png
 
 target.path = $$binary_path
 
-win32: {
-    gui_conf.path  = target.path
-    gui_conf.files = gui-config.json
-    INSTALLS      += gui_conf
-}
-
 INSTALLS += target
 
 !mac:unix: INSTALLS += desktop ssicon
