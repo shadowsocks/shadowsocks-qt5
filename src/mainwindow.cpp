@@ -237,11 +237,6 @@ void MainWindow::startButtonPressed()
     ss_local.start(current_profile);
 }
 
-void MainWindow::stopButtonPressed()
-{
-    ss_local.stop();
-}
-
 void MainWindow::deleteProfile()
 {
     int i = ui->profileComboBox->currentIndex();
@@ -438,9 +433,4 @@ void MainWindow::updateTranslucent(bool translucent)
         this->setAttribute(Qt::WA_TranslucentBackground);
         addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);
     }
-}
-
-void MainWindow::aboutButtonClicked()
-{
-    QMessageBox::about(this, tr("About Shadowsocks-Qt5"), aboutText);
 }

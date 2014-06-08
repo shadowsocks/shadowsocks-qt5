@@ -53,7 +53,7 @@ private slots:
     void onAddProfileDialogueAccepted(const QString &, bool, const QString &);
     void onAddProfileDialogueRejected(bool enforce = false);
     void profileEditButtonClicked(QAbstractButton*);
-    void stopButtonPressed();
+    inline void stopButtonPressed() { ss_local.stop(); }
     void deleteProfile();
     void processStarted();
     void processStopped();
@@ -75,7 +75,7 @@ private slots:
     void autoStartToggled(bool);
     void debugToggled(bool);
     void transculentToggled(bool);
-    void aboutButtonClicked();
+    inline void aboutButtonClicked() { QMessageBox::about(this, tr("About Shadowsocks-Qt5"), aboutText); }
     void saveConfig();
 
 private:
