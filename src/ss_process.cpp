@@ -68,7 +68,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
     args.append(QString(" -l ") + l_port);
     args.append(QString(" -k \"") + pwd + QString("\""));
     args.append(QString(" -m ") + method.toLower());
-    if (backendTypeID == 0 || backendTypeID == 1) {//only libev and nodejs ports support this argument
+    if (backendTypeID != 2) {//go port doesn't support this argument
         args.append(QString(" -t ") + timeout);
     }
 
