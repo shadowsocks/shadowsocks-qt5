@@ -57,6 +57,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
     QtWin::enableBlurBehindWindow(&addProfileDlg);
     QtWin::extendFrameIntoClientArea(&addProfileDlg, -1, -1, -1, -1);
+    //smaller margins
+    ui->verticalLayout->setMargin(4);//centralwidget
 #endif
 
     //Move to the center of the screen
