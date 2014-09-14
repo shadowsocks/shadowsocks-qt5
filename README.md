@@ -8,7 +8,7 @@ Introduction
 
 Shadowsocks-Qt5 is a fast, reliable and platform-cross GUI fronted for [Shadowsocks](http://shadowsocks.org).
 
-Latest Stable Version: 0.4.1
+Latest Stable Version: 0.4.2
 
 Features
 --------
