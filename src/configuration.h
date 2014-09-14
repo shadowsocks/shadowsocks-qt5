@@ -24,6 +24,8 @@ public:
     bool isDebug();
     void setTranslucent(bool);
     bool isTranslucent();
+    void setRelativePath(bool);
+    bool isRelativePath();
     inline bool isTFOAvailable() const { return tfo_available; }
     int count();
     QStringList getProfileList();
@@ -42,6 +44,7 @@ private:
     bool autoHide;
     bool autoStart;
     bool translucent;
+    bool relativePath;
     QList<SSProfile> profileList;
     QString m_file;
     static bool tfo_available;

@@ -110,6 +110,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->autostartCheck, &QCheckBox::stateChanged, this, &MainWindow::autoStartToggled);
     connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::debugToggled);
     connect(ui->translucentCheck, &QCheckBox::toggled, this, &MainWindow::transculentToggled);
+    connect(ui->relativePathCheck, &QCheckBox::toggled, this, &MainWindow::relativePathToggled);
     connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::saveConfig);
     connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::aboutButtonClicked);
 }
@@ -127,7 +128,7 @@ void MainWindow::onBackendToolButtonPressed()
 {
     QString backend = QFileDialog::getOpenFileName();
     if (!backend.isEmpty()) {
-        current_profile->setBackend(backend);
+        current_profile->setBackend(backend, m_conf->isRelativePath());
         ui->backendEdit->setText(current_profile->backend);
         emit configurationChanged();
     }
@@ -147,7 +148,7 @@ void MainWindow::onCurrentProfileChanged(int i)
     m_conf->setIndex(i);
     current_profile = m_conf->currentProfile();
     if (current_profile->backend.isEmpty()) {
-        current_profile->setBackend();
+        current_profile->setBackend(m_conf->isRelativePath());
         if (!current_profile->backend.isEmpty()) {
             ui->profileEditButtonBox->setEnabled(true);
             ui->miscSaveButton->setEnabled(true);
@@ -433,4 +434,10 @@ void MainWindow::updateTranslucent(bool translucent)
         this->setAttribute(Qt::WA_TranslucentBackground);
         addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);
     }
+}
+
+void MainWindow::relativePathToggled(bool r)
+{
+    m_conf->setRelativePath(r);
+    emit configurationChanged();
 }

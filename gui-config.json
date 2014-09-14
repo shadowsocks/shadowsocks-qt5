@@ -18,5 +18,6 @@
     ],
     "debug": false,
     "index": 0,
-    "translucent": false
+    "translucent": false,
+    "relative_path": false
 }

@@ -12,7 +12,7 @@ SSProfile::SSProfile() :
     local_addr("127.0.0.1"), local_port("1080"),  method("aes-256-cfb"), timeout("600"), fast_open(false)
 { }
 
-void SSProfile::setBackend()
+void SSProfile::setBackend(bool relativePath)
 {
     QString execName, sslocal;
     switch (this->getBackendTypeID()) {
@@ -42,11 +42,12 @@ void SSProfile::setBackend()
     if(sslocal.isEmpty()) {//if not found then search system's PATH
         sslocal = QStandardPaths::findExecutable(execName);
     }
-    this->setBackend(sslocal);
+    this->setBackend(sslocal, relativePath);
 }
 
-void SSProfile::setBackend(const QString &a)
+void SSProfile::setBackend(const QString &a, bool relativePath)
 {
+    backend = QDir::toNativeSeparators(a);
 #ifdef _WIN32
     if (type.compare("Shadowsocks-Python", Qt::CaseInsensitive) == 0) {
         QDir python(a);
@@ -55,10 +56,13 @@ void SSProfile::setBackend(const QString &a)
         if (QFile::exists(s)) {
             backend = QDir::toNativeSeparators(s);
         }
-        return;
+        //return;
     }
 #endif
-    backend = QDir::toNativeSeparators(a);
+    if (relativePath) {
+        QDir workingDir;
+        backend = workingDir.relativeFilePath(backend);
+    }
 }
 
 QString SSProfile::getBackend()

@@ -7,8 +7,8 @@ class SSProfile
 {
 public:
     SSProfile();
-    void setBackend();
-    void setBackend(const QString &a);
+    void setBackend(bool relativePath = false);
+    void setBackend(const QString &a, bool relativePath = false);
     QString getBackend();
     int getBackendTypeID();
     bool isBackendMatchType();

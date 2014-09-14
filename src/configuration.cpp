@@ -43,6 +43,7 @@ void Configuration::setJSONFile(const QString &file)
         autoStart = false;
         autoHide = false;
         translucent = true;
+        relativePath = false;
         return;
     }
 
@@ -99,6 +100,7 @@ void Configuration::setJSONFile(const QString &file)
     autoHide = JSONObj["autoHide"].toBool();
     autoStart = JSONObj["autoStart"].toBool();
     translucent = JSONObj["translucent"].toBool();
+    relativePath = JSONObj["relative_path"].toBool();
     JSONFile.close();
 }
 
@@ -198,6 +200,7 @@ void Configuration::save()
     JSONObj["autoHide"] = QJsonValue(autoHide);
     JSONObj["autoStart"] = QJsonValue(autoStart);
     JSONObj["translucent"] = QJsonValue(translucent);
+    JSONObj["relative_path"] = QJsonValue(relativePath);
     JSONObj["configs"] = QJsonValue(newConfArray);
 
     QJsonDocument JSONDoc(JSONObj);
@@ -261,6 +264,16 @@ void Configuration::setTranslucent(bool t)
 bool Configuration::isTranslucent()
 {
     return translucent;
+}
+
+void Configuration::setRelativePath(bool r)
+{
+    relativePath = r;
+}
+
+bool Configuration::isRelativePath()
+{
+    return relativePath;
 }
 
 void Configuration::revert()
