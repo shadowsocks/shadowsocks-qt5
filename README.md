@@ -30,7 +30,10 @@ Installation
 
 ### Windows ###
 
-Downloading the prebuilt bundle (only **32-bit**) from [releases](https://github.com/librehat/shadowsocks-qt5/releases) is recommended because the bundles include `ss-local.exe`. For those who want to build from source, follow the instructions below.
+1. Download prebuilt binaries from [releases](https://github.com/librehat/shadowsocks-qt5/releases).
+2. Install/update your favourite shadowsocks backend. (You may want to download prebuilt [ss-libev](http://dl.lazyzhu.com/file/Toolchain/ss-libev/)).
+
+For those who want to build from source, follow the instructions below.
 
 Open this project using Qt Creator and build it.
 

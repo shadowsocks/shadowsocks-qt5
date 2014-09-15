@@ -6,7 +6,7 @@ SOURCES      += src/main.cpp\
                 src/addprofiledialogue.cpp \
                 src/ssvalidator.cpp \
                 src/ssprofile.cpp \
-    src/configuration.cpp
+                src/configuration.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ss_process.h \
@@ -15,7 +15,7 @@ HEADERS      += src/mainwindow.h \
                 src/portvalidator.h \
                 src/addprofiledialogue.h \
                 src/ssvalidator.h \
-    src/configuration.h
+                src/configuration.h
 
 FORMS        += src/mainwindow.ui \
                 src/addprofiledialogue.ui
