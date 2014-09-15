@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AddProfileDialogue</name>
     <message>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Server Domain/IP</source>
-        <translation>服务器域名/IP</translation>
+        <translation type="vanished">服务器域名/IP</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="96"/>
@@ -84,7 +84,7 @@
     <message>
         <location filename="../mainwindow.ui" line="269"/>
         <source>Shadowsocks-NodeJS</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="291"/>
@@ -175,7 +175,7 @@
     </message>
     <message>
         <source>Start backend automatically when ss-qt5 started if current profile is valid.</source>
-        <translation>当ss-qt5启动后如果当前配置有效则自动启动后端</translation>
+        <translation type="vanished">当ss-qt5启动后如果当前配置有效则自动启动后端</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="384"/>
@@ -199,7 +199,7 @@
     </message>
     <message>
         <source>Hide main window automatically when ss-qt5 started.</source>
-        <translation>当ss-qt5启动后自动隐藏主窗口</translation>
+        <translation type="vanished">当ss-qt5启动后自动隐藏主窗口</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="431"/>
@@ -219,9 +219,13 @@ Not every port of Shadowsocks support this option.</source>
         <translation>使用TCP Fast Open（如果可用）</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="40"/>
         <source>Show/Hide</source>
-        <translation>显示/隐藏</translation>
+        <translation type="vanished">显示/隐藏</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="40"/>
+        <source>Show</source>
+        <translation>显示</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="43"/>
@@ -229,12 +233,12 @@ Not every port of Shadowsocks support this option.</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="308"/>
+        <location filename="../mainwindow.cpp" line="298"/>
         <source>Save Changes</source>
         <translation>保存变更</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="308"/>
+        <location filename="../mainwindow.cpp" line="298"/>
         <source>Configuration has been changed.
 Do you want to save it now?</source>
         <translation>设置已经被变更。
@@ -242,7 +246,7 @@ Do you want to save it now?</source>
     </message>
     <message>
         <source>&lt;h3&gt;Platform-Cross GUI Client for Shadowsocks&lt;/h3&gt;&lt;p&gt;Version: 0.3.1&lt;/p&gt;&lt;p&gt;Copyright © 2014 William Wong (&lt;a href=&apos;https://twitter.com/librehat&apos;&gt;@librehat&lt;/a&gt;)&lt;/p&gt;&lt;p&gt;Licensed under LGPLv3&lt;br /&gt;Project Hosted at &lt;a href=&apos;https://github.com/librehat/shadowsocks-qt5&apos;&gt;GitHub&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;h3&gt;Shadowsocks的跨平台图形化客户端&lt;/h3&gt;&lt;p&gt;版本： 0.3.1&lt;/p&gt;&lt;p&gt;版权所有 © 2014 William Wong (&lt;a href=&apos;https://twitter.com/librehat&apos;&gt;@librehat&lt;/a&gt;)&lt;/p&gt;&lt;p&gt;以LGPLv3许可证发布&lt;br /&gt;项目托管在&lt;a href=&apos;https://github.com/librehat/shadowsocks-qt5&apos;&gt;GitHub&lt;/a&gt;&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;h3&gt;Shadowsocks的跨平台图形化客户端&lt;/h3&gt;&lt;p&gt;版本： 0.3.1&lt;/p&gt;&lt;p&gt;版权所有 © 2014 William Wong (&lt;a href=&apos;https://twitter.com/librehat&apos;&gt;@librehat&lt;/a&gt;)&lt;/p&gt;&lt;p&gt;以LGPLv3许可证发布&lt;br /&gt;项目托管在&lt;a href=&apos;https://github.com/librehat/shadowsocks-qt5&apos;&gt;GitHub&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="234"/>
@@ -256,12 +260,12 @@ Do you want to save it now?</source>
     </message>
     <message>
         <source>Unsaved Profile</source>
-        <translation>配置未保存</translation>
+        <translation type="vanished">配置未保存</translation>
     </message>
     <message>
         <source>Current profile is not saved yet.
 Do you want to save it now?</source>
-        <translation>当前的配置暂未保存。
+        <translation type="vanished">当前的配置暂未保存。
 你希望现在就保存吗？</translation>
     </message>
     <message>
@@ -273,22 +277,22 @@ Do you want to save it now?</source>
 <context>
     <name>SS_Process</name>
     <message>
-        <location filename="../ss_process.cpp" line="50"/>
+        <location filename="../ss_process.cpp" line="53"/>
         <source>Aborted: Invalid Backend Type.</source>
         <translation>终止：无效的后端类型。</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="58"/>
+        <location filename="../ss_process.cpp" line="61"/>
         <source>Backend arguments are </source>
         <translation>后端参数为</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="110"/>
+        <location filename="../ss_process.cpp" line="113"/>
         <source>Backend started. PID: </source>
         <translation>后端已启动。PID：</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="116"/>
+        <location filename="../ss_process.cpp" line="119"/>
         <source>Backend exited. Exit Code: </source>
         <translation>后端已退出。退出代号：</translation>
     </message>
