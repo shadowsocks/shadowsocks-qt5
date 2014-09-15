@@ -33,6 +33,7 @@ void SS_Process::start(QString &args)
 #ifdef _WIN32
     QString sslocalbin = QFileInfo(app_path).dir().canonicalPath();
     sslocalbin.append("/node_modules/shadowsocks/bin/sslocal");
+    sslocalbin = QString("\"") + QDir::toNativeSeparators(sslocalbin) + QString("\"");
     switch (backendTypeID) {
     case 0://libev
     case 2://go
@@ -40,11 +41,13 @@ void SS_Process::start(QString &args)
         break;
     case 1://nodejs
         proc.setProgram("node");
-        args.prepend(QDir::toNativeSeparators(sslocalbin));
+        args.prepend(sslocalbin);
         break;
     case 3://python
         proc.setProgram("python");
+        args.prepend(QString("\""));
         args.prepend(app_path);
+        args.prepend(QString("\""));
         break;
     default:
         qWarning() << tr("Aborted: Invalid Backend Type.") << backendTypeID;
