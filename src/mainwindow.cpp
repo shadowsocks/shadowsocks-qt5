@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updateTranslucent(m_conf->isTranslucent());
 
     //desktop systray
-    systrayMenu.addAction(tr("Show/Hide"), this, SLOT(showorhideWindow()));
+    systrayMenu.addAction(tr("Show"), this, SLOT(showWindow()));
     systrayMenu.addAction(tr("Start"), this, SLOT(startButtonPressed()));
     systrayMenu.addAction(tr("Stop"), this, SLOT(stopButtonPressed()));
     systrayMenu.addAction(tr("Exit"), this, SLOT(close()));
@@ -270,28 +270,18 @@ void MainWindow::processStopped()
 #endif
 }
 
-void MainWindow::showorhideWindow()
+void MainWindow::showWindow()
 {
-    if (this->isVisible()) {
-        if (this->isActiveWindow()) {
-            this->hide();
-        }
-        else {
-            this->activateWindow();
-            ui->startButton->setFocus();
-        }
-    }
-    else {
-        this->show();
-        this->activateWindow();
-        ui->startButton->setFocus();
-    }
+    this->show();
+    this->setWindowState(Qt::WindowActive);
+    this->activateWindow();
+    ui->startButton->setFocus();
 }
 
 void MainWindow::systrayActivated(QSystemTrayIcon::ActivationReason r)
 {
     if (r != 1) {
-        showorhideWindow();
+        showWindow();
     }
 }
 

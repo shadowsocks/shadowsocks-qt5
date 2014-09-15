@@ -58,7 +58,7 @@ private slots:
     void processStarted();
     void processStopped();
     void systrayActivated(QSystemTrayIcon::ActivationReason);
-    void showorhideWindow();
+    void showWindow();
     void onReadReadyProcess(const QByteArray &o);
     void onConfigurationChanged(bool);
     void serverEditFinished(const QString &);
