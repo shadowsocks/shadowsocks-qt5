@@ -6,6 +6,7 @@
 
 QT      += core gui widgets
 win32: QT += winextras
+!mac:unix: QT += x11extras
 
 TARGET   = ss-qt5
 TEMPLATE = app

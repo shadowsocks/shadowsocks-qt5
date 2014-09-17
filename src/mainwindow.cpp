@@ -5,6 +5,10 @@
 #include <QtWin>
 #endif
 
+#ifdef Q_WS_X11
+#include <QX11Info>
+#endif
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -421,6 +425,12 @@ void MainWindow::transculentToggled(bool c)
 void MainWindow::updateTranslucent(bool translucent)
 {
     if (translucent) {
+#ifdef Q_WS_X11
+        if(!QX11Info::isCompositingManagerRunning()) {
+            QMessageBox::warning(this, tr("Compositor is not running"), tr("Unable to set translucent background because there is no compositing manager running."));
+            return;
+        }
+#endif
         this->setAttribute(Qt::WA_TranslucentBackground);
         addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);
     }
