@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
         w.startButtonPressed();
     }
     if (w.m_conf->isAutoHide()) {
-        w.hide();
+        w.minimizeToSysTray();
     }
 
     return a.exec();

@@ -215,6 +215,22 @@ void MainWindow::saveConfig()
     emit configurationChanged(true);
 }
 
+void MainWindow::minimizeToSysTray()
+{
+#ifdef __linux__
+    QString currentDE = (getenv("XDG_CURRENT_DESKTOP"));
+    /*
+     * There is no systray in Unity. Nor a clean and simple way to use the indicator.
+     * While hiding window will cause inability to restore.
+     * Simply not to hide if the desktop is Unity.
+     */
+    if (currentDE.compare("Unity") == 0) {
+        return;
+    }
+#endif
+    this->hide();
+}
+
 void MainWindow::profileEditButtonClicked(QAbstractButton *b)
 {
     if (ui->profileEditButtonBox->standardButton(b) == QDialogButtonBox::Save) {
@@ -292,7 +308,7 @@ void MainWindow::systrayActivated(QSystemTrayIcon::ActivationReason r)
 void MainWindow::changeEvent(QEvent *e)
 {
     if (e->type() == QEvent::WindowStateChange && this->isMinimized()) {
-        this->hide();
+        minimizeToSysTray();
     }
 }
 

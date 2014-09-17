@@ -45,6 +45,9 @@ signals:
 public slots:
     void startButtonPressed();
 
+public:
+    void minimizeToSysTray();
+
 private slots:
     void onCurrentProfileChanged(int);
     void onBackendToolButtonPressed();
