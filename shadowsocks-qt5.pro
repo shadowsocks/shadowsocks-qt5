@@ -17,22 +17,19 @@ OTHER_FILES  += README.md \
                 gui-config.json \
                 shadowsocks-qt5.desktop
 
-binary_path   = /usr/bin
-desktop.path  = /usr/share/applications
 desktop.files = shadowsocks-qt5.desktop
-ssicon.path   = /usr/share/icons/hicolor/512x512/apps
-ssicon.files  = icon/shadowsocks-qt5.png
+ssicon.files  = src/icon/shadowsocks-qt5.png
 
-!equals($$(INSTALL_PREFIX), "") {
-    unix: {
-        binary_path   = $$(INSTALL_PREFIX)/bin
-        desktop.path  = $$(INSTALL_PREFIX)/share/applications
-        ssicon.path   = $$(INSTALL_PREFIX)/share/icons/hicolor/512x512/apps
-    }
-    else: binary_path = $$(INSTALL_PREFIX)
+isEmpty(INSTALL_PREFIX) {
+    unix: INSTALL_PREFIX = /usr
+    else: INSTALL_PREFIX = ..
+}
+unix: {
+    desktop.path  = $$INSTALL_PREFIX/share/applications
+    ssicon.path   = $$INSTALL_PREFIX/share/icons/hicolor/512x512/apps
 }
 
-target.path = $$binary_path
+target.path = $$INSTALL_PREFIX/bin
 
 INSTALLS += target
 
