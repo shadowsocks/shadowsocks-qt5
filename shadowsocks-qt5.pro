@@ -9,7 +9,7 @@ win32: QT += winextras
 
 TARGET   = ss-qt5
 TEMPLATE = app
-VERSION  = 0.4.2
+VERSION  = 0.4.3
 
 include(src/ss-qt5.pri)
 

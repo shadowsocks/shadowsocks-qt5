@@ -16,14 +16,14 @@ Features
 - Shadowsocks-Qt5 is written in C++/Qt5.
 - An intuitive and native UI. And JUST a **GUI fronted**. Keep your favourite Shadowsocks port as backend.
 - The `gui-config.json` file is partially compatible with [shadowsocks-gui](https://github.com/shadowsocks/shadowsocks-gui). In order to serve better, some new values have been added.
-- `gui-config.json` is located under ~/.config/shadowsocks for UNIX users, or under the main programme's directory for Windows users.
+- `gui-config.json` is located under ~/.config/shadowsocks on UNIX platforms, or under the main programme's directory in Windows.
 
 Note
 ----
 
-- It is not a standalone programme. By default, `ss-qt5` works along with `ss-local` from [shadowsocks-libev project](https://github.com/madeye/shadowsocks-libev). While it also supports using other shadowsocks ports as backend such as [Shadowsocks-Nodejs](https://github.com/clowwindy/shadowsocks-nodejs).
-- Shadowsocks-Nodejs port is highly recommended to serve as backend for better performance.
-- Don't be panic if you encounter a bug. Feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Remember to run from terminal or `cmd` and paste the output.
+- It is not a standalone programme. `ss-qt5` needs a shadowsocks backend such as Shadowsocks-libev and Shadowsocks-Python.
+- Shadowsocks-Python is highly recommended to serve as backend for better performance and stability.
+- Don't be panic if you encounter a bug. Please feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Just remember to run from terminal or `cmd` and paste the output to the description of issue.
 
 Installation
 ------------
@@ -57,3 +57,7 @@ qmake INSTALL_PREFIX=/usr
 make
 make install
 ```
+
+### Others ###
+
+Mac OS X and FreeBSD are not tested and they're NOT supported officially. Well, I do hope you can help me mantain the compatibility if you have spare time.
