@@ -80,7 +80,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
         if(backendTypeID == 2) {
             args.append("-d=true");//shadowsocks-go
         }
-        else if (backendTypeID == 0 || backendTypeID == 1) {
+        else {
             args.append(" -v");
         }
     }
