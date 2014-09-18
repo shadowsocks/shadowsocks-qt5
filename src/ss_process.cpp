@@ -36,6 +36,7 @@ void SS_Process::start(QString &args)
     sslocalbin = QString("\"") + QDir::toNativeSeparators(sslocalbin) + QString("\"");
     switch (backendTypeID) {
     case 0://libev
+        args.append(" -u");
     case 2://go
         proc.setProgram(app_path);
         break;
