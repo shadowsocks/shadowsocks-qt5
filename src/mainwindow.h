@@ -94,6 +94,7 @@ private:
     AddProfileDialogue addProfileDlg;
     void updateTranslucent(bool translucent);
     static const QString aboutText;
+    void showNotify(QString msg);
 
 protected:
     void changeEvent(QEvent *);

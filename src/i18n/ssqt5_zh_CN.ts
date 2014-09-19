@@ -28,7 +28,8 @@
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="26"/>
-        <location filename="../mainwindow.cpp" line="50"/>
+        <location filename="../mainwindow.cpp" line="54"/>
+        <location filename="../mainwindow.cpp" line="263"/>
         <source>Shadowsocks-Qt5</source>
         <translation></translation>
     </message>
@@ -88,13 +89,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="291"/>
-        <location filename="../mainwindow.cpp" line="41"/>
+        <location filename="../mainwindow.cpp" line="45"/>
         <source>Start</source>
         <translation>启动</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="316"/>
-        <location filename="../mainwindow.cpp" line="42"/>
+        <location filename="../mainwindow.cpp" line="46"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -166,7 +167,7 @@
     <message>
         <location filename="../mainwindow.ui" line="381"/>
         <source>Start backend automatically when started and the current profile is valid.</source>
-        <translation>启动后如果当前配置有效则自动启动后端</translation>
+        <translation>启动后如果当前配置有效则自动启动后端。</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="374"/>
@@ -223,22 +224,32 @@ Not every port of Shadowsocks support this option.</source>
         <translation type="vanished">显示/隐藏</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="40"/>
+        <location filename="../mainwindow.cpp" line="44"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="43"/>
+        <location filename="../mainwindow.cpp" line="47"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="282"/>
+        <source>Shadowsocks started! profile: %1.</source>
+        <translation>Shadowsocks 已启动！配置： %1。</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="298"/>
+        <source>Shadowsocks stoped!</source>
+        <translation>Shadowsocks 已停止！</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="326"/>
         <source>Save Changes</source>
         <translation>保存变更</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="298"/>
+        <location filename="../mainwindow.cpp" line="326"/>
         <source>Configuration has been changed.
 Do you want to save it now?</source>
         <translation>设置已经被变更。
@@ -249,14 +260,14 @@ Do you want to save it now?</source>
         <translation type="vanished">&lt;h3&gt;Shadowsocks的跨平台图形化客户端&lt;/h3&gt;&lt;p&gt;版本： 0.3.1&lt;/p&gt;&lt;p&gt;版权所有 © 2014 William Wong (&lt;a href=&apos;https://twitter.com/librehat&apos;&gt;@librehat&lt;/a&gt;)&lt;/p&gt;&lt;p&gt;以LGPLv3许可证发布&lt;br /&gt;项目托管在&lt;a href=&apos;https://github.com/librehat/shadowsocks-qt5&apos;&gt;GitHub&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="234"/>
+        <location filename="../mainwindow.cpp" line="254"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="234"/>
+        <location filename="../mainwindow.cpp" line="254"/>
         <source>Invalid profile or configuration.</source>
-        <translation>无效的配置或设置</translation>
+        <translation>无效的配置或设置。</translation>
     </message>
     <message>
         <source>Unsaved Profile</source>
@@ -269,7 +280,7 @@ Do you want to save it now?</source>
 你希望现在就保存吗？</translation>
     </message>
     <message>
-        <location filename="../mainwindow.h" line="79"/>
+        <location filename="../mainwindow.h" line="82"/>
         <source>About Shadowsocks-Qt5</source>
         <translation>关于Shadowsocks-Qt5</translation>
     </message>
