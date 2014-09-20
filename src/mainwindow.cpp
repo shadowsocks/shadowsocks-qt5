@@ -279,7 +279,7 @@ void MainWindow::processStarted()
     ui->logBrowser->clear();
 
     systray.setIcon(QIcon(":/icon/running_icon.png"));
-    showNotify(tr("Shadowsocks started! profile: %1.").arg(current_profile->profileName));
+    showNotification(tr("Shadowsocks started! profile: %1.").arg(current_profile->profileName));
 }
 
 void MainWindow::processStopped()
@@ -295,7 +295,7 @@ void MainWindow::processStopped()
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
 #endif
 
-    showNotify(tr("Shadowsocks stoped!"));
+    showNotification(tr("Shadowsocks stoped!"));
 }
 
 void MainWindow::showWindow()
