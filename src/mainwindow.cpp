@@ -258,9 +258,9 @@ void MainWindow::startButtonPressed()
     ss_local.start(current_profile);
 }
 
-void MainWindow::showNotify(QString msg)
+void MainWindow::showNotification(QString msg)
 {
-    systray.showMessage(tr("Shadowsocks-Qt5"), msg);
+    systray.showMessage("Shadowsocks-Qt5", msg);
 }
 
 void MainWindow::deleteProfile()
