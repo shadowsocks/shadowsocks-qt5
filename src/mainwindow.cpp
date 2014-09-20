@@ -258,6 +258,11 @@ void MainWindow::startButtonPressed()
     ss_local.start(current_profile);
 }
 
+void MainWindow::showNotification(QString msg)
+{
+    systray.showMessage("Shadowsocks-Qt5", msg);
+}
+
 void MainWindow::deleteProfile()
 {
     int i = ui->profileComboBox->currentIndex();
@@ -274,6 +279,7 @@ void MainWindow::processStarted()
     ui->logBrowser->clear();
 
     systray.setIcon(QIcon(":/icon/running_icon.png"));
+    showNotification(tr("Shadowsocks started! profile: %1.").arg(current_profile->profileName));
 }
 
 void MainWindow::processStopped()
@@ -288,6 +294,8 @@ void MainWindow::processStopped()
 #else
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
 #endif
+
+    showNotification(tr("Shadowsocks stoped!"));
 }
 
 void MainWindow::showWindow()
