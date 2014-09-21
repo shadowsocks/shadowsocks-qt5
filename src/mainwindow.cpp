@@ -355,13 +355,13 @@ void MainWindow::backendTypeChanged(const QString &type)
     ui->backendEdit->setText(current_profile->getBackend());
 
     int tID = current_profile->getBackendTypeID();
-    if (tID == 0 || tID == 1) {//other ports don't support timeout argument for now
-        ui->timeoutSpinBox->setVisible(true);
-        ui->timeoutLabel->setVisible(true);
-    }
-    else {
+    if (tID == 2) {//shadowsocks-go doesn't support timeout argument
         ui->timeoutSpinBox->setVisible(false);
         ui->timeoutLabel->setVisible(false);
+    }
+    else {
+        ui->timeoutSpinBox->setVisible(true);
+        ui->timeoutLabel->setVisible(true);
     }
     if ((tID == 0 || tID == 3) && m_conf->isTFOAvailable()) {
         ui->tfoCheckBox->setVisible(true);
