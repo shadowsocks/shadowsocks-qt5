@@ -52,11 +52,13 @@ void SSProfile::setBackend(const QString &a, bool relativePath)
     if (type.compare("Shadowsocks-Python", Qt::CaseInsensitive) == 0) {
         QDir python(a);
         python.cdUp();
-        QString s(python.absolutePath() + QString("/Scripts/sslocal-script.py"));
-        if (QFile::exists(s)) {
-            backend = QDir::toNativeSeparators(s);
+        QString scriptPath(python.absolutePath() + QString("/Scripts/sslocal-script.py"));
+        if (QFile::exists(scriptPath)) {
+            backend = QDir::toNativeSeparators(scriptPath);
         }
-        //return;
+        else {
+            backend = QString();
+        }
     }
 #endif
     if (relativePath) {
