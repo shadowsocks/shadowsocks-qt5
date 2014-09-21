@@ -448,10 +448,17 @@ void MainWindow::transculentToggled(bool c)
 
 void MainWindow::updateTranslucent(bool translucent)
 {
+    /*
+     * don't use translucent background for Linux!
+     */
+#ifndef __linux__
     if (translucent) {
         this->setAttribute(Qt::WA_TranslucentBackground);
         addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);
     }
+#else
+    Q_UNUSED(translucent);
+#endif
 }
 
 void MainWindow::relativePathToggled(bool r)
