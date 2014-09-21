@@ -28,8 +28,6 @@
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="26"/>
-        <location filename="../mainwindow.cpp" line="54"/>
-        <location filename="../mainwindow.cpp" line="263"/>
         <source>Shadowsocks-Qt5</source>
         <translation></translation>
     </message>
@@ -89,13 +87,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="291"/>
-        <location filename="../mainwindow.cpp" line="45"/>
+        <location filename="../mainwindow.cpp" line="46"/>
         <source>Start</source>
         <translation>启动</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="316"/>
-        <location filename="../mainwindow.cpp" line="46"/>
+        <location filename="../mainwindow.cpp" line="47"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -224,32 +222,32 @@ Not every port of Shadowsocks support this option.</source>
         <translation type="vanished">显示/隐藏</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="44"/>
+        <location filename="../mainwindow.cpp" line="45"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="47"/>
+        <location filename="../mainwindow.cpp" line="48"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="282"/>
+        <location filename="../mainwindow.cpp" line="283"/>
         <source>Shadowsocks started! profile: %1.</source>
         <translation>Shadowsocks 已启动！配置： %1。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="298"/>
+        <location filename="../mainwindow.cpp" line="299"/>
         <source>Shadowsocks stoped!</source>
         <translation>Shadowsocks 已停止！</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="326"/>
+        <location filename="../mainwindow.cpp" line="327"/>
         <source>Save Changes</source>
         <translation>保存变更</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="326"/>
+        <location filename="../mainwindow.cpp" line="327"/>
         <source>Configuration has been changed.
 Do you want to save it now?</source>
         <translation>设置已经被变更。
@@ -260,12 +258,12 @@ Do you want to save it now?</source>
         <translation type="vanished">&lt;h3&gt;Shadowsocks的跨平台图形化客户端&lt;/h3&gt;&lt;p&gt;版本： 0.3.1&lt;/p&gt;&lt;p&gt;版权所有 © 2014 William Wong (&lt;a href=&apos;https://twitter.com/librehat&apos;&gt;@librehat&lt;/a&gt;)&lt;/p&gt;&lt;p&gt;以LGPLv3许可证发布&lt;br /&gt;项目托管在&lt;a href=&apos;https://github.com/librehat/shadowsocks-qt5&apos;&gt;GitHub&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="254"/>
+        <location filename="../mainwindow.cpp" line="255"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="254"/>
+        <location filename="../mainwindow.cpp" line="255"/>
         <source>Invalid profile or configuration.</source>
         <translation>无效的配置或设置。</translation>
     </message>
@@ -288,22 +286,22 @@ Do you want to save it now?</source>
 <context>
     <name>SS_Process</name>
     <message>
-        <location filename="../ss_process.cpp" line="53"/>
+        <location filename="../ss_process.cpp" line="54"/>
         <source>Aborted: Invalid Backend Type.</source>
         <translation>终止：无效的后端类型。</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="61"/>
+        <location filename="../ss_process.cpp" line="62"/>
         <source>Backend arguments are </source>
         <translation>后端参数为</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="113"/>
+        <location filename="../ss_process.cpp" line="114"/>
         <source>Backend started. PID: </source>
         <translation>后端已启动。PID：</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="119"/>
+        <location filename="../ss_process.cpp" line="120"/>
         <source>Backend exited. Exit Code: </source>
         <translation>后端已退出。退出代号：</translation>
     </message>
