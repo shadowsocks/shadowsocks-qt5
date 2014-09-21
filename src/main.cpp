@@ -13,6 +13,9 @@ int main(int argc, char *argv[])
     if (QLocale::system().country() == QLocale::China) {
         a.setFont(QFont("Microsoft Yahei", 9, QFont::Normal, false));
     }
+    else {
+        a.setFont(QFont("Segoe UI", 9, QFont::Normal, false));
+    }
 #endif
 
     QTranslator t;
