@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #else
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
 #endif
-    systray.setToolTip(tr("Shadowsocks-Qt5"));
+    systray.setToolTip(QString("Shadowsocks-Qt5"));
     systray.setContextMenu(&systrayMenu);
     systray.show();
 
