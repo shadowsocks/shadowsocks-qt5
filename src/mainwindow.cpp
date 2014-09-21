@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->translucentCheck->setChecked(m_conf->isTranslucent());
     updateTranslucent(m_conf->isTranslucent());
 #endif
+    ui->relativePathCheck->setChecked(m_conf->isRelativePath());
 
     //desktop systray
     systrayMenu.addAction(tr("Show"), this, SLOT(showWindow()));
