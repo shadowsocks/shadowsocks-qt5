@@ -6,9 +6,7 @@ Shadowsocks-Qt5
 Introduction
 ------------
 
-Shadowsocks-Qt5 is a fast, reliable and platform-cross GUI fronted for [Shadowsocks](http://shadowsocks.org).
-
-Latest Stable Version: 0.4.2
+Shadowsocks-Qt5 is a fast, reliable and cross-platform GUI fronted for [Shadowsocks](http://shadowsocks.org).
 
 Features
 --------
@@ -60,4 +58,4 @@ make install
 
 ### Others ###
 
-Mac OS X and FreeBSD are not tested and they're NOT supported officially. Well, I do hope you can help me mantain the compatibility if you have spare time.
+Mac OS X and *BSD are not tested and they're NOT supported officially. Well, I do hope you can help me mantain the compatibility if you have spare time.
