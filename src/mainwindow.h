@@ -79,7 +79,7 @@ private slots:
     void debugToggled(bool);
     void transculentToggled(bool);
     void relativePathToggled(bool);
-    inline void aboutButtonClicked() { QMessageBox::about(this, tr("About Shadowsocks-Qt5"), aboutText); }
+    inline void aboutButtonClicked() { QMessageBox::about(this, tr("About"), aboutText); }
     void saveConfig();
 
 private:

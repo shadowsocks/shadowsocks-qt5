@@ -127,7 +127,7 @@ MainWindow::~MainWindow()
     delete m_conf;
 }
 
-const QString MainWindow::aboutText = "<h3>Platform-Cross GUI Client for Shadowsocks</h3><p>Version: 0.4.3</p><p>Copyright © 2014 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>";
+const QString MainWindow::aboutText = "<h3>Cross-Platform GUI Fronted for Shadowsocks</h3><p>Version: 0.4.3</p><p>Copyright © 2014 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>";
 
 void MainWindow::onBackendToolButtonPressed()
 {
