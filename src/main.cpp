@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
 
     a.setApplicationName(QString("shadowsocks-qt5"));
     a.setApplicationDisplayName(QString("Shadowsocks Qt5"));
+    a.setApplicationVersion(APP_VERSION);
 
 #ifdef _WIN32
     if (QLocale::system().country() == QLocale::China) {
