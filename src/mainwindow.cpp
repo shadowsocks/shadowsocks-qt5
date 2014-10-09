@@ -76,7 +76,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
 
     connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::onBackendToolButtonPressed);
+
+    /*
+     * I believe there's bug. see https://bugreports.qt-project.org/browse/QTBUG-41863
+     * before it's fixed, let's use old way to work around.
+     *
     connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
+    */
+    connect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentProfileChanged(int)));
+
     connect(ui->backendTypeCombo, &QComboBox::currentTextChanged, this, &MainWindow::backendTypeChanged);
     connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
     connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
