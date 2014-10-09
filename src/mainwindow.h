@@ -91,7 +91,7 @@ private:
     PortValidator portValidator;
     QSystemTrayIcon systray;
     QMenu systrayMenu;
-    AddProfileDialogue addProfileDlg;
+    AddProfileDialogue *addProfileDlg;
     void updateTranslucent(bool translucent);
     static const QString aboutText;
     void showNotification(QString msg);

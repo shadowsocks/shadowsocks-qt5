@@ -12,10 +12,8 @@ class AddProfileDialogue : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddProfileDialogue(QWidget *parent = 0);
+    explicit AddProfileDialogue(QWidget *parent = 0, bool e = false);
     ~AddProfileDialogue();
-    void setEnforceMode(bool);
-    void clear();
 
 signals:
     void inputAccepted(const QString &, bool = false, const QString & = 0);

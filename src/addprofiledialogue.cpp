@@ -2,34 +2,20 @@
 #include "ssvalidator.h"
 #include "ui_addprofiledialogue.h"
 
-AddProfileDialogue::AddProfileDialogue(QWidget *parent) :
+AddProfileDialogue::AddProfileDialogue(QWidget *parent, bool e) :
     QDialog(parent),
     ui(new Ui::AddProfileDialogue)
 {
     ui->setupUi(this);
-    enforce = false;
+    enforce = e;
     connect(ui->ssuriEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::checkBase64SSURI);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AddProfileDialogue::onAccepted);
     connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &AddProfileDialogue::onRejected);
-    this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);//no min/max/close buttons
 }
 
 AddProfileDialogue::~AddProfileDialogue()
 {
     delete ui;
-}
-
-void AddProfileDialogue::setEnforceMode(bool e)
-{
-    enforce = e;
-}
-
-void AddProfileDialogue::clear()
-{
-    ui->profileNameEdit->clear();
-    ui->ssuriEdit->clear();
-    ui->ssuriEdit->setStyleSheet("");
-    ui->ssuriCheckBox->setChecked(false);
 }
 
 void AddProfileDialogue::checkBase64SSURI(const QString &str)

@@ -88,8 +88,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->backendTypeCombo, &QComboBox::currentTextChanged, this, &MainWindow::backendTypeChanged);
     connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
     connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
-    connect(&addProfileDlg, &AddProfileDialogue::inputAccepted, this, &MainWindow::onAddProfileDialogueAccepted);
-    connect(&addProfileDlg, &AddProfileDialogue::inputRejected, this, &MainWindow::onAddProfileDialogueRejected);
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
 
@@ -186,10 +184,10 @@ void MainWindow::onCurrentProfileChanged(int i)
 
 void MainWindow::addProfileDialogue(bool enforce = false)
 {
-    addProfileDlg.setEnforceMode(enforce);
-    addProfileDlg.clear();
-    addProfileDlg.show();
-    addProfileDlg.exec();
+    addProfileDlg = new AddProfileDialogue(this, enforce);
+    connect(addProfileDlg, &AddProfileDialogue::inputAccepted, this, &MainWindow::onAddProfileDialogueAccepted);
+    connect(addProfileDlg, &AddProfileDialogue::inputRejected, this, &MainWindow::onAddProfileDialogueRejected);
+    addProfileDlg->exec();
 }
 
 void MainWindow::onAddProfileDialogueAccepted(const QString &name, bool u, const QString &uri)
@@ -210,9 +208,9 @@ void MainWindow::onAddProfileDialogueAccepted(const QString &name, bool u, const
 void MainWindow::onAddProfileDialogueRejected(bool enforce)
 {
     if (enforce) {
-        m_conf->addProfile("");
+        m_conf->addProfile("Unnamed");
         current_profile = m_conf->lastProfile();
-        ui->profileComboBox->insertItem(ui->profileComboBox->count(), "");
+        ui->profileComboBox->insertItem(ui->profileComboBox->count(), "Unnamed");
         //since there was no item previously, serverComboBox would change itself automatically.
         //we don't need to emit the signal again.
     }
