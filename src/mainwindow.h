@@ -95,7 +95,7 @@ private:
     SSProfile *current_profile;
     static const QString aboutText;
     Ui::MainWindow *ui;
-    void showNotification(QString msg);
+    void showNotification(const QString &);
     void updateTranslucent(bool translucent);
 
 #ifdef Q_OS_LINUX

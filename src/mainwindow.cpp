@@ -284,7 +284,7 @@ void MainWindow::startButtonPressed()
     ss_local.start(current_profile);
 }
 
-void MainWindow::showNotification(QString msg)
+void MainWindow::showNotification(const QString &msg)
 {
     systray.showMessage("Shadowsocks-Qt5", msg);
 }
