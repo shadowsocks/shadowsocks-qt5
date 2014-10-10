@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#ifdef _WIN32
+#ifdef Q_OS_WIN
 #include <QtWin>
 #endif
 
@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //initialisation
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     jsonconfigFile = QCoreApplication::applicationDirPath() + "/gui-config.json";
 #else
     QDir ssConfigDir = QDir::homePath() + "/.config/shadowsocks";
@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->debugCheck->setChecked(m_conf->isDebug());
     ui->autohideCheck->setChecked(m_conf->isAutoHide());
     ui->autostartCheck->setChecked(m_conf->isAutoStart());
-#ifdef __linux__
+#ifdef Q_OS_LINUX
     ui->translucentCheck->setVisible(false);
 #else
     ui->translucentCheck->setChecked(m_conf->isTranslucent());
@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
     systrayMenu.addAction(tr("Stop"), this, SLOT(stopButtonPressed()));
     systrayMenu.addAction(tr("Exit"), this, SLOT(close()));
     systrayMenu.actions().at(2)->setEnabled(false);
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     systray.setIcon(QIcon(":/icon/black_icon.png"));
 #else
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     systray.show();
 
     //Windows Extras
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     QtWin::enableBlurBehindWindow(this);
     QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
     QtWin::enableBlurBehindWindow(&addProfileDlg);
@@ -111,7 +111,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->lportEdit, &QLineEdit::textChanged, this, &MainWindow::lportEditFinished);
     connect(ui->methodComboBox, &QComboBox::currentTextChanged, this, &MainWindow::methodChanged);
     connect(ui->timeoutSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MainWindow::timeoutChanged);
-#ifdef __linux__
+#ifdef Q_OS_LINUX
     connect(ui->tfoCheckBox, &QCheckBox::toggled, this, &MainWindow::tcpFastOpenChanged);
 #endif
     connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::profileEditButtonClicked);
@@ -175,7 +175,7 @@ void MainWindow::onCurrentProfileChanged(int i)
     ui->lportEdit->setText(current_profile->local_port);
     ui->methodComboBox->setCurrentText(current_profile->method);
     ui->timeoutSpinBox->setValue(current_profile->timeout.toInt());
-#ifdef __linux__
+#ifdef Q_OS_LINUX
     ui->tfoCheckBox->setChecked(current_profile->fast_open);
 #endif
 
@@ -224,7 +224,7 @@ void MainWindow::saveConfig()
 
 void MainWindow::minimizeToSysTray()
 {
-#ifdef __linux__
+#ifdef Q_OS_LINUX
     QString currentDE = (getenv("XDG_CURRENT_DESKTOP"));
     /*
      * There is no systray in Unity. Nor a clean and simple way to use the indicator.
@@ -296,7 +296,7 @@ void MainWindow::processStopped()
     ui->stopButton->setEnabled(false);
     ui->startButton->setEnabled(true);
 
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     systray.setIcon(QIcon(":/icon/black_icon.png"));
 #else
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
@@ -421,7 +421,7 @@ void MainWindow::timeoutChanged(int t)
     emit configurationChanged();
 }
 
-#ifdef __linux__
+#ifdef Q_OS_LINUX
 void MainWindow::tcpFastOpenChanged(bool t)
 {
     current_profile->fast_open = t;
@@ -458,7 +458,7 @@ void MainWindow::updateTranslucent(bool translucent)
     /*
      * don't use translucent background for Linux!
      */
-#ifndef __linux__
+#ifndef Q_OS_LINUX
     if (translucent) {
         this->setAttribute(Qt::WA_TranslucentBackground);
         addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);

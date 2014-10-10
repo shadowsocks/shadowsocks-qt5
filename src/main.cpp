@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     a.setApplicationDisplayName(QString("Shadowsocks Qt5"));
     a.setApplicationVersion(APP_VERSION);
 
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     if (QLocale::system().country() == QLocale::China) {
         a.setFont(QFont("Microsoft Yahei", 9, QFont::Normal, false));
     }

@@ -7,7 +7,7 @@
 #include <QJsonValue>
 #include "configuration.h"
 
-#ifdef __linux__
+#ifdef Q_OS_LINUX
 #include <sys/utsname.h>
 #endif
 
@@ -15,7 +15,7 @@ bool Configuration::tfo_available = false;
 
 Configuration::Configuration(const QString &file)
 {
-#ifdef __linux__
+#ifdef Q_OS_LINUX
     /*
      * Determine linux kernel version on the run-time
      * if it's greater than 3.7, then define tcp fast open available.

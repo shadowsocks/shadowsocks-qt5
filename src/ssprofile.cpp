@@ -23,7 +23,7 @@ void SSProfile::setBackend(bool relativePath)
         execName = "shadowsocks-local";
         break;
     case 3:
-#ifdef _WIN32
+#ifdef Q_OS_WIN
         execName = "python";//detect python to avoid the conflict with sslocal.cmd of nodejs
 #else
         execName = "sslocal";
@@ -33,7 +33,7 @@ void SSProfile::setBackend(bool relativePath)
         execName = "ss-local";
     }
 
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     QStringList findPathsList(QCoreApplication::applicationDirPath());
 #else
     QStringList findPathsList(QDir::homePath() + "/.config/shadowsocks/bin");
@@ -48,7 +48,7 @@ void SSProfile::setBackend(bool relativePath)
 void SSProfile::setBackend(const QString &a, bool relativePath)
 {
     backend = QDir::toNativeSeparators(a);
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     if (type.compare("Shadowsocks-Python", Qt::CaseInsensitive) == 0) {
         QDir python(a);
         python.cdUp();

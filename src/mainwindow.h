@@ -71,7 +71,7 @@ private slots:
     void lportEditFinished(const QString &);
     void methodChanged(const QString &);
     void timeoutChanged(int);
-#ifdef __linux__
+#ifdef Q_OS_LINUX
     void tcpFastOpenChanged(bool);
 #endif
     void autoHideToggled(bool);

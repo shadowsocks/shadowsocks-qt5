@@ -30,7 +30,7 @@ void SS_Process::start(SSProfile * const p, bool debug)
 void SS_Process::start(QString &args)
 {
     stop();
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     QString sslocalbin = QFileInfo(app_path).dir().canonicalPath();
     sslocalbin.append("/node_modules/shadowsocks/bin/sslocal");
     sslocalbin = QString("\"") + QDir::toNativeSeparators(sslocalbin) + QString("\"");
@@ -85,7 +85,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
         }
     }
 
-#ifdef __linux__
+#ifdef Q_OS_LINUX
     if ((backendTypeID == 3 || backendTypeID == 0) && tfo) {//only python and libev ports support tfo
         args.append(" --fast-open");
     }
