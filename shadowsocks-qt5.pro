@@ -6,6 +6,7 @@
 
 QT      += core gui widgets
 win32: QT += winextras
+linux: QT += dbus
 
 TARGET   = ss-qt5
 TEMPLATE = app
@@ -28,10 +29,11 @@ isEmpty(INSTALL_PREFIX) {
 unix: {
     desktop.path  = $$INSTALL_PREFIX/share/applications
     ssicon.path   = $$INSTALL_PREFIX/share/icons/hicolor/512x512/apps
+    iconsymlink.path=.
+    iconsymlink.commands=ln -s $$INSTALL_PREFIX/share/icons/hicolor/512x512/apps/shadowsocks-qt5.png $$INSTALL_PREFIX/share/pixmaps/shadowsocks-qt5.png
+    INSTALLS += desktop ssicon iconsymlink
 }
 
 target.path = $$INSTALL_PREFIX/bin
 
 INSTALLS += target
-
-!mac:unix: INSTALLS += desktop ssicon

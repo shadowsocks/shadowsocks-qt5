@@ -6,6 +6,12 @@
 #include <QtWin>
 #endif
 
+#ifdef Q_OS_LINUX
+#include <QDBusMessage>
+#include <QDBusConnection>
+#include <QDBusPendingCall>
+#endif
+
 MainWindow::MainWindow(bool verbose, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -286,7 +292,16 @@ void MainWindow::startButtonPressed()
 
 void MainWindow::showNotification(const QString &msg)
 {
-    systray.showMessage("Shadowsocks-Qt5", msg);
+#ifdef Q_OS_LINUX
+    //Using DBus to send message.
+    QDBusMessage method = QDBusMessage::createMethodCall("org.freedesktop.Notifications","/org/freedesktop/Notifications", "org.freedesktop.Notifications", "Notify");
+    QVariantList args;
+    args << QCoreApplication::applicationName() << quint32(0) << "shadowsocks-qt5" << "Shadowsocks Qt5" << msg << QStringList () << QVariantMap() << qint32(-1);
+    method.setArguments(args);
+    QDBusConnection::sessionBus().asyncCall(method);
+#else
+    systray.showMessage("Shadowsocks Qt5", msg);
+#endif
 }
 
 void MainWindow::deleteProfile()
@@ -305,7 +320,7 @@ void MainWindow::processStarted()
     ui->logBrowser->clear();
 
     systray.setIcon(QIcon(":/icon/running_icon.png"));
-    showNotification(tr("Shadowsocks Started! Profile: %1.").arg(current_profile->profileName));
+    showNotification(tr("Profile: %1 Started").arg(current_profile->profileName));
 }
 
 void MainWindow::processStopped()
@@ -321,7 +336,7 @@ void MainWindow::processStopped()
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
 #endif
 
-    showNotification(tr("Shadowsocks Stopped!"));
+    showNotification(tr("Profile: %1 Stopped").arg(current_profile->profileName));
 }
 
 void MainWindow::showWindow()
