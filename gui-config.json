@@ -4,6 +4,7 @@
     "configs": [
         {
             "backend": "",
+            "custom_arg": "",
             "fast_open": false,
             "local_address": "127.0.0.1",
             "local_port": "1080",

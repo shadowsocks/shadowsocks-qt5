@@ -34,7 +34,7 @@ private:
     QString app_path;
     QProcess proc;
 
-    void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false, bool tfo = false);
+    void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false, bool tfo = false);
     void start(QString &args);
 
 private slots:

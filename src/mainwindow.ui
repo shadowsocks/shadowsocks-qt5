@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>564</width>
-    <height>380</height>
+    <width>600</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>564</width>
-    <height>380</height>
+    <width>600</width>
+    <height>400</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>564</width>
-    <height>380</height>
+    <width>600</width>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -178,82 +178,6 @@ Not every port of Shadowsocks support this option.</string>
         </item>
         <item row="0" column="0" rowspan="2">
          <layout class="QGridLayout" name="gridLayout_l">
-          <item row="0" column="3">
-           <widget class="QToolButton" name="addProfileButton">
-            <property name="text">
-             <string>+</string>
-            </property>
-            <property name="icon">
-             <iconset theme="list-add">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="profileLabel">
-            <property name="text">
-             <string>Profile</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" colspan="2">
-           <widget class="QComboBox" name="profileComboBox"/>
-          </item>
-          <item row="0" column="4">
-           <widget class="QToolButton" name="delProfileButton">
-            <property name="text">
-             <string>-</string>
-            </property>
-            <property name="icon">
-             <iconset theme="list-remove">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1" colspan="3">
-           <widget class="QLineEdit" name="backendEdit">
-            <property name="cursor">
-             <cursorShape>ForbiddenCursor</cursorShape>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-            <property name="clearButtonEnabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="backendLabel">
-            <property name="text">
-             <string>Backend</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QToolButton" name="backendToolButton">
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-open">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="backendTypeLabel">
-            <property name="text">
-             <string>Backend Type</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1" colspan="4">
            <widget class="QComboBox" name="backendTypeCombo">
             <property name="currentIndex">
@@ -279,6 +203,99 @@ Not every port of Shadowsocks support this option.</string>
               <string>Shadowsocks-Python</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="backendLabel">
+            <property name="text">
+             <string>Backend</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QToolButton" name="backendToolButton">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-open">
+              <normaloff/>
+             </iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QToolButton" name="addProfileButton">
+            <property name="text">
+             <string>+</string>
+            </property>
+            <property name="icon">
+             <iconset theme="list-add">
+              <normaloff/>
+             </iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="backendTypeLabel">
+            <property name="text">
+             <string>Backend Type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="3">
+           <widget class="QLineEdit" name="backendEdit">
+            <property name="cursor">
+             <cursorShape>ForbiddenCursor</cursorShape>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QToolButton" name="delProfileButton">
+            <property name="text">
+             <string>-</string>
+            </property>
+            <property name="icon">
+             <iconset theme="list-remove">
+              <normaloff/>
+             </iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="profileLabel">
+            <property name="text">
+             <string>Profile</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QComboBox" name="profileComboBox"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="customArgLabel">
+            <property name="text">
+             <string>Custom Arguments</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="4">
+           <widget class="QLineEdit" name="customArgEdit">
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>

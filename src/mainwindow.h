@@ -49,53 +49,54 @@ public slots:
     void startButtonPressed();
 
 private slots:
-    void onCurrentProfileChanged(int);
-    void onBackendToolButtonPressed();
-    void backendTypeChanged(const QString &);
-    void addProfileDialogue(bool);
-    void onAddProfileDialogueAccepted(const QString &, bool, const QString &);
-    void onAddProfileDialogueRejected(bool enforce = false);
-    void profileEditButtonClicked(QAbstractButton*);
     inline void stopButtonPressed() { ss_local.stop(); }
+    void addProfileDialogue(bool);
+    void backendTypeChanged(const QString &);
     void deleteProfile();
-    void processStarted();
-    void processStopped();
-    void systrayActivated(QSystemTrayIcon::ActivationReason);
-    void showWindow();
-    void onReadReadyProcess(const QByteArray &o);
-    void onConfigurationChanged(bool);
-    void serverEditFinished(const QString &);
-    void sportEditFinished(const QString &);
-    void pwdEditFinished(const QString &);
     void laddrEditFinished(const QString &);
     void lportEditFinished(const QString &);
     void methodChanged(const QString &);
+    void onAddProfileDialogueAccepted(const QString &, bool, const QString &);
+    void onAddProfileDialogueRejected(bool enforce = false);
+    void onBackendToolButtonPressed();
+    void onConfigurationChanged(bool);
+    void onCurrentProfileChanged(int);
+    void onCustomArgsEditFinished(const QString &);
+    void onReadReadyProcess(const QByteArray &o);
+    void processStarted();
+    void processStopped();
+    void profileEditButtonClicked(QAbstractButton*);
+    void pwdEditFinished(const QString &);
+    void serverEditFinished(const QString &);
+    void showWindow();
+    void sportEditFinished(const QString &);
+    void systrayActivated(QSystemTrayIcon::ActivationReason);
     void timeoutChanged(int);
 #ifdef Q_OS_LINUX
     void tcpFastOpenChanged(bool);
 #endif
+    inline void aboutButtonClicked() { QMessageBox::about(this, tr("About"), aboutText); }
     void autoHideToggled(bool);
     void autoStartToggled(bool);
     void debugToggled(bool);
-    void transculentToggled(bool);
     void relativePathToggled(bool);
-    inline void aboutButtonClicked() { QMessageBox::about(this, tr("About"), aboutText); }
     void saveConfig();
+    void transculentToggled(bool);
 
 private:
-    Ui::MainWindow *ui;
-    SS_Process ss_local;
-    SSProfile *current_profile;
-    QString jsonconfigFile;
-    IP4Validator ipv4addrValidator;
-    PortValidator portValidator;
-    QSystemTrayIcon systray;
-    QMenu systrayMenu;
     AddProfileDialogue *addProfileDlg;
     bool verboseOutput;
-    void updateTranslucent(bool translucent);
+    IP4Validator ipv4addrValidator;
+    PortValidator portValidator;
+    QMenu systrayMenu;
+    QString jsonconfigFile;
+    QSystemTrayIcon systray;
+    SS_Process ss_local;
+    SSProfile *current_profile;
     static const QString aboutText;
+    Ui::MainWindow *ui;
     void showNotification(QString msg);
+    void updateTranslucent(bool translucent);
 
 #ifdef Q_OS_LINUX
     bool isUbuntuUnity;

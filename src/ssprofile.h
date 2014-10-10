@@ -15,15 +15,16 @@ public:
     bool isValid() const;
 
     QString backend;
-    QString type;
-    QString profileName;
-    QString server;
-    QString server_port;
-    QString password;
+    QString custom_arg;
+    bool fast_open;
     QString local_addr;
     QString local_port;
     QString method;
+    QString password;
+    QString profileName;
+    QString server;
+    QString server_port;
     QString timeout;
-    bool fast_open;
+    QString type;
 };
 #endif // SSPROFILE_H

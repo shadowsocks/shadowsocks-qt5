@@ -38,12 +38,12 @@ void Configuration::setJSONFile(const QString &file)
 
     if (!JSONFile.exists()) {
         qWarning() << "Warning: gui-config.json does not exist!";
-        m_index = -1;
-        debugLog = false;
-        autoStart = false;
         autoHide = false;
-        translucent = true;
+        autoStart = false;
+        debugLog = false;
+        m_index = -1;
         relativePath = false;
+        translucent = true;
         return;
     }
 
@@ -80,15 +80,16 @@ void Configuration::setJSONFile(const QString &file)
             QJsonObject json = (*it).toObject();
             SSProfile p;
             p.backend = json["backend"].toString();
-            p.type = json["type"].toString();
-            p.profileName = json["profile"].toString();
-            p.server = json["server"].toString();
-            p.password = json["password"].toString();
-            p.server_port = json["server_port"].toString();
+            p.custom_arg = json["custom_arg"].toString();
             p.local_addr = json["local_address"].toString();
             p.local_port = json["local_port"].toString();
             p.method = json["method"].toString().toUpper();//using Upper-case in GUI
+            p.password = json["password"].toString();
+            p.profileName = json["profile"].toString();
+            p.server = json["server"].toString();
+            p.server_port = json["server_port"].toString();
             p.timeout = json["timeout"].toString();
+            p.type = json["type"].toString();
             if (tfo_available) {
                 p.fast_open = json["fast_open"].toBool();
             }
@@ -96,11 +97,11 @@ void Configuration::setJSONFile(const QString &file)
         }
         m_index = JSONObj["index"].toInt();
     }
-    debugLog = JSONObj["debug"].toBool();
     autoHide = JSONObj["autoHide"].toBool();
     autoStart = JSONObj["autoStart"].toBool();
-    translucent = JSONObj["translucent"].toBool();
+    debugLog = JSONObj["debug"].toBool();
     relativePath = JSONObj["relative_path"].toBool();
+    translucent = JSONObj["translucent"].toBool();
     JSONFile.close();
 }
 
@@ -127,12 +128,13 @@ void Configuration::addProfile(const QString &pName)
     QJsonObject json;
     json["profile"] = QJsonValue(p.profileName);
     //below are using default values
-    json["type"] = QJsonValue(p.type);
-    json["server_port"] = QJsonValue(p.server_port);
+    json["custom_arg"] = QJsonValue(p.custom_arg);
     json["local_address"] = QJsonValue(p.local_addr);
     json["local_port"] = QJsonValue(p.local_port);
     json["method"] = QJsonValue(p.method);
+    json["server_port"] = QJsonValue(p.server_port);
     json["timeout"] = QJsonValue(p.timeout);
+    json["type"] = QJsonValue(p.type);
     if (tfo_available) {
         json["fast_open"] = QJsonValue(p.fast_open);
     }
@@ -152,16 +154,17 @@ void Configuration::addProfileFromSSURI(const QString &name, QString uri)
     p.password = ser.join('@');//incase there is a '@' in password
 
     QJsonObject json;
-    json["profile"] = QJsonValue(p.profileName);
-    json["server"] = QJsonValue(p.server);
-    json["password"] = QJsonValue(p.password);
     json["method"] = QJsonValue(p.method.toLower());
+    json["password"] = QJsonValue(p.password);
+    json["profile"] = QJsonValue(p.profileName);
     json["server_port"] = QJsonValue(p.server_port);
+    json["server"] = QJsonValue(p.server);
     //below are using default values
-    json["type"] = QJsonValue(p.type);
+    json["custom_arg"] = QJsonValue(p.custom_arg);
     json["local_address"] = QJsonValue(p.local_addr);
     json["local_port"] = QJsonValue(p.local_port);
     json["timeout"] = QJsonValue(p.timeout);
+    json["type"] = QJsonValue(p.type);
     if (tfo_available) {
         json["fast_open"] = QJsonValue(p.fast_open);
     }
@@ -179,15 +182,16 @@ void Configuration::save()
     for (QList<SSProfile>::iterator it = profileList.begin(); it != profileList.end(); ++it) {
         QJsonObject json;
         json["backend"] = QJsonValue(it->backend);
-        json["type"] = QJsonValue(it->type);
-        json["profile"] = QJsonValue(it->profileName);
-        json["server"] = QJsonValue(it->server);
-        json["server_port"] = QJsonValue(it->server_port);
-        json["password"] = QJsonValue(it->password);
+        json["custom_arg"] = QJsonValue(it->custom_arg);
         json["local_address"] = QJsonValue(it->local_addr);
         json["local_port"] = QJsonValue(it->local_port);
         json["method"] = QJsonValue(it->method.isEmpty() ? QString("table") : it->method.toLower());//lower-case in config
+        json["password"] = QJsonValue(it->password);
+        json["profile"] = QJsonValue(it->profileName);
+        json["server_port"] = QJsonValue(it->server_port);
+        json["server"] = QJsonValue(it->server);
         json["timeout"] = QJsonValue(it->timeout);
+        json["type"] = QJsonValue(it->type);
         if (tfo_available) {
             json["fast_open"] = QJsonValue(it->fast_open);
         }
@@ -195,13 +199,13 @@ void Configuration::save()
     }
 
     QJsonObject JSONObj;
-    JSONObj["index"] = QJsonValue(m_index);
-    JSONObj["debug"] = QJsonValue(debugLog);
     JSONObj["autoHide"] = QJsonValue(autoHide);
     JSONObj["autoStart"] = QJsonValue(autoStart);
-    JSONObj["translucent"] = QJsonValue(translucent);
-    JSONObj["relative_path"] = QJsonValue(relativePath);
     JSONObj["configs"] = QJsonValue(newConfArray);
+    JSONObj["debug"] = QJsonValue(debugLog);
+    JSONObj["index"] = QJsonValue(m_index);
+    JSONObj["relative_path"] = QJsonValue(relativePath);
+    JSONObj["translucent"] = QJsonValue(translucent);
 
     QJsonDocument JSONDoc(JSONObj);
 

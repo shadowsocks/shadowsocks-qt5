@@ -28,16 +28,16 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
 #endif
     m_conf = new Configuration(jsonconfigFile);
 
-    ui->profileComboBox->insertItems(0, m_conf->getProfileList());
-    ui->stopButton->setEnabled(false);
     ui->laddrEdit->setValidator(&ipv4addrValidator);
-    ui->sportEdit->setValidator(&portValidator);
     ui->lportEdit->setValidator(&portValidator);
     ui->methodComboBox->addItems(SSValidator::supportedMethod);
+    ui->profileComboBox->insertItems(0, m_conf->getProfileList());
+    ui->sportEdit->setValidator(&portValidator);
+    ui->stopButton->setEnabled(false);
 
-    ui->debugCheck->setChecked(m_conf->isDebug());
     ui->autohideCheck->setChecked(m_conf->isAutoHide());
     ui->autostartCheck->setChecked(m_conf->isAutoStart());
+    ui->debugCheck->setChecked(m_conf->isDebug());
 #ifdef Q_OS_LINUX
     ui->translucentCheck->setVisible(false);
 #else
@@ -116,12 +116,13 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     //connect signals and slots when config changed
     //Profile
     connect(this, &MainWindow::configurationChanged, this, &MainWindow::onConfigurationChanged);
-    connect(ui->serverEdit, &QLineEdit::textChanged, this, &MainWindow::serverEditFinished);
-    connect(ui->sportEdit, &QLineEdit::textChanged, this, &MainWindow::sportEditFinished);
-    connect(ui->pwdEdit, &QLineEdit::textChanged, this, &MainWindow::pwdEditFinished);
+    connect(ui->customArgEdit, &QLineEdit::textChanged, this, &MainWindow::onCustomArgsEditFinished);
     connect(ui->laddrEdit, &QLineEdit::textChanged, this, &MainWindow::laddrEditFinished);
     connect(ui->lportEdit, &QLineEdit::textChanged, this, &MainWindow::lportEditFinished);
     connect(ui->methodComboBox, &QComboBox::currentTextChanged, this, &MainWindow::methodChanged);
+    connect(ui->pwdEdit, &QLineEdit::textChanged, this, &MainWindow::pwdEditFinished);
+    connect(ui->serverEdit, &QLineEdit::textChanged, this, &MainWindow::serverEditFinished);
+    connect(ui->sportEdit, &QLineEdit::textChanged, this, &MainWindow::sportEditFinished);
     connect(ui->timeoutSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MainWindow::timeoutChanged);
 #ifdef Q_OS_LINUX
     connect(ui->tfoCheckBox, &QCheckBox::toggled, this, &MainWindow::tcpFastOpenChanged);
@@ -178,19 +179,26 @@ void MainWindow::onCurrentProfileChanged(int i)
         }
     }
 
-    ui->backendTypeCombo->setCurrentIndex(current_profile->getBackendTypeID());
     ui->backendEdit->setText(current_profile->backend);
-    ui->serverEdit->setText(current_profile->server);
-    ui->sportEdit->setText(current_profile->server_port);
-    ui->pwdEdit->setText(current_profile->password);
+    ui->backendTypeCombo->setCurrentIndex(current_profile->getBackendTypeID());
+    ui->customArgEdit->setText(current_profile->custom_arg);
     ui->laddrEdit->setText(current_profile->local_addr);
     ui->lportEdit->setText(current_profile->local_port);
     ui->methodComboBox->setCurrentText(current_profile->method);
+    ui->pwdEdit->setText(current_profile->password);
+    ui->serverEdit->setText(current_profile->server);
+    ui->sportEdit->setText(current_profile->server_port);
     ui->timeoutSpinBox->setValue(current_profile->timeout.toInt());
 #ifdef Q_OS_LINUX
     ui->tfoCheckBox->setChecked(current_profile->fast_open);
 #endif
 
+    emit configurationChanged();
+}
+
+void MainWindow::onCustomArgsEditFinished(const QString &arg)
+{
+    current_profile->custom_arg = arg;
     emit configurationChanged();
 }
 

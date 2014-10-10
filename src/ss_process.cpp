@@ -24,7 +24,7 @@ void SS_Process::start(SSProfile * const p, bool debug)
 {
     app_path = p->backend;
     backendTypeID = p->getBackendTypeID();
-    start(p->server, p->password, p->server_port, p->local_addr, p->local_port, p->method, p->timeout, debug, p->fast_open);
+    start(p->server, p->password, p->server_port, p->local_addr, p->local_port, p->method, p->timeout, p->custom_arg, debug, p->fast_open);
 }
 
 void SS_Process::start(QString &args)
@@ -63,7 +63,7 @@ void SS_Process::start(QString &args)
     proc.waitForStarted(1000);//wait for at most 1 second
 }
 
-void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, bool debug, bool tfo)
+void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, const QString &custom_arg, bool debug, bool tfo)
 {
     QString args;
     args.append(QString(" -s ") + server);
@@ -93,6 +93,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
     Q_UNUSED(tfo);
 #endif
 
+    args.append(" ").append(custom_arg);
     start(args);
 }
 

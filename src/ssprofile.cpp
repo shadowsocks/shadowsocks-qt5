@@ -8,8 +8,18 @@
 #include "ssprofile.h"
 
 SSProfile::SSProfile() :
-    backend(), type("Shadowsocks-libev"),  profileName(), server(), server_port("8388"), password(),
-    local_addr("127.0.0.1"), local_port("1080"),  method("aes-256-cfb"), timeout("600"), fast_open(false)
+    backend(),
+    custom_arg(),
+    fast_open(false),
+    local_addr("127.0.0.1"),
+    local_port("1080"),
+    method("aes-256-cfb"),
+    password(),
+    profileName(),
+    server(),
+    server_port("8388"),
+    timeout("600"),
+    type("Shadowsocks-libev")
 { }
 
 void SSProfile::setBackend(bool relativePath)
