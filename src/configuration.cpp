@@ -50,18 +50,18 @@ void Configuration::setJSONFile(const QString &file)
     JSONFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
     if (!JSONFile.isOpen()) {
-        qWarning() << "Critical Error: cannot open gui-config.json!";
+        qCritical() << "Critical Error: cannot open gui-config.json!";
     }
 
     if(!JSONFile.isReadable()) {
-        qWarning() << "Critical Error: cannot read gui-config.json!";
+        qCritical() << "Critical Error: cannot read gui-config.json!";
     }
 
     QJsonParseError pe;
     QJsonDocument JSONDoc = QJsonDocument::fromJson(JSONFile.readAll(), &pe);
 
     if (pe.error != QJsonParseError::NoError) {
-        qWarning() << pe.errorString();
+        qCritical() << pe.errorString();
     }
 
     if (JSONDoc.isEmpty()) {
