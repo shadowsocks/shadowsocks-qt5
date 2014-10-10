@@ -23,7 +23,7 @@ Configuration::Configuration(const QString &file)
     utsname u;
     uname(&u);
     QString linux_release(u.release);
-    tfo_available = (linux_release.mid(2, 2).toInt() >= 7 && linux_release.at(0) == '3') ? true : false;
+    tfo_available = (linux_release.mid(2, 2).toFloat() >= 7 && linux_release.at(0) == '3') ? true : false;
 #endif
     setJSONFile(file);
 }

@@ -166,7 +166,7 @@
           <item row="7" column="0" colspan="2">
            <widget class="QCheckBox" name="tfoCheckBox">
             <property name="toolTip">
-             <string>Only available in Linux with Kernel &gt; 3.7
+             <string>Only available in Linux with Kernel &gt;= 3.7
 Not every port of Shadowsocks support this option.</string>
             </property>
             <property name="text">
