@@ -54,7 +54,14 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
     systray.setToolTip(QString("Shadowsocks-Qt5"));
     systray.setContextMenu(&systrayMenu);
+#ifdef Q_OS_LINUX
+    isUbuntuUnity = QString(getenv("XDG_CURRENT_DESKTOP")).compare("Unity") == 0;
+    if (!isUbuntuUnity) {
+        systray.show();
+    }
+#else
     systray.show();
+#endif
 
     //Windows Extras
 #ifdef Q_OS_WIN
@@ -225,13 +232,12 @@ void MainWindow::saveConfig()
 void MainWindow::minimizeToSysTray()
 {
 #ifdef Q_OS_LINUX
-    QString currentDE = (getenv("XDG_CURRENT_DESKTOP"));
     /*
      * There is no systray in Unity. Nor a clean and simple way to use the indicator.
      * While hiding window will cause inability to restore.
      * Simply not to hide if the desktop is Unity.
      */
-    if (currentDE.compare("Unity") == 0) {
+    if (isUbuntuUnity) {
         return;
     }
 #endif

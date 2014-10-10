@@ -96,6 +96,10 @@ private:
     static const QString aboutText;
     void showNotification(QString msg);
 
+#ifdef Q_OS_LINUX
+    bool isUbuntuUnity;
+#endif
+
 protected:
     void changeEvent(QEvent *);
     void closeEvent(QCloseEvent *);
