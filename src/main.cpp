@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     ssqt5t.load("ssqt5_" + QLocale::system().name(), QCoreApplication::applicationDirPath());
     a.installTranslator(&ssqt5t);
 
-    MainWindow w;
+    MainWindow w(a.arguments().contains("-v"));
     w.show();
 
     if (w.m_conf->isAutoStart()) {

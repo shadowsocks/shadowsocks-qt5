@@ -35,18 +35,18 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(bool verbose = false, QWidget *parent = 0);
     ~MainWindow();
     Configuration *m_conf;
 
 signals:
     void configurationChanged(bool saved = false);
 
-public slots:
-    void startButtonPressed();
-
 public:
     void minimizeToSysTray();
+
+public slots:
+    void startButtonPressed();
 
 private slots:
     void onCurrentProfileChanged(int);
@@ -92,6 +92,7 @@ private:
     QSystemTrayIcon systray;
     QMenu systrayMenu;
     AddProfileDialogue *addProfileDlg;
+    bool verboseOutput;
     void updateTranslucent(bool translucent);
     static const QString aboutText;
     void showNotification(QString msg);

@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -5,13 +6,17 @@
 #include <QtWin>
 #endif
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(bool verbose, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     //initialisation
+    verboseOutput = verbose;
+    if (verboseOutput) {
+        qDebug() << "Verbose Enabled.";
+    }
 #ifdef Q_OS_WIN
     jsonconfigFile = QCoreApplication::applicationDirPath() + "/gui-config.json";
 #else
@@ -55,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent) :
     systray.setToolTip(QString("Shadowsocks-Qt5"));
     systray.setContextMenu(&systrayMenu);
 #ifdef Q_OS_LINUX
-    isUbuntuUnity = QString(getenv("XDG_CURRENT_DESKTOP")).compare("Unity") == 0;
+    isUbuntuUnity = (QString(getenv("XDG_CURRENT_DESKTOP")).compare("Unity") == 0);
     if (!isUbuntuUnity) {
         systray.show();
     }
@@ -350,8 +355,13 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::onReadReadyProcess(const QByteArray &o)
 {
+    QString logStream = QString::fromLocal8Bit(o);
+    if (verboseOutput) {
+        qDebug() << logStream;
+    }
+
     ui->logBrowser->moveCursor(QTextCursor::End);
-    ui->logBrowser->append(QString::fromLocal8Bit(o));
+    ui->logBrowser->append(logStream);
     ui->logBrowser->moveCursor(QTextCursor::End);
 }
 
