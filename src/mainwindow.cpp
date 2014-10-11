@@ -78,8 +78,6 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
 #ifdef Q_OS_WIN
     QtWin::enableBlurBehindWindow(this);
     QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
-    QtWin::enableBlurBehindWindow(&addProfileDlg);
-    QtWin::extendFrameIntoClientArea(&addProfileDlg, -1, -1, -1, -1);
     //smaller margins
     ui->verticalLayout->setMargin(4);//centralwidget
 #endif
@@ -213,6 +211,15 @@ void MainWindow::addProfileDialogue(bool enforce = false)
     addProfileDlg = new AddProfileDialogue(this, enforce);
     connect(addProfileDlg, &AddProfileDialogue::inputAccepted, this, &MainWindow::onAddProfileDialogueAccepted);
     connect(addProfileDlg, &AddProfileDialogue::inputRejected, this, &MainWindow::onAddProfileDialogueRejected);
+#ifdef Q_OS_WIN
+    QtWin::enableBlurBehindWindow(addProfileDlg);
+    QtWin::extendFrameIntoClientArea(addProfileDlg, -1, -1, -1, -1);
+#endif
+#ifndef Q_OS_LINUX
+    if (m_conf->isTranslucent()) {
+        addProfileDlg->setAttribute(Qt::WA_TranslucentBackground);
+    }
+#endif
     addProfileDlg->exec();
 }
 
@@ -500,7 +507,6 @@ void MainWindow::updateTranslucent(bool translucent)
 #ifndef Q_OS_LINUX
     if (translucent) {
         this->setAttribute(Qt::WA_TranslucentBackground);
-        addProfileDlg.setAttribute(Qt::WA_TranslucentBackground);
     }
 #else
     Q_UNUSED(translucent);
