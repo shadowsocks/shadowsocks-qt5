@@ -21,11 +21,11 @@ Features
 Note
 ----
 
-- It is not a standalone programme. `ss-qt5` needs a shadowsocks backend such as [Shadowsocks-libev](https://github.com/clowwindy/shadowsocks) and [Shadowsocks-Python](ss-python).
-- [Shadowsocks-Python](ss-python) is highly recommended to serve as backend for better performance and stability.
+- It is not a standalone programme. `ss-qt5` needs a shadowsocks backend such as [Shadowsocks-libev](https://github.com/clowwindy/shadowsocks) and [Shadowsocks-Python] [ss-python].
+- [Shadowsocks-Python] [ss-python] is highly recommended to serve as backend for better performance and stability.
 - Don't be panic if you encounter a bug. Please feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Just remember to run from terminal or `cmd` and paste the output to the description of issue.
 
-[ss-python]:https://github.com/clowwindy/shadowsocks
+[ss-python]: https://github.com/clowwindy/shadowsocks
 
 Installation
 ------------
