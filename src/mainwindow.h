@@ -96,7 +96,6 @@ private:
     static const QString aboutText;
     Ui::MainWindow *ui;
     void showNotification(const QString &);
-    void updateTranslucent(bool translucent);
 
 #ifdef Q_OS_LINUX
     bool isUbuntuUnity;

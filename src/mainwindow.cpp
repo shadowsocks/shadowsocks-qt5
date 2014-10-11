@@ -48,7 +48,9 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     ui->translucentCheck->setVisible(false);
 #else
     ui->translucentCheck->setChecked(m_conf->isTranslucent());
-    updateTranslucent(m_conf->isTranslucent());
+    if(m_conf->isTranslucent()) {
+        this->setAttribute(Qt::WA_TranslucentBackground);
+    }
 #endif
     ui->relativePathCheck->setChecked(m_conf->isRelativePath());
 
@@ -497,20 +499,6 @@ void MainWindow::transculentToggled(bool c)
 {
     m_conf->setTranslucent(c);
     emit configurationChanged();
-}
-
-void MainWindow::updateTranslucent(bool translucent)
-{
-    /*
-     * don't use translucent background for Linux!
-     */
-#ifndef Q_OS_LINUX
-    if (translucent) {
-        this->setAttribute(Qt::WA_TranslucentBackground);
-    }
-#else
-    Q_UNUSED(translucent);
-#endif
 }
 
 void MainWindow::relativePathToggled(bool r)
