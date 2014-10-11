@@ -12,16 +12,20 @@ Features
 --------
 
 - Shadowsocks-Qt5 is written in C++/Qt5.
-- An intuitive and native UI. And JUST a **GUI fronted**. Keep your favourite Shadowsocks port as backend.
+- Intuitive and **native** UI. This is **not** a clumsy Web App.
+- JUST a **GUI fronted**. Keep your favourite Shadowsocks port as backend.
+- Easy-to-use and highly customisable.
 - The `gui-config.json` file is partially compatible with [shadowsocks-gui](https://github.com/shadowsocks/shadowsocks-gui). In order to serve better, some new values have been added.
 - `gui-config.json` is located under ~/.config/shadowsocks on UNIX platforms, or under the main programme's directory in Windows.
 
 Note
 ----
 
-- It is not a standalone programme. `ss-qt5` needs a shadowsocks backend such as Shadowsocks-libev and Shadowsocks-Python.
-- Shadowsocks-Python is highly recommended to serve as backend for better performance and stability.
+- It is not a standalone programme. `ss-qt5` needs a shadowsocks backend such as [Shadowsocks-libev](https://github.com/clowwindy/shadowsocks) and [Shadowsocks-Python](ss-python).
+- [Shadowsocks-Python](ss-python) is highly recommended to serve as backend for better performance and stability.
 - Don't be panic if you encounter a bug. Please feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Just remember to run from terminal or `cmd` and paste the output to the description of issue.
+
+[ss-python]:https://github.com/clowwindy/shadowsocks
 
 Installation
 ------------
