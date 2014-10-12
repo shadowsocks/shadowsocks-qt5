@@ -97,6 +97,7 @@ private:
     static const QString aboutText;
     Ui::MainWindow *ui;
     void showNotification(const QString &);
+    void blockChildrenSignals(bool);
 
 #ifdef Q_OS_LINUX
     bool isUbuntuUnity;
