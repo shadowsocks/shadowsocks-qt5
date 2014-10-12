@@ -315,6 +315,18 @@ Not every port of Shadowsocks support this option.</string>
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="stopButton">
+            <property name="text">
+             <string>Stop</string>
+            </property>
+            <property name="icon">
+             <iconset theme="process-stop">
+              <normaloff/>
+             </iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacerStartStop">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -328,14 +340,9 @@ Not every port of Shadowsocks support this option.</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="stopButton">
+           <widget class="QPushButton" name="qrcodeButton">
             <property name="text">
-             <string>Stop</string>
-            </property>
-            <property name="icon">
-             <iconset theme="process-stop">
-              <normaloff/>
-             </iconset>
+             <string>QR Code</string>
             </property>
            </widget>
           </item>
@@ -512,7 +519,6 @@ background-color: rgb(0, 0, 0);</string>
   <tabstop>timeoutSpinBox</tabstop>
   <tabstop>tfoCheckBox</tabstop>
   <tabstop>startButton</tabstop>
-  <tabstop>stopButton</tabstop>
   <tabstop>profileEditButtonBox</tabstop>
   <tabstop>logBrowser</tabstop>
   <tabstop>debugCheck</tabstop>

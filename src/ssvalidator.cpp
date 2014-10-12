@@ -10,7 +10,7 @@ bool SSValidator::validate(QString input)
     //must begin with ss:// to distinguish from random base64 encoded strings
     if (input.startsWith("ss://")) {
         input.remove(0, 5);
-        QString decode(QByteArray::fromBase64(input.toLatin1()));
+        QString decode(QByteArray::fromBase64(QByteArray(input.toStdString().c_str())));
         QStringList decList = decode.split(':');
         if (decList.size() < 3) {
             return false;

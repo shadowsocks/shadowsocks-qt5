@@ -22,6 +22,17 @@ SSProfile::SSProfile() :
     type("Shadowsocks-libev")
 { }
 
+QByteArray SSProfile::getSsUrl()
+{
+    /*
+     * cook a ss:// url
+     */
+    QString ssurl = QString("%1:%2@%3:%4").arg(method.toLower()).arg(password).arg(server).arg(server_port);
+    QByteArray ba = QByteArray(ssurl.toStdString().c_str()).toBase64();
+    ba.prepend("ss://");
+    return ba;
+}
+
 void SSProfile::setBackend(bool relativePath)
 {
     QString execName, sslocal;

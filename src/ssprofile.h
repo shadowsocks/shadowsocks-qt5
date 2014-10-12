@@ -7,12 +7,13 @@ class SSProfile
 {
 public:
     SSProfile();
-    void setBackend(bool relativePath = false);
-    void setBackend(const QString &a, bool relativePath = false);
-    QString getBackend();
-    int getBackendTypeID();
+    QByteArray getSsUrl();
     bool isBackendMatchType();
     bool isValid() const;
+    int getBackendTypeID();
+    QString getBackend();
+    void setBackend(bool relativePath = false);
+    void setBackend(const QString &a, bool relativePath = false);
 
     QString backend;
     QString custom_arg;

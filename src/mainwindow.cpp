@@ -2,6 +2,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#ifdef Q_OS_UNIX
+#include "qrcodedialogue.h"
+#endif
+
 #ifdef Q_OS_WIN
 #include <QtWin>
 #endif
@@ -40,6 +44,9 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     ui->profileComboBox->insertItems(0, m_conf->getProfileList());
     ui->sportEdit->setValidator(&portValidator);
     ui->stopButton->setEnabled(false);
+#ifndef Q_OS_UNIX
+    ui->qrcodeButton->setVisible(false);
+#endif
 
     ui->autohideCheck->setChecked(m_conf->isAutoHide());
     ui->autostartCheck->setChecked(m_conf->isAutoStart());
@@ -108,6 +115,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
+    connect(ui->qrcodeButton, &QPushButton::clicked, this, &MainWindow::onQrcodeButtonClicked);
 
     //update current configuration
     ui->profileComboBox->setCurrentIndex(m_conf->getIndex());
@@ -206,6 +214,14 @@ void MainWindow::onCustomArgsEditFinished(const QString &arg)
 {
     current_profile->custom_arg = arg;
     emit configurationChanged();
+}
+
+void MainWindow::onQrcodeButtonClicked()
+{
+#ifdef Q_OS_UNIX
+    QRCodeDialogue *qrdlg = new QRCodeDialogue(current_profile->getSsUrl(), this);
+    qrdlg->exec();
+#endif
 }
 
 void MainWindow::addProfileDialogue(bool enforce = false)

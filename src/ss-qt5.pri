@@ -6,7 +6,9 @@ SOURCES      += src/main.cpp\
                 src/addprofiledialogue.cpp \
                 src/ssvalidator.cpp \
                 src/ssprofile.cpp \
-                src/configuration.cpp
+                src/configuration.cpp \
+                src/qrcodedialogue.cpp \
+                src/qrwidget.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ss_process.h \
@@ -15,10 +17,13 @@ HEADERS      += src/mainwindow.h \
                 src/portvalidator.h \
                 src/addprofiledialogue.h \
                 src/ssvalidator.h \
-                src/configuration.h
+                src/configuration.h \
+                src/qrcodedialogue.h \
+                src/qrwidget.h
 
 FORMS        += src/mainwindow.ui \
-                src/addprofiledialogue.ui
+                src/addprofiledialogue.ui \
+                src/qrcodedialogue.ui
 
 RESOURCES    += src/icons.qrc
 
@@ -26,3 +31,5 @@ TRANSLATIONS  = src/i18n/ssqt5_zh_CN.ts
 
 win32: RC_FILE = src/ss-qt5.rc
 mac:   ICON    = src/ss-qt5.icns
+
+unix: LIBS += -lqrencode

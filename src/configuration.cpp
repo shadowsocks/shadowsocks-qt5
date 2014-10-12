@@ -145,7 +145,8 @@ void Configuration::addProfileFromSSURI(const QString &name, QString uri)
     SSProfile p;
     p.profileName = name;
 
-    QStringList resultList = QString(QByteArray::fromBase64(uri.toLatin1())).split(':');
+    uri.remove(0, 5);//remove the prefix "ss://" from uri
+    QStringList resultList = QString(QByteArray::fromBase64(QByteArray(uri.toStdString().c_str()))).split(':');
     p.method = resultList.first();
     p.server_port = resultList.last();
     QStringList ser = resultList.at(1).split('@');
