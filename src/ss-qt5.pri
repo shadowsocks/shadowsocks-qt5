@@ -32,4 +32,12 @@ TRANSLATIONS  = src/i18n/ssqt5_zh_CN.ts
 win32: RC_FILE = src/ss-qt5.rc
 mac:   ICON    = src/ss-qt5.icns
 
-unix: LIBS += -lqrencode
+win32: {
+    win32-msvc*: error("Doesn't Support MSVC! Please use MinGW GCC.")
+    else: {
+        INCLUDEPATH += $$top_srcdir/3rdparty/qrencode/include
+        LIBS += -L$$top_srcdir/3rdparty/qrencode
+    }
+}
+
+LIBS += -lqrencode

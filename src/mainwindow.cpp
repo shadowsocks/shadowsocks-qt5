@@ -1,10 +1,7 @@
 #include <QDebug>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
-#ifdef Q_OS_UNIX
 #include "sharedialogue.h"
-#endif
 
 #ifdef Q_OS_WIN
 #include <QtWin>
@@ -44,9 +41,6 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     ui->profileComboBox->addItems(m_conf->getProfileList());
     ui->sportEdit->setValidator(&portValidator);
     ui->stopButton->setEnabled(false);
-#ifndef Q_OS_UNIX
-    ui->shareButton->setVisible(false);
-#endif
 
     ui->autohideCheck->setChecked(m_conf->isAutoHide());
     ui->autostartCheck->setChecked(m_conf->isAutoStart());
@@ -226,10 +220,8 @@ void MainWindow::onCustomArgsEditFinished(const QString &arg)
 
 void MainWindow::onShareButtonClicked()
 {
-#ifdef Q_OS_UNIX
     ShareDialogue *shareDlg = new ShareDialogue(current_profile->getSsUrl(), this);
     shareDlg->exec();
-#endif
 }
 
 void MainWindow::addProfileDialogue(bool enforce = false)
