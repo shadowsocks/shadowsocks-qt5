@@ -54,9 +54,11 @@ You will get `ss-qt5.exe` and `gui-config.json` in ../ss-qt5 directory.
 #### Dependencies ####
 
 - Qt5 (QtCore, QtGui, etc)
-- libqrencode
+- `qrencode` (or `libqrencode` in Debian/Ubuntu)
 
 #### Compile ####
+
+The development packages of Qt5 and `qrencode-devel` (or `libqrencode-devel` in Debian/Ubuntu) are required.
 
 ```bash
 # Some distros use seperated qmake-qt4, qmake-qt5. Then, just run `qmake-qt5`. You can specify INSTALL_PREFIX=/usr/local if needed. default is /usr

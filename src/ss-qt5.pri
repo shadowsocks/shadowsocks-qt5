@@ -39,5 +39,8 @@ win32: {
         LIBS += -L$$top_srcdir/3rdparty/qrencode
     }
 }
-
+unix : {
+    CONFIG    += link_pkgconfig
+    PKGCONFIG += libqrencode
+}
 LIBS += -lqrencode
