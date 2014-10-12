@@ -52,6 +52,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     if(m_conf->isTranslucent()) {
         this->setAttribute(Qt::WA_TranslucentBackground);
     }
+    ui->tfoCheckBox->setVisible(false);
 #endif
     ui->relativePathCheck->setChecked(m_conf->isRelativePath());
 
@@ -434,12 +435,15 @@ void MainWindow::backendTypeChanged(const QString &type)
         ui->timeoutSpinBox->setVisible(true);
         ui->timeoutLabel->setVisible(true);
     }
+
+#ifdef Q_OS_LINUX
     if ((tID == 0 || tID == 3) && m_conf->isTFOAvailable()) {
         ui->tfoCheckBox->setVisible(true);
     }
     else {
         ui->tfoCheckBox->setVisible(false);
     }
+#endif
     emit configurationChanged();
 }
 
