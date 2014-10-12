@@ -116,6 +116,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
     connect(ui->qrcodeButton, &QPushButton::clicked, this, &MainWindow::onQrcodeButtonClicked);
+    connect(this, &MainWindow::configurationChanged, this, &MainWindow::onConfigurationChanged);
 
     //update current configuration
     ui->profileComboBox->setCurrentIndex(m_conf->getIndex());
@@ -127,9 +128,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
         emit ui->profileComboBox->currentIndexChanged(m_conf->getIndex());
     }
 
-    //connect signals and slots when config changed
-    //Profile
-    connect(this, &MainWindow::configurationChanged, this, &MainWindow::onConfigurationChanged);
+    //Profile signals and slots
     connect(ui->customArgEdit, &QLineEdit::textChanged, this, &MainWindow::onCustomArgsEditFinished);
     connect(ui->laddrEdit, &QLineEdit::textChanged, this, &MainWindow::laddrEditFinished);
     connect(ui->lportEdit, &QLineEdit::textChanged, this, &MainWindow::lportEditFinished);
@@ -183,6 +182,9 @@ void MainWindow::onCurrentProfileChanged(int i)
     }
 
     ss_local.stop();//Q: should we stop the backend when profile changed?
+    if(i != m_conf->getIndex()) {
+        emit configurationChanged();
+    }
     m_conf->setIndex(i);
     current_profile = m_conf->currentProfile();
     if (current_profile->backend.isEmpty()) {
@@ -206,8 +208,6 @@ void MainWindow::onCurrentProfileChanged(int i)
 #ifdef Q_OS_LINUX
     ui->tfoCheckBox->setChecked(current_profile->fast_open);
 #endif
-
-    emit configurationChanged();
 }
 
 void MainWindow::onCustomArgsEditFinished(const QString &arg)
