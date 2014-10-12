@@ -41,7 +41,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     ui->laddrEdit->setValidator(&ipv4addrValidator);
     ui->lportEdit->setValidator(&portValidator);
     ui->methodComboBox->addItems(SSValidator::supportedMethod);
-    ui->profileComboBox->insertItems(0, m_conf->getProfileList());
+    ui->profileComboBox->addItems(m_conf->getProfileList());
     ui->sportEdit->setValidator(&portValidator);
     ui->stopButton->setEnabled(false);
 #ifndef Q_OS_UNIX
