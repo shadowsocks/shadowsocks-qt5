@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QRCodeDialogue</class>
- <widget class="QDialog" name="QRCodeDialogue">
+ <class>ShareDialogue</class>
+ <widget class="QDialog" name="ShareDialogue">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>340</height>
+    <height>320</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>300</width>
+    <height>320</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>300</width>
+    <height>320</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>QR Code</string>
+   <string>Share Profile</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -29,6 +41,9 @@
    </item>
    <item alignment="Qt::AlignBottom">
     <widget class="QLineEdit" name="ssUrlEdit">
+     <property name="styleSheet">
+      <string notr="true">background-color: &quot;transparent&quot;</string>
+     </property>
      <property name="frame">
       <bool>false</bool>
      </property>

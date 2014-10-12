@@ -7,8 +7,8 @@ SOURCES      += src/main.cpp\
                 src/ssvalidator.cpp \
                 src/ssprofile.cpp \
                 src/configuration.cpp \
-                src/qrcodedialogue.cpp \
-                src/qrwidget.cpp
+                src/qrwidget.cpp \
+                src/sharedialogue.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ss_process.h \
@@ -18,12 +18,12 @@ HEADERS      += src/mainwindow.h \
                 src/addprofiledialogue.h \
                 src/ssvalidator.h \
                 src/configuration.h \
-                src/qrcodedialogue.h \
-                src/qrwidget.h
+                src/qrwidget.h \
+                src/sharedialogue.h
 
 FORMS        += src/mainwindow.ui \
                 src/addprofiledialogue.ui \
-                src/qrcodedialogue.ui
+                src/sharedialogue.ui
 
 RESOURCES    += src/icons.qrc
 

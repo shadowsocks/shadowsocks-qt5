@@ -62,7 +62,7 @@ private slots:
     void onConfigurationChanged(bool);
     void onCurrentProfileChanged(int);
     void onCustomArgsEditFinished(const QString &);
-    void onQrcodeButtonClicked();
+    void onShareButtonClicked();
     void onReadReadyProcess(const QByteArray &o);
     void processStarted();
     void processStopped();

@@ -340,9 +340,9 @@ Not every port of Shadowsocks support this option.</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="qrcodeButton">
+           <widget class="QPushButton" name="shareButton">
             <property name="text">
-             <string>QR Code</string>
+             <string>Share</string>
             </property>
            </widget>
           </item>

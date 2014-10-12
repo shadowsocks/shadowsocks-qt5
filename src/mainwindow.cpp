@@ -3,7 +3,7 @@
 #include "ui_mainwindow.h"
 
 #ifdef Q_OS_UNIX
-#include "qrcodedialogue.h"
+#include "sharedialogue.h"
 #endif
 
 #ifdef Q_OS_WIN
@@ -45,7 +45,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     ui->sportEdit->setValidator(&portValidator);
     ui->stopButton->setEnabled(false);
 #ifndef Q_OS_UNIX
-    ui->qrcodeButton->setVisible(false);
+    ui->shareButton->setVisible(false);
 #endif
 
     ui->autohideCheck->setChecked(m_conf->isAutoHide());
@@ -117,7 +117,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
-    connect(ui->qrcodeButton, &QPushButton::clicked, this, &MainWindow::onQrcodeButtonClicked);
+    connect(ui->shareButton, &QPushButton::clicked, this, &MainWindow::onShareButtonClicked);
 
     connect(this, &MainWindow::configurationChanged, this, &MainWindow::onConfigurationChanged);
     connect(ui->customArgEdit, &QLineEdit::textChanged, this, &MainWindow::onCustomArgsEditFinished);
@@ -224,11 +224,11 @@ void MainWindow::onCustomArgsEditFinished(const QString &arg)
     emit configurationChanged();
 }
 
-void MainWindow::onQrcodeButtonClicked()
+void MainWindow::onShareButtonClicked()
 {
 #ifdef Q_OS_UNIX
-    QRCodeDialogue *qrdlg = new QRCodeDialogue(current_profile->getSsUrl(), this);
-    qrdlg->exec();
+    ShareDialogue *shareDlg = new ShareDialogue(current_profile->getSsUrl(), this);
+    shareDlg->exec();
 #endif
 }
 
