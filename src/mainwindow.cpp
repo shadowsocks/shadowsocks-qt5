@@ -69,7 +69,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     systray.setToolTip(QString("Shadowsocks-Qt5"));
     systray.setContextMenu(&systrayMenu);
 #ifdef Q_OS_LINUX
-    isUbuntuUnity = (QString(getenv("XDG_CURRENT_DESKTOP")).compare("Unity") == 0);
+    isUbuntuUnity = (QString(getenv("XDG_CURRENT_DESKTOP")).compare("Unity", Qt::CaseInsensitive) == 0);
     if (!isUbuntuUnity) {
         systray.show();
     }
