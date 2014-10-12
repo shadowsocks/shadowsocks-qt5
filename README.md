@@ -51,7 +51,12 @@ You will get `ss-qt5.exe` and `gui-config.json` in ../ss-qt5 directory.
 
 ### Linux ###
 
-You should have installed Qt 5 and its development packages before building.
+#### Dependencies ####
+
+- Qt5 (QtCore, QtGui, etc)
+- libqrencode
+
+#### Compile ####
 
 ```bash
 # Some distros use seperated qmake-qt4, qmake-qt5. Then, just run `qmake-qt5`. You can specify INSTALL_PREFIX=/usr/local if needed. default is /usr
