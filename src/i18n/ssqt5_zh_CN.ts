@@ -145,13 +145,14 @@
     <message>
         <location filename="../mainwindow.ui" line="26"/>
         <source>Control Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>控制面板</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="169"/>
         <source>Only available in Linux with Kernel &gt;= 3.7
 Not every port of Shadowsocks support this option.</source>
-        <translation type="unfinished"></translation>
+        <translation>仅在Linux内核版本&gt;=3.7时可用
+不是所有版本的Shadowsocks都支持该选项。</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="203"/>
@@ -161,12 +162,12 @@ Not every port of Shadowsocks support this option.</source>
     <message>
         <location filename="../mainwindow.ui" line="287"/>
         <source>Custom Arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义参数</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="345"/>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>分享</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="362"/>
@@ -250,12 +251,12 @@ Not every port of Shadowsocks support this option.</source>
     <message>
         <location filename="../mainwindow.cpp" line="348"/>
         <source>Profile: %1 Started</source>
-        <translation type="unfinished"></translation>
+        <translation>配置： %1 已启动</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="364"/>
         <source>Profile: %1 Stopped</source>
-        <translation type="unfinished"></translation>
+        <translation>配置： %1 已停止</translation>
     </message>
     <message>
         <source>Shadowsocks started! profile: %1.</source>
@@ -311,7 +312,7 @@ Do you want to save it now?</source>
     <message>
         <location filename="../qrwidget.cpp" line="48"/>
         <source>Generating QR code failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>二维码生成失败。</translation>
     </message>
 </context>
 <context>
@@ -342,7 +343,7 @@ Do you want to save it now?</source>
     <message>
         <location filename="../sharedialogue.ui" line="26"/>
         <source>Share Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>分享配置</translation>
     </message>
 </context>
 </TS>
