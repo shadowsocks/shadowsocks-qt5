@@ -29,9 +29,7 @@ isEmpty(INSTALL_PREFIX) {
 unix: {
     desktop.path  = $$INSTALL_PREFIX/share/applications
     ssicon.path   = $$INSTALL_PREFIX/share/icons/hicolor/512x512/apps
-    iconsymlink.path=.
-    iconsymlink.commands=ln -s $$INSTALL_PREFIX/share/icons/hicolor/512x512/apps/shadowsocks-qt5.png $$INSTALL_PREFIX/share/pixmaps/shadowsocks-qt5.png
-    INSTALLS += desktop ssicon iconsymlink
+    INSTALLS += desktop ssicon
 }
 
 target.path = $$INSTALL_PREFIX/bin
