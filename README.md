@@ -56,7 +56,17 @@ You will get `ss-qt5.exe` and `gui-config.json` in ../ss-qt5 directory.
 - Qt5 (QtCore, QtGui, etc)
 - `qrencode` (or `libqrencode` in Debian/Ubuntu)
 
-#### Compile ####
+#### Debian / Ubuntu ####
+
+By running the command below, you'll get a deb package on upper directory.
+
+```bash
+dpkg-buildpackage -uc -us -b
+```
+
+Then, install it by `sudo dpkg -i shadowsocks-qt5-<VER_ARCH_ETC>.deb`.
+
+#### General Compile ####
 
 The development packages of Qt5 and `qrencode-devel` (or `libqrencode-devel` in Debian/Ubuntu) are required.
 
