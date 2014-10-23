@@ -1,0 +1,5 @@
+shadowsocks-qt5 (0.5.0) stable; urgency=medium
+
+  * first debian package
+
+ -- Symeon Huang <hzwhuang@gmail.com>  Thu, 23 Oct 2014 15:26:18 +0100
