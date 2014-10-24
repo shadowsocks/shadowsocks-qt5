@@ -55,7 +55,7 @@ You will get `ss-qt5.exe` and `gui-config.json` in ../ss-qt5 directory.
 
 Make sure you're running at least Ubuntu 14.04.
 
-For instructions, please refer to this PPA: https://code.launchpad.net/~hzwhuang/+archive/ubuntu/ppa
+For instructions, please refer to [PPA](https://code.launchpad.net/~hzwhuang/+archive/ubuntu/ss-qt5).
 
 #### Compile ####
 
