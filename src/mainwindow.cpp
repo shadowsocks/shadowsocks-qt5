@@ -296,11 +296,11 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
     }
     else {//reset
         m_conf->revert();
-        disconnect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
+        this->blockChildrenSignals(true);
         ui->profileComboBox->clear();
         ui->profileComboBox->insertItems(0, m_conf->getProfileList());
         ui->profileComboBox->setCurrentIndex(m_conf->getIndex());
-        connect(ui->profileComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::onCurrentProfileChanged);
+        this->blockChildrenSignals(false);
         emit ui->profileComboBox->currentIndexChanged(m_conf->getIndex());//same in MainWindow's constructor
         emit configurationChanged(true);
     }
