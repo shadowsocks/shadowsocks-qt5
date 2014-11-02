@@ -424,7 +424,7 @@ void MainWindow::backendTypeChanged(const QString &type)
 {
     current_profile->type = type;
 
-    ui->backendEdit->setText(current_profile->getBackend());
+    ui->backendEdit->setText(current_profile->getBackend(m_conf->isRelativePath()));
 
     int tID = current_profile->getBackendTypeID();
     if (tID == 2) {//shadowsocks-go doesn't support timeout argument

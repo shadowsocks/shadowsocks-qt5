@@ -11,7 +11,7 @@ public:
     bool isBackendMatchType();
     bool isValid() const;
     int getBackendTypeID();
-    QString getBackend();
+    QString getBackend(bool relativePath = false);
     void setBackend(bool relativePath = false);
     void setBackend(const QString &a, bool relativePath = false);
 

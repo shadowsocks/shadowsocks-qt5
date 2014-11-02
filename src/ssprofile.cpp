@@ -37,6 +37,9 @@ void SSProfile::setBackend(bool relativePath)
 {
     QString execName, sslocal;
     switch (this->getBackendTypeID()) {
+    case 0://libev
+        execName = "ss-local";
+        break;
     case 1://nodejs
         execName = "sslocal";
         break;
@@ -50,7 +53,8 @@ void SSProfile::setBackend(bool relativePath)
         execName = "sslocal";
 #endif
         break;
-    default://including 0. libev
+    default://shouldn't get here
+        qWarning() << "Invalid backend type ID.";
         execName = "ss-local";
     }
 
@@ -88,10 +92,10 @@ void SSProfile::setBackend(const QString &a, bool relativePath)
     }
 }
 
-QString SSProfile::getBackend()
+QString SSProfile::getBackend(bool relativePath)
 {
     if (!isBackendMatchType()) {
-        setBackend();
+        setBackend(relativePath);
     }
     return backend;
 }
@@ -120,7 +124,7 @@ bool SSProfile::isBackendMatchType()
 {
     QFile file(backend);
     if (!file.exists()) {
-        qWarning() << "Backend does not exist.";
+        qWarning() << "Backend does not exist. You can safely ignore this message if you're changing the backend type.";
         return false;
     }
 
@@ -142,8 +146,9 @@ bool SSProfile::isBackendMatchType()
         if (backend.contains("ss-local")) {
             rType = 0;//libev
         }
-        else
+        else {
             rType = 2;//Go
+        }
     }
 
     return (rType == this->getBackendTypeID());
@@ -151,14 +156,13 @@ bool SSProfile::isBackendMatchType()
 
 bool SSProfile::isValid() const
 {
-    bool valid;
     QFile backendFile(backend);
-    valid = SSValidator::validatePort(server_port) && SSValidator::validatePort(local_port) && SSValidator::validateMethod(method) && backendFile.exists();
+    bool valid = SSValidator::validatePort(server_port) && SSValidator::validatePort(local_port) && SSValidator::validateMethod(method) && backendFile.exists();
 
-    //TODO: more accurate
     if (server.isEmpty() || local_addr.isEmpty() || timeout.toInt() < 1 || !valid) {
         return false;
     }
-    else
+    else {
         return true;
+    }
 }
