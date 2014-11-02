@@ -92,9 +92,9 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     /*
      * SIGNALs and SLOTs
      */
-    connect(&ss_local, &SS_Process::readReadyProcess, this, &MainWindow::onReadReadyProcess);
-    connect(&ss_local, &SS_Process::sigstart, this, &MainWindow::onProcessStarted);
-    connect(&ss_local, &SS_Process::sigstop, this, &MainWindow::onProcessStopped);
+    connect(&ss_local, &SS_Process::processRead, this, &MainWindow::onProcessReadyRead);
+    connect(&ss_local, &SS_Process::processStarted, this, &MainWindow::onProcessStarted);
+    connect(&ss_local, &SS_Process::processStopped, this, &MainWindow::onProcessStopped);
     connect(&systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
 
     connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::onBackendToolButtonPressed);
@@ -402,7 +402,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
     QWidget::closeEvent(e);
 }
 
-void MainWindow::onReadReadyProcess(const QByteArray &o)
+void MainWindow::onProcessReadyRead(const QByteArray &o)
 {
     QString logStream = QString::fromLocal8Bit(o);
     if (verboseOutput) {

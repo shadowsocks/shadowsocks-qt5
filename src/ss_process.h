@@ -24,9 +24,9 @@ public:
     bool isRunning();
 
 signals:
-    void readReadyProcess(const QByteArray &o);
-    void sigstart();
-    void sigstop();
+    void processRead(const QByteArray &o);
+    void processStarted();
+    void processStopped();
 
 private:
     bool running;
@@ -38,9 +38,9 @@ private:
     void start(QString &args);
 
 private slots:
-    void autoemitreadReadyProcess();
-    void started();
-    void exited(int);
+    void onProcessReadyRead();
+    void onStarted();
+    void onExited(int);
 };
 
 #endif // SS_PROCESS_H

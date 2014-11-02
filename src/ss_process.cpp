@@ -7,9 +7,9 @@ SS_Process::SS_Process(QObject *parent) :
     QObject(parent)
 {
     proc.setReadChannelMode(QProcess::MergedChannels);
-    connect(&proc, &QProcess::readyRead, this, &SS_Process::autoemitreadReadyProcess);
-    connect(&proc, &QProcess::started, this, &SS_Process::started);
-    connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), this, &SS_Process::exited);
+    connect(&proc, &QProcess::readyRead, this, &SS_Process::onProcessReadyRead);
+    connect(&proc, &QProcess::started, this, &SS_Process::onStarted);
+    connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), this, &SS_Process::onExited);
 }
 
 SS_Process::~SS_Process()
@@ -104,21 +104,21 @@ void SS_Process::stop()
     }
 }
 
-void SS_Process::autoemitreadReadyProcess()
+void SS_Process::onProcessReadyRead()
 {
-    emit readReadyProcess(proc.readAll());
+    emit processRead(proc.readAll());
 }
 
-void SS_Process::started()
+void SS_Process::onStarted()
 {
     running = true;
     qDebug() << tr("Backend started. PID: ") <<proc.pid();
-    emit sigstart();
+    emit processStarted();
 }
 
-void SS_Process::exited(int e)
+void SS_Process::onExited(int e)
 {
     qDebug() << tr("Backend exited. Exit Code: ") << e;
     running = false;
-    emit sigstop();
+    emit processStopped();
 }

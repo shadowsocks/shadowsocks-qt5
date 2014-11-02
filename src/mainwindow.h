@@ -63,7 +63,7 @@ private slots:
     void onCurrentProfileChanged(int);
     void onCustomArgsEditFinished(const QString &);
     void onShareButtonClicked();
-    void onReadReadyProcess(const QByteArray &o);
+    void onProcessReadyRead(const QByteArray &o);
     void onProcessStarted();
     void onProcessStopped();
     void onProfileEditButtonClicked(QAbstractButton*);
