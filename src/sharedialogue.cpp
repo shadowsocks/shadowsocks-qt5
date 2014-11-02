@@ -9,6 +9,7 @@ ShareDialogue::ShareDialogue(const QByteArray &ssUrl, QWidget *parent) :
     ui->setupUi(this);
     ui->qrWidget->setQRData(ssUrl);
     ui->ssUrlEdit->setText(QString(ssUrl));
+    ui->ssUrlEdit->setCursorPosition(0);
 }
 
 ShareDialogue::~ShareDialogue()
