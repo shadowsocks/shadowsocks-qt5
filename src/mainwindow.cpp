@@ -58,8 +58,8 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
 
     //desktop systray
     systrayMenu.addAction(tr("Show"), this, SLOT(showWindow()));
-    systrayMenu.addAction(tr("Start"), this, SLOT(startButtonPressed()));
-    systrayMenu.addAction(tr("Stop"), this, SLOT(stopButtonPressed()));
+    systrayMenu.addAction(tr("Start"), this, SLOT(onStartButtonPressed()));
+    systrayMenu.addAction(tr("Stop"), this, SLOT(onStopButtonPressed()));
     systrayMenu.addAction(tr("Exit"), this, SLOT(close()));
     systrayMenu.actions().at(2)->setEnabled(false);
 #ifdef Q_OS_WIN
@@ -93,8 +93,8 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
      * SIGNALs and SLOTs
      */
     connect(&ss_local, &SS_Process::readReadyProcess, this, &MainWindow::onReadReadyProcess);
-    connect(&ss_local, &SS_Process::sigstart, this, &MainWindow::processStarted);
-    connect(&ss_local, &SS_Process::sigstop, this, &MainWindow::processStopped);
+    connect(&ss_local, &SS_Process::sigstart, this, &MainWindow::onProcessStarted);
+    connect(&ss_local, &SS_Process::sigstop, this, &MainWindow::onProcessStopped);
     connect(&systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
 
     connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::onBackendToolButtonPressed);
@@ -107,34 +107,34 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     */
     connect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentProfileChanged(int)));
 
-    connect(ui->backendTypeCombo, &QComboBox::currentTextChanged, this, &MainWindow::backendTypeChanged);
+    connect(ui->backendTypeCombo, &QComboBox::currentTextChanged, this, &MainWindow::onBackendTypeChanged);
     connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
     connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
-    connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startButtonPressed);
-    connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopButtonPressed);
+    connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::onStartButtonPressed);
+    connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::onStopButtonPressed);
     connect(ui->shareButton, &QPushButton::clicked, this, &MainWindow::onShareButtonClicked);
 
     connect(this, &MainWindow::configurationChanged, this, &MainWindow::onConfigurationChanged);
     connect(ui->customArgEdit, &QLineEdit::textChanged, this, &MainWindow::onCustomArgsEditFinished);
-    connect(ui->laddrEdit, &QLineEdit::textChanged, this, &MainWindow::laddrEditFinished);
-    connect(ui->lportEdit, &QLineEdit::textChanged, this, &MainWindow::lportEditFinished);
-    connect(ui->methodComboBox, &QComboBox::currentTextChanged, this, &MainWindow::methodChanged);
-    connect(ui->pwdEdit, &QLineEdit::textChanged, this, &MainWindow::pwdEditFinished);
-    connect(ui->serverEdit, &QLineEdit::textChanged, this, &MainWindow::serverEditFinished);
-    connect(ui->sportEdit, &QLineEdit::textChanged, this, &MainWindow::sportEditFinished);
-    connect(ui->timeoutSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MainWindow::timeoutChanged);
+    connect(ui->laddrEdit, &QLineEdit::textChanged, this, &MainWindow::onLAddrEditFinished);
+    connect(ui->lportEdit, &QLineEdit::textChanged, this, &MainWindow::onLPortEditFinished);
+    connect(ui->methodComboBox, &QComboBox::currentTextChanged, this, &MainWindow::onMethodChanged);
+    connect(ui->pwdEdit, &QLineEdit::textChanged, this, &MainWindow::onPasswordEditFinished);
+    connect(ui->serverEdit, &QLineEdit::textChanged, this, &MainWindow::onServerEditFinished);
+    connect(ui->sportEdit, &QLineEdit::textChanged, this, &MainWindow::onSPortEditFinished);
+    connect(ui->timeoutSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MainWindow::onTimeoutChanged);
 #ifdef Q_OS_LINUX
-    connect(ui->tfoCheckBox, &QCheckBox::toggled, this, &MainWindow::tcpFastOpenChanged);
+    connect(ui->tfoCheckBox, &QCheckBox::toggled, this, &MainWindow::onTcpFastOpenChanged);
 #endif
-    connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::profileEditButtonClicked);
+    connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::onProfileEditButtonClicked);
 
-    connect(ui->autohideCheck, &QCheckBox::stateChanged, this, &MainWindow::autoHideToggled);
-    connect(ui->autostartCheck, &QCheckBox::stateChanged, this, &MainWindow::autoStartToggled);
-    connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::debugToggled);
-    connect(ui->translucentCheck, &QCheckBox::toggled, this, &MainWindow::transculentToggled);
-    connect(ui->relativePathCheck, &QCheckBox::toggled, this, &MainWindow::relativePathToggled);
+    connect(ui->autohideCheck, &QCheckBox::stateChanged, this, &MainWindow::onAutoHideToggled);
+    connect(ui->autostartCheck, &QCheckBox::stateChanged, this, &MainWindow::onAutoStartToggled);
+    connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::onDebugToggled);
+    connect(ui->translucentCheck, &QCheckBox::toggled, this, &MainWindow::onTransculentToggled);
+    connect(ui->relativePathCheck, &QCheckBox::toggled, this, &MainWindow::onRelativePathToggled);
     connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::saveConfig);
-    connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::aboutButtonClicked);
+    connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::onAboutButtonClicked);
 
     //update current configuration
     ui->profileComboBox->setCurrentIndex(m_conf->getIndex());
@@ -289,7 +289,7 @@ void MainWindow::minimizeToSysTray()
     this->hide();
 }
 
-void MainWindow::profileEditButtonClicked(QAbstractButton *b)
+void MainWindow::onProfileEditButtonClicked(QAbstractButton *b)
 {
     if (ui->profileEditButtonBox->standardButton(b) == QDialogButtonBox::Save) {
         saveConfig();
@@ -306,7 +306,7 @@ void MainWindow::profileEditButtonClicked(QAbstractButton *b)
     }
 }
 
-void MainWindow::startButtonPressed()
+void MainWindow::onStartButtonPressed()
 {
     if (!current_profile->isValid()) {
         QMessageBox::critical(this, tr("Error"), tr("Invalid profile or configuration."));
@@ -337,7 +337,7 @@ void MainWindow::deleteProfile()
     ui->profileComboBox->removeItem(i);
 }
 
-void MainWindow::processStarted()
+void MainWindow::onProcessStarted()
 {
     systrayMenu.actions().at(1)->setEnabled(false);
     systrayMenu.actions().at(2)->setEnabled(true);
@@ -349,7 +349,7 @@ void MainWindow::processStarted()
     showNotification(tr("Profile: %1 Started").arg(current_profile->profileName));
 }
 
-void MainWindow::processStopped()
+void MainWindow::onProcessStopped()
 {
     systrayMenu.actions().at(1)->setEnabled(true);
     systrayMenu.actions().at(2)->setEnabled(false);
@@ -420,7 +420,7 @@ void MainWindow::onConfigurationChanged(bool saved)
     ui->miscSaveButton->setEnabled(!saved);
 }
 
-void MainWindow::backendTypeChanged(const QString &type)
+void MainWindow::onBackendTypeChanged(const QString &type)
 {
     current_profile->type = type;
 
@@ -447,81 +447,81 @@ void MainWindow::backendTypeChanged(const QString &type)
     emit configurationChanged();
 }
 
-void MainWindow::serverEditFinished(const QString &str)
+void MainWindow::onServerEditFinished(const QString &str)
 {
     current_profile->server = str;
     emit configurationChanged();
 }
 
-void MainWindow::sportEditFinished(const QString &str)
+void MainWindow::onSPortEditFinished(const QString &str)
 {
     current_profile->server_port = str;
     emit configurationChanged();
 }
 
-void MainWindow::pwdEditFinished(const QString &str)
+void MainWindow::onPasswordEditFinished(const QString &str)
 {
     current_profile->password = str;
     emit configurationChanged();
 }
 
-void MainWindow::laddrEditFinished(const QString &str)
+void MainWindow::onLAddrEditFinished(const QString &str)
 {
     current_profile->local_addr = str;
     emit configurationChanged();
 }
 
-void MainWindow::lportEditFinished(const QString &str)
+void MainWindow::onLPortEditFinished(const QString &str)
 {
     current_profile->local_port = str;
     emit configurationChanged();
 }
 
-void MainWindow::methodChanged(const QString &m)
+void MainWindow::onMethodChanged(const QString &m)
 {
     current_profile->method = m;
     emit configurationChanged();
 }
 
-void MainWindow::timeoutChanged(int t)
+void MainWindow::onTimeoutChanged(int t)
 {
     current_profile->timeout = QString::number(t);
     emit configurationChanged();
 }
 
 #ifdef Q_OS_LINUX
-void MainWindow::tcpFastOpenChanged(bool t)
+void MainWindow::onTcpFastOpenChanged(bool t)
 {
     current_profile->fast_open = t;
     emit configurationChanged();
 }
 #endif
 
-void MainWindow::autoHideToggled(bool c)
+void MainWindow::onAutoHideToggled(bool c)
 {
     m_conf->setAutoHide(c);
     emit configurationChanged();
 }
 
-void MainWindow::autoStartToggled(bool c)
+void MainWindow::onAutoStartToggled(bool c)
 {
     m_conf->setAutoStart(c);
     emit configurationChanged();
 }
 
-void MainWindow::debugToggled(bool c)
+void MainWindow::onDebugToggled(bool c)
 {
     m_conf->setDebug(c);
     emit configurationChanged();
 }
 
-void MainWindow::transculentToggled(bool c)
+void MainWindow::onTransculentToggled(bool c)
 {
     m_conf->setTranslucent(c);
     emit configurationChanged();
 }
 
-void MainWindow::relativePathToggled(bool r)
+void MainWindow::onRelativePathToggled(bool r)
 {
     m_conf->setRelativePath(r);
     emit configurationChanged();

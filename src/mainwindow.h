@@ -46,16 +46,16 @@ public:
     void minimizeToSysTray();
 
 public slots:
-    void startButtonPressed();
+    void onStartButtonPressed();
 
 private slots:
-    inline void stopButtonPressed() { ss_local.stop(); }
+    inline void onStopButtonPressed() { ss_local.stop(); }
     void addProfileDialogue(bool);
-    void backendTypeChanged(const QString &);
+    void onBackendTypeChanged(const QString &);
     void deleteProfile();
-    void laddrEditFinished(const QString &);
-    void lportEditFinished(const QString &);
-    void methodChanged(const QString &);
+    void onLAddrEditFinished(const QString &);
+    void onLPortEditFinished(const QString &);
+    void onMethodChanged(const QString &);
     void onAddProfileDialogueAccepted(const QString &, bool, const QString &);
     void onAddProfileDialogueRejected(bool enforce = false);
     void onBackendToolButtonPressed();
@@ -64,25 +64,25 @@ private slots:
     void onCustomArgsEditFinished(const QString &);
     void onShareButtonClicked();
     void onReadReadyProcess(const QByteArray &o);
-    void processStarted();
-    void processStopped();
-    void profileEditButtonClicked(QAbstractButton*);
-    void pwdEditFinished(const QString &);
-    void serverEditFinished(const QString &);
+    void onProcessStarted();
+    void onProcessStopped();
+    void onProfileEditButtonClicked(QAbstractButton*);
+    void onPasswordEditFinished(const QString &);
+    void onServerEditFinished(const QString &);
     void showWindow();
-    void sportEditFinished(const QString &);
+    void onSPortEditFinished(const QString &);
     void systrayActivated(QSystemTrayIcon::ActivationReason);
-    void timeoutChanged(int);
+    void onTimeoutChanged(int);
 #ifdef Q_OS_LINUX
-    void tcpFastOpenChanged(bool);
+    void onTcpFastOpenChanged(bool);
 #endif
-    inline void aboutButtonClicked() { QMessageBox::about(this, tr("About"), aboutText); }
-    void autoHideToggled(bool);
-    void autoStartToggled(bool);
-    void debugToggled(bool);
-    void relativePathToggled(bool);
+    inline void onAboutButtonClicked() { QMessageBox::about(this, tr("About"), aboutText); }
+    void onAutoHideToggled(bool);
+    void onAutoStartToggled(bool);
+    void onDebugToggled(bool);
+    void onRelativePathToggled(bool);
+    void onTransculentToggled(bool);
     void saveConfig();
-    void transculentToggled(bool);
 
 private:
     AddProfileDialogue *addProfileDlg;

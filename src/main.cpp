@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     w.show();
 
     if (w.m_conf->isAutoStart()) {
-        w.startButtonPressed();
+        w.onStartButtonPressed();
     }
     if (w.m_conf->isAutoHide()) {
         w.minimizeToSysTray();
