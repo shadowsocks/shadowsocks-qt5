@@ -1,3 +1,9 @@
+shadowsocks-qt5 (0.5.1) stable; urgency=medium
+
+  * bug fixes. 
+
+ -- Symeon Huang <symeon@odroid-u3>  Sun, 02 Nov 2014 16:57:58 +0000
+
 shadowsocks-qt5 (0.5.0) stable; urgency=medium
 
   * first debian package

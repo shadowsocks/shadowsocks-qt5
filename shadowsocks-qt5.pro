@@ -10,7 +10,7 @@ linux: QT += dbus
 
 TARGET   = ss-qt5
 TEMPLATE = app
-VERSION  = 0.5.0
+VERSION  = 0.5.1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 include(src/ss-qt5.pri)
