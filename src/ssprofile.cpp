@@ -36,17 +36,17 @@ QByteArray SSProfile::getSsUrl()
 void SSProfile::setBackend(bool relativePath)
 {
     QString execName, sslocal;
-    switch (this->getBackendTypeID()) {
-    case 0://libev
+    switch (this->getBackendType()) {
+    case LIBEV:
         execName = "ss-local";
         break;
-    case 1://nodejs
+    case NODEJS:
         execName = "sslocal";
         break;
-    case 2://go
+    case GO:
         execName = "shadowsocks-local";
         break;
-    case 3:
+    case PYTHON:
 #ifdef Q_OS_WIN
         execName = "python";//detect python to avoid the conflict with sslocal.cmd of nodejs
 #else
@@ -100,23 +100,22 @@ QString SSProfile::getBackend(bool relativePath)
     return backend;
 }
 
-int SSProfile::getBackendTypeID()
+SSProfile::BackendType SSProfile::getBackendType()
 {
     if (type.compare("Shadowsocks-libev", Qt::CaseInsensitive) == 0) {
-        return 0;
+        return SSProfile::LIBEV;
     }
     if (type.compare("Shadowsocks-NodeJS", Qt::CaseInsensitive) == 0) {
-        return 1;
+        return SSProfile::NODEJS;
     }
     else if (type.compare("Shadowsocks-Go", Qt::CaseInsensitive) == 0) {
-        return 2;
+        return SSProfile::GO;
     }
     else if (type.compare("Shadowsocks-Python", Qt::CaseInsensitive) == 0) {
-        return 3;
+        return SSProfile::PYTHON;
     }
     else {
-        qWarning() << "Error. Unknown backend type.";
-        return -1;
+        return SSProfile::UNKNOWN;
     }
 }
 
@@ -134,24 +133,24 @@ bool SSProfile::isBackendMatchType()
         return false;
     }
 
-    int rType = 0;
+    SSProfile::BackendType rType;
     QString ident(file.readLine());
     if (ident.contains("node")) {
-        rType = 1;
+        rType = NODEJS;
     }
     else if (ident.contains("python")) {
-        rType = 3;
+        rType = PYTHON;
     }
     else {
         if (backend.contains("ss-local")) {
-            rType = 0;//libev
+            rType = LIBEV;//libev
         }
         else {
-            rType = 2;//Go
+            rType = GO;//Go
         }
     }
 
-    return (rType == this->getBackendTypeID());
+    return (rType == this->getBackendType());
 }
 
 bool SSProfile::isValid() const

@@ -197,7 +197,7 @@ void MainWindow::onCurrentProfileChanged(int i)
     }
 
     ui->backendEdit->setText(current_profile->backend);
-    ui->backendTypeCombo->setCurrentIndex(current_profile->getBackendTypeID());
+    ui->backendTypeCombo->setCurrentIndex(current_profile->getBackendType());//the enum int is the same index in backend type combo box
     ui->customArgEdit->setText(current_profile->custom_arg);
     ui->laddrEdit->setText(current_profile->local_addr);
     ui->lportEdit->setText(current_profile->local_port);
@@ -426,8 +426,8 @@ void MainWindow::onBackendTypeChanged(const QString &type)
 
     ui->backendEdit->setText(current_profile->getBackend(m_conf->isRelativePath()));
 
-    int tID = current_profile->getBackendTypeID();
-    if (tID == 2) {//shadowsocks-go doesn't support timeout argument
+    SSProfile::BackendType tID = current_profile->getBackendType();
+    if (tID == SSProfile::GO) {//shadowsocks-go doesn't support timeout argument
         ui->timeoutSpinBox->setVisible(false);
         ui->timeoutLabel->setVisible(false);
     }

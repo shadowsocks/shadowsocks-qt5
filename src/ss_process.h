@@ -30,7 +30,7 @@ signals:
 
 private:
     bool running;
-    int backendTypeID;
+    SSProfile::BackendType backendType;
     QString app_path;
     QProcess proc;
 

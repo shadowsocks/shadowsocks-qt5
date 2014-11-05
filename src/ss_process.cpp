@@ -23,7 +23,7 @@ bool SS_Process::isRunning()
 void SS_Process::start(SSProfile * const p, bool debug)
 {
     app_path = p->backend;
-    backendTypeID = p->getBackendTypeID();
+    backendType = p->getBackendType();
     start(p->server, p->password, p->server_port, p->local_addr, p->local_port, p->method, p->timeout, p->custom_arg, debug, p->fast_open);
 }
 
@@ -34,17 +34,17 @@ void SS_Process::start(QString &args)
     QString sslocalbin = QFileInfo(app_path).dir().canonicalPath();
     sslocalbin.append("/node_modules/shadowsocks/bin/sslocal");
     sslocalbin = QString("\"") + QDir::toNativeSeparators(sslocalbin) + QString("\"");
-    switch (backendTypeID) {
-    case 0://libev
+    switch (backendType) {
+    case SSProfile::LIBEV:
         args.append(" -u");
-    case 2://go
+    case SSProfile::GO:
         proc.setProgram(app_path);
         break;
-    case 1://nodejs
+    case SSProfile::NODEJS:
         proc.setProgram("node");
         args.prepend(sslocalbin);
         break;
-    case 3://python
+    case SSProfile::PYTHON:
         proc.setProgram("python");
         args.prepend(QString("\""));
         args.prepend(app_path);
@@ -72,13 +72,13 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
     args.append(QString(" -l ") + l_port);
     args.append(QString(" -k \"") + pwd + QString("\""));
     args.append(QString(" -m ") + method.toLower());
-    if (backendTypeID != 2) {//go port doesn't support this argument
+    if (backendType != SSProfile::GO) {//go port doesn't support this argument
         args.append(QString(" -t ") + timeout);
     }
 
     if (debug) {
-        if(backendTypeID == 2) {
-            args.append("-d=true");//shadowsocks-go
+        if(backendType == SSProfile::GO) {
+            args.append("-d=true");
         }
         else {
             args.append(" -v");
@@ -86,7 +86,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
     }
 
 #ifdef Q_OS_LINUX
-    if ((backendTypeID == 3 || backendTypeID == 0) && tfo) {//only python and libev ports support tfo
+    if ((backendType == SSProfile::PYTHON || backendType == SSProfile::LIBEV) && tfo) {//only python and libev ports support tfo
         args.append(" --fast-open");
     }
 #else

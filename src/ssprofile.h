@@ -6,11 +6,12 @@
 class SSProfile
 {
 public:
+    enum BackendType{LIBEV, NODEJS, GO, PYTHON, UNKNOWN};
     SSProfile();
     QByteArray getSsUrl();
     bool isBackendMatchType();
     bool isValid() const;
-    int getBackendTypeID();
+    BackendType getBackendType();
     QString getBackend(bool relativePath = false);
     void setBackend(bool relativePath = false);
     void setBackend(const QString &a, bool relativePath = false);
