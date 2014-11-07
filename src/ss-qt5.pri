@@ -36,7 +36,12 @@ win32: {
     win32-msvc*: error("Doesn't Support MSVC! Please use MinGW GCC.")
     else: {
         INCLUDEPATH += $$top_srcdir/3rdparty/qrencode/include
-        LIBS += -L$$top_srcdir/3rdparty/qrencode
+        contains(DEFINES, mingw64): {
+            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw64
+        }
+        else {
+            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw32
+        }
     }
 }
 unix : {
