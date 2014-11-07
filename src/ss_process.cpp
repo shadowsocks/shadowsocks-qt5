@@ -51,7 +51,7 @@ void SS_Process::start(QString &args)
         args.prepend(QString("\""));
         break;
     default:
-        qWarning() << tr("Aborted: Invalid Backend Type.") << backendTypeID;
+        qWarning() << tr("Aborted: Invalid Backend Type.") << backendType;
         return;
     }
     proc.setNativeArguments(args);
