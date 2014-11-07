@@ -82,13 +82,13 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="308"/>
-        <location filename="../mainwindow.cpp" line="60"/>
+        <location filename="../mainwindow.cpp" line="61"/>
         <source>Start</source>
         <translation>启动</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="320"/>
-        <location filename="../mainwindow.cpp" line="61"/>
+        <location filename="../mainwindow.cpp" line="62"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -128,12 +128,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="491"/>
+        <location filename="../mainwindow.ui" line="485"/>
         <source>For portable purpose</source>
         <translation>适用于便携版</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="494"/>
+        <location filename="../mainwindow.ui" line="488"/>
         <source>Use relative path instead of absolute path</source>
         <translation>使用相对路径而不是绝对路径</translation>
     </message>
@@ -170,22 +170,22 @@ Not every port of Shadowsocks support this option.</source>
         <translation>分享</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="362"/>
+        <location filename="../mainwindow.ui" line="365"/>
         <source>Log</source>
         <translation>日志</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="401"/>
+        <location filename="../mainwindow.ui" line="395"/>
         <source>Misc</source>
         <translation>杂项</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="414"/>
+        <location filename="../mainwindow.ui" line="408"/>
         <source>Start backend automatically when started and the current profile is valid.</source>
         <translation>启动后如果当前配置有效则自动启动后端。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="407"/>
+        <location filename="../mainwindow.ui" line="401"/>
         <source>Use translucent background</source>
         <translation>使用透明背景</translation>
     </message>
@@ -194,22 +194,22 @@ Not every port of Shadowsocks support this option.</source>
         <translation type="vanished">当ss-qt5启动后如果当前配置有效则自动启动后端</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="417"/>
+        <location filename="../mainwindow.ui" line="411"/>
         <source>Autostart if profile is valid</source>
         <translation>配置有效则自动启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="484"/>
+        <location filename="../mainwindow.ui" line="478"/>
         <source>Debug-level log</source>
         <translation>除错级别的日志</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="440"/>
+        <location filename="../mainwindow.ui" line="434"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="452"/>
+        <location filename="../mainwindow.ui" line="446"/>
         <location filename="../mainwindow.h" line="79"/>
         <source>About</source>
         <translation>关于</translation>
@@ -219,7 +219,7 @@ Not every port of Shadowsocks support this option.</source>
         <translation type="vanished">当ss-qt5启动后自动隐藏主窗口</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="464"/>
+        <location filename="../mainwindow.ui" line="458"/>
         <source>Auto hide main window when started</source>
         <translation>启动后自动隐藏主窗口</translation>
     </message>
@@ -239,22 +239,22 @@ Not every port of Shadowsocks support this option.</source>
         <translation type="vanished">显示/隐藏</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="59"/>
+        <location filename="../mainwindow.cpp" line="60"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="62"/>
+        <location filename="../mainwindow.cpp" line="63"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="348"/>
+        <location filename="../mainwindow.cpp" line="349"/>
         <source>Profile: %1 Started</source>
         <translation>配置： %1 已启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="364"/>
+        <location filename="../mainwindow.cpp" line="365"/>
         <source>Profile: %1 Stopped</source>
         <translation>配置： %1 已停止</translation>
     </message>
@@ -267,12 +267,12 @@ Not every port of Shadowsocks support this option.</source>
         <translation type="vanished">Shadowsocks 已停止！</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="392"/>
+        <location filename="../mainwindow.cpp" line="393"/>
         <source>Save Changes</source>
         <translation>保存变更</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="392"/>
+        <location filename="../mainwindow.cpp" line="393"/>
         <source>Configuration has been changed.
 Do you want to save it now?</source>
         <translation>设置已经被变更。
@@ -283,12 +283,12 @@ Do you want to save it now?</source>
         <translation type="vanished">&lt;h3&gt;Shadowsocks的跨平台图形化客户端&lt;/h3&gt;&lt;p&gt;版本： 0.3.1&lt;/p&gt;&lt;p&gt;版权所有 © 2014 William Wong (&lt;a href=&apos;https://twitter.com/librehat&apos;&gt;@librehat&lt;/a&gt;)&lt;/p&gt;&lt;p&gt;以LGPLv3许可证发布&lt;br /&gt;项目托管在&lt;a href=&apos;https://github.com/librehat/shadowsocks-qt5&apos;&gt;GitHub&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="311"/>
+        <location filename="../mainwindow.cpp" line="312"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="311"/>
+        <location filename="../mainwindow.cpp" line="312"/>
         <source>Invalid profile or configuration.</source>
         <translation>无效的配置或设置。</translation>
     </message>
