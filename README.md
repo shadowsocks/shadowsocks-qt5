@@ -49,6 +49,14 @@ make install
 
 You will get `ss-qt5.exe` and `gui-config.json` in ../ss-qt5 directory.
 
+For 64-bit build, please use mingw-w64 toolchain (there are unofficial Qt builds using mingw-w64) and use the command below instead.
+
+```bash
+qmake INSTALL_PREFIX=../ss-qt5 DEFINES+="mingw64"
+make
+make install
+```
+
 ### Linux ###
 
 ##### Ubuntu #####
