@@ -435,6 +435,14 @@ void MainWindow::onBackendTypeChanged(const QString &type)
         ui->timeoutSpinBox->setVisible(true);
         ui->timeoutLabel->setVisible(true);
     }
+    if (tID == SSProfile::LIBSHADOWSOCKS) {//libshadowsocks is statically or dynamically linked
+        ui->backendEdit->setVisible(false);
+        ui->backendLabel->setVisible(false);
+    }
+    else {
+        ui->backendEdit->setVisible(true);
+        ui->backendLabel->setVisible(true);
+    }
 
 #ifdef Q_OS_LINUX
     if ((tID == 0 || tID == 3) && m_conf->isTFOAvailable()) {

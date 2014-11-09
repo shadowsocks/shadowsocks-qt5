@@ -48,4 +48,4 @@ unix : {
     CONFIG    += link_pkgconfig
     PKGCONFIG += libqrencode
 }
-LIBS += -lqrencode
+LIBS += -lqrencode -lshadowsocks

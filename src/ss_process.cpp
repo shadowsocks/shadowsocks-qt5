@@ -1,4 +1,4 @@
-#include <QtDebug>
+#include <QDebug>
 #include <QFileInfo>
 #include <QDir>
 #include "ss_process.h"
@@ -6,7 +6,12 @@
 SS_Process::SS_Process(QObject *parent) :
     QObject(parent)
 {
+    libshadowsocks = false;
+    libssThread = new LibshadowsocksThread(this);
     proc.setReadChannelMode(QProcess::MergedChannels);
+
+    connect(libssThread, &LibshadowsocksThread::started, this, &SS_Process::processStarted);
+    connect(libssThread, &LibshadowsocksThread::finished, this, &SS_Process::processStopped);
     connect(&proc, &QProcess::readyRead, this, &SS_Process::onProcessReadyRead);
     connect(&proc, &QProcess::started, this, &SS_Process::onStarted);
     connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), this, &SS_Process::onExited);
@@ -24,7 +29,12 @@ void SS_Process::start(SSProfile * const p, bool debug)
 {
     app_path = p->backend;
     backendType = p->getBackendType();
-    start(p->server, p->password, p->server_port, p->local_addr, p->local_port, p->method, p->timeout, p->custom_arg, debug, p->fast_open);
+    if (backendType == SSProfile::LIBSHADOWSOCKS) {
+        startLibshadowsocks(p->getLibshadowsocksProfile());
+    }
+    else {
+        start(p->server, p->password, p->server_port, p->local_addr, p->local_port, p->method, p->timeout, p->custom_arg, debug, p->fast_open);
+    }
 }
 
 void SS_Process::start(QString &args)
@@ -63,6 +73,14 @@ void SS_Process::start(QString &args)
     proc.waitForStarted(1000);//wait for at most 1 second
 }
 
+void SS_Process::startLibshadowsocks(const profile_t &profile)
+{
+    libshadowsocks = true;
+    stop();
+    libssThread->setProfile(profile);
+    libssThread->start();
+}
+
 void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, const QString &custom_arg, bool debug, bool tfo)
 {
     QString args;
@@ -99,7 +117,10 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
 
 void SS_Process::stop()
 {
-    if (proc.isOpen()) {
+    if (libshadowsocks) {
+        libssThread->quit();
+    }
+    else if (proc.isOpen()) {
         proc.close();
     }
 }

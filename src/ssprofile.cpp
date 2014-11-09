@@ -53,6 +53,9 @@ void SSProfile::setBackend(bool relativePath)
         execName = "sslocal";
 #endif
         break;
+    case LIBSHADOWSOCKS:
+        backend.clear();
+        return;
     default://shouldn't get here
         qWarning() << "Invalid backend type ID.";
         execName = "ss-local";
@@ -100,7 +103,7 @@ QString SSProfile::getBackend(bool relativePath)
     return backend;
 }
 
-SSProfile::BackendType SSProfile::getBackendType()
+SSProfile::BackendType SSProfile::getBackendType() const
 {
     if (type.compare("Shadowsocks-libev", Qt::CaseInsensitive) == 0) {
         return SSProfile::LIBEV;
@@ -114,15 +117,45 @@ SSProfile::BackendType SSProfile::getBackendType()
     else if (type.compare("Shadowsocks-Python", Qt::CaseInsensitive) == 0) {
         return SSProfile::PYTHON;
     }
+    else if (type.compare("Shadowsocks-libshadowsocks", Qt::CaseInsensitive) == 0) {
+        return SSProfile::LIBSHADOWSOCKS;
+    }
     else {
         return SSProfile::UNKNOWN;
     }
+}
+
+profile_t SSProfile::getLibshadowsocksProfile() const
+{
+    const profile_t profile = {
+        .remote_host = server.toLatin1().data(),
+        .local_addr = local_addr.toLatin1().data(),
+        .method = method.toLatin1().data(),
+        .password = password.toLatin1().data(),
+        .remote_port = server_port.toInt(),
+        .local_port = local_port.toInt(),
+        .timeout = timeout.toInt(),
+
+        .acl = NULL,
+        .log = QDir::tempPath().append("/libshadowsocks.log").toLatin1().data(),
+#ifdef __linux__
+        .fast_open = fast_open ? 1 : 0,
+#else
+        .fast_open = 0,
+#endif
+        .udp_relay = 1,
+        .verbose = 0
+    };
+    return profile;
 }
 
 bool SSProfile::isBackendMatchType()
 {
     QFile file(backend);
     if (!file.exists()) {
+        if (getBackendType() == SSProfile::LIBSHADOWSOCKS && backend.isEmpty()) {
+            return true;
+        }
         qWarning() << "Backend does not exist. You can safely ignore this message if you're changing the backend type.";
         return false;
     }
@@ -135,6 +168,7 @@ bool SSProfile::isBackendMatchType()
 
     SSProfile::BackendType rType;
     QString ident(file.readLine());
+    file.close();
     if (ident.contains("node")) {
         rType = NODEJS;
     }
@@ -156,7 +190,8 @@ bool SSProfile::isBackendMatchType()
 bool SSProfile::isValid() const
 {
     QFile backendFile(backend);
-    bool valid = SSValidator::validatePort(server_port) && SSValidator::validatePort(local_port) && SSValidator::validateMethod(method) && backendFile.exists();
+    bool valid = SSValidator::validatePort(server_port) && SSValidator::validatePort(local_port) && SSValidator::validateMethod(method);
+    valid = valid && (backendFile.exists() || getBackendType() == SSProfile::LIBSHADOWSOCKS);
 
     if (server.isEmpty() || local_addr.isEmpty() || timeout.toInt() < 1 || !valid) {
         return false;
