@@ -52,7 +52,7 @@ private:
     QString app_path;
     QProcess proc;
 
-    void startLibshadowsocks(const profile_t&);
+    void startLibshadowsocks(const profile_t &);
     void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false, bool tfo = false);
     void start(QString &args);
 

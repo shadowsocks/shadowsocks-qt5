@@ -46,6 +46,6 @@ win32: {
 }
 unix : {
     CONFIG    += link_pkgconfig
-    PKGCONFIG += libqrencode
+    PKGCONFIG += libqrencode shadowsocks
 }
 LIBS += -lqrencode -lshadowsocks
