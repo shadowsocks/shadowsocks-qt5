@@ -2,28 +2,27 @@
 #include "libshadowsocksthread.h"
 
 LibshadowsocksThread::LibshadowsocksThread(QObject *parent) :
-    QThread(parent)
+    QObject(parent)
 {
-    this->setTerminationEnabled(true);
 }
 
 QByteArray LibshadowsocksThread::log_file = QDir::tempPath().append("/libshadowsocks.log").toUtf8();
 
 void LibshadowsocksThread::setProfile(SSProfile * const p, bool debug)
 {
-    profile.acl = NULL;
+    libssprofile.acl = NULL;
 #ifdef __linux__
-    profile.fast_open = p->fast_open ? 1 : 0,
+    libssprofile.fast_open = p->fast_open ? 1 : 0,
 #else
-    profile.fast_open = 0,
+    libssprofile.fast_open = 0,
 #endif
-    profile.log = log_file.data();
-    profile.udp_relay = 1;
-    profile.verbose = debug ? 1 : 0;
+    libssprofile.log = log_file.data();
+    libssprofile.udp_relay = 1;
+    libssprofile.verbose = debug ? 1 : 0;
 
-    profile.remote_port = p->server_port.toInt();
-    profile.local_port = p->local_port.toInt();
-    profile.timeout = p->timeout.toInt();
+    libssprofile.remote_port = p->server_port.toInt();
+    libssprofile.local_port = p->local_port.toInt();
+    libssprofile.timeout = p->timeout.toInt();
 
     //save temporary QByteArray at first
     remote_host = p->server.toUtf8();
@@ -31,14 +30,36 @@ void LibshadowsocksThread::setProfile(SSProfile * const p, bool debug)
     local_addr = p->local_addr.toUtf8();
     password = p->password.toUtf8();
 
-    profile.remote_host = remote_host.data();
-    profile.method = method.data();
-    profile.local_addr = local_addr.data();
-    profile.password = password.data();
+    libssprofile.remote_host = remote_host.data();
+    libssprofile.method = method.data();
+    libssprofile.local_addr = local_addr.data();
+    libssprofile.password = password.data();
 }
 
-void LibshadowsocksThread::run()
+void *LibshadowsocksThread::threadStart(void * p)
 {
-    start_ss_local_server(profile);
-    exec();
+    int result = start_ss_local_server(*static_cast<profile_t *>(p));
+    pthread_exit(&result);
+}
+
+bool LibshadowsocksThread::startThread()
+{
+    if (pthread_create(&t, NULL, threadStart, static_cast<void *>(&libssprofile)) == 0) {
+        emit started();
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+bool LibshadowsocksThread::stopThread()
+{
+    if (pthread_cancel(t) == 0) {
+        emit finished();
+        return true;
+    }
+    else {
+        return false;
+    }
 }

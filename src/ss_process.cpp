@@ -76,7 +76,7 @@ void SS_Process::start(QString &args)
 void SS_Process::startLibshadowsocks(SSProfile * const p, bool d)
 {
     libssThread->setProfile(p, d);
-    libssThread->start();
+    libssThread->startThread();
 }
 
 void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, const QString &custom_arg, bool debug, bool tfo)
@@ -116,7 +116,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
 void SS_Process::stop()
 {
     if (libshadowsocks) {
-        libssThread->quit();
+        libssThread->stopThread();
     }
     else if (proc.isOpen()) {
         proc.close();
