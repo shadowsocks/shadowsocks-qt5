@@ -20,15 +20,11 @@ SS_Process::SS_Process(QObject *parent) :
 SS_Process::~SS_Process()
 {}
 
-bool SS_Process::isRunning()
-{
-    return running;
-}
-
 void SS_Process::start(SSProfile * const p, bool debug)
 {
     app_path = p->backend;
     backendType = p->getBackendType();
+    stop();
     if (backendType == SSProfile::LIBSHADOWSOCKS) {
         libshadowsocks = true;
         startLibshadowsocks(p);
@@ -41,7 +37,6 @@ void SS_Process::start(SSProfile * const p, bool debug)
 
 void SS_Process::start(QString &args)
 {
-    stop();
 #ifdef Q_OS_WIN
     QString sslocalbin = QFileInfo(app_path).dir().canonicalPath();
     sslocalbin.append("/node_modules/shadowsocks/bin/sslocal");
@@ -77,7 +72,6 @@ void SS_Process::start(QString &args)
 
 void SS_Process::startLibshadowsocks(SSProfile * const p)
 {
-    stop();
     libssThread->setProfile(p);
     libssThread->start();
 }
@@ -119,7 +113,8 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
 void SS_Process::stop()
 {
     if (libshadowsocks) {
-        libssThread->quit();
+        libssThread->terminate();//note it seems the libshadowsocks won't be terminated immediately on UNIX platforms
+        libssThread->wait(1000);//wait for 1 second.
     }
     else if (proc.isOpen()) {
         proc.close();
@@ -133,7 +128,6 @@ void SS_Process::onProcessReadyRead()
 
 void SS_Process::onStarted()
 {
-    running = true;
     qDebug() << tr("Backend started. PID: ") <<proc.pid();
     emit processStarted();
 }
@@ -141,6 +135,5 @@ void SS_Process::onStarted()
 void SS_Process::onExited(int e)
 {
     qDebug() << tr("Backend exited. Exit Code: ") << e;
-    running = false;
     emit processStopped();
 }

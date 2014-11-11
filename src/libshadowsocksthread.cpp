@@ -1,6 +1,12 @@
 #include <QDir>
 #include "libshadowsocksthread.h"
 
+LibshadowsocksThread::LibshadowsocksThread(QObject *parent) :
+    QThread(parent)
+{
+    this->setTerminationEnabled(true);
+}
+
 QByteArray LibshadowsocksThread::log_file = QDir::tempPath().append("/libshadowsocks.log").toUtf8();
 
 void LibshadowsocksThread::setProfile(SSProfile * const p)

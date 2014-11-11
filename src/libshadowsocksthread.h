@@ -10,7 +10,7 @@ class LibshadowsocksThread : public QThread
     Q_OBJECT
 
 public:
-    LibshadowsocksThread(QObject *parent) : QThread(parent) {}
+    LibshadowsocksThread(QObject *parent);
     void setProfile(SSProfile * const p);
     void run() Q_DECL_OVERRIDE;
 

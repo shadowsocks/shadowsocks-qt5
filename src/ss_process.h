@@ -23,7 +23,6 @@ public:
     ~SS_Process();
     void start(SSProfile * const, bool debug = false);
     void stop();
-    bool isRunning();
 
 signals:
     void processRead(const QByteArray &o);
@@ -31,7 +30,6 @@ signals:
     void processStopped();
 
 private:
-    bool running;
     bool libshadowsocks;
     LibshadowsocksThread *libssThread;
     SSProfile::BackendType backendType;
