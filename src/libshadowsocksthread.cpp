@@ -9,7 +9,7 @@ LibshadowsocksThread::LibshadowsocksThread(QObject *parent) :
 
 QByteArray LibshadowsocksThread::log_file = QDir::tempPath().append("/libshadowsocks.log").toUtf8();
 
-void LibshadowsocksThread::setProfile(SSProfile * const p)
+void LibshadowsocksThread::setProfile(SSProfile * const p, bool debug)
 {
     profile.acl = NULL;
 #ifdef __linux__
@@ -19,7 +19,7 @@ void LibshadowsocksThread::setProfile(SSProfile * const p)
 #endif
     profile.log = log_file.data();
     profile.udp_relay = 1;
-    profile.verbose = 0;
+    profile.verbose = debug ? 1 : 0;
 
     profile.remote_port = p->server_port.toInt();
     profile.local_port = p->local_port.toInt();
@@ -40,4 +40,5 @@ void LibshadowsocksThread::setProfile(SSProfile * const p)
 void LibshadowsocksThread::run()
 {
     start_ss_local_server(profile);
+    exec();
 }

@@ -37,7 +37,7 @@ private:
     QProcess proc;
     QFile *libshadowsocksLog;
 
-    void startLibshadowsocks(SSProfile * const);
+    void startLibshadowsocks(SSProfile * const, bool);
     void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false, bool tfo = false);
     void start(QString &args);
 

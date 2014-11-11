@@ -11,7 +11,7 @@ class LibshadowsocksThread : public QThread
 
 public:
     LibshadowsocksThread(QObject *parent);
-    void setProfile(SSProfile * const p);
+    void setProfile(SSProfile * const p, bool);
     void run() Q_DECL_OVERRIDE;
 
     static QByteArray log_file;

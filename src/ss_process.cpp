@@ -30,7 +30,7 @@ void SS_Process::start(SSProfile * const p, bool debug)
     stop();
     if (backendType == SSProfile::LIBSHADOWSOCKS) {
         libshadowsocks = true;
-        startLibshadowsocks(p);
+        startLibshadowsocks(p, debug);
     }
     else {
         libshadowsocks = false;
@@ -73,9 +73,9 @@ void SS_Process::start(QString &args)
     proc.waitForStarted(1000);//wait for at most 1 second
 }
 
-void SS_Process::startLibshadowsocks(SSProfile * const p)
+void SS_Process::startLibshadowsocks(SSProfile * const p, bool d)
 {
-    libssThread->setProfile(p);
+    libssThread->setProfile(p, d);
     libssThread->start();
 }
 
@@ -116,8 +116,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
 void SS_Process::stop()
 {
     if (libshadowsocks) {
-        libssThread->terminate();//note it seems the libshadowsocks won't be terminated immediately on UNIX platforms
-        libssThread->wait(1000);//wait for 1 second.
+        libssThread->quit();
     }
     else if (proc.isOpen()) {
         proc.close();
