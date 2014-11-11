@@ -16,6 +16,13 @@ public:
 
 private:
     profile_t profile;
+    //use member variables to keep those data, otherwise the temporary QByteArray will be released by Qt.
+    QByteArray remote_host;
+    QByteArray method;
+    QByteArray local_addr;
+    QByteArray password;
+
+    static QByteArray log_file;
 };
 
 #endif // LIBSHADOWSOCKSTHREAD_H
