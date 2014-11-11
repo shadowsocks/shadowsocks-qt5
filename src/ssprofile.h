@@ -2,7 +2,6 @@
 #define SSPROFILE_H
 
 #include <QString>
-#include <shadowsocks.h>
 
 class SSProfile
 {
@@ -16,7 +15,6 @@ public:
     QString getBackend(bool relativePath = false);
     void setBackend(bool relativePath = false);
     void setBackend(const QString &a, bool relativePath = false);
-    profile_t getLibshadowsocksProfile() const;//return the profile in the format defined in shadowsocks.h (a C struct)
 
     QString backend;
     QString custom_arg;

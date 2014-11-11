@@ -31,7 +31,7 @@ void SS_Process::start(SSProfile * const p, bool debug)
     backendType = p->getBackendType();
     if (backendType == SSProfile::LIBSHADOWSOCKS) {
         libshadowsocks = true;
-        startLibshadowsocks(p->getLibshadowsocksProfile());
+        startLibshadowsocks(p);
     }
     else {
         libshadowsocks = false;
@@ -75,10 +75,10 @@ void SS_Process::start(QString &args)
     proc.waitForStarted(1000);//wait for at most 1 second
 }
 
-void SS_Process::startLibshadowsocks(const profile_t &profile)
+void SS_Process::startLibshadowsocks(SSProfile * const p)
 {
     stop();
-    libssThread->setProfile(profile);
+    libssThread->setProfile(p);
     libssThread->start();
 }
 

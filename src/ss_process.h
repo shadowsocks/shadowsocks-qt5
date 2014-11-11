@@ -12,21 +12,7 @@
 #include <QProcess>
 #include <QThread>
 #include "ssprofile.h"
-
-class LibshadowsocksThread : public QThread
-{
-    Q_OBJECT
-
-public:
-    LibshadowsocksThread(QObject *parent) : QThread(parent) {}
-    void setProfile(const profile_t &p) { profile = p; }
-    void run() Q_DECL_OVERRIDE {
-        start_ss_local_server(profile);
-    }
-
-private:
-    profile_t profile;
-};
+#include "libshadowsocksthread.h"
 
 class SS_Process : public QObject
 {
@@ -52,7 +38,7 @@ private:
     QString app_path;
     QProcess proc;
 
-    void startLibshadowsocks(const profile_t &);
+    void startLibshadowsocks(SSProfile * const);
     void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false, bool tfo = false);
     void start(QString &args);
 

@@ -8,7 +8,8 @@ SOURCES      += src/main.cpp\
                 src/ssprofile.cpp \
                 src/configuration.cpp \
                 src/qrwidget.cpp \
-                src/sharedialogue.cpp
+                src/sharedialogue.cpp \
+                src/libshadowsocksthread.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ss_process.h \
@@ -19,7 +20,8 @@ HEADERS      += src/mainwindow.h \
                 src/ssvalidator.h \
                 src/configuration.h \
                 src/qrwidget.h \
-                src/sharedialogue.h
+                src/sharedialogue.h \
+                src/libshadowsocksthread.h
 
 FORMS        += src/mainwindow.ui \
                 src/addprofiledialogue.ui \

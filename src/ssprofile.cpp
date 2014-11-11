@@ -125,30 +125,6 @@ SSProfile::BackendType SSProfile::getBackendType() const
     }
 }
 
-profile_t SSProfile::getLibshadowsocksProfile() const
-{
-    const profile_t profile = {
-        .remote_host = server.toLatin1().data(),
-        .local_addr = local_addr.toLatin1().data(),
-        .method = method.toLatin1().data(),
-        .password = password.toLatin1().data(),
-        .remote_port = server_port.toInt(),
-        .local_port = local_port.toInt(),
-        .timeout = timeout.toInt(),
-
-        .acl = NULL,
-        .log = QDir::tempPath().append("/libshadowsocks.log").toLatin1().data(),
-#ifdef __linux__
-        .fast_open = fast_open ? 1 : 0,
-#else
-        .fast_open = 0,
-#endif
-        .udp_relay = 1,
-        .verbose = 0
-    };
-    return profile;
-}
-
 bool SSProfile::isBackendMatchType()
 {
     QFile file(backend);
