@@ -14,6 +14,8 @@ public:
     void setProfile(SSProfile * const p);
     void run() Q_DECL_OVERRIDE;
 
+    static QByteArray log_file;
+
 private:
     profile_t profile;
     //use member variables to keep those data, otherwise the temporary QByteArray will be released by Qt.
@@ -21,8 +23,6 @@ private:
     QByteArray method;
     QByteArray local_addr;
     QByteArray password;
-
-    static QByteArray log_file;
 };
 
 #endif // LIBSHADOWSOCKSTHREAD_H

@@ -10,7 +10,7 @@
 #include <QObject>
 #include <QString>
 #include <QProcess>
-#include <QThread>
+#include <QFile>
 #include "ssprofile.h"
 #include "libshadowsocksthread.h"
 
@@ -35,6 +35,7 @@ private:
     SSProfile::BackendType backendType;
     QString app_path;
     QProcess proc;
+    QFile *libshadowsocksLog;
 
     void startLibshadowsocks(SSProfile * const);
     void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false, bool tfo = false);
@@ -44,6 +45,7 @@ private slots:
     void onProcessReadyRead();
     void onStarted();
     void onExited(int);
+    void onLibShadowsocksLogReadyRead();
 };
 
 #endif // SS_PROCESS_H
