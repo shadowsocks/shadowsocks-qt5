@@ -13,7 +13,7 @@ Features
 
 - Shadowsocks-Qt5 is written in C++/Qt5.
 - Intuitive and **native** UI. This is **not** a clumsy Web App.
-- JUST a **GUI fronted**. Keep your favourite Shadowsocks port as backend.
+- Keep your favourite Shadowsocks port as backend if you want.
 - Easy-to-use and highly customisable.
 - The `gui-config.json` file is partially compatible with [shadowsocks-gui](https://github.com/shadowsocks/shadowsocks-gui). In order to serve better, some new values have been added.
 - `gui-config.json` is located under ~/.config/shadowsocks on UNIX platforms, or under the main programme's directory in Windows.
@@ -21,11 +21,10 @@ Features
 Note
 ----
 
-- It is not a standalone programme. `ss-qt5` needs a shadowsocks backend such as [Shadowsocks-libev](https://github.com/madeye/shadowsocks-libev) and [Shadowsocks-Python] [ss-python].
+- By default, `ss-qt5` can work with `libshadowsocks`. While you can still use a shadowsocks backend such as [Shadowsocks-libev] [ss-libev] and [Shadowsocks-Python] [ss-python].
 - [Shadowsocks-Python] [ss-python] is highly recommended to serve as backend for better performance and stability.
 - Don't be panic if you encounter a bug. Please feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Just remember to run from terminal or `cmd` and paste the output to the description of issue.
 
-[ss-python]: https://github.com/clowwindy/shadowsocks
 
 Installation
 ------------
@@ -36,6 +35,8 @@ Installation
 2. Install/update your favourite shadowsocks backend. (You may want to download prebuilt [ss-libev](http://dl.lazyzhu.com/file/Toolchain/ss-libev/)).
 
 For those who want to build from source, follow the instructions below.
+
+Since 0.6.x, You need to build [Shadowsocks-liev] [ss-libev] and add `--enable-shared` as a `configure` option.
 
 Open this project using Qt Creator and build it.
 
@@ -58,6 +59,8 @@ make install
 ```
 
 ### Linux ###
+
+`ss-qt5` depends on [Shadowsocks-libev] [ss-libev] since 0.6.x. Make sure you've already installed [Shadowsocks-libev] [ss-libev] (>= 1.5.2) and build it with `--enable-shared` option.
 
 ##### Ubuntu #####
 
@@ -95,4 +98,7 @@ make install
 
 ### Others ###
 
-Mac OS X and *BSD are not tested and they're NOT supported officially. Well, I do hope you can help me mantain the compatibility if you have spare time.
+Other platforms are not tested and they're NOT supported officially. Well, I do hope you can help me mantain the compatibility if you have spare time.
+
+[ss-python]: https://github.com/clowwindy/shadowsocks
+[ss-libev]: https://github.com/madeye/shadowsocks-libev
