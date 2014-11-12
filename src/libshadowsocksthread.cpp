@@ -5,9 +5,16 @@
 LibshadowsocksThread::LibshadowsocksThread(QObject *parent) :
     QObject(parent)
 {
+    log = new QFile(this);
+    log->setFileName(QString::fromLocal8Bit(log_file));
+    log->open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Unbuffered);
+    log->write('\0');
+    logWatcher = new QFileSystemWatcher(this);
+    logWatcher->addPath(QString::fromLocal8Bit(log_file));
+    connect(logWatcher, &QFileSystemWatcher::fileChanged, this, &LibshadowsocksThread::onLogFileChanged);
 }
 
-QByteArray LibshadowsocksThread::log_file = QDir::tempPath().append("/libshadowsocks.log").toUtf8();
+QByteArray LibshadowsocksThread::log_file = QDir::tempPath().append("/libshadowsocks.log").toLocal8Bit();
 
 void LibshadowsocksThread::setProfile(SSProfile * const p, bool debug)
 {
@@ -26,10 +33,10 @@ void LibshadowsocksThread::setProfile(SSProfile * const p, bool debug)
     libssprofile.timeout = p->timeout.toInt();
 
     //save temporary QByteArray at first
-    remote_host = p->server.toUtf8();
-    method = p->method.toLower().toUtf8();
-    local_addr = p->local_addr.toUtf8();
-    password = p->password.toUtf8();
+    remote_host = p->server.toLocal8Bit();
+    method = p->method.toLower().toLocal8Bit();
+    local_addr = p->local_addr.toLocal8Bit();
+    password = p->password.toLocal8Bit();
 
     libssprofile.remote_host = remote_host.data();
     libssprofile.method = method.data();
@@ -63,4 +70,9 @@ bool LibshadowsocksThread::stopThread()
     else {
         return false;
     }
+}
+
+void LibshadowsocksThread::onLogFileChanged()
+{
+    emit logReadyRead(log->readAll());
 }

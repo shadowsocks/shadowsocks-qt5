@@ -2,6 +2,8 @@
 #define LIBSHADOWSOCKSTHREAD_H
 
 #include <QObject>
+#include <QFile>
+#include <QFileSystemWatcher>
 #include <shadowsocks.h>
 #include <pthread.h>
 #include "ssprofile.h"
@@ -25,8 +27,11 @@ public:
 signals:
     void started();
     void finished();
+    void logReadyRead(const QByteArray &);
 
 private:
+    QFile *log;
+    QFileSystemWatcher *logWatcher;
     //use member variables to keep those data, otherwise the temporary QByteArray will be released by Qt.
     QByteArray remote_host;
     QByteArray method;
@@ -34,6 +39,9 @@ private:
     QByteArray password;
 
     pthread_t t;
+
+private slots:
+    void onLogFileChanged();
 };
 
 #endif // LIBSHADOWSOCKSTHREAD_H

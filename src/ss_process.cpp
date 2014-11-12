@@ -8,13 +8,11 @@ SS_Process::SS_Process(QObject *parent) :
 {
     libshadowsocks = false;
     libssThread = new LibshadowsocksThread(this);
-    libshadowsocksLog = new QFile(QString(libssThread->log_file), this);
-    libshadowsocksLog->open(QIODevice::ReadOnly | QIODevice::Text | QIODevice::Unbuffered);
-    connect(libshadowsocksLog, &QFile::readyRead, this, &SS_Process::onLibShadowsocksLogReadyRead);
     proc.setReadChannelMode(QProcess::MergedChannels);
 
     connect(libssThread, &LibshadowsocksThread::started, this, &SS_Process::processStarted);
     connect(libssThread, &LibshadowsocksThread::finished, this, &SS_Process::processStopped);
+    connect(libssThread, &LibshadowsocksThread::logReadyRead, this, &SS_Process::processRead);
     connect(&proc, &QProcess::readyRead, this, &SS_Process::onProcessReadyRead);
     connect(&proc, &QProcess::started, this, &SS_Process::onStarted);
     connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), this, &SS_Process::onExited);
@@ -138,9 +136,4 @@ void SS_Process::onExited(int e)
 {
     qDebug() << tr("Backend exited. Exit Code: ") << e;
     emit processStopped();
-}
-
-void SS_Process::onLibShadowsocksLogReadyRead()
-{
-    emit processRead(libshadowsocksLog->readAll());
 }
