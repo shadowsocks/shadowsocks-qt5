@@ -33,6 +33,7 @@ Configuration::~Configuration()
 
 void Configuration::setJSONFile(const QString &file)
 {
+    profileList.clear();//clear list in the very beginning
     m_file = QDir::toNativeSeparators(file);
     QFile JSONFile(m_file);
 
@@ -70,7 +71,6 @@ void Configuration::setJSONFile(const QString &file)
 
     QJsonObject JSONObj = JSONDoc.object();
     QJsonArray CONFArray = JSONObj["configs"].toArray();
-    profileList.clear();//clear list before
     if (CONFArray.isEmpty()) {
         qWarning() << "configs is empty. Please check your gui-config.json";
         m_index = -1;//apparently m_index is invalid.
