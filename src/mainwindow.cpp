@@ -145,6 +145,8 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     if (m_conf->getIndex() <= 0) {
         emit ui->profileComboBox->currentIndexChanged(m_conf->getIndex());
     }
+    //finishing UI initialisation
+    onBackendTypeChanged(ui->backendTypeCombo->currentText());
 }
 
 MainWindow::~MainWindow()
@@ -438,10 +440,16 @@ void MainWindow::onBackendTypeChanged(const QString &type)
     if (tID == SSProfile::LIBSHADOWSOCKS) {//libshadowsocks is statically or dynamically linked
         ui->backendEdit->setVisible(false);
         ui->backendLabel->setVisible(false);
+        ui->backendToolButton->setVisible(false);
+        ui->customArgEdit->setVisible(false);
+        ui->customArgLabel->setVisible(false);
     }
     else {
         ui->backendEdit->setVisible(true);
         ui->backendLabel->setVisible(true);
+        ui->backendToolButton->setVisible(true);
+        ui->customArgEdit->setVisible(true);
+        ui->customArgLabel->setVisible(true);
     }
 
 #ifdef Q_OS_LINUX
