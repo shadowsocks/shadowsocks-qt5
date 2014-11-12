@@ -1,3 +1,11 @@
+shadowsocks-qt5 (0.6.0) stable; urgency=high
+
+  * support libshadowsocks(libev).
+  * small UI tweaks.
+  * bug fixes.
+
+ -- Symeon Huang <symeon@odroid-u3>  Wed, 12 Nov 2014 21:11:17 +0000
+
 shadowsocks-qt5 (0.5.1) stable; urgency=medium
 
   * bug fixes. 
