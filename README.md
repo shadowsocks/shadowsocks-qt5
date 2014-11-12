@@ -36,11 +36,11 @@ Installation
 
 For those who want to build from source, follow the instructions below.
 
-Since 0.6.x, You need to build [Shadowsocks-liev] [ss-libev] and add `--enable-shared` as a `configure` option.
+Since 0.6.x, You need to build [Shadowsocks-libev] [ss-libev] and add `--enable-shared` as a `configure` option.
 
 Open this project using Qt Creator and build it.
 
-Or type the command in MSYS.
+Or type the command in MSYS/MinGW.
 
 ```bash
 qmake INSTALL_PREFIX=../ss-qt5
