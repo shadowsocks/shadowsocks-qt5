@@ -430,34 +430,34 @@ void MainWindow::onBackendTypeChanged(const QString &type)
 
     SSProfile::BackendType tID = current_profile->getBackendType();
     if (tID == SSProfile::GO) {//shadowsocks-go doesn't support timeout argument
-        ui->timeoutSpinBox->setVisible(false);
-        ui->timeoutLabel->setVisible(false);
+        ui->timeoutSpinBox->setEnabled(false);
+        ui->timeoutLabel->setEnabled(false);
     }
     else {
-        ui->timeoutSpinBox->setVisible(true);
-        ui->timeoutLabel->setVisible(true);
+        ui->timeoutSpinBox->setEnabled(true);
+        ui->timeoutLabel->setEnabled(true);
     }
     if (tID == SSProfile::LIBSHADOWSOCKS) {//libshadowsocks is statically or dynamically linked
-        ui->backendEdit->setVisible(false);
-        ui->backendLabel->setVisible(false);
-        ui->backendToolButton->setVisible(false);
-        ui->customArgEdit->setVisible(false);
-        ui->customArgLabel->setVisible(false);
+        ui->backendEdit->setEnabled(false);
+        ui->backendLabel->setEnabled(false);
+        ui->backendToolButton->setEnabled(false);
+        ui->customArgEdit->setEnabled(false);
+        ui->customArgLabel->setEnabled(false);
     }
     else {
-        ui->backendEdit->setVisible(true);
-        ui->backendLabel->setVisible(true);
-        ui->backendToolButton->setVisible(true);
-        ui->customArgEdit->setVisible(true);
-        ui->customArgLabel->setVisible(true);
+        ui->backendEdit->setEnabled(true);
+        ui->backendLabel->setEnabled(true);
+        ui->backendToolButton->setEnabled(true);
+        ui->customArgEdit->setEnabled(true);
+        ui->customArgLabel->setEnabled(true);
     }
 
 #ifdef Q_OS_LINUX
     if ((tID == 0 || tID == 3) && m_conf->isTFOAvailable()) {
-        ui->tfoCheckBox->setVisible(true);
+        ui->tfoCheckBox->setEnabled(true);
     }
     else {
-        ui->tfoCheckBox->setVisible(false);
+        ui->tfoCheckBox->setEnabled(false);
     }
 #endif
     emit configurationChanged();
