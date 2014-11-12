@@ -1,4 +1,5 @@
 #include <QDir>
+#include <signal.h>
 #include "libshadowsocksthread.h"
 
 LibshadowsocksThread::LibshadowsocksThread(QObject *parent) :
@@ -55,7 +56,7 @@ bool LibshadowsocksThread::startThread()
 
 bool LibshadowsocksThread::stopThread()
 {
-    if (pthread_cancel(t) == 0) {
+    if (pthread_kill(t, SIGTERM) == 0) {
         emit finished();
         return true;
     }
