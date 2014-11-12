@@ -147,6 +147,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     }
     //finishing UI initialisation
     onBackendTypeChanged(ui->backendTypeCombo->currentText());
+    emit configurationChanged(true);
 }
 
 MainWindow::~MainWindow()
