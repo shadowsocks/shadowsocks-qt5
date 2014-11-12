@@ -407,7 +407,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::onProcessReadyRead(const QByteArray &o)
 {
-    QString logStream = QString::fromLocal8Bit(o);
+    QString logStream = QString::fromLocal8Bit(o).trimmed();
     if (verboseOutput) {
         qDebug() << logStream;
     }
