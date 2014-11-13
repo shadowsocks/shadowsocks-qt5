@@ -454,7 +454,7 @@ void MainWindow::onBackendTypeChanged(const QString &type)
     }
 
 #ifdef Q_OS_LINUX
-    if ((tID == 0 || tID == 3) && m_conf->isTFOAvailable()) {
+    if ((tID == SSProfile::LIBEV || tID == SSProfile::PYTHON || tID == SSProfile::LIBSHADOWSOCKS) && m_conf->isTFOAvailable()) {
         ui->tfoCheckBox->setEnabled(true);
     }
     else {
