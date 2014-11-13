@@ -36,8 +36,6 @@ Installation
 
 For those who want to build from source, follow the instructions below.
 
-Since 0.6.x, You need to build [Shadowsocks-libev] [ss-libev] and add `--enable-shared` as a `configure` option.
-
 Open this project using Qt Creator and build it.
 
 Or type the command in MSYS/MinGW.
@@ -60,22 +58,16 @@ make install
 
 ### Linux ###
 
-`ss-qt5` depends on [Shadowsocks-libev] [ss-libev] since 0.6.x. Make sure you've already installed [Shadowsocks-libev] [ss-libev] (>= 1.5.2) and build it with `--enable-shared` option.
+We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means there'll be some dependencies to be solved.
 
-##### Ubuntu #####
-
-Make sure you're running at least Ubuntu 14.04.
-
-For instructions, please refer to [PPA](https://code.launchpad.net/~hzwhuang/+archive/ubuntu/ss-qt5).
-
-#### Compile ####
-
-##### Dependencies #####
+#### Dependencies ####
 
 - Qt >= 5.2
 - `qrencode` (or `libqrencode` in Debian/Ubuntu)
+- `libshadowsocks` ([Shadowsocks-libev] [ss-libev] (>= 1.5.2) built with `--enable-shared` option)
+- OpenSSL development package (required by `libshadowsocks`)
 
-##### Debian #####
+#### Debian ####
 
 By running the command below, you'll get a deb package on upper directory.
 
@@ -85,7 +77,13 @@ dpkg-buildpackage -uc -us -b
 
 Then, install it by `sudo dpkg -i shadowsocks-qt5-<VER_ARCH_ETC>.deb`.
 
-##### Generic Linux #####
+#### Ubuntu ####
+
+Make sure you're running at least Ubuntu 14.04.
+
+For instructions, please refer to [PPA](https://code.launchpad.net/~hzwhuang/+archive/ubuntu/ss-qt5).
+
+#### Generic Linux ####
 
 The development packages of Qt5 and `qrencode-devel` (or `libqrencode-devel` in Debian/Ubuntu) are required.
 
