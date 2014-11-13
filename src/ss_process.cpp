@@ -8,7 +8,7 @@ SS_Process::SS_Process(QObject *parent) :
 {
     libshadowsocks = false;
     libssThread = new LibshadowsocksThread(this);
-    proc.setReadChannelMode(QProcess::MergedChannels);
+    proc.setProcessChannelMode(QProcess::MergedChannels);
 
     connect(libssThread, &LibshadowsocksThread::started, this, &SS_Process::processStarted);
     connect(libssThread, &LibshadowsocksThread::finished, this, &SS_Process::processStopped);
