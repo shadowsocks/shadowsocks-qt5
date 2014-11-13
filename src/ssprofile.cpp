@@ -13,13 +13,13 @@ SSProfile::SSProfile() :
     fast_open(false),
     local_addr("127.0.0.1"),
     local_port("1080"),
-    method("aes-256-cfb"),
+    method("rc4-md5"),
     password(),
     profileName(),
     server(),
     server_port("8388"),
     timeout("600"),
-    type("Shadowsocks-libev")
+    type("Shadowsocks-libshadowsocks")
 { }
 
 QByteArray SSProfile::getSsUrl()

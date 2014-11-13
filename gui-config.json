@@ -8,13 +8,13 @@
             "fast_open": false,
             "local_address": "127.0.0.1",
             "local_port": "1080",
-            "method": "table",
+            "method": "rc4-md5",
             "password": "",
             "profile": "Default",
             "server": "127.0.0.1",
             "server_port": "8338",
             "timeout": "600",
-            "type": "Shadowsocks-libev"
+            "type": "Shadowsocks-libshadowsocks"
         }
     ],
     "debug": false,
