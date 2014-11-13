@@ -124,20 +124,6 @@ void Configuration::addProfile(const QString &pName)
     SSProfile p;
     p.profileName = pName;
     profileList << p;
-
-    QJsonObject json;
-    json["profile"] = QJsonValue(p.profileName);
-    //below are using default values
-    json["custom_arg"] = QJsonValue(p.custom_arg);
-    json["local_address"] = QJsonValue(p.local_addr);
-    json["local_port"] = QJsonValue(p.local_port);
-    json["method"] = QJsonValue(p.method);
-    json["server_port"] = QJsonValue(p.server_port);
-    json["timeout"] = QJsonValue(p.timeout);
-    json["type"] = QJsonValue(p.type);
-    if (tfo_available) {
-        json["fast_open"] = QJsonValue(p.fast_open);
-    }
 }
 
 void Configuration::addProfileFromSSURI(const QString &name, QString uri)
@@ -154,21 +140,6 @@ void Configuration::addProfileFromSSURI(const QString &name, QString uri)
     ser.removeLast();
     p.password = ser.join('@');//incase there is a '@' in password
 
-    QJsonObject json;
-    json["method"] = QJsonValue(p.method.toLower());
-    json["password"] = QJsonValue(p.password);
-    json["profile"] = QJsonValue(p.profileName);
-    json["server_port"] = QJsonValue(p.server_port);
-    json["server"] = QJsonValue(p.server);
-    //below are using default values
-    json["custom_arg"] = QJsonValue(p.custom_arg);
-    json["local_address"] = QJsonValue(p.local_addr);
-    json["local_port"] = QJsonValue(p.local_port);
-    json["timeout"] = QJsonValue(p.timeout);
-    json["type"] = QJsonValue(p.type);
-    if (tfo_available) {
-        json["fast_open"] = QJsonValue(p.fast_open);
-    }
     profileList << p;
 }
 
