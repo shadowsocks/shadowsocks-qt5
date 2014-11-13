@@ -37,12 +37,17 @@ mac:   ICON    = src/ss-qt5.icns
 win32: {
     win32-msvc*: error("Doesn't Support MSVC! Please use MinGW GCC.")
     else: {
-        INCLUDEPATH += $$top_srcdir/3rdparty/qrencode/include
+        INCLUDEPATH +=  $$top_srcdir/3rdparty/qrencode/include \
+                        $$top_srcdir/3rdparty/shadowsocks-libev/include
         contains(DEFINES, mingw64): {
-            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw64
+            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw64 \
+                    -L$$top_srcdir/3rdparty/shadowsocks-libev/mingw64 \
+                    -L$$top_srcdir/3rdparty/openssl/mingw64
         }
         else {
-            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw32
+            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw32 \
+                    -L$$top_srcdir/3rdparty/shadowsocks-libev/mingw32 \
+                    -L$$top_srcdir/3rdparty/openssl/mingw32
         }
     }
 }
@@ -50,4 +55,4 @@ unix : {
     CONFIG    += link_pkgconfig
     PKGCONFIG += libqrencode shadowsocks
 }
-LIBS += -lqrencode -lshadowsocks
+LIBS += -lqrencode -lshadowsocks -lcrypto
