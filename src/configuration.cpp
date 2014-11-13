@@ -90,9 +90,11 @@ void Configuration::setJSONFile(const QString &file)
             p.server_port = json["server_port"].toString();
             p.timeout = json["timeout"].toString();
             p.type = json["type"].toString();
+#ifdef Q_OS_LINUX
             if (tfo_available) {
                 p.fast_open = json["fast_open"].toBool();
             }
+#endif
             profileList << p;
         }
         m_index = JSONObj["index"].toInt();
@@ -164,9 +166,11 @@ void Configuration::save()
         json["server"] = QJsonValue(it->server);
         json["timeout"] = QJsonValue(it->timeout);
         json["type"] = QJsonValue(it->type);
+#ifdef Q_OS_LINUX
         if (tfo_available) {
             json["fast_open"] = QJsonValue(it->fast_open);
         }
+#endif
         newConfArray.append(QJsonValue(json));
     }
 
