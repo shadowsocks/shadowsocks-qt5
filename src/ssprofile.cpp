@@ -13,7 +13,7 @@ SSProfile::SSProfile() :
     fast_open(false),
     local_addr("127.0.0.1"),
     local_port("1080"),
-    method("rc4-md5"),
+    method("RC4-MD5"),
     password(),
     profileName(),
     server(),
