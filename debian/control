@@ -8,6 +8,7 @@ Build-Depends: debhelper (>= 9),
                qtbase5-dev,
                qtbase5-private-dev,
                libqrencode-dev,
+               libssl-dev,
                shadowsocks
 Standards-Version: 3.9.4
 Homepage: https://github.com/librehat/shadowsocks-qt5
