@@ -7,11 +7,6 @@ LibshadowsocksThread::LibshadowsocksThread(QObject *parent) :
 {
     log = new QFile(this);
     log->setFileName(QString::fromLocal8Bit(log_file));
-    log->open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Unbuffered);
-    log->write('\0');
-    logWatcher = new QFileSystemWatcher(this);
-    logWatcher->addPath(QString::fromLocal8Bit(log_file));
-    connect(logWatcher, &QFileSystemWatcher::fileChanged, this, &LibshadowsocksThread::onLogFileChanged);
 }
 
 QByteArray LibshadowsocksThread::log_file = QDir::tempPath().append("/libshadowsocks.log").toLocal8Bit();
@@ -50,25 +45,25 @@ void *LibshadowsocksThread::threadStart(void * p)
     pthread_exit(&result);
 }
 
-bool LibshadowsocksThread::startThread()
+void LibshadowsocksThread::startThread()
 {
+    log->open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Unbuffered);
+    log->write('\0');
+    logWatcher = new QFileSystemWatcher(this);
+    logWatcher->addPath(QString::fromLocal8Bit(log_file));
+    connect(logWatcher, &QFileSystemWatcher::fileChanged, this, &LibshadowsocksThread::onLogFileChanged);
     if (pthread_create(&t, NULL, threadStart, static_cast<void *>(&libssprofile)) == 0) {
         emit started();
-        return true;
-    }
-    else {
-        return false;
     }
 }
 
-bool LibshadowsocksThread::stopThread()
+void LibshadowsocksThread::stopThread()
 {
-    if (pthread_kill(t, SIGTERM) == 0) {
+    if (logWatcher != NULL && pthread_kill(t, SIGTERM) == 0) {
+        log->close();
+        logWatcher->deleteLater();
+        logWatcher = NULL;
         emit finished();
-        return true;
-    }
-    else {
-        return false;
     }
 }
 

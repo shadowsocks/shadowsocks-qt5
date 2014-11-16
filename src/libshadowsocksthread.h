@@ -21,8 +21,8 @@ public:
     profile_t libssprofile;
     static QByteArray log_file;
 
-    bool startThread();
-    bool stopThread();
+    void startThread();
+    void stopThread();
 
 signals:
     void started();
