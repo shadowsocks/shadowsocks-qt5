@@ -1,3 +1,9 @@
+shadowsocks-qt5 (0.6.0-1) stable; urgency=medium
+
+  * change dependency because of rename of shadowsocks-libev
+
+ -- Symeon Huang <symeon@odroid-u3>  Sat, 15 Nov 2014 15:17:34 +0000
+
 shadowsocks-qt5 (0.6.0) stable; urgency=high
 
   * support libshadowsocks(libev).
