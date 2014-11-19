@@ -62,10 +62,35 @@ We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means 
 
 #### Dependencies ####
 
-- Qt >= 5.2
+- `qt5-qtbase` >= 5.2
 - `qrencode` (or `libqrencode` in Debian/Ubuntu)
-- `libshadowsocks` ([Shadowsocks-libev] [ss-libev] (>= 1.5.2) built with `--enable-shared` option)
-- OpenSSL development package (required by `libshadowsocks`)
+- `shadowsocks-libev` (>= 1.5.3 built with `--enable-shared` option)
+- `openssl`(or `libssl` in Debian/Ubuntu. this is required by `shadowsocks-libev`)
+
+#### Fedora/Red Hat Enterprise Linux ####
+
+The Copr build RPM for Fedora 19, 20, 21, rawhide and RHEL6, RHEL7. If you're using other RHEL-based distributions such as CentOS, you can just use the EPEL repo in Copr.
+
+You can enable the repo via `dnf`:
+
+```bash
+sudo dnf copr enable librehat/shadowsocks
+sudo dnf update
+sudo dnf install shadowsocks-qt5
+```
+
+You may need to install dnf plugins by below command before you can enable copr repo.
+
+```bash
+sudo dnf install dnf-plugins-core
+```
+
+If your distribution doesn't have `dnf`, you can download the corresponding yum repo from [Copr](https://copr.fedoraproject.org/coprs/librehat/shadowsocks/) and put it under `/etc/yum.repos.d/`, then install `shadowsocks-qt5` via `yum`:
+
+```bash
+sudo yum update
+sudo yum install shadowsocks-qt5
+```
 
 #### Debian ####
 
@@ -90,7 +115,7 @@ sudo apt-get install shadowsocks-qt5
 
 #### Generic Linux ####
 
-The development packages of Qt5 and `qrencode-devel` (or `libqrencode-devel` in Debian/Ubuntu) are required.
+The development packages of `qt5-qtbase`, `openssl` (or `libssl`) and `qrencode-devel` (or `libqrencode-devel` in Debian/Ubuntu) are required.
 
 ```bash
 # Some distros use seperated qmake-qt4, qmake-qt5. Then, just run `qmake-qt5`. You can specify INSTALL_PREFIX=/usr/local if needed. default is /usr
