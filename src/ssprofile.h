@@ -2,11 +2,12 @@
 #define SSPROFILE_H
 
 #include <QString>
+#include <QtShadowsocks>
 
 class SSProfile
 {
 public:
-    enum BackendType{LIBEV, NODEJS, GO, PYTHON, LIBSHADOWSOCKS, UNKNOWN};
+    enum BackendType{LIBEV, NODEJS, GO, PYTHON, LIBQSS, UNKNOWN};
     SSProfile();
     QByteArray getSsUrl();
     bool isBackendMatchType();
@@ -15,6 +16,7 @@ public:
     QString getBackend(bool relativePath = false);
     void setBackend(bool relativePath = false);
     void setBackend(const QString &a, bool relativePath = false);
+    QSS::Profile getQSSProfile();
 
     QString backend;
     QString custom_arg;

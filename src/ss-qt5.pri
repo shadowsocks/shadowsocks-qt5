@@ -8,8 +8,7 @@ SOURCES      += src/main.cpp\
                 src/ssprofile.cpp \
                 src/configuration.cpp \
                 src/qrwidget.cpp \
-                src/sharedialogue.cpp \
-                src/libshadowsocksthread.cpp
+                src/sharedialogue.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ss_process.h \
@@ -20,8 +19,7 @@ HEADERS      += src/mainwindow.h \
                 src/ssvalidator.h \
                 src/configuration.h \
                 src/qrwidget.h \
-                src/sharedialogue.h \
-                src/libshadowsocksthread.h
+                src/sharedialogue.h
 
 FORMS        += src/mainwindow.ui \
                 src/addprofiledialogue.ui \
@@ -37,22 +35,17 @@ mac:   ICON    = src/ss-qt5.icns
 win32: {
     win32-msvc*: error("Doesn't Support MSVC! Please use MinGW GCC.")
     else: {
-        INCLUDEPATH +=  $$top_srcdir/3rdparty/qrencode/include \
-                        $$top_srcdir/3rdparty/shadowsocks-libev/include
+        INCLUDEPATH +=  $$top_srcdir/3rdparty/qrencode/include
         contains(DEFINES, mingw64): {
-            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw64 \
-                    -L$$top_srcdir/3rdparty/shadowsocks-libev/mingw64 \
-                    -L$$top_srcdir/3rdparty/openssl/mingw64
+            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw64
         }
         else {
-            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw32 \
-                    -L$$top_srcdir/3rdparty/shadowsocks-libev/mingw32 \
-                    -L$$top_srcdir/3rdparty/openssl/mingw32
+            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw32
         }
     }
+    LIBS += -lqrencode -lQtShadowsocks -lbotan-1.10
 }
 unix : {
     CONFIG    += link_pkgconfig
-    PKGCONFIG += libqrencode shadowsocks-libev
+    PKGCONFIG += libqrencode QtShadowsocks botan-1.10
 }
-LIBS += -lqrencode -lshadowsocks -lcrypto

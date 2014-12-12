@@ -10,8 +10,8 @@
 #include <QObject>
 #include <QString>
 #include <QProcess>
+#include <QtShadowsocks>
 #include "ssprofile.h"
-#include "libshadowsocksthread.h"
 
 class SS_Process : public QObject
 {
@@ -29,18 +29,19 @@ signals:
     void processStopped();
 
 private:
-    bool libshadowsocks;
-    LibshadowsocksThread *libssThread;
+    bool libQSS;
+    QSS::Controller *qssController;
     SSProfile::BackendType backendType;
     QString app_path;
     QProcess proc;
 
-    void startLibshadowsocks(SSProfile * const, bool);
+    void startQSS(SSProfile * const, bool);
     void start(const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, const QString&, bool debug = false, bool tfo = false);
     void start(QString &args);
 
 private slots:
     void onProcessReadyRead();
+    void onQSSInfoReady(const QString &);
     void onStarted();
     void onExited(int);
 };

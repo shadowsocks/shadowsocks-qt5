@@ -6,13 +6,10 @@
 SS_Process::SS_Process(QObject *parent) :
     QObject(parent)
 {
-    libshadowsocks = false;
-    libssThread = new LibshadowsocksThread(this);
+    libQSS = false;
+    qssController = NULL;
     proc.setProcessChannelMode(QProcess::MergedChannels);
 
-    connect(libssThread, &LibshadowsocksThread::started, this, &SS_Process::processStarted);
-    connect(libssThread, &LibshadowsocksThread::finished, this, &SS_Process::processStopped);
-    connect(libssThread, &LibshadowsocksThread::logReadyRead, this, &SS_Process::processRead);
     connect(&proc, &QProcess::readyRead, this, &SS_Process::onProcessReadyRead);
     connect(&proc, &QProcess::started, this, &SS_Process::onStarted);
     connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), this, &SS_Process::onExited);
@@ -26,12 +23,12 @@ void SS_Process::start(SSProfile * const p, bool debug)
     app_path = p->backend;
     backendType = p->getBackendType();
     stop();
-    if (backendType == SSProfile::LIBSHADOWSOCKS) {
-        libshadowsocks = true;
-        startLibshadowsocks(p, debug);
+    if (backendType == SSProfile::LIBQSS) {
+        libQSS = true;
+        startQSS(p, debug);
     }
     else {
-        libshadowsocks = false;
+        libQSS = false;
         start(p->server, p->password, p->server_port, p->local_addr, p->local_port, p->method, p->timeout, p->custom_arg, debug, p->fast_open);
     }
 }
@@ -71,10 +68,19 @@ void SS_Process::start(QString &args)
     proc.waitForStarted(1000);//wait for at most 1 second
 }
 
-void SS_Process::startLibshadowsocks(SSProfile * const p, bool d)
+void SS_Process::startQSS(SSProfile * const p, bool debug)
 {
-    libssThread->setProfile(p, d);
-    libssThread->startThread();
+    QSS::Profile profile = p->getQSSProfile();
+    if (qssController == NULL) {
+        qssController = new QSS::Controller(profile, true, this);
+        connect(qssController, &QSS::Controller::error, this, &SS_Process::onQSSInfoReady, Qt::DirectConnection);
+        if (debug) {
+            connect(qssController, &QSS::Controller::info, this, &SS_Process::onQSSInfoReady, Qt::DirectConnection);
+        }
+    }
+    if (qssController->start()) {
+        emit processStarted();
+    }
 }
 
 void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, const QString &custom_arg, bool debug, bool tfo)
@@ -113,8 +119,11 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
 
 void SS_Process::stop()
 {
-    if (libshadowsocks) {
-        libssThread->stopThread();
+    if (libQSS && qssController != NULL) {
+        qssController->stop();
+        qssController->deleteLater();
+        qssController = NULL;
+        emit processStopped();
     }
     else if (proc.isOpen()) {
         proc.close();
@@ -124,6 +133,11 @@ void SS_Process::stop()
 void SS_Process::onProcessReadyRead()
 {
     emit processRead(proc.readAll());
+}
+
+void SS_Process::onQSSInfoReady(const QString &s)
+{
+    emit processRead(s.toLocal8Bit());
 }
 
 void SS_Process::onStarted()

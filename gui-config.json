@@ -14,7 +14,7 @@
             "server": "127.0.0.1",
             "server_port": "8338",
             "timeout": "600",
-            "type": "Shadowsocks-libshadowsocks"
+            "type": "libQtShadowsocks"
         }
     ],
     "debug": false,

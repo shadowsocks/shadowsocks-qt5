@@ -407,13 +407,13 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::onProcessReadyRead(const QByteArray &o)
 {
-    QString logStream = QString::fromLocal8Bit(o).trimmed();
+    QString str = QString::fromLocal8Bit(o).trimmed();
     if (verboseOutput) {
-        qDebug() << logStream;
+        qDebug() << str;
     }
 
     ui->logBrowser->moveCursor(QTextCursor::End);
-    ui->logBrowser->append(logStream);
+    ui->logBrowser->append(str);
     ui->logBrowser->moveCursor(QTextCursor::End);
 }
 
@@ -438,7 +438,7 @@ void MainWindow::onBackendTypeChanged(const QString &type)
         ui->timeoutSpinBox->setEnabled(true);
         ui->timeoutLabel->setEnabled(true);
     }
-    if (tID == SSProfile::LIBSHADOWSOCKS) {//libshadowsocks is statically or dynamically linked
+    if (tID == SSProfile::LIBQSS) {//libQtShadowsocks is statically or dynamically linked
         ui->backendEdit->setEnabled(false);
         ui->backendLabel->setEnabled(false);
         ui->backendToolButton->setEnabled(false);
@@ -454,7 +454,7 @@ void MainWindow::onBackendTypeChanged(const QString &type)
     }
 
 #ifdef Q_OS_LINUX
-    if ((tID == SSProfile::LIBEV || tID == SSProfile::PYTHON || tID == SSProfile::LIBSHADOWSOCKS) && m_conf->isTFOAvailable()) {
+    if ((tID == SSProfile::LIBEV || tID == SSProfile::PYTHON) && m_conf->isTFOAvailable()) {
         ui->tfoCheckBox->setEnabled(true);
     }
     else {

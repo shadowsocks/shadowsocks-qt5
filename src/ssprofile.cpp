@@ -19,8 +19,8 @@ SSProfile::SSProfile() :
     server(),
     server_port("8388"),
     timeout("600"),
-    type("Shadowsocks-libshadowsocks")
-{ }
+    type("libQtShadowsocks")
+{}
 
 QByteArray SSProfile::getSsUrl()
 {
@@ -53,7 +53,7 @@ void SSProfile::setBackend(bool relativePath)
         execName = "sslocal";
 #endif
         break;
-    case LIBSHADOWSOCKS:
+    case LIBQSS:
         backend.clear();
         return;
     default://shouldn't get here
@@ -117,8 +117,8 @@ SSProfile::BackendType SSProfile::getBackendType() const
     else if (type.compare("Shadowsocks-Python", Qt::CaseInsensitive) == 0) {
         return SSProfile::PYTHON;
     }
-    else if (type.compare("Shadowsocks-libshadowsocks", Qt::CaseInsensitive) == 0) {
-        return SSProfile::LIBSHADOWSOCKS;
+    else if (type.compare("libQtShadowsocks", Qt::CaseInsensitive) == 0) {
+        return SSProfile::LIBQSS;
     }
     else {
         return SSProfile::UNKNOWN;
@@ -129,7 +129,7 @@ bool SSProfile::isBackendMatchType()
 {
     QFile file(backend);
     if (!file.exists()) {
-        if (getBackendType() == SSProfile::LIBSHADOWSOCKS && backend.isEmpty()) {
+        if (getBackendType() == SSProfile::LIBQSS && backend.isEmpty()) {
             return true;
         }
         qWarning() << "Backend does not exist. You can safely ignore this message if you're changing the backend type.";
@@ -167,7 +167,7 @@ bool SSProfile::isValid() const
 {
     QFile backendFile(backend);
     bool valid = SSValidator::validatePort(server_port) && SSValidator::validatePort(local_port) && SSValidator::validateMethod(method);
-    valid = valid && (backendFile.exists() || getBackendType() == SSProfile::LIBSHADOWSOCKS);
+    valid = valid && (backendFile.exists() || getBackendType() == SSProfile::LIBQSS);
 
     if (server.isEmpty() || local_addr.isEmpty() || timeout.toInt() < 1 || !valid) {
         return false;
@@ -175,4 +175,17 @@ bool SSProfile::isValid() const
     else {
         return true;
     }
+}
+
+QSS::Profile SSProfile::getQSSProfile()
+{
+    QSS::Profile profile;
+    profile.local_address = local_addr;
+    profile.local_port = local_port.toUInt();
+    profile.method = method;
+    profile.password = password;
+    profile.server = server;
+    profile.server_port = server_port.toUInt();
+    profile.timeout = timeout.toInt();
+    return profile;
 }

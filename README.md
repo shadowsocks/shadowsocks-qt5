@@ -21,7 +21,7 @@ Features
 Note
 ----
 
-- By default, `ss-qt5` can work with `libshadowsocks`. While you can still use a shadowsocks backend such as [Shadowsocks-libev] [ss-libev] and [Shadowsocks-Python] [ss-python].
+- By default, `ss-qt5` works with `libQtShadowsocks`. While you can still use a shadowsocks backend such as [Shadowsocks-libev] [ss-libev] and [Shadowsocks-Python] [ss-python].
 - [Shadowsocks-Python] [ss-python] is highly recommended to serve as backend for better performance and stability.
 - Don't be panic if you encounter a bug. Please feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Just remember to run from terminal or `cmd` and paste the output to the description of issue.
 
@@ -64,8 +64,8 @@ We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means 
 
 - `qt5-qtbase` >= 5.2
 - `qrencode` (or `libqrencode` in Debian/Ubuntu)
-- `shadowsocks-libev` (>= 1.5.3 built with `--enable-shared` option)
-- `openssl`(or `libssl` in Debian/Ubuntu. this is required by `shadowsocks-libev`)
+- `libQtShadowsocks`
+- `botan-1.10` (`libbotan-1.10` in Debian/Ubuntu)
 
 #### Fedora/Red Hat Enterprise Linux ####
 
@@ -115,7 +115,7 @@ sudo apt-get install shadowsocks-qt5
 
 #### Generic Linux ####
 
-The development packages of `qt5-qtbase`, `openssl` (or `libssl`) and `qrencode-devel` (or `libqrencode-devel` in Debian/Ubuntu) are required.
+The development packages of `qt5-qtbase`, `botan-1.10` (or `libbotan-1.10`) and `qrencode-devel` (or `libqrencode-devel` in Debian/Ubuntu) are required.
 
 ```bash
 # Some distros use seperated qmake-qt4, qmake-qt5. Then, just run `qmake-qt5`. You can specify INSTALL_PREFIX=/usr/local if needed. default is /usr

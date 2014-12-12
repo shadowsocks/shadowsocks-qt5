@@ -180,6 +180,9 @@ Not every port of Shadowsocks support this option.</string>
          <layout class="QGridLayout" name="gridLayout_l">
           <item row="1" column="1" colspan="4">
            <widget class="QComboBox" name="backendTypeCombo">
+            <property name="currentIndex">
+             <number>-1</number>
+            </property>
             <item>
              <property name="text">
               <string>Shadowsocks-libev</string>
@@ -202,7 +205,7 @@ Not every port of Shadowsocks support this option.</string>
             </item>
             <item>
              <property name="text">
-              <string>Shadowsocks-libshadowsocks</string>
+              <string>libQtShadowsocks</string>
              </property>
             </item>
            </widget>
