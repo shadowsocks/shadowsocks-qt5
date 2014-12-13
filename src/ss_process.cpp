@@ -73,10 +73,10 @@ void SS_Process::startQSS(SSProfile * const p, bool debug)
     QSS::Profile profile = p->getQSSProfile();
     if (qssController == NULL) {
         qssController = new QSS::Controller(profile, true, this);
-        connect(qssController, &QSS::Controller::error, this, &SS_Process::onQSSInfoReady, Qt::DirectConnection);
         if (debug) {
             connect(qssController, &QSS::Controller::info, this, &SS_Process::onQSSInfoReady, Qt::DirectConnection);
         }
+        connect(qssController, &QSS::Controller::error, this, &SS_Process::onQSSInfoReady, Qt::DirectConnection);
     }
     if (qssController->start()) {
         emit processStarted();

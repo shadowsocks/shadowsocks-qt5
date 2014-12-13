@@ -317,7 +317,7 @@ void MainWindow::onStartButtonPressed()
         return;
     }
 
-    ssProcess->start(current_profile);
+    ssProcess->start(current_profile, m_conf->isDebug());
 }
 
 void MainWindow::showNotification(const QString &msg)
@@ -413,7 +413,6 @@ void MainWindow::onProcessReadyRead(const QByteArray &o)
         qDebug() << str;
     }
 
-    ui->logBrowser->moveCursor(QTextCursor::End);
     ui->logBrowser->append(str);
     ui->logBrowser->moveCursor(QTextCursor::End);
 }
