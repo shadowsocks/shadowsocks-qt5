@@ -49,7 +49,7 @@ public slots:
     void onStartButtonPressed();
 
 private slots:
-    inline void onStopButtonPressed() { ss_local.stop(); }
+    inline void onStopButtonPressed() { ssProcess->stop(); }
     void addProfileDialogue(bool);
     void onBackendTypeChanged(const QString &);
     void deleteProfile();
@@ -92,7 +92,7 @@ private:
     QMenu systrayMenu;
     QString jsonconfigFile;
     QSystemTrayIcon systray;
-    SS_Process ss_local;
+    SS_Process *ssProcess;
     SSProfile *current_profile;
     static const QString aboutText;
     Ui::MainWindow *ui;
