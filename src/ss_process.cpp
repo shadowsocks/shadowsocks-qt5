@@ -81,6 +81,10 @@ void SS_Process::startQSS(SSProfile * const p, bool debug)
     if (qssController->start()) {
         emit processStarted();
     }
+    else {
+        qssController->deleteLater();
+        qssController = NULL;
+    }
 }
 
 void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, const QString &custom_arg, bool debug, bool tfo)
