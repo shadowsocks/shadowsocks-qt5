@@ -1,3 +1,11 @@
+shadowsocks-qt5 (0.7.0) stable; urgency=medium
+
+  * drop shadowsocks-libev.
+  * use libQtShadowsocks as built-in backend.
+  * a few bug fixes.
+
+ -- Symeon Huang <symeon@odroid-u3>  Sun, 14 Dec 2014 19:06:50 +0000
+
 shadowsocks-qt5 (0.6.0-1) stable; urgency=medium
 
   * change dependency because of rename of shadowsocks-libev
