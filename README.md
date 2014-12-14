@@ -107,7 +107,6 @@ Then, install it by `sudo dpkg -i shadowsocks-qt5-<VER_ARCH_ETC>.deb`.
 Make sure you're running at least Ubuntu 14.04.
 
 ```
-sudo add-apt-repository ppa:hzwhuang/ss-libev
 sudo add-apt-repository ppa:hzwhuang/ss-qt5
 sudo apt-get update
 sudo apt-get install shadowsocks-qt5
