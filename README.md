@@ -64,8 +64,8 @@ We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means 
 
 - `qt5-qtbase` >= 5.2
 - `qrencode` (or `libqrencode` in Debian/Ubuntu)
-- `libQtShadowsocks`
-- `botan-1.10` (`libbotan-1.10` in Debian/Ubuntu)
+- `libQtShadowsocks` (`libqtshadowsocks` in Debian/Ubuntu)
+- `botan-1.10` (`libbotan1.10` in Debian/Ubuntu)
 
 #### Fedora/Red Hat Enterprise Linux ####
 
