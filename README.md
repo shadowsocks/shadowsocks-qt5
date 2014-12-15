@@ -65,7 +65,7 @@ We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means 
 - `qt5-qtbase` >= 5.2
 - `qrencode` (or `libqrencode` in Debian/Ubuntu)
 - `libQtShadowsocks` (`libqtshadowsocks` in Debian/Ubuntu)
-- `botan-1.10` (`libbotan1.10` in Debian/Ubuntu)
+- `botan = 1.10.x` (`libbotan1.10` in Debian/Ubuntu)
 
 #### Fedora/Red Hat Enterprise Linux ####
 
@@ -114,7 +114,7 @@ sudo apt-get install shadowsocks-qt5
 
 #### Generic Linux ####
 
-The development packages of `qt5-qtbase`, `botan-1.10` (or `libbotan-1.10`) and `qrencode-devel` (or `libqrencode-devel` in Debian/Ubuntu) are required.
+The **development packages** of `qt5-qtbase`, `botan-1.10` (or `libbotan1.10`) and `qrencode` (or `libqrencode`) are required.
 
 ```bash
 # Some distros use seperated qmake-qt4, qmake-qt5. Then, just run `qmake-qt5`. You can specify INSTALL_PREFIX=/usr/local if needed. default is /usr
