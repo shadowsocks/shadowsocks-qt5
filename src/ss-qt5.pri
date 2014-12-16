@@ -32,6 +32,10 @@ TRANSLATIONS  = src/i18n/ssqt5_zh_CN.ts
 win32: RC_FILE = src/ss-qt5.rc
 mac:   ICON    = src/ss-qt5.icns
 
+isEmpty(BOTAN_VER) {
+    BOTAN_VER = 1.10
+}
+
 win32: {
     win32-msvc*: error("Doesn't Support MSVC! Please use MinGW GCC.")
     else: {
@@ -43,9 +47,9 @@ win32: {
             LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw32
         }
     }
-    LIBS += -lqrencode -lQtShadowsocks -lbotan-1.10
+    LIBS += -lqrencode -lQtShadowsocks -lbotan-$$BOTAN_VER
 }
 unix : {
     CONFIG    += link_pkgconfig
-    PKGCONFIG += libqrencode QtShadowsocks botan-1.10
+    PKGCONFIG += libqrencode QtShadowsocks botan-$$BOTAN_VER
 }
