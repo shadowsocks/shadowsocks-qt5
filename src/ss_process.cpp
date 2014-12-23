@@ -102,7 +102,7 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
 
     if (debug) {
         if(backendType == SSProfile::GO) {
-            args.append("-d=true");
+            args.append(" -d=true");
         }
         else {
             args.append(" -v");
