@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     a.installTranslator(&t);
 
     QTranslator ssqt5t;
-    ssqt5t.load("ssqt5_" + QLocale::system().name(), QCoreApplication::applicationDirPath());
+    ssqt5t.load("ss-qt5_" + QLocale::system().name(), QCoreApplication::applicationDirPath());
     a.installTranslator(&ssqt5t);
 
     MainWindow w(a.arguments().contains("-v"));
