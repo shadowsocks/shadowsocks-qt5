@@ -21,6 +21,7 @@ OTHER_FILES  += README.md \
 
 desktop.files = shadowsocks-qt5.desktop
 ssicon.files  = src/icon/shadowsocks-qt5.png
+translate.files = src/i18n/ss-qt5_zh_CN.qm
 
 isEmpty(INSTALL_PREFIX) {
     unix: INSTALL_PREFIX = /usr
@@ -29,7 +30,8 @@ isEmpty(INSTALL_PREFIX) {
 unix: {
     desktop.path  = $$INSTALL_PREFIX/share/applications
     ssicon.path   = $$INSTALL_PREFIX/share/icons/hicolor/512x512/apps
-    INSTALLS += desktop ssicon
+    translate.path = $$INSTALL_PREFIX/share/shadowsocks-qt5
+    INSTALLS += desktop ssicon translate
 }
 win32: DEFINES += QSS_STATIC
 
