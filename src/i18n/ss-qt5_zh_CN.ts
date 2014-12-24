@@ -150,11 +150,13 @@ Not every port of Shadowsocks support this option.</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="313"/>
+        <location filename="../mainwindow.cpp" line="62"/>
         <source>Start</source>
         <translation>启动</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="325"/>
+        <location filename="../mainwindow.cpp" line="63"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -217,6 +219,79 @@ Not every port of Shadowsocks support this option.</source>
         <location filename="../mainwindow.ui" line="504"/>
         <source>Use relative path instead of absolute path</source>
         <translation>使用相对路径而不是绝对路径</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="61"/>
+        <source>Show</source>
+        <translation>显示</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="64"/>
+        <source>Exit</source>
+        <translation>退出</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="316"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="316"/>
+        <source>Invalid profile or configuration.</source>
+        <translation>无效的配置或设置。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="353"/>
+        <source>Profile: %1 Started</source>
+        <translation>配置：%1 已启动</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="369"/>
+        <source>Profile: %1 Stopped</source>
+        <translation>配置：%1 已停止</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="397"/>
+        <source>Save Changes</source>
+        <translation>保存变更</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="397"/>
+        <source>Configuration has been changed.
+Do you want to save it now?</source>
+        <translation>设置已经被变更。
+你想要现在保存吗？</translation>
+    </message>
+</context>
+<context>
+    <name>QRWidget</name>
+    <message>
+        <location filename="../qrwidget.cpp" line="48"/>
+        <source>Generating QR code failed.</source>
+        <translation>二维码生成失败。</translation>
+    </message>
+</context>
+<context>
+    <name>SS_Process</name>
+    <message>
+        <location filename="../ss_process.cpp" line="59"/>
+        <source>Aborted: Invalid Backend Type.</source>
+        <translation>终止：无效的后端类型。</translation>
+    </message>
+    <message>
+        <location filename="../ss_process.cpp" line="67"/>
+        <source>Backend arguments are </source>
+        <translation>后端参数为</translation>
+    </message>
+    <message>
+        <location filename="../ss_process.cpp" line="149"/>
+        <source>Backend started. PID: </source>
+        <translation>后端已启动。PID：</translation>
+    </message>
+    <message>
+        <location filename="../ss_process.cpp" line="155"/>
+        <source>Backend exited. Exit Code: </source>
+        <translation>后端已退出。退出代码：</translation>
     </message>
 </context>
 <context>
