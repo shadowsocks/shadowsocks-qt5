@@ -100,7 +100,7 @@ private:
     void blockChildrenSignals(bool);
 
 #ifdef Q_OS_LINUX
-    bool isUbuntuUnity;
+    static const bool isUbuntuUnity;
 #endif
 
 protected:
