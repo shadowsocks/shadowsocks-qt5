@@ -27,6 +27,7 @@ isEmpty(INSTALL_PREFIX) {
     unix: INSTALL_PREFIX = /usr
     else: INSTALL_PREFIX = ..
 }
+DEFINES += LOC_PREFIX=\\\"$$INSTALL_PREFIX\\\"
 unix: {
     desktop.path  = $$INSTALL_PREFIX/share/applications
     ssicon.path   = $$INSTALL_PREFIX/share/icons/hicolor/512x512/apps

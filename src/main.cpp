@@ -28,9 +28,9 @@ int main(int argc, char *argv[])
 
     QTranslator ssqt5t;
     #ifdef Q_OS_WIN
-    ssqt5t.load("ss-qt5_" + QLocale::system().name(), QCoreApplication::applicationDirPath());
+    ssqt5t.load(QLocale::system().name(), "ss-qt5", "_", QCoreApplication::applicationDirPath());
     #else
-    ssqt5t.load("ss-qt5_" + QLocale::system().name(), "/usr/share/shadowsocks-qt5");
+    ssqt5t.load(QLocale::system().name(), "ss-qt5", "_", QString(LOC_PREFIX).append("/share/shadowsocks-qt5"));
     #endif
     a.installTranslator(&ssqt5t);
 
