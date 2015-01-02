@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/i18n">
+        <file>i18n/ss-qt5_zh_CN.qm</file>
+    </qresource>
+</RCC>

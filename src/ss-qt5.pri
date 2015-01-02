@@ -25,7 +25,8 @@ FORMS        += src/mainwindow.ui \
                 src/addprofiledialogue.ui \
                 src/sharedialogue.ui
 
-RESOURCES    += src/icons.qrc
+RESOURCES    += src/icons.qrc \
+                src/translations.qrc
 
 TRANSLATIONS  = src/i18n/ss-qt5_zh_CN.ts
 
