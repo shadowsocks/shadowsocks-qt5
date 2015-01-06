@@ -7,7 +7,7 @@ SS_Process::SS_Process(QObject *parent) :
     QObject(parent)
 {
     libQSS = false;
-    qssController = NULL;
+    qssController = new QSS::Controller(true, this);
     proc.setProcessChannelMode(QProcess::MergedChannels);
 
     connect(&proc, &QProcess::readyRead, this, &SS_Process::onProcessReadyRead);
@@ -71,19 +71,14 @@ void SS_Process::start(QString &args)
 void SS_Process::startQSS(SSProfile * const p, bool debug)
 {
     QSS::Profile profile = p->getQSSProfile();
-    if (qssController == NULL) {
-        qssController = new QSS::Controller(profile, true, this);
-        if (debug) {
-            connect(qssController, &QSS::Controller::info, this, &SS_Process::onQSSInfoReady, Qt::DirectConnection);
-        }
-        connect(qssController, &QSS::Controller::error, this, &SS_Process::onQSSInfoReady, Qt::DirectConnection);
-    }
+    qssController->setup(profile);
+    connect(qssController, debug ? &QSS::Controller::debug : &QSS::Controller::info, this, &SS_Process::onQSSInfoReady, Qt::DirectConnection);
     if (qssController->start()) {
         emit processStarted();
     }
     else {
-        qssController->deleteLater();
-        qssController = NULL;
+        disconnect(qssController, &QSS::Controller::debug, this, &SS_Process::onQSSInfoReady);
+        disconnect(qssController, &QSS::Controller::info, this, &SS_Process::onQSSInfoReady);
     }
 }
 
@@ -123,10 +118,10 @@ void SS_Process::start(const QString &server, const QString &pwd, const QString 
 
 void SS_Process::stop()
 {
-    if (libQSS && qssController != NULL) {
+    if (libQSS) {
         qssController->stop();
-        qssController->deleteLater();
-        qssController = NULL;
+        disconnect(qssController, &QSS::Controller::debug, this, &SS_Process::onQSSInfoReady);
+        disconnect(qssController, &QSS::Controller::info, this, &SS_Process::onQSSInfoReady);
         emit processStopped();
     }
     else if (proc.isOpen()) {
