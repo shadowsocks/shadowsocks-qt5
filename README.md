@@ -129,3 +129,10 @@ Other platforms are not tested and they're NOT supported officially. Well, I do 
 
 [ss-python]: https://github.com/clowwindy/shadowsocks
 [ss-libev]: https://github.com/madeye/shadowsocks-libev
+
+LICENSE
+-------
+
+Copyright © 20014-2015 Symeon Huang
+
+This project is licensed under version 3 of the GNU Lesser General Public License.
