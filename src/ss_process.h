@@ -3,7 +3,7 @@
  *
  * Used to interact with the backend.
  *
- * Copyright 2014 William Wong <librehat@outlook.com>
+ * Copyright 2014-2015 Symeon Huang <hzwhuang@gmail.com>
  */
 #ifndef SS_PROCESS_H
 #define SS_PROCESS_H

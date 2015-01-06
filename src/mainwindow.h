@@ -1,7 +1,7 @@
 /*
  * MainWindow class
  * Lots of variables, functions are included in this class
- * Copyright 2014 William Wong <librehat@outlook.com>
+ * Copyright 2014-2015 Symeon Huang <hzwhuang@gmail.com>
  */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H

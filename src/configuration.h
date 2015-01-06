@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 William Wong <librehat@outlook.com>
+ * Copyright 2014-2015 Symeon Huang <hzwhuang@gmail.com>
  */
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
