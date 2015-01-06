@@ -58,18 +58,19 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     ui->relativePathCheck->setChecked(m_conf->isRelativePath());
 
     //desktop systray
-    systrayMenu.addAction(tr("Show"), this, SLOT(showWindow()));
-    systrayMenu.addAction(tr("Start"), this, SLOT(onStartButtonPressed()));
-    systrayMenu.addAction(tr("Stop"), this, SLOT(onStopButtonPressed()));
-    systrayMenu.addAction(tr("Exit"), this, SLOT(close()));
-    systrayMenu.actions().at(2)->setEnabled(false);
+    systrayMenu = new QMenu(this);
+    systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
+    systrayMenu->addAction(tr("Start"), this, SLOT(onStartButtonPressed()));
+    systrayMenu->addAction(tr("Stop"), this, SLOT(onStopButtonPressed()));
+    systrayMenu->addAction(tr("Exit"), this, SLOT(close()));
+    systrayMenu->actions().at(2)->setEnabled(false);
 #ifdef Q_OS_WIN
     systray.setIcon(QIcon(":/icon/black_icon.png"));
 #else
     systray.setIcon(QIcon(":/icon/mono_icon.png"));
 #endif
     systray.setToolTip(QString("Shadowsocks-Qt5"));
-    systray.setContextMenu(&systrayMenu);
+    systray.setContextMenu(systrayMenu);
 #ifdef Q_OS_LINUX
     if (!isUbuntuUnity) {
         systray.show();
@@ -346,8 +347,8 @@ void MainWindow::deleteProfile()
 
 void MainWindow::onProcessStarted()
 {
-    systrayMenu.actions().at(1)->setEnabled(false);
-    systrayMenu.actions().at(2)->setEnabled(true);
+    systrayMenu->actions().at(1)->setEnabled(false);
+    systrayMenu->actions().at(2)->setEnabled(true);
     ui->stopButton->setEnabled(true);
     ui->startButton->setEnabled(false);
     ui->logBrowser->clear();
@@ -358,8 +359,8 @@ void MainWindow::onProcessStarted()
 
 void MainWindow::onProcessStopped()
 {
-    systrayMenu.actions().at(1)->setEnabled(true);
-    systrayMenu.actions().at(2)->setEnabled(false);
+    systrayMenu->actions().at(1)->setEnabled(true);
+    systrayMenu->actions().at(2)->setEnabled(false);
     ui->stopButton->setEnabled(false);
     ui->startButton->setEnabled(true);
 
@@ -382,7 +383,7 @@ void MainWindow::showWindow()
 
 void MainWindow::systrayActivated(QSystemTrayIcon::ActivationReason r)
 {
-    if (r != 1) {
+    if (r != QSystemTrayIcon::Context) {
         showWindow();
     }
 }

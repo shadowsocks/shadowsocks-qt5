@@ -89,7 +89,7 @@ private:
     bool verboseOutput;
     IP4Validator ipv4addrValidator;
     PortValidator portValidator;
-    QMenu systrayMenu;
+    QMenu *systrayMenu;
     QString jsonconfigFile;
     QSystemTrayIcon systray;
     SS_Process *ssProcess;
