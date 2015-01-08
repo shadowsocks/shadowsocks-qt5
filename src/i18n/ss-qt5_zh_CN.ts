@@ -150,13 +150,13 @@ Not every port of Shadowsocks support this option.</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="313"/>
-        <location filename="../mainwindow.cpp" line="62"/>
+        <location filename="../mainwindow.cpp" line="64"/>
         <source>Start</source>
         <translation>启动</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="325"/>
-        <location filename="../mainwindow.cpp" line="63"/>
+        <location filename="../mainwindow.cpp" line="65"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -197,6 +197,7 @@ Not every port of Shadowsocks support this option.</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="462"/>
+        <location filename="../mainwindow.h" line="79"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
@@ -221,42 +222,54 @@ Not every port of Shadowsocks support this option.</source>
         <translation>使用相对路径而不是绝对路径</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="61"/>
+        <location filename="../mainwindow.ui" line="511"/>
+        <source>This will enable application minimise to system tray.
+If system tray icon doesn&apos;t show or malfunction, please uncheck this option.</source>
+        <translation>该选项使得程序能最小化到系统托盘
+如果系统托盘不显示或者异常，请取消勾选本项。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="515"/>
+        <source>Use system tray</source>
+        <translation>使用系统托盘</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="63"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="64"/>
+        <location filename="../mainwindow.cpp" line="66"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="316"/>
+        <location filename="../mainwindow.cpp" line="306"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="316"/>
+        <location filename="../mainwindow.cpp" line="306"/>
         <source>Invalid profile or configuration.</source>
         <translation>无效的配置或设置。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="353"/>
+        <location filename="../mainwindow.cpp" line="343"/>
         <source>Profile: %1 Started</source>
         <translation>配置：%1 已启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="369"/>
+        <location filename="../mainwindow.cpp" line="359"/>
         <source>Profile: %1 Stopped</source>
         <translation>配置：%1 已停止</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="397"/>
+        <location filename="../mainwindow.cpp" line="388"/>
         <source>Save Changes</source>
         <translation>保存变更</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="397"/>
+        <location filename="../mainwindow.cpp" line="388"/>
         <source>Configuration has been changed.
 Do you want to save it now?</source>
         <translation>设置已经被变更。
@@ -284,12 +297,12 @@ Do you want to save it now?</source>
         <translation>后端参数为</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="149"/>
+        <location filename="../ss_process.cpp" line="144"/>
         <source>Backend started. PID: </source>
         <translation>后端已启动。PID：</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="155"/>
+        <location filename="../ss_process.cpp" line="150"/>
         <source>Backend exited. Exit Code: </source>
         <translation>后端已退出。退出代码：</translation>
     </message>
