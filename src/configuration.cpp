@@ -28,9 +28,6 @@ Configuration::Configuration(const QString &file)
     setJSONFile(file);
 }
 
-Configuration::~Configuration()
-{}
-
 void Configuration::setJSONFile(const QString &file)
 {
     profileList.clear();//clear list in the very beginning
@@ -45,6 +42,7 @@ void Configuration::setJSONFile(const QString &file)
         m_index = -1;
         relativePath = false;
         translucent = true;
+        useSystray = true;
         return;
     }
 
@@ -104,12 +102,8 @@ void Configuration::setJSONFile(const QString &file)
     debugLog = JSONObj["debug"].toBool();
     relativePath = JSONObj["relative_path"].toBool();
     translucent = JSONObj["translucent"].toBool();
+    useSystray = JSONObj["useSystray"].toBool();
     JSONFile.close();
-}
-
-int Configuration::count()
-{
-    return profileList.count();
 }
 
 QStringList Configuration::getProfileList()
@@ -145,11 +139,6 @@ void Configuration::addProfileFromSSURI(const QString &name, QString uri)
     profileList << p;
 }
 
-void Configuration::deleteProfile(int index)
-{
-    profileList.removeAt(index);
-}
-
 void Configuration::save()
 {
     QJsonArray newConfArray;
@@ -182,6 +171,7 @@ void Configuration::save()
     JSONObj["index"] = QJsonValue(m_index);
     JSONObj["relative_path"] = QJsonValue(relativePath);
     JSONObj["translucent"] = QJsonValue(translucent);
+    JSONObj["useSystray"] = QJsonValue(useSystray);
 
     QJsonDocument JSONDoc(JSONObj);
 
@@ -194,69 +184,4 @@ void Configuration::save()
         qWarning() << "Warning: file is not writable!";
     }
     JSONFile.close();
-}
-
-void Configuration::setIndex(int index)
-{
-    m_index = index;
-}
-
-int Configuration::getIndex()
-{
-    return m_index;
-}
-
-bool Configuration::isDebug()
-{
-    return debugLog;
-}
-
-void Configuration::setDebug(bool d)
-{
-    debugLog = d;
-}
-
-bool Configuration::isAutoStart()
-{
-    return autoStart;
-}
-
-void Configuration::setAutoStart(bool s)
-{
-    autoStart = s;
-}
-
-void Configuration::setAutoHide(bool h)
-{
-    autoHide = h;
-}
-
-bool Configuration::isAutoHide()
-{
-    return autoHide;
-}
-
-void Configuration::setTranslucent(bool t)
-{
-    translucent = t;
-}
-
-bool Configuration::isTranslucent()
-{
-    return translucent;
-}
-
-void Configuration::setRelativePath(bool r)
-{
-    relativePath = r;
-}
-
-bool Configuration::isRelativePath()
-{
-    return relativePath;
-}
-
-void Configuration::revert()
-{
-    setJSONFile(m_file);
 }

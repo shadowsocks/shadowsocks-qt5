@@ -12,39 +12,42 @@ class Configuration
 {
 public:
     Configuration(const QString &file);
-    ~Configuration();
-    void setJSONFile(const QString &);
-    void setIndex(int);
-    int getIndex();
-    void setAutoStart(bool);
-    bool isAutoStart();
-    void setAutoHide(bool);
-    bool isAutoHide();
-    void setDebug(bool);
-    bool isDebug();
-    void setTranslucent(bool);
-    bool isTranslucent();
-    void setRelativePath(bool);
-    bool isRelativePath();
+
+    inline bool isAutoHide() const { return autoHide; }
+    inline bool isAutoStart() const { return autoStart; }
+    inline bool isDebug() const { return debugLog; }
+    inline bool isRelativePath() const { return relativePath; }
     inline bool isTFOAvailable() const { return tfo_available; }
-    int count();
-    QStringList getProfileList();
-    inline SSProfile *profileAt(int i) { return &profileList[i]; }
+    inline bool isTranslucent() const { return translucent; }
+    inline bool isUseSystray() const { return useSystray; }
+    inline int count() const { return profileList.count(); }
+    inline int getIndex() const { return m_index; }
     inline SSProfile *currentProfile() { return &profileList[m_index]; }
     inline SSProfile *lastProfile() { return &profileList.last(); }
-    void revert();
+    inline SSProfile *profileAt(int i) { return &profileList[i]; }
+    inline void deleteProfile(int index) { profileList.removeAt(index); }
+    inline void revert() { setJSONFile(m_file); }
+    inline void setAutoHide(bool b) { autoHide = b; }
+    inline void setAutoStart(bool b) { autoStart = b; }
+    inline void setDebug(bool b) { debugLog = b; }
+    inline void setIndex(int i) { m_index = i; }
+    inline void setRelativePath(bool b) { relativePath = b; }
+    inline void setTranslucent(bool b) { translucent = b; }
+    inline void setUseSystray(bool b) { useSystray = b; }
+    QStringList getProfileList();
     void addProfile(const QString &);
     void addProfileFromSSURI(const QString &, QString);
-    void deleteProfile(int);
     void save();
+    void setJSONFile(const QString &);
 
 private:
-    int m_index;
-    bool debugLog;
     bool autoHide;
     bool autoStart;
-    bool translucent;
+    bool debugLog;
     bool relativePath;
+    bool translucent;
+    bool useSystray;
+    int m_index;
     QList<SSProfile> profileList;
     QString m_file;
     static bool tfo_available;
