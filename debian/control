@@ -8,7 +8,7 @@ Build-Depends: debhelper (>= 9),
                qtbase5-dev,
                qtbase5-private-dev,
                libqrencode-dev,
-               libqtshadowsocks (>= 1.2),
+               libqtshadowsocks,
                libbotan1.10-dev
 Standards-Version: 3.9.6
 Homepage: https://github.com/librehat/shadowsocks-qt5
@@ -17,7 +17,7 @@ Vcs-Browser: https://github.com/librehat/shadowsocks-qt5
 
 Package: shadowsocks-qt5
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, libqtshadowsocks (>= 1.2)
 Description: A Qt5 GUI Fronted for Shadowsocks
  Shadowsocks-Qt5 is designed to run fast and reliable while offer an
  intuitive yet highly customisable user interface.
