@@ -1,3 +1,11 @@
+shadowsocks-qt5 (0.8.0) stable; urgency=medium
+
+  * add chacha20
+  * add an option to enable/disable systray
+  * bundled translation file into executable
+
+ -- Symeon Huang <symeon@odroid-u3>  Thu, 8 Jan 2015 14:41:24 +0000
+
 shadowsocks-qt5 (0.7.0) stable; urgency=medium
 
   * drop shadowsocks-libev.
