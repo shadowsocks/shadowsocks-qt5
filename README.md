@@ -69,7 +69,7 @@ We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means 
 
 #### Fedora/Red Hat Enterprise Linux ####
 
-The Copr build RPM for Fedora 19, 20, 21, rawhide and RHEL6, RHEL7. If you're using other RHEL-based distributions such as CentOS, you can just use the EPEL repo in Copr.
+The Copr build RPM for Fedora 20, 21, rawhide and RHEL6, RHEL7. If you're using other RHEL-based distributions such as CentOS, you can just use the EPEL repo in Copr.
 
 You can enable the repo via `dnf`:
 
