@@ -56,6 +56,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     ui->tfoCheckBox->setVisible(false);
 #endif
     ui->relativePathCheck->setChecked(m_conf->isRelativePath());
+    ui->useSystrayCheck->setChecked(m_conf->isUseSystray());
 
     //desktop systray
     systrayMenu = new QMenu(this);
@@ -71,13 +72,9 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
 #endif
     systray.setToolTip(QString("Shadowsocks-Qt5"));
     systray.setContextMenu(systrayMenu);
-#ifdef Q_OS_LINUX
-    if (!isUbuntuUnity) {
+    if (m_conf->isUseSystray()) {
         systray.show();
     }
-#else
-    systray.show();
-#endif
 
     //Windows Extras
 #ifdef Q_OS_WIN
@@ -134,6 +131,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     connect(ui->debugCheck, &QCheckBox::stateChanged, this, &MainWindow::onDebugToggled);
     connect(ui->translucentCheck, &QCheckBox::toggled, this, &MainWindow::onTransculentToggled);
     connect(ui->relativePathCheck, &QCheckBox::toggled, this, &MainWindow::onRelativePathToggled);
+    connect(ui->useSystrayCheck, &QCheckBox::toggled, this, &MainWindow::onUseSystrayToggled);
     connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::saveConfig);
     connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::onAboutButtonClicked);
 
@@ -157,10 +155,6 @@ MainWindow::~MainWindow()
     delete ui;
     delete m_conf;
 }
-
-#ifdef Q_OS_LINUX
-const bool MainWindow::isUbuntuUnity = (QString(getenv("XDG_CURRENT_DESKTOP")).compare("Unity", Qt::CaseInsensitive) == 0);
-#endif
 
 const QString MainWindow::aboutText = "<h3>Cross-Platform GUI Fronted for Shadowsocks</h3><p>Version: " + QString(APP_VERSION) + "</p><p>Copyright © 2014-2015 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>";
 
@@ -284,17 +278,9 @@ void MainWindow::saveConfig()
 
 void MainWindow::minimizeToSysTray()
 {
-#ifdef Q_OS_LINUX
-    /*
-     * There is no systray in Unity. Nor a clean and simple way to use the indicator.
-     * While hiding window will cause inability to restore.
-     * Simply not to hide if the desktop is Unity.
-     */
-    if (isUbuntuUnity) {
-        return;
+    if (m_conf->isUseSystray()) {
+        this->hide();
     }
-#endif
-    this->hide();
 }
 
 void MainWindow::onProfileEditButtonClicked(QAbstractButton *b)
@@ -393,6 +379,7 @@ void MainWindow::changeEvent(QEvent *e)
     if (e->type() == QEvent::WindowStateChange && this->isMinimized()) {
         minimizeToSysTray();
     }
+    QMainWindow::changeEvent(e);
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
@@ -545,6 +532,18 @@ void MainWindow::onTransculentToggled(bool c)
 void MainWindow::onRelativePathToggled(bool r)
 {
     m_conf->setRelativePath(r);
+    emit configurationChanged();
+}
+
+void MainWindow::onUseSystrayToggled(bool u)
+{
+    m_conf->setUseSystray(u);
+    if (u) {
+        systray.show();
+    }
+    else {
+        systray.hide();
+    }
     emit configurationChanged();
 }
 

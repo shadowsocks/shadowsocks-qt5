@@ -82,6 +82,7 @@ private slots:
     void onDebugToggled(bool);
     void onRelativePathToggled(bool);
     void onTransculentToggled(bool);
+    void onUseSystrayToggled(bool);
     void saveConfig();
 
 private:
@@ -98,10 +99,6 @@ private:
     Ui::MainWindow *ui;
     void showNotification(const QString &);
     void blockChildrenSignals(bool);
-
-#ifdef Q_OS_LINUX
-    static const bool isUbuntuUnity;
-#endif
 
 protected:
     void changeEvent(QEvent *);
