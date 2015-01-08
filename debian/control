@@ -8,7 +8,7 @@ Build-Depends: debhelper (>= 9),
                qtbase5-dev,
                qtbase5-private-dev,
                libqrencode-dev,
-               libqtshadowsocks,
+               libqtshadowsocks (>= 1.2),
                libbotan1.10-dev
 Standards-Version: 3.9.6
 Homepage: https://github.com/librehat/shadowsocks-qt5
