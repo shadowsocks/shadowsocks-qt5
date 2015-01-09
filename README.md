@@ -16,7 +16,7 @@ Features
 - Keep your favourite Shadowsocks port as backend if you want.
 - Easy-to-use and highly customisable.
 - The `gui-config.json` file is partially compatible with [shadowsocks-gui](https://github.com/shadowsocks/shadowsocks-gui). In order to serve better, some new values have been added.
-- `gui-config.json` is located under ~/.config/shadowsocks on UNIX platforms, or under the main programme's directory in Windows.
+- `gui-config.json` is located under ~/.config/shadowsocks on UNIX platforms, or under the main programme's directory on Windows.
 
 Note
 ----
@@ -31,8 +31,7 @@ Installation
 
 ### Windows ###
 
-1. Download prebuilt binaries from [releases](https://github.com/librehat/shadowsocks-qt5/releases).
-2. Install/update your favourite shadowsocks backend. (You may want to download prebuilt [ss-libev](http://dl.lazyzhu.com/file/Toolchain/ss-libev/)).
+Download prebuilt binaries from [releases](https://github.com/librehat/shadowsocks-qt5/releases).
 
 For those who want to build from source, follow the instructions below.
 
@@ -65,11 +64,11 @@ We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means 
 - `qt5-qtbase` >= 5.2
 - `qrencode` (or `libqrencode` in Debian/Ubuntu)
 - `libQtShadowsocks` (`libqtshadowsocks` in Debian/Ubuntu)
-- `botan = 1.10.x` (`libbotan1.10` in Debian/Ubuntu)
+- `botan >= 1.10` (`libbotan1.10` in Debian/Ubuntu)
 
 #### Fedora/Red Hat Enterprise Linux ####
 
-The Copr build RPM for Fedora 20, 21, rawhide and RHEL6, RHEL7. If you're using other RHEL-based distributions such as CentOS, you can just use the EPEL repo in Copr.
+The Copr builds RPMs for Fedora 20, 21, rawhide and RHEL 7. If you're using other RHEL-based distributions such as CentOS and Scientific Linux, you can just use the EPEL repo in Copr.
 
 You can enable the repo via `dnf`:
 
