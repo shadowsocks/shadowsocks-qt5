@@ -41,16 +41,6 @@
         <string>General</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2" rowstretch="10,0,0">
-        <item row="2" column="2" alignment="Qt::AlignBottom">
-         <widget class="QDialogButtonBox" name="profileEditButtonBox">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="standardButtons">
-           <set>QDialogButtonBox::Reset|QDialogButtonBox::Save</set>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="2" rowspan="2">
          <layout class="QGridLayout" name="gridLayout_r">
           <item row="4" column="0">
@@ -365,6 +355,49 @@ Not every port of Shadowsocks support this option.</string>
           </property>
          </widget>
         </item>
+        <item row="2" column="2">
+         <layout class="QHBoxLayout" name="profileButtonLayout">
+          <item>
+           <widget class="QPushButton" name="profileResetButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Reset</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-revert"/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacerPBL">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="profileSaveButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Save</string>
+            </property>
+            <property name="icon">
+             <iconset theme="document-save"/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="logTab">
@@ -540,6 +573,8 @@ If system tray icon doesn't show or malfunction, please uncheck this option.</st
   <tabstop>methodComboBox</tabstop>
   <tabstop>timeoutSpinBox</tabstop>
   <tabstop>tfoCheckBox</tabstop>
+  <tabstop>profileResetButton</tabstop>
+  <tabstop>profileSaveButton</tabstop>
   <tabstop>startButton</tabstop>
   <tabstop>stopButton</tabstop>
   <tabstop>shareButton</tabstop>

@@ -124,7 +124,8 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
 #ifdef Q_OS_LINUX
     connect(ui->tfoCheckBox, &QCheckBox::toggled, this, &MainWindow::onTcpFastOpenChanged);
 #endif
-    connect(ui->profileEditButtonBox, &QDialogButtonBox::clicked, this, &MainWindow::onProfileEditButtonClicked);
+    connect(ui->profileResetButton, &QPushButton::clicked, this, &MainWindow::onProfileResetClicked);
+    connect(ui->profileSaveButton, &QPushButton::clicked, this, &MainWindow::onProfileSaveClicked);
 
     connect(ui->autohideCheck, &QCheckBox::stateChanged, this, &MainWindow::onAutoHideToggled);
     connect(ui->autostartCheck, &QCheckBox::stateChanged, this, &MainWindow::onAutoStartToggled);
@@ -193,7 +194,8 @@ void MainWindow::onCurrentProfileChanged(int i)
     if (current_profile->backend.isEmpty()) {
         current_profile->setBackend(m_conf->isRelativePath());
         if (!current_profile->backend.isEmpty()) {
-            ui->profileEditButtonBox->setEnabled(true);
+            ui->profileSaveButton->setEnabled(true);
+            ui->profileResetButton->setEnabled(true);
             ui->miscSaveButton->setEnabled(true);
         }
     }
@@ -283,21 +285,21 @@ void MainWindow::minimizeToSysTray()
     }
 }
 
-void MainWindow::onProfileEditButtonClicked(QAbstractButton *b)
+void MainWindow::onProfileResetClicked()
 {
-    if (ui->profileEditButtonBox->standardButton(b) == QDialogButtonBox::Save) {
-        saveConfig();
-    }
-    else {//reset
-        m_conf->revert();
-        this->blockChildrenSignals(true);
-        ui->profileComboBox->clear();
-        ui->profileComboBox->insertItems(0, m_conf->getProfileList());
-        ui->profileComboBox->setCurrentIndex(m_conf->getIndex());
-        this->blockChildrenSignals(false);
-        emit ui->profileComboBox->currentIndexChanged(m_conf->getIndex());//same in MainWindow's constructor
-        emit configurationChanged(true);
-    }
+    m_conf->revert();
+    this->blockChildrenSignals(true);
+    ui->profileComboBox->clear();
+    ui->profileComboBox->insertItems(0, m_conf->getProfileList());
+    ui->profileComboBox->setCurrentIndex(m_conf->getIndex());
+    this->blockChildrenSignals(false);
+    emit ui->profileComboBox->currentIndexChanged(m_conf->getIndex());//same in MainWindow's constructor
+    emit configurationChanged(true);
+}
+
+void MainWindow::onProfileSaveClicked()
+{
+    saveConfig();
 }
 
 void MainWindow::onStartButtonPressed()
@@ -384,7 +386,7 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
-    if (ui->profileEditButtonBox->isEnabled()) {//which means unsaved
+    if (ui->profileSaveButton->isEnabled()) {//which means unsaved
         QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Save Changes"), tr("Configuration has been changed.\nDo you want to save it now?"), QMessageBox::Cancel|QMessageBox::Save|QMessageBox::No, QMessageBox::Save);
         if (answer == QMessageBox::Cancel) {
             e->ignore();
@@ -410,7 +412,8 @@ void MainWindow::onProcessReadyRead(const QByteArray &o)
 
 void MainWindow::onConfigurationChanged(bool saved)
 {
-    ui->profileEditButtonBox->setEnabled(!saved);
+    ui->profileSaveButton->setEnabled(!saved);
+    ui->profileResetButton->setEnabled(!saved);
     ui->miscSaveButton->setEnabled(!saved);
 }
 

@@ -22,10 +22,6 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    QTranslator t;
-    t.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    a.installTranslator(&t);
-
     QTranslator ssqt5t;
     ssqt5t.load(QLocale::system(), "ss-qt5", "_", ":/i18n");
     a.installTranslator(&ssqt5t);

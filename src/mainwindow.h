@@ -66,7 +66,8 @@ private slots:
     void onProcessReadyRead(const QByteArray &);
     void onProcessStarted();
     void onProcessStopped();
-    void onProfileEditButtonClicked(QAbstractButton*);
+    void onProfileResetClicked();
+    void onProfileSaveClicked();
     void onPasswordEditFinished(const QString &);
     void onServerEditFinished(const QString &);
     void showWindow();
