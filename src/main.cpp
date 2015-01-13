@@ -4,9 +4,17 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QLocale>
+#include <QSharedMemory>
 
 int main(int argc, char *argv[])
 {
+    QSharedMemory sharedMem;
+    sharedMem.setKey("shadowsocks-qt5");
+    if (!sharedMem.create(1)) {
+        qCritical("Abort. Another instance of Shadowsocks-Qt5 is already running.");
+        return -1;
+    }
+
     QApplication a(argc, argv);
 
     a.setApplicationName(QString("shadowsocks-qt5"));
