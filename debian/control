@@ -17,7 +17,8 @@ Vcs-Browser: https://github.com/librehat/shadowsocks-qt5
 
 Package: shadowsocks-qt5
 Architecture: any
-Depends: ${shlibs:Depends}, libqtshadowsocks (>= 1.2)
-Description: A Qt5 GUI Fronted for Shadowsocks
+Depends: ${shlibs:Depends},
+         libqtshadowsocks (>= 1.2)
+Description: A Qt5 GUI Client for Shadowsocks
  Shadowsocks-Qt5 is designed to run fast and reliable while offer an
  intuitive yet highly customisable user interface.

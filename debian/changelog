@@ -1,3 +1,10 @@
+shadowsocks-qt5 (0.8.1-1) stable; urgency=medium
+
+  * fix translation loading
+  * allow only one instance running
+
+ -- Symeon Huang <symeon@odroid-u3>  Tue, 13 Jan 2015 14:11:57 +0000
+
 shadowsocks-qt5 (0.8.0) stable; urgency=medium
 
   * add chacha20
