@@ -6,7 +6,7 @@ Shadowsocks-Qt5
 Introduction
 ------------
 
-Shadowsocks-Qt5 is a fast, reliable and cross-platform GUI fronted for [Shadowsocks](http://shadowsocks.org).
+Shadowsocks-Qt5 is a native and cross-platform GUI client for [Shadowsocks](http://shadowsocks.org).
 
 Features
 --------
@@ -63,8 +63,8 @@ We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means 
 
 - `qt5-qtbase` >= 5.2
 - `qrencode` (or `libqrencode` in Debian/Ubuntu)
-- `libQtShadowsocks` (`libqtshadowsocks` in Debian/Ubuntu)
-- `botan >= 1.10` (`libbotan1.10` in Debian/Ubuntu)
+- `libQtShadowsocks` >= 1.2 (`libqtshadowsocks` in Debian/Ubuntu)
+- `botan` >= 1.10 (`libbotan1.10` in Debian/Ubuntu)
 
 #### Fedora/Red Hat Enterprise Linux ####
 
@@ -91,16 +91,6 @@ sudo yum update
 sudo yum install shadowsocks-qt5
 ```
 
-#### Debian ####
-
-By running the command below, you'll get a deb package on upper directory.
-
-```bash
-dpkg-buildpackage -uc -us -b
-```
-
-Then, install it by `sudo dpkg -i shadowsocks-qt5-<VER_ARCH_ETC>.deb`.
-
 #### Ubuntu ####
 
 Make sure you're running at least Ubuntu 14.04.
@@ -111,9 +101,19 @@ sudo apt-get update
 sudo apt-get install shadowsocks-qt5
 ```
 
+#### Debian ####
+
+By running the command below, you'll get a deb package on upper directory.
+
+```bash
+dpkg-buildpackage -uc -us -b
+```
+
+Then, install it by `sudo dpkg -i shadowsocks-qt5-<VER_ARCH_ETC>.deb`.
+
 #### Generic Linux ####
 
-The **development packages** of `qt5-qtbase`, `botan-1.10` (or `libbotan1.10`) and `qrencode` (or `libqrencode`) are required.
+The **development packages** of `qt5-qtbase`, `botan-1.10` (or `libbotan1.10`), `libQtShadowsocks` and `qrencode` (or `libqrencode`) are required.
 
 ```bash
 # Some distros use seperated qmake-qt4, qmake-qt5. Then, just run `qmake-qt5`. You can specify INSTALL_PREFIX=/usr/local if needed. default is /usr
@@ -127,7 +127,7 @@ make install
 Other platforms are not tested and they're NOT supported officially. Well, I do hope you can help me mantain the compatibility if you have spare time.
 
 [ss-python]: https://github.com/clowwindy/shadowsocks
-[ss-libev]: https://github.com/madeye/shadowsocks-libev
+[ss-libev]: https://github.com/shadowsocks/shadowsocks-libev
 
 LICENSE
 -------
