@@ -43,6 +43,7 @@ void Configuration::setJSONFile(const QString &file)
         relativePath = false;
         translucent = true;
         useSystray = false;
+        singleInstance = false;
         return;
     }
 
@@ -103,6 +104,7 @@ void Configuration::setJSONFile(const QString &file)
     relativePath = JSONObj["relative_path"].toBool();
     translucent = JSONObj["translucent"].toBool();
     useSystray = JSONObj["useSystray"].toBool();
+    singleInstance = JSONObj["singleInstance"].toBool();
     JSONFile.close();
 }
 
@@ -172,6 +174,7 @@ void Configuration::save()
     JSONObj["relative_path"] = QJsonValue(relativePath);
     JSONObj["translucent"] = QJsonValue(translucent);
     JSONObj["useSystray"] = QJsonValue(useSystray);
+    JSONObj["singleInstance"] = QJsonValue(singleInstance);
 
     QJsonDocument JSONDoc(JSONObj);
 

@@ -84,6 +84,7 @@ private slots:
     void onRelativePathToggled(bool);
     void onTransculentToggled(bool);
     void onUseSystrayToggled(bool);
+    void onSingleInstanceToggled(bool);
     void saveConfig();
 
 private:

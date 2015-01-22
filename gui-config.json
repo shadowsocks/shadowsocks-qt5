@@ -19,7 +19,8 @@
     ],
     "debug": false,
     "index": 0,
-    "translucent": false,
     "relative_path": false,
+    "singleInstance": false,
+    "translucent": false,
     "useSystray": true
 }

@@ -8,13 +8,6 @@
 
 int main(int argc, char *argv[])
 {
-    QSharedMemory sharedMem;
-    sharedMem.setKey("shadowsocks-qt5");
-    if (!sharedMem.create(1)) {
-        qCritical("Abort. Another instance of Shadowsocks-Qt5 is already running.");
-        return -1;
-    }
-
     QApplication a(argc, argv);
 
     a.setApplicationName(QString("shadowsocks-qt5"));
@@ -36,6 +29,13 @@ int main(int argc, char *argv[])
 
     MainWindow w(a.arguments().contains("-v"));
     w.show();
+
+    QSharedMemory sharedMem;
+    sharedMem.setKey("shadowsocks-qt5");
+    if (!sharedMem.create(1) && w.m_conf->isSingleInstance()) {
+        QMessageBox::critical(&w, QObject::tr("Error"), QObject::tr("Another instance of Shadowsocks-Qt5 is already running."));
+        return -1;
+    }
 
     if (w.m_conf->isAutoStart()) {
         w.onStartButtonPressed();

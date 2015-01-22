@@ -20,6 +20,7 @@ public:
     inline bool isTFOAvailable() const { return tfo_available; }
     inline bool isTranslucent() const { return translucent; }
     inline bool isUseSystray() const { return useSystray; }
+    inline bool isSingleInstance() const { return singleInstance; }
     inline int count() const { return profileList.count(); }
     inline int getIndex() const { return m_index; }
     inline SSProfile *currentProfile() { return &profileList[m_index]; }
@@ -34,6 +35,7 @@ public:
     inline void setRelativePath(bool b) { relativePath = b; }
     inline void setTranslucent(bool b) { translucent = b; }
     inline void setUseSystray(bool b) { useSystray = b; }
+    inline void setSingleInstance(bool b) { singleInstance = b; }
     QStringList getProfileList();
     void addProfile(const QString &);
     void addProfileFromSSURI(const QString &, QString);
@@ -47,6 +49,7 @@ private:
     bool relativePath;
     bool translucent;
     bool useSystray;
+    bool singleInstance;
     int m_index;
     QList<SSProfile> profileList;
     QString m_file;

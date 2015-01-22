@@ -57,6 +57,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
 #endif
     ui->relativePathCheck->setChecked(m_conf->isRelativePath());
     ui->useSystrayCheck->setChecked(m_conf->isUseSystray());
+    ui->singleInstanceCheck->setChecked(m_conf->isSingleInstance());
 
     //desktop systray
     systrayMenu = new QMenu(this);
@@ -133,6 +134,7 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     connect(ui->translucentCheck, &QCheckBox::toggled, this, &MainWindow::onTransculentToggled);
     connect(ui->relativePathCheck, &QCheckBox::toggled, this, &MainWindow::onRelativePathToggled);
     connect(ui->useSystrayCheck, &QCheckBox::toggled, this, &MainWindow::onUseSystrayToggled);
+    connect(ui->singleInstanceCheck, &QCheckBox::toggled, this, &MainWindow::onSingleInstanceToggled);
     connect(ui->miscSaveButton, &QPushButton::clicked, this, &MainWindow::saveConfig);
     connect(ui->aboutButton, &QPushButton::clicked, this, &MainWindow::onAboutButtonClicked);
 
@@ -547,6 +549,12 @@ void MainWindow::onUseSystrayToggled(bool u)
     else {
         systray.hide();
     }
+    emit configurationChanged();
+}
+
+void MainWindow::onSingleInstanceToggled(bool s)
+{
+    m_conf->setSingleInstance(s);
     emit configurationChanged();
 }
 
