@@ -4,16 +4,16 @@
 #
 #-------------------------------------------------
 
-QT      += core gui widgets network concurrent
+QT        += core gui widgets network concurrent
 win32: QT += winextras
 linux: QT += dbus
 
-CONFIG  += c++11
+CONFIG    += c++11
 
-TARGET   = ss-qt5
-TEMPLATE = app
-VERSION  = 0.8.1
-DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+TARGET     = ss-qt5
+TEMPLATE   = app
+VERSION    = 0.9.0
+DEFINES   += APP_VERSION=\\\"$$VERSION\\\"
 
 include(src/ss-qt5.pri)
 
@@ -32,10 +32,10 @@ isEmpty(INSTALL_PREFIX) {
 unix: {
     desktop.path  = $$INSTALL_PREFIX/share/applications
     ssicon.path   = $$INSTALL_PREFIX/share/icons/hicolor/512x512/apps
-    INSTALLS += desktop ssicon
+    INSTALLS     += desktop ssicon
 }
-win32: DEFINES += QSS_STATIC
+win32: DEFINES   += QSS_STATIC
 
-target.path = $$INSTALL_PREFIX/bin
+target.path       = $$INSTALL_PREFIX/bin
 
-INSTALLS += target
+INSTALLS         += target
