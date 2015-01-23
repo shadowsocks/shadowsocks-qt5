@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::ShareDialogue *ui;
+
+private slots:
+    void onSaveButtonClicked();
 };
 
 #endif // QRCODEDIALOGUE_H
