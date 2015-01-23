@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>338</width>
-    <height>152</height>
+    <width>350</width>
+    <height>220</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>338</width>
-    <height>152</height>
+    <width>350</width>
+    <height>220</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>338</width>
-    <height>152</height>
+    <width>350</width>
+    <height>220</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -59,6 +59,19 @@
     </widget>
    </item>
    <item>
+    <widget class="QPushButton" name="scanButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="toolTip">
+      <string>Scan QR code on screen and decode it to get he SS URI.</string>
+     </property>
+     <property name="text">
+      <string>Scan QR Code on Screen</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLineEdit" name="ssuriEdit">
      <property name="enabled">
       <bool>false</bool>
@@ -71,7 +84,7 @@
      </property>
     </widget>
    </item>
-   <item alignment="Qt::AlignBottom">
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -83,6 +96,13 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>profileNameEdit</tabstop>
+  <tabstop>ssuriCheckBox</tabstop>
+  <tabstop>scanButton</tabstop>
+  <tabstop>ssuriEdit</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -146,6 +166,22 @@
     <hint type="destinationlabel">
      <x>168</x>
      <y>129</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ssuriCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>scanButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>174</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>174</x>
+     <y>120</y>
     </hint>
    </hints>
   </connection>

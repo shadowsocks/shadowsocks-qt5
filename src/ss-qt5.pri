@@ -48,9 +48,9 @@ win32: {
             LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw32
         }
     }
-    LIBS += -lqrencode -lQtShadowsocks -lbotan-$$BOTAN_VER
+    LIBS += -lqrencode -lQtShadowsocks -lbotan-$$BOTAN_VER -lzbar
 }
 unix : {
     CONFIG    += link_pkgconfig
-    PKGCONFIG += libqrencode QtShadowsocks botan-$$BOTAN_VER
+    PKGCONFIG += libqrencode QtShadowsocks botan-$$BOTAN_VER zbar
 }
