@@ -8,6 +8,8 @@ QT      += core gui widgets network concurrent
 win32: QT += winextras
 linux: QT += dbus
 
+CONFIG  += c++11
+
 TARGET   = ss-qt5
 TEMPLATE = app
 VERSION  = 0.8.1
