@@ -20,6 +20,16 @@
     </message>
     <message>
         <location filename="../addprofiledialogue.ui" line="67"/>
+        <source>Scan QR code on screen and decode it to get he SS URI.</source>
+        <translation>扫描屏幕上的二维码并解码获取统一资源标志符。</translation>
+    </message>
+    <message>
+        <location filename="../addprofiledialogue.ui" line="70"/>
+        <source>Scan QR Code on Screen</source>
+        <translation>扫描屏幕上的二维码</translation>
+    </message>
+    <message>
+        <location filename="../addprofiledialogue.ui" line="80"/>
         <source>ss://BASE64-ENCODED-STRING-WITHOUT-PADDING</source>
         <translation></translation>
     </message>
@@ -150,13 +160,13 @@ Not every port of Shadowsocks support this option.</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="303"/>
-        <location filename="../mainwindow.cpp" line="64"/>
+        <location filename="../mainwindow.cpp" line="65"/>
         <source>Start</source>
         <translation>启动</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="315"/>
-        <location filename="../mainwindow.cpp" line="65"/>
+        <location filename="../mainwindow.cpp" line="66"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -171,115 +181,133 @@ Not every port of Shadowsocks support this option.</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="405"/>
+        <location filename="../mainwindow.ui" line="409"/>
         <source>Log</source>
         <translation>日志</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="444"/>
+        <location filename="../mainwindow.ui" line="448"/>
         <source>Misc</source>
         <translation>杂项</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="450"/>
+        <location filename="../mainwindow.ui" line="454"/>
         <source>Use translucent background</source>
         <translation>使用透明背景</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="457"/>
+        <location filename="../mainwindow.ui" line="461"/>
         <source>Start backend automatically when started and the current profile is valid.</source>
         <translation>启动后如果当前配置有效则自动启动后端。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="460"/>
+        <location filename="../mainwindow.ui" line="464"/>
         <source>Autostart if profile is valid</source>
         <translation>配置有效则自动启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="392"/>
-        <location filename="../mainwindow.ui" line="483"/>
+        <location filename="../mainwindow.ui" line="559"/>
+        <source>Allow only one instance running</source>
+        <translation>仅允许一个实例运行</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="394"/>
+        <location filename="../mainwindow.ui" line="487"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="495"/>
+        <location filename="../mainwindow.ui" line="499"/>
         <location filename="../mainwindow.h" line="80"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="507"/>
+        <location filename="../mainwindow.ui" line="511"/>
         <source>Auto hide main window when started</source>
         <translation>启动后自动隐藏主窗口</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="527"/>
+        <location filename="../mainwindow.ui" line="531"/>
         <source>Debug-level log</source>
         <translation>除错级别的日志</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="534"/>
+        <location filename="../mainwindow.ui" line="538"/>
         <source>For portable purpose</source>
         <translation>适用于便携版</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="537"/>
+        <location filename="../mainwindow.ui" line="541"/>
         <source>Use relative path instead of absolute path</source>
         <translation>使用相对路径而不是绝对路径</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="544"/>
+        <location filename="../mainwindow.ui" line="548"/>
         <source>This will enable application minimise to system tray.
 If system tray icon doesn&apos;t show or malfunction, please uncheck this option.</source>
         <translation>该选项使得程序能最小化到系统托盘
 如果系统托盘不显示或者异常，请取消勾选本项。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="548"/>
+        <location filename="../mainwindow.ui" line="552"/>
         <source>Use system tray</source>
         <translation>使用系统托盘</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="63"/>
+        <location filename="../mainwindow.cpp" line="64"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="66"/>
+        <location filename="../mainwindow.cpp" line="67"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="308"/>
+        <location filename="../mainwindow.cpp" line="310"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="308"/>
+        <location filename="../mainwindow.cpp" line="310"/>
         <source>Invalid profile or configuration.</source>
         <translation>无效的配置或设置。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="345"/>
+        <location filename="../mainwindow.cpp" line="347"/>
         <source>Profile: %1 Started</source>
         <translation>配置：%1 已启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="361"/>
+        <location filename="../mainwindow.cpp" line="363"/>
         <source>Profile: %1 Stopped</source>
         <translation>配置：%1 已停止</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="390"/>
+        <location filename="../mainwindow.cpp" line="392"/>
         <source>Save Changes</source>
         <translation>保存变更</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="390"/>
+        <location filename="../mainwindow.cpp" line="392"/>
         <source>Configuration has been changed.
 Do you want to save it now?</source>
         <translation>设置已经被变更。
 你想要现在保存吗？</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../main.cpp" line="36"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="36"/>
+        <source>Another instance of Shadowsocks-Qt5 is already running.</source>
+        <translation>另一个Shadowsocks-Qt5的实例已经在运行了。</translation>
     </message>
 </context>
 <context>
@@ -319,6 +347,16 @@ Do you want to save it now?</source>
         <location filename="../sharedialogue.ui" line="26"/>
         <source>Share Profile</source>
         <translation>分享配置</translation>
+    </message>
+    <message>
+        <location filename="../sharedialogue.ui" line="58"/>
+        <source>Save QR code as an Image file</source>
+        <translation>保存二维码为图像文件</translation>
+    </message>
+    <message>
+        <location filename="../sharedialogue.cpp" line="25"/>
+        <source>Save QR Code</source>
+        <translation>保存二维码</translation>
     </message>
 </context>
 </TS>
