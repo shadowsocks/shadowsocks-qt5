@@ -25,6 +25,7 @@ AddProfileDialogue::~AddProfileDialogue()
 
 void AddProfileDialogue::onScanButtonClicked()
 {
+    ui->scanButton->setEnabled(false);
     QList<QScreen *> screens = qApp->screens();
     QString uri;
     //concurrent screen capturing and analyzing
@@ -55,6 +56,7 @@ void AddProfileDialogue::onScanButtonClicked()
     if (!uri.isEmpty()) {
         ui->ssuriEdit->setText(uri);
     }
+    ui->scanButton->setEnabled(true);
 }
 
 void AddProfileDialogue::checkBase64SSURI(const QString &str)
