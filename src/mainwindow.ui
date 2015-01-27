@@ -246,6 +246,9 @@ Not every port of Shadowsocks support this option.</string>
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>Path to command-line Shadowsocks backend (libQtShadowsocks doesn't apply).</string>
+            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -288,6 +291,9 @@ Not every port of Shadowsocks support this option.</string>
           </item>
           <item row="3" column="1" colspan="4">
            <widget class="QLineEdit" name="customArgEdit">
+            <property name="toolTip">
+             <string>Additional arguments for command-line Shadowsocks backend (libQtShadowsocks doesn't apply).</string>
+            </property>
             <property name="clearButtonEnabled">
              <bool>true</bool>
             </property>
