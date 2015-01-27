@@ -40,15 +40,18 @@ isEmpty(BOTAN_VER) {
 win32: {
     win32-msvc*: error("Doesn't Support MSVC! Please use MinGW GCC.")
     else: {
-        INCLUDEPATH +=  $$top_srcdir/3rdparty/qrencode/include
+        INCLUDEPATH +=  $$top_srcdir/3rdparty/qrencode/include \
+                        $$top_srcdir/3rdparty/zbar/include
         contains(DEFINES, mingw64): {
-            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw64
+            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw64 \
+                    -L$$top_srcdir/3rdparty/zbar/mingw64#TODO: add 64bit libzbar.a
         }
         else {
-            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw32
+            LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw32 \
+                    -L$$top_srcdir/3rdparty/zbar/mingw32
         }
     }
-    LIBS += -lqrencode -lQtShadowsocks -lbotan-$$BOTAN_VER -lzbar
+    LIBS += -lqrencode -lQtShadowsocks -lbotan-$$BOTAN_VER -lzbar -liconv
 }
 unix : {
     CONFIG    += link_pkgconfig
