@@ -144,44 +144,54 @@ Not every port of Shadowsocks support this option.</source>
         <translation>后端类型</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="260"/>
+        <location filename="../mainwindow.ui" line="250"/>
+        <source>Path to command-line Shadowsocks backend (libQtShadowsocks doesn&apos;t apply).</source>
+        <translation>命令行Shadowsocks后端的路径（libQtShadowsocks不适用）。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="263"/>
         <source>-</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="272"/>
+        <location filename="../mainwindow.ui" line="275"/>
         <source>Profile</source>
         <translation>配置</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="282"/>
+        <location filename="../mainwindow.ui" line="285"/>
         <source>Custom Arguments</source>
         <translation>自定义参数</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="303"/>
+        <location filename="../mainwindow.ui" line="295"/>
+        <source>Additional arguments for command-line Shadowsocks backend (libQtShadowsocks doesn&apos;t apply).</source>
+        <translation>命令行Shadowsocks后端的额外参数（libQtShadowsocks不适用）。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="309"/>
         <location filename="../mainwindow.cpp" line="65"/>
         <source>Start</source>
         <translation>启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="315"/>
+        <location filename="../mainwindow.ui" line="321"/>
         <location filename="../mainwindow.cpp" line="66"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="340"/>
+        <location filename="../mainwindow.ui" line="346"/>
         <source>Share</source>
         <translation>分享</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="366"/>
+        <location filename="../mainwindow.ui" line="372"/>
         <source>Reset</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="409"/>
+        <location filename="../mainwindow.ui" line="415"/>
         <source>Log</source>
         <translation>日志</translation>
     </message>
@@ -190,71 +200,71 @@ Not every port of Shadowsocks support this option.</source>
         <translation type="vanished">杂项</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="454"/>
+        <location filename="../mainwindow.ui" line="460"/>
         <source>Use translucent background</source>
         <translation>使用透明背景</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="461"/>
+        <location filename="../mainwindow.ui" line="467"/>
         <source>Start backend automatically when started and the current profile is valid.</source>
         <translation>启动后如果当前配置有效则自动启动后端。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="464"/>
+        <location filename="../mainwindow.ui" line="470"/>
         <source>Autostart if profile is valid</source>
         <translation>配置有效则自动启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="559"/>
+        <location filename="../mainwindow.ui" line="565"/>
         <source>Allow only one instance running</source>
         <translation>仅允许一个实例运行</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="394"/>
-        <location filename="../mainwindow.ui" line="487"/>
+        <location filename="../mainwindow.ui" line="400"/>
+        <location filename="../mainwindow.ui" line="493"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="448"/>
+        <location filename="../mainwindow.ui" line="454"/>
         <source>Miscellaneous</source>
         <translation>杂项</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="499"/>
+        <location filename="../mainwindow.ui" line="505"/>
         <location filename="../mainwindow.h" line="80"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="511"/>
+        <location filename="../mainwindow.ui" line="517"/>
         <source>Auto hide main window when started</source>
         <translation>启动后自动隐藏主窗口</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="531"/>
+        <location filename="../mainwindow.ui" line="537"/>
         <source>Debug-level log</source>
         <translation>除错级别的日志</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="538"/>
+        <location filename="../mainwindow.ui" line="544"/>
         <source>For portable purpose</source>
         <translation>适用于便携版</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="541"/>
+        <location filename="../mainwindow.ui" line="547"/>
         <source>Use relative path instead of absolute path</source>
         <translation>使用相对路径而不是绝对路径</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="548"/>
+        <location filename="../mainwindow.ui" line="554"/>
         <source>This will enable application minimise to system tray.
 If system tray icon doesn&apos;t show or malfunction, please uncheck this option.</source>
         <translation>该选项使得程序能最小化到系统托盘
 如果系统托盘不显示或者异常，请取消勾选本项。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="552"/>
+        <location filename="../mainwindow.ui" line="558"/>
         <source>Use system tray</source>
         <translation>使用系统托盘</translation>
     </message>
