@@ -445,7 +445,7 @@ background-color: rgb(0, 0, 0);</string>
       </widget>
       <widget class="QWidget" name="miscTab">
        <attribute name="title">
-        <string>Misc</string>
+        <string>Miscellaneous</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
         <item row="5" column="0" colspan="3">

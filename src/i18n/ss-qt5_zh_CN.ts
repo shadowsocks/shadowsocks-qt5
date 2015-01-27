@@ -186,9 +186,8 @@ Not every port of Shadowsocks support this option.</source>
         <translation>日志</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="448"/>
         <source>Misc</source>
-        <translation>杂项</translation>
+        <translation type="vanished">杂项</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="454"/>
@@ -215,6 +214,11 @@ Not every port of Shadowsocks support this option.</source>
         <location filename="../mainwindow.ui" line="487"/>
         <source>Save</source>
         <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="448"/>
+        <source>Miscellaneous</source>
+        <translation>杂项</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="499"/>
