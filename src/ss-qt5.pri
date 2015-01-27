@@ -41,10 +41,11 @@ win32: {
     win32-msvc*: error("Doesn't Support MSVC! Please use MinGW GCC.")
     else: {
         INCLUDEPATH +=  $$top_srcdir/3rdparty/qrencode/include \
-                        $$top_srcdir/3rdparty/zbar/include
+                        $$top_srcdir/3rdparty/zbar/include \
+                        D:/Projects/libQtShadowsocks/lib#just for convenience
         contains(DEFINES, mingw64): {
             LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw64 \
-                    -L$$top_srcdir/3rdparty/zbar/mingw64#TODO: add 64bit libzbar.a
+                    -L$$top_srcdir/3rdparty/zbar/mingw64
         }
         else {
             LIBS += -L$$top_srcdir/3rdparty/qrencode/mingw32 \
