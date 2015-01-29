@@ -1,4 +1,6 @@
+#include <QMenu>
 #include <QDebug>
+#include <QWindow>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "sharedialogue.h"
@@ -11,6 +13,24 @@
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusPendingCall>
+#ifdef UBUNTU_UNITY
+void onShow(GtkCheckMenuItem *menu, gpointer data)
+{
+    bool checked = gtk_check_menu_item_get_active(menu);
+    QWindow *w = static_cast<QApplication *>(data)->topLevelWindows().at(0);
+    if (checked) {
+        w->show();
+    }
+    else {
+        w->hide();
+    }
+}
+
+void onQuit(GtkMenu *, gpointer data)
+{
+    static_cast<QApplication *>(data)->quit();
+}
+#endif
 #endif
 
 MainWindow::MainWindow(bool verbose, QWidget *parent) :
@@ -59,22 +79,9 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     ui->useSystrayCheck->setChecked(m_conf->isUseSystray());
     ui->singleInstanceCheck->setChecked(m_conf->isSingleInstance());
 
-    //desktop systray
-    systrayMenu = new QMenu(this);
-    systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
-    systrayMenu->addAction(tr("Start"), this, SLOT(onStartButtonPressed()));
-    systrayMenu->addAction(tr("Stop"), this, SLOT(onStopButtonPressed()));
-    systrayMenu->addAction(tr("Exit"), this, SLOT(close()));
-    systrayMenu->actions().at(2)->setEnabled(false);
-#ifdef Q_OS_WIN
-    systray.setIcon(QIcon(":/icon/black_icon.png"));
-#else
-    systray.setIcon(QIcon(":/icon/mono_icon.png"));
-#endif
-    systray.setToolTip(QString("Shadowsocks-Qt5"));
-    systray.setContextMenu(systrayMenu);
+    systray = NULL;
     if (m_conf->isUseSystray()) {
-        systray.show();
+        createSystemTray();
     }
 
     //Windows Extras
@@ -94,7 +101,6 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     connect(ssProcess, &SS_Process::processRead, this, &MainWindow::onProcessReadyRead);
     connect(ssProcess, &SS_Process::processStarted, this, &MainWindow::onProcessStarted);
     connect(ssProcess, &SS_Process::processStopped, this, &MainWindow::onProcessStopped);
-    connect(&systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
 
     connect(ui->backendToolButton, &QToolButton::clicked, this, &MainWindow::onBackendToolButtonPressed);
 
@@ -283,7 +289,12 @@ void MainWindow::saveConfig()
 void MainWindow::minimizeToSysTray()
 {
     if (m_conf->isUseSystray()) {
+#ifdef UBUNTU_UNITY
+        qApp->topLevelWindows().at(0)->hide();
+        gtk_check_menu_item_set_active((GtkCheckMenuItem*)showItem, false);
+#else
         this->hide();
+#endif
     }
 }
 
@@ -314,6 +325,53 @@ void MainWindow::onStartButtonPressed()
     ssProcess->start(current_profile, m_conf->isDebug());
 }
 
+void MainWindow::createSystemTray()
+{
+#ifdef UBUNTU_UNITY
+        AppIndicator *indicator = app_indicator_new("Shadowsocks-Qt5", "shadowsocks-qt5", APP_INDICATOR_CATEGORY_OTHER);
+        GtkWidget *menu = gtk_menu_new();
+
+        showItem = gtk_check_menu_item_new_with_label(tr("Show").toLocal8Bit().constData());
+        gtk_check_menu_item_set_active((GtkCheckMenuItem*)showItem, true);
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), showItem);
+        g_signal_connect(showItem, "toggled", G_CALLBACK(onShow), qApp);
+        gtk_widget_show(showItem);
+
+        //TODO: Add start/stop menu item
+
+        GtkWidget *exitItem = gtk_menu_item_new_with_label(tr("Exit").toLocal8Bit().constData());
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), exitItem);
+        g_signal_connect(exitItem, "activate", G_CALLBACK(onQuit), qApp);
+        gtk_widget_show(exitItem);
+
+        app_indicator_set_status(indicator, APP_INDICATOR_STATUS_ACTIVE);
+        app_indicator_set_menu(indicator, GTK_MENU(menu));
+#else
+        //desktop systray
+        QMenu *systrayMenu = new QMenu(this);
+        systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
+        systrayMenu->addAction(QIcon::fromTheme("run-build", QIcon::fromTheme("start")), tr("Start"), this, SLOT(onStartButtonPressed()));
+        systrayMenu->addAction(QIcon::fromTheme("process-stop", QIcon::fromTheme("stop")), tr("Stop"), this, SLOT(onStopButtonPressed()));
+        systrayMenu->addAction(QIcon::fromTheme("exit"), tr("Exit"), this, SLOT(close()));
+        systrayMenu->actions().at(2)->setVisible(false);
+
+        connect(ssProcess, &SS_Process::processStarted, [&]{
+            systrayMenu->actions().at(1)->setVisible(false);
+            systrayMenu->actions().at(2)->setVisible(true);
+        });
+        connect(ssProcess, &SS_Process::processStopped, [&]{
+            systrayMenu->actions().at(1)->setVisible(true);
+            systrayMenu->actions().at(2)->setVisible(false);
+        });
+
+        systray = new QSystemTrayIcon(QIcon(":/icon/shadowsocks-qt5.png"), this);
+        systray->setToolTip(QString("Shadowsocks-Qt5"));
+        systray->setContextMenu(systrayMenu);
+        connect(systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
+        systray->show();
+#endif
+}
+
 void MainWindow::showNotification(const QString &msg)
 {
 #ifdef Q_OS_LINUX
@@ -337,28 +395,17 @@ void MainWindow::deleteProfile()
 
 void MainWindow::onProcessStarted()
 {
-    systrayMenu->actions().at(1)->setEnabled(false);
-    systrayMenu->actions().at(2)->setEnabled(true);
     ui->stopButton->setEnabled(true);
     ui->startButton->setEnabled(false);
     ui->logBrowser->clear();
 
-    systray.setIcon(QIcon(":/icon/running_icon.png"));
     showNotification(tr("Profile: %1 Started").arg(current_profile->profileName));
 }
 
 void MainWindow::onProcessStopped()
 {
-    systrayMenu->actions().at(1)->setEnabled(true);
-    systrayMenu->actions().at(2)->setEnabled(false);
     ui->stopButton->setEnabled(false);
     ui->startButton->setEnabled(true);
-
-#ifdef Q_OS_WIN
-    systray.setIcon(QIcon(":/icon/black_icon.png"));
-#else
-    systray.setIcon(QIcon(":/icon/mono_icon.png"));
-#endif
 
     showNotification(tr("Profile: %1 Stopped").arg(current_profile->profileName));
 }
@@ -543,12 +590,6 @@ void MainWindow::onRelativePathToggled(bool r)
 void MainWindow::onUseSystrayToggled(bool u)
 {
     m_conf->setUseSystray(u);
-    if (u) {
-        systray.show();
-    }
-    else {
-        systray.hide();
-    }
     emit configurationChanged();
 }
 

@@ -12,7 +12,6 @@
 #include <QAbstractButton>
 #include <QPushButton>
 #include <QSystemTrayIcon>
-#include <QMenu>
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QInputDialog>
@@ -25,6 +24,16 @@
 #include "ip4validator.h"
 #include "portvalidator.h"
 #include "addprofiledialogue.h"
+
+#ifdef UBUNTU_UNITY
+#undef signals
+extern "C"
+{
+#include <libappindicator/app-indicator.h>
+#include <gtk/gtk.h>
+}
+#define signals public
+#endif
 
 namespace Ui {
 class MainWindow;
@@ -92,13 +101,16 @@ private:
     bool verboseOutput;
     IP4Validator ipv4addrValidator;
     PortValidator portValidator;
-    QMenu *systrayMenu;
     QString jsonconfigFile;
-    QSystemTrayIcon systray;
+    QSystemTrayIcon *systray;
     SS_Process *ssProcess;
     SSProfile *current_profile;
     static const QString aboutText;
     Ui::MainWindow *ui;
+#ifdef UBUNTU_UNITY
+    GtkWidget *showItem;
+#endif
+    void createSystemTray();
     void showNotification(const QString &);
     void blockChildrenSignals(bool);
 

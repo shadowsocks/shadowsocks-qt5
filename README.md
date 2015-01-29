@@ -65,6 +65,7 @@ We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means 
 - `qrencode` (or `libqrencode` in Debian/Ubuntu)
 - `libQtShadowsocks` >= 1.2 (`libqtshadowsocks` in Debian/Ubuntu)
 - `botan` >= 1.10 (`libbotan1.10` in Debian/Ubuntu)
+- `libappindicator1` (optional, only if you want to build with `appindicator` support)
 
 #### Fedora/Red Hat Enterprise Linux ####
 
@@ -100,6 +101,8 @@ sudo add-apt-repository ppa:hzwhuang/ss-qt5
 sudo apt-get update
 sudo apt-get install shadowsocks-qt5
 ```
+
+If you want to build it manually, add `DEFINES+="UBUNTU_UNITY"` to `qmake` to enable `appindicator` support.
 
 #### Debian ####
 

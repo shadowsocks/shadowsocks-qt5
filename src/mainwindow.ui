@@ -309,9 +309,7 @@ Not every port of Shadowsocks support this option.</string>
              <string>Start</string>
             </property>
             <property name="icon">
-             <iconset theme="run-build">
-              <normaloff/>
-             </iconset>
+             <iconset theme="media-playback-start"/>
             </property>
            </widget>
           </item>
@@ -321,9 +319,7 @@ Not every port of Shadowsocks support this option.</string>
              <string>Stop</string>
             </property>
             <property name="icon">
-             <iconset theme="process-stop">
-              <normaloff/>
-             </iconset>
+             <iconset theme="media-playback-stop"/>
             </property>
            </widget>
           </item>
@@ -346,9 +342,7 @@ Not every port of Shadowsocks support this option.</string>
              <string>Share</string>
             </property>
             <property name="icon">
-             <iconset theme="view-preview">
-              <normaloff/>
-             </iconset>
+             <iconset theme="edit-copy"/>
             </property>
            </widget>
           </item>
@@ -552,7 +546,8 @@ background-color: rgb(0, 0, 0);</string>
          <widget class="QCheckBox" name="useSystrayCheck">
           <property name="toolTip">
            <string>This will enable application minimise to system tray.
-If system tray icon doesn't show or malfunction, please uncheck this option.</string>
+If system tray icon doesn't show or malfunction, please uncheck this option.
+Need application restart to take effect.</string>
           </property>
           <property name="text">
            <string>Use system tray</string>
