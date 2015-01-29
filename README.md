@@ -64,6 +64,7 @@ We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means 
 - `qrencode` (or `libqrencode` in Debian/Ubuntu)
 - `libQtShadowsocks` >= 1.2 (`libqtshadowsocks` in Debian/Ubuntu)
 - `botan` >= 1.10 (`libbotan1.10` in Debian/Ubuntu)
+- `zbar` (`libzbar0` in Debian/Ubuntu)
 - `libappindicator1` (optional, only if you want to build with `appindicator` support)
 
 Your C++ compiler must has a good support for C++11.
