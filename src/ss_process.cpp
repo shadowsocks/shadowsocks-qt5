@@ -10,13 +10,20 @@ SS_Process::SS_Process(QObject *parent) :
     qssController = new QSS::Controller(true, this);
     proc.setProcessChannelMode(QProcess::MergedChannels);
 
+    connect(qssController, &QSS::Controller::runningStateChanged, [&] (bool running) {
+        if (running) {
+            emit processStarted();
+        }
+        else {
+            emit processStopped();
+            disconnect(qssController, &QSS::Controller::debug, this, &SS_Process::onQSSInfoReady);
+            disconnect(qssController, &QSS::Controller::info, this, &SS_Process::onQSSInfoReady);
+        }
+    });
     connect(&proc, &QProcess::readyRead, this, &SS_Process::onProcessReadyRead);
     connect(&proc, &QProcess::started, this, &SS_Process::onStarted);
     connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), this, &SS_Process::onExited);
 }
-
-SS_Process::~SS_Process()
-{}
 
 void SS_Process::start(SSProfile * const p, bool debug)
 {
@@ -70,15 +77,9 @@ void SS_Process::start(QString &args)
 
 void SS_Process::startQSS(SSProfile * const p, bool debug)
 {
-    qssController->setup(p->getQSSProfile());
     connect(qssController, debug ? &QSS::Controller::debug : &QSS::Controller::info, this, &SS_Process::onQSSInfoReady, Qt::DirectConnection);
-    if (qssController->start()) {
-        emit processStarted();
-    }
-    else {
-        disconnect(qssController, &QSS::Controller::debug, this, &SS_Process::onQSSInfoReady);
-        disconnect(qssController, &QSS::Controller::info, this, &SS_Process::onQSSInfoReady);
-    }
+    qssController->setup(p->getQSSProfile());
+    qssController->start();
 }
 
 void SS_Process::start(const QString &server, const QString &pwd, const QString &s_port, const QString &l_addr, const QString &l_port, const QString &method, const QString &timeout, const QString &custom_arg, bool debug, bool tfo)
@@ -119,9 +120,6 @@ void SS_Process::stop()
 {
     if (libQSS) {
         qssController->stop();
-        disconnect(qssController, &QSS::Controller::debug, this, &SS_Process::onQSSInfoReady);
-        disconnect(qssController, &QSS::Controller::info, this, &SS_Process::onQSSInfoReady);
-        emit processStopped();
     }
     else if (proc.isOpen()) {
         proc.close();
@@ -140,7 +138,7 @@ void SS_Process::onQSSInfoReady(const QString &s)
 
 void SS_Process::onStarted()
 {
-    qDebug() << tr("Backend started. PID: ") <<proc.pid();
+    qDebug() << tr("Backend started. PID: ") << proc.pid();
     emit processStarted();
 }
 

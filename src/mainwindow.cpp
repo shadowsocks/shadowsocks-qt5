@@ -13,24 +13,6 @@
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusPendingCall>
-#ifdef UBUNTU_UNITY
-void onShow(GtkCheckMenuItem *menu, gpointer data)
-{
-    bool checked = gtk_check_menu_item_get_active(menu);
-    QWindow *w = static_cast<QApplication *>(data)->topLevelWindows().at(0);
-    if (checked) {
-        w->show();
-    }
-    else {
-        w->hide();
-    }
-}
-
-void onQuit(GtkMenu *, gpointer data)
-{
-    static_cast<QApplication *>(data)->closeAllWindows();
-}
-#endif
 #endif
 
 MainWindow::MainWindow(bool verbose, QWidget *parent) :
@@ -160,7 +142,9 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    ssProcess->stop();//prevent crashes
+    if (ui->stopButton->isEnabled()) {//stop if it's still running
+        ssProcess->stop();//prevent crashes
+    }
     delete ui;
     delete m_conf;
 }
@@ -324,6 +308,25 @@ void MainWindow::onStartButtonPressed()
 
     ssProcess->start(current_profile, m_conf->isDebug());
 }
+
+#ifdef UBUNTU_UNITY
+void onShow(GtkCheckMenuItem *menu, gpointer data)
+{
+    bool checked = gtk_check_menu_item_get_active(menu);
+    QWindow *w = static_cast<QApplication *>(data)->topLevelWindows().at(0);
+    if (checked) {
+        w->show();
+    }
+    else {
+        w->hide();
+    }
+}
+
+void onQuit(GtkMenu *, gpointer data)
+{
+    static_cast<QApplication *>(data)->closeAllWindows();
+}
+#endif
 
 void MainWindow::createSystemTray()
 {
