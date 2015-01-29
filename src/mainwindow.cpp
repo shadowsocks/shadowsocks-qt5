@@ -339,7 +339,7 @@ void MainWindow::createSystemTray()
 
         //TODO: Add start/stop menu item
 
-        GtkWidget *exitItem = gtk_menu_item_new_with_label(tr("Exit").toLocal8Bit().constData());
+        GtkWidget *exitItem = gtk_image_menu_item_new_from_stock(GTK_STOCK_QUIT, NULL);
         gtk_menu_shell_append(GTK_MENU_SHELL(menu), exitItem);
         g_signal_connect(exitItem, "activate", G_CALLBACK(onQuit), qApp);
         gtk_widget_show(exitItem);
@@ -352,7 +352,9 @@ void MainWindow::createSystemTray()
         systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
         systrayMenu->addAction(QIcon::fromTheme("run-build", QIcon::fromTheme("start")), tr("Start"), this, SLOT(onStartButtonPressed()));
         systrayMenu->addAction(QIcon::fromTheme("process-stop", QIcon::fromTheme("stop")), tr("Stop"), this, SLOT(onStopButtonPressed()));
-        systrayMenu->addAction(QIcon::fromTheme("exit"), tr("Exit"), this, SLOT(close()));
+        systrayMenu->addAction(QIcon::fromTheme("exit"), tr("Quit"), [&]{
+            qApp->quit();
+        });
         systrayMenu->actions().at(2)->setVisible(false);
 
         connect(ssProcess, &SS_Process::processStarted, [&]{
