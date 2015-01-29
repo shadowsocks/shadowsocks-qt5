@@ -28,7 +28,7 @@ void onShow(GtkCheckMenuItem *menu, gpointer data)
 
 void onQuit(GtkMenu *, gpointer data)
 {
-    static_cast<QApplication *>(data)->quit();
+    static_cast<QApplication *>(data)->closeAllWindows();
 }
 #endif
 #endif
@@ -352,9 +352,7 @@ void MainWindow::createSystemTray()
         systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
         systrayMenu->addAction(QIcon::fromTheme("run-build", QIcon::fromTheme("start")), tr("Start"), this, SLOT(onStartButtonPressed()));
         systrayMenu->addAction(QIcon::fromTheme("process-stop", QIcon::fromTheme("stop")), tr("Stop"), this, SLOT(onStopButtonPressed()));
-        systrayMenu->addAction(QIcon::fromTheme("exit"), tr("Quit"), [&]{
-            qApp->quit();
-        });
+        systrayMenu->addAction(QIcon::fromTheme("exit"), tr("Quit"), this, &MainWindow::close);
         systrayMenu->actions().at(2)->setVisible(false);
 
         connect(ssProcess, &SS_Process::processStarted, [&]{
