@@ -1,3 +1,13 @@
+shadowsocks-qt5 (0.9.0-1) stable; urgency=medium
+
+  * add an option to control single-instance mode
+  * support scanning QR code on screen
+  * add an button to save QR code as an image file
+  * support appindicator
+  * other improvements and bug fixes
+
+ -- Symeon Huang <symeon@odroid-u3>  Thu, 29 Jan 2015 15:51:10 +0000
+
 shadowsocks-qt5 (0.8.1-1) stable; urgency=medium
 
   * fix translation loading
