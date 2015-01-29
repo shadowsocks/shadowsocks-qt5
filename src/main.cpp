@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
     a.installTranslator(&ssqt5t);
 
     MainWindow w(a.arguments().contains("-v"));
-    w.show();
 
     QSharedMemory sharedMem;
     sharedMem.setKey("shadowsocks-qt5");
@@ -37,6 +36,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+    w.show();
     if (w.m_conf->isAutoStart()) {
         w.onStartButtonPressed();
     }
