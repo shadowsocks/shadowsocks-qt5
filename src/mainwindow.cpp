@@ -351,11 +351,11 @@ void MainWindow::createSystemTray()
         app_indicator_set_menu(indicator, GTK_MENU(menu));
 #else
         //desktop systray
-        QMenu *systrayMenu = new QMenu(this);
+        systrayMenu = new QMenu(this);
         systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
         systrayMenu->addAction(QIcon::fromTheme("run-build", QIcon::fromTheme("start")), tr("Start"), this, SLOT(onStartButtonPressed()));
         systrayMenu->addAction(QIcon::fromTheme("process-stop", QIcon::fromTheme("stop")), tr("Stop"), this, SLOT(onStopButtonPressed()));
-        systrayMenu->addAction(QIcon::fromTheme("exit"), tr("Quit"), this, &MainWindow::close);
+        systrayMenu->addAction(QIcon::fromTheme("exit"), tr("Quit"), this, SLOT(close()));
         systrayMenu->actions().at(2)->setVisible(false);
 
         connect(ssProcess, &SS_Process::processStarted, [&]{

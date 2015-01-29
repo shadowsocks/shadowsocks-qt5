@@ -102,6 +102,7 @@ private:
     IP4Validator ipv4addrValidator;
     PortValidator portValidator;
     QString jsonconfigFile;
+    QMenu *systrayMenu;
     QSystemTrayIcon *systray;
     SS_Process *ssProcess;
     SSProfile *current_profile;
