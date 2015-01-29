@@ -42,7 +42,7 @@ void Configuration::setJSONFile(const QString &file)
         m_index = -1;
         relativePath = false;
         translucent = true;
-        useSystray = false;
+        useSystray = true;
         singleInstance = false;
         return;
     }

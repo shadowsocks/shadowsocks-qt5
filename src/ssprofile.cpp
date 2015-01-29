@@ -13,7 +13,7 @@ SSProfile::SSProfile() :
     fast_open(false),
     local_addr("127.0.0.1"),
     local_port("1080"),
-    method("RC4-MD5"),
+    method("CHACHA20"),
     password(),
     profileName(),
     server(),
