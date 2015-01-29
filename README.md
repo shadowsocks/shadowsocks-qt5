@@ -21,10 +21,9 @@ Features
 Note
 ----
 
-- By default, `ss-qt5` works with `libQtShadowsocks`. While you can still use a shadowsocks backend such as [Shadowsocks-libev] [ss-libev] and [Shadowsocks-Python] [ss-python].
-- [Shadowsocks-Python] [ss-python] is highly recommended to serve as backend for better performance and stability.
+- By default, `ss-qt5` works with `libQtShadowsocks` which is considered as a reliable and lightweight alternative. While you can still use other shadowsocks backends such as [Shadowsocks-libev] [ss-libev] and [Shadowsocks-Python] [ss-python].
+- If `ss-qt5` crashes and the single-instance mode is on, you may need to manually delete `/tmp/qipc_sharedmemory_shadowsocksqt*` and `/tmp/qipc_systemsem_shadowsocksqt*`. Otherwise, `ss-qt5` will complain that another instance is already running.
 - Don't be panic if you encounter a bug. Please feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Just remember to run from terminal or `cmd` and paste the output to the description of issue.
-
 
 Installation
 ------------
@@ -67,6 +66,8 @@ We build `ss-qt5` in a dynamically linking style on UNIX platfroms, which means 
 - `botan` >= 1.10 (`libbotan1.10` in Debian/Ubuntu)
 - `libappindicator1` (optional, only if you want to build with `appindicator` support)
 
+Your C++ compiler must has a good support for C++11.
+
 #### Fedora/Red Hat Enterprise Linux ####
 
 The Copr builds RPMs for Fedora 20, 21, rawhide and RHEL 7. If you're using other RHEL-based distributions such as CentOS and Scientific Linux, you can just use the EPEL repo in Copr.
@@ -102,11 +103,16 @@ sudo apt-get update
 sudo apt-get install shadowsocks-qt5
 ```
 
-If you want to build it manually, add `DEFINES+="UBUNTU_UNITY"` to `qmake` to enable `appindicator` support.
+If you want to build it manually, add `DEFINES+="UBUNTU_UNITY"` to `qmake` to enable `appindicator` support even if you're not using _Unity_. It seems Qt libraries in Ubuntu are heavily patched for Unity. Therefore, using `appindicator` is recommended for this distribution.
 
 #### Debian ####
 
-By running the command below, you'll get a deb package on upper directory.
+Since `v0.9`, the `debian` directory needs two modifications to get rid of Ubuntu stuff.
+
+1. Edit `debian/rules`, remove `DEFINES+="UBUNTU_UNITY"` from `qmake`.
+2. Edit `debian/control`, delete `libappindicator-dev,` (line 12).
+
+Now run the command below, you'll get a deb package in upper directory.
 
 ```bash
 dpkg-buildpackage -uc -us -b
