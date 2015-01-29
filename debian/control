@@ -8,7 +8,7 @@ Build-Depends: debhelper (>= 9),
                qtbase5-dev,
                qtbase5-private-dev,
                libqrencode-dev,
-               libqtshadowsocks-dev,
+               libqtshadowsocks-dev (>= 1.4.0),
                libappindicator-dev,
                libbotan1.10-dev
 Standards-Version: 3.9.6
@@ -19,7 +19,7 @@ Vcs-Browser: https://github.com/librehat/shadowsocks-qt5
 Package: shadowsocks-qt5
 Architecture: any
 Depends: ${shlibs:Depends},
-         libqtshadowsocks (>= 1.2)
+         libqtshadowsocks (>= 1.4)
 Description: A Qt5 GUI Client for Shadowsocks
  Shadowsocks-Qt5 is designed to be a fast and reliable shadowsocks client
  while offer an intuitive yet highly customisable user interface.
