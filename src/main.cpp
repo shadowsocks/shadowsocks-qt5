@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     a.setApplicationName(QString("shadowsocks-qt5"));
-    a.setApplicationDisplayName(QString("Shadowsocks Qt5"));
+    a.setApplicationDisplayName(QString("Shadowsocks-Qt5"));
     a.setApplicationVersion(APP_VERSION);
 
 #ifdef Q_OS_WIN
