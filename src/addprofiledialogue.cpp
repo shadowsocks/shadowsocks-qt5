@@ -15,6 +15,16 @@ AddProfileDialogue::AddProfileDialogue(bool _enforce, QWidget *parent) :
     ui->progressBar->setVisible(false);//progress bar is used as a QR code scanning busy indicator
 
     fw = new QFutureWatcher<void>(this);
+    connect(fw, &QFutureWatcher<void>::started, [&]{
+        ui->progressBar->setVisible(true);
+        ui->scanButton->setEnabled(false);
+        ui->ssuriCheckBox->setEnabled(false);
+    });
+    connect(fw, &QFutureWatcher<void>::finished, [&]{
+        ui->progressBar->setVisible(false);
+        ui->scanButton->setEnabled(true);
+        ui->ssuriCheckBox->setEnabled(true);
+    });
 
     connect(ui->scanButton, &QPushButton::clicked, this, &AddProfileDialogue::onScanButtonClicked);
     connect(ui->ssuriEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::checkBase64SSURI);
@@ -57,17 +67,6 @@ void AddProfileDialogue::onScanButtonClicked()
                 }
             }
         }
-    });
-
-    connect(fw, &QFutureWatcher<void>::started, [&]{
-        ui->progressBar->setVisible(true);
-        ui->scanButton->setEnabled(false);
-        ui->ssuriCheckBox->setEnabled(false);
-    });
-    connect(fw, &QFutureWatcher<void>::finished, [&]{
-        ui->progressBar->setVisible(false);
-        ui->scanButton->setEnabled(true);
-        ui->ssuriCheckBox->setEnabled(true);
     });
     fw->setFuture(future);
 }
