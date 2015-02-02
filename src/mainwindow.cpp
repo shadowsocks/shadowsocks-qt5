@@ -226,15 +226,6 @@ void MainWindow::addProfileDialogue(bool enforce = false)
     addProfileDlg = new AddProfileDialogue(enforce, this);
     connect(addProfileDlg, &AddProfileDialogue::inputAccepted, this, &MainWindow::onAddProfileDialogueAccepted);
     connect(addProfileDlg, &AddProfileDialogue::inputRejected, this, &MainWindow::onAddProfileDialogueRejected);
-#ifdef Q_OS_WIN
-    QtWin::enableBlurBehindWindow(addProfileDlg);
-    QtWin::extendFrameIntoClientArea(addProfileDlg, -1, -1, -1, -1);
-#endif
-#ifndef Q_OS_LINUX
-    if (m_conf->isTranslucent()) {
-        addProfileDlg->setAttribute(Qt::WA_TranslucentBackground);
-    }
-#endif
     addProfileDlg->exec();
 }
 
