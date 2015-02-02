@@ -1,3 +1,10 @@
+shadowsocks-qt5 (0.9.1-1) stable; urgency=medium
+
+  * refine add profile dialog
+  * minor bug fixes
+
+ -- Symeon Huang <symeon@odroid-u3>  Mon, 02 Feb 2015 12:29:00 +0000
+
 shadowsocks-qt5 (0.9.0-2) stable; urgency=medium
 
   * add zbar to dependency
