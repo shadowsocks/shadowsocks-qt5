@@ -7,25 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>350</width>
-    <height>220</height>
+    <height>250</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
     <width>350</width>
-    <height>220</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>350</width>
-    <height>220</height>
+    <height>250</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -68,6 +56,16 @@
      </property>
      <property name="text">
       <string>Scan QR Code on Screen</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QProgressBar" name="progressBar">
+     <property name="maximum">
+      <number>0</number>
+     </property>
+     <property name="format">
+      <string/>
      </property>
     </widget>
    </item>

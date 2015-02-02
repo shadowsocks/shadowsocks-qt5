@@ -2,6 +2,7 @@
 #define ADDPROFILEDIALOGUE_H
 
 #include <QDialog>
+#include <QFutureWatcher>
 
 namespace Ui {
 class AddProfileDialogue;
@@ -22,6 +23,7 @@ signals:
 private:
     Ui::AddProfileDialogue *ui;
     const bool enforce;
+    QFutureWatcher<void> *fw;
 
 private slots:
     void onScanButtonClicked();

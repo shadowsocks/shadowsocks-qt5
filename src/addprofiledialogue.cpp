@@ -12,6 +12,10 @@ AddProfileDialogue::AddProfileDialogue(bool _enforce, QWidget *parent) :
     enforce(_enforce)
 {
     ui->setupUi(this);
+    ui->progressBar->setVisible(false);//progress bar is used as a QR code scanning busy indicator
+
+    fw = new QFutureWatcher<void>(this);
+
     connect(ui->scanButton, &QPushButton::clicked, this, &AddProfileDialogue::onScanButtonClicked);
     connect(ui->ssuriEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::checkBase64SSURI);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AddProfileDialogue::onAccepted);
@@ -25,38 +29,47 @@ AddProfileDialogue::~AddProfileDialogue()
 
 void AddProfileDialogue::onScanButtonClicked()
 {
-    ui->scanButton->setEnabled(false);
-    QList<QScreen *> screens = qApp->screens();
-    QString uri;
-    //concurrent screen capturing and analyzing
-    QtConcurrent::blockingMap(screens, [&] (QScreen *sc) {
-        QImage screenshot = sc->grabWindow(qApp->desktop()->winId()).toImage().convertToFormat(QImage::Format_Indexed8);
+    /*
+     * Somehow using QtConcurrent::map will lead to crash.
+     * Therefore, just run parsing part in another thread instead of concurrently
+     */
+    QFuture<void> future = QtConcurrent::run([&]{
+        QList<QScreen *> screens = qApp->screens();
+        for (QList<QScreen *>::iterator sc = screens.begin(); sc != screens.end(); ++sc) {
+            QImage screenshot = (*sc)->grabWindow(qApp->desktop()->winId()).toImage().convertToFormat(QImage::Format_Indexed8);
 
-        //use zbar to decode the QR code, if found.
-        zbar::ImageScanner scanner;
-        zbar::Image image(screenshot.width(), screenshot.height(), "Y800", screenshot.bits(), screenshot.byteCount());
-        scanner.scan(image);
-        zbar::SymbolSet res_set = scanner.get_results();
-        for (zbar::SymbolIterator it = res_set.symbol_begin(); it != res_set.symbol_end(); ++it) {
-            if (it->get_type() == zbar::ZBAR_QRCODE) {
-                /*
-                 * uri will be overwritten if the result is valid
-                 * this means always the last uri gets used
-                 * therefore, please only leave one QR code on all screens for accuracy
-                 */
-                QString result = QString::fromStdString(it->get_data());
-                if (result.left(5).compare("ss://", Qt::CaseInsensitive) == 0) {
-                    uri = result;
+            //use zbar to decode the QR code, if found.
+            zbar::ImageScanner scanner;
+            zbar::Image image(screenshot.width(), screenshot.height(), "Y800", screenshot.bits(), screenshot.byteCount());
+            scanner.scan(image);
+            zbar::SymbolSet res_set = scanner.get_results();
+            for (zbar::SymbolIterator it = res_set.symbol_begin(); it != res_set.symbol_end(); ++it) {
+                if (it->get_type() == zbar::ZBAR_QRCODE) {
+                    /*
+                     * uri will be overwritten if the result is valid
+                     * this means always the last uri gets used
+                     * therefore, please only leave one QR code on all screens for accuracy
+                     */
+                    QString result = QString::fromStdString(it->get_data());
+                    if (result.left(5).compare("ss://", Qt::CaseInsensitive) == 0) {
+                        ui->ssuriEdit->setText(result);
+                    }
                 }
             }
         }
     });
 
-    //update the SS URI if QR code is decoded successfully
-    if (!uri.isEmpty()) {
-        ui->ssuriEdit->setText(uri);
-    }
-    ui->scanButton->setEnabled(true);
+    connect(fw, &QFutureWatcher<void>::started, [&]{
+        ui->progressBar->setVisible(true);
+        ui->scanButton->setEnabled(false);
+        ui->ssuriCheckBox->setEnabled(false);
+    });
+    connect(fw, &QFutureWatcher<void>::finished, [&]{
+        ui->progressBar->setVisible(false);
+        ui->scanButton->setEnabled(true);
+        ui->ssuriCheckBox->setEnabled(true);
+    });
+    fw->setFuture(future);
 }
 
 void AddProfileDialogue::checkBase64SSURI(const QString &str)
