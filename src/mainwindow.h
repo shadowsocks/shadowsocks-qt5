@@ -66,7 +66,7 @@ private slots:
     void onLPortEditFinished(const QString &);
     void onMethodChanged(const QString &);
     void onAddProfileDialogueAccepted(const QString &, bool, const QString &);
-    void onAddProfileDialogueRejected(bool enforce = false);
+    void onAddProfileDialogueRejected(const bool);
     void onBackendToolButtonPressed();
     void onConfigurationChanged(bool);
     void onCurrentProfileChanged(int);

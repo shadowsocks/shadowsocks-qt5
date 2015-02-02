@@ -6,12 +6,12 @@
 #include "ssvalidator.h"
 #include "ui_addprofiledialogue.h"
 
-AddProfileDialogue::AddProfileDialogue(QWidget *parent, bool e) :
+AddProfileDialogue::AddProfileDialogue(bool _enforce, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::AddProfileDialogue)
+    ui(new Ui::AddProfileDialogue),
+    enforce(_enforce)
 {
     ui->setupUi(this);
-    enforce = e;
     connect(ui->scanButton, &QPushButton::clicked, this, &AddProfileDialogue::onScanButtonClicked);
     connect(ui->ssuriEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::checkBase64SSURI);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AddProfileDialogue::onAccepted);

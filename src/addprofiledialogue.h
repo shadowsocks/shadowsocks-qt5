@@ -12,16 +12,16 @@ class AddProfileDialogue : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddProfileDialogue(QWidget *parent = 0, bool e = false);
+    explicit AddProfileDialogue(bool _enforce, QWidget *parent = 0);
     ~AddProfileDialogue();
 
 signals:
-    void inputAccepted(const QString &, bool = false, const QString & = 0);
-    void inputRejected(bool);
+    void inputAccepted(const QString &name, bool usingSSURI, const QString &ssuri);
+    void inputRejected(const bool enforce);
 
 private:
     Ui::AddProfileDialogue *ui;
-    bool enforce;
+    const bool enforce;
 
 private slots:
     void onScanButtonClicked();

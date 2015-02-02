@@ -223,7 +223,7 @@ void MainWindow::onShareButtonClicked()
 
 void MainWindow::addProfileDialogue(bool enforce = false)
 {
-    addProfileDlg = new AddProfileDialogue(this, enforce);
+    addProfileDlg = new AddProfileDialogue(enforce, this);
     connect(addProfileDlg, &AddProfileDialogue::inputAccepted, this, &MainWindow::onAddProfileDialogueAccepted);
     connect(addProfileDlg, &AddProfileDialogue::inputRejected, this, &MainWindow::onAddProfileDialogueRejected);
 #ifdef Q_OS_WIN
@@ -253,7 +253,7 @@ void MainWindow::onAddProfileDialogueAccepted(const QString &name, bool u, const
     ui->profileComboBox->setCurrentIndex(ui->profileComboBox->count() - 1);
 }
 
-void MainWindow::onAddProfileDialogueRejected(bool enforce)
+void MainWindow::onAddProfileDialogueRejected(const bool enforce)
 {
     if (enforce) {
         m_conf->addProfile("Unnamed");
