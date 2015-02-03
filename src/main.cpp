@@ -5,10 +5,19 @@
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QSharedMemory>
+#include <signal.h>
+
+static void onSIGINT_TERM(int sig)
+{
+    if (sig == SIGINT || sig == SIGTERM) qApp->quit();
+}
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    signal(SIGINT, onSIGINT_TERM);
+    signal(SIGTERM, onSIGINT_TERM);
 
     a.setApplicationName(QString("shadowsocks-qt5"));
     a.setApplicationDisplayName(QString("Shadowsocks-Qt5"));
