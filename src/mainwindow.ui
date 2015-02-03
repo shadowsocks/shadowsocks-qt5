@@ -75,10 +75,21 @@
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="laddrEdit"/>
+           <widget class="QLineEdit" name="laddrEdit">
+            <property name="toolTip">
+             <string>Local socks proxy address
+Use 0.0.0.0 if you want to share this proxy to all connected devices
+Or use intranet IP address to share proxy to devices in local network
+Otherwise, simply use 127.0.0.1</string>
+            </property>
+           </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLineEdit" name="lportEdit"/>
+           <widget class="QLineEdit" name="lportEdit">
+            <property name="toolTip">
+             <string>Local socks proxy port</string>
+            </property>
+           </widget>
           </item>
           <item row="0" column="0">
            <widget class="QLabel" name="serverLabel">
@@ -126,7 +137,7 @@
           <item row="0" column="1">
            <widget class="QLineEdit" name="serverEdit">
             <property name="toolTip">
-             <string>Domain or IP Address</string>
+             <string>Shadowsocks server's domain or IP address</string>
             </property>
             <property name="maxLength">
              <number>200</number>
@@ -137,7 +148,11 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="sportEdit"/>
+           <widget class="QLineEdit" name="sportEdit">
+            <property name="toolTip">
+             <string>Shadowsocks server's port</string>
+            </property>
+           </widget>
           </item>
           <item row="5" column="0">
            <widget class="QLabel" name="methodLabel">
@@ -170,6 +185,10 @@ Not every port of Shadowsocks support this option.</string>
          <layout class="QGridLayout" name="gridLayout_l">
           <item row="1" column="1" colspan="4">
            <widget class="QComboBox" name="backendTypeCombo">
+            <property name="toolTip">
+             <string>Choose which type of Shadowsocks backend to use
+Note: This has nothing to with your shadowsocks server</string>
+            </property>
             <property name="currentIndex">
              <number>-1</number>
             </property>
@@ -247,7 +266,7 @@ Not every port of Shadowsocks support this option.</string>
              <enum>Qt::NoFocus</enum>
             </property>
             <property name="toolTip">
-             <string>Path to command-line Shadowsocks backend (libQtShadowsocks doesn't apply).</string>
+             <string>Path to command-line Shadowsocks backend (libQtShadowsocks doesn't apply)</string>
             </property>
             <property name="readOnly">
              <bool>true</bool>
@@ -292,7 +311,7 @@ Not every port of Shadowsocks support this option.</string>
           <item row="3" column="1" colspan="4">
            <widget class="QLineEdit" name="customArgEdit">
             <property name="toolTip">
-             <string>Additional arguments for command-line Shadowsocks backend (libQtShadowsocks doesn't apply).</string>
+             <string>Additional arguments for command-line Shadowsocks backend (libQtShadowsocks doesn't apply)</string>
             </property>
             <property name="clearButtonEnabled">
              <bool>true</bool>
@@ -309,7 +328,9 @@ Not every port of Shadowsocks support this option.</string>
              <string>Start</string>
             </property>
             <property name="icon">
-             <iconset theme="media-playback-start"/>
+             <iconset theme="media-playback-start">
+              <normaloff/>
+             </iconset>
             </property>
            </widget>
           </item>
@@ -319,7 +340,9 @@ Not every port of Shadowsocks support this option.</string>
              <string>Stop</string>
             </property>
             <property name="icon">
-             <iconset theme="media-playback-stop"/>
+             <iconset theme="media-playback-stop">
+              <normaloff/>
+             </iconset>
             </property>
            </widget>
           </item>
@@ -338,11 +361,16 @@ Not every port of Shadowsocks support this option.</string>
           </item>
           <item>
            <widget class="QPushButton" name="shareButton">
+            <property name="toolTip">
+             <string>Generate QR code to share current profile</string>
+            </property>
             <property name="text">
              <string>Share</string>
             </property>
             <property name="icon">
-             <iconset theme="edit-copy"/>
+             <iconset theme="edit-copy">
+              <normaloff/>
+             </iconset>
             </property>
            </widget>
           </item>
@@ -458,7 +486,7 @@ background-color: rgb(0, 0, 0);</string>
         <item row="3" column="0" colspan="3">
          <widget class="QCheckBox" name="autostartCheck">
           <property name="toolTip">
-           <string>Start backend automatically when started and the current profile is valid.</string>
+           <string>Start backend automatically if current profile is valid when ss-qt5 started</string>
           </property>
           <property name="text">
            <string>Autostart if profile is valid</string>
@@ -535,7 +563,7 @@ background-color: rgb(0, 0, 0);</string>
         <item row="6" column="0" colspan="3">
          <widget class="QCheckBox" name="relativePathCheck">
           <property name="toolTip">
-           <string>For portable purpose</string>
+           <string>Use relative path to backend executables</string>
           </property>
           <property name="text">
            <string>Use relative path instead of absolute path</string>
@@ -545,9 +573,9 @@ background-color: rgb(0, 0, 0);</string>
         <item row="7" column="0" colspan="3">
          <widget class="QCheckBox" name="useSystrayCheck">
           <property name="toolTip">
-           <string>This will enable application minimise to system tray.
-If system tray icon doesn't show or malfunction, please uncheck this option.
-Need application restart to take effect.</string>
+           <string>This will enable application minimise to system tray
+If system tray icon doesn't show or malfunction, please uncheck this option
+Need application restart to take effect</string>
           </property>
           <property name="text">
            <string>Use system tray</string>
@@ -556,6 +584,10 @@ Need application restart to take effect.</string>
         </item>
         <item row="8" column="0" colspan="3">
          <widget class="QCheckBox" name="singleInstanceCheck">
+          <property name="toolTip">
+           <string>Only one ss-qt5 instance is allowed to run
+If ss-qt5 crashed, you may need to delete shared memeory files manually to avoid errors</string>
+          </property>
           <property name="text">
            <string>Allow only one instance running</string>
           </property>

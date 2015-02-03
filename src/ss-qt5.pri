@@ -52,7 +52,7 @@ win32: {
                     -L$$top_srcdir/3rdparty/zbar/mingw32
         }
     }
-    LIBS += -lqrencode -lQtShadowsocks -lbotan-$$BOTAN_VER -lzbar -liconv
+    LIBS += -L./ -lqrencode -lQtShadowsocks -lbotan-$$BOTAN_VER -lzbar -liconv
 }
 unix : {
     CONFIG    += link_pkgconfig
