@@ -131,11 +131,10 @@ void Configuration::addProfileFromSSURI(const QString &name, QString uri)
 
     uri.remove(0, 5);//remove the prefix "ss://" from uri
     QStringList resultList = QString(QByteArray::fromBase64(QByteArray(uri.toStdString().c_str()))).split(':');
-    p.method = resultList.first().toUpper();
-    p.server_port = resultList.last();
-    QStringList ser = resultList.at(1).split('@');
-    p.server = ser.last();
-    ser.removeLast();
+    p.method = resultList.takeFirst().toUpper();
+    p.server_port = resultList.takeLast();
+    QStringList ser = resultList.join(':').split('@');//there are lots of ':' in IPv6 address
+    p.server = ser.takeLast();
     p.password = ser.join('@');//incase there is a '@' in password
 
     profileList << p;
