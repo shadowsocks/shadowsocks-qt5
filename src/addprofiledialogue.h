@@ -27,12 +27,11 @@ private:
     bool validURI;
     QFutureWatcher<void> *fw;
 
-    void checkIsValid();
-
 private slots:
     void onProfileNameChanged(const QString &name);
     void onScanButtonClicked();
     void checkBase64SSURI(const QString &str);
+    void checkIsValid();
     void onAccepted();
     void onRejected();
 };

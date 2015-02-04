@@ -34,6 +34,7 @@ AddProfileDialogue::AddProfileDialogue(bool _enforce, QWidget *parent) :
     connect(ui->ssuriEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::checkBase64SSURI);
     connect(ui->cancelButton, &QPushButton::clicked, this, &AddProfileDialogue::onRejected);
     connect(ui->addButton, &QPushButton::clicked, this, &AddProfileDialogue::onAccepted);
+    connect(ui->ssuriCheckBox, &QCheckBox::toggled, this, &AddProfileDialogue::checkIsValid);
 }
 
 AddProfileDialogue::~AddProfileDialogue()
@@ -94,6 +95,16 @@ void AddProfileDialogue::checkBase64SSURI(const QString &str)
     checkIsValid();
 }
 
+void AddProfileDialogue::checkIsValid()
+{
+    if (ui->ssuriCheckBox->isChecked()) {
+        ui->addButton->setEnabled(validName && validURI);
+    }
+    else {
+        ui->addButton->setEnabled(validName);
+    }
+}
+
 void AddProfileDialogue::onAccepted()
 {
     emit inputAccepted(ui->profileNameEdit->text(), ui->ssuriCheckBox->isChecked(), ui->ssuriEdit->text());
@@ -104,14 +115,4 @@ void AddProfileDialogue::onRejected()
 {
     emit inputRejected(enforce);
     this->reject();
-}
-
-inline void AddProfileDialogue::checkIsValid()
-{
-    if (ui->ssuriCheckBox->isChecked()) {
-        ui->addButton->setEnabled(validName && validURI);
-    }
-    else {
-        ui->addButton->setEnabled(validName);
-    }
 }
