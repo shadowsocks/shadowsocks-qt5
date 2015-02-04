@@ -14,6 +14,9 @@ AddProfileDialogue::AddProfileDialogue(bool _enforce, QWidget *parent) :
     ui->setupUi(this);
     ui->progressBar->setVisible(false);//progress bar is used as a QR code scanning busy indicator
 
+    validName = false;
+    validURI = false;
+
     fw = new QFutureWatcher<void>(this);
     connect(fw, &QFutureWatcher<void>::started, [&]{
         ui->progressBar->setVisible(true);
@@ -26,15 +29,22 @@ AddProfileDialogue::AddProfileDialogue(bool _enforce, QWidget *parent) :
         ui->ssuriCheckBox->setEnabled(true);
     });
 
+    connect(ui->profileNameEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::onProfileNameChanged);
     connect(ui->scanButton, &QPushButton::clicked, this, &AddProfileDialogue::onScanButtonClicked);
     connect(ui->ssuriEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::checkBase64SSURI);
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AddProfileDialogue::onAccepted);
-    connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &AddProfileDialogue::onRejected);
+    connect(ui->cancelButton, &QPushButton::clicked, this, &AddProfileDialogue::onRejected);
+    connect(ui->addButton, &QPushButton::clicked, this, &AddProfileDialogue::onAccepted);
 }
 
 AddProfileDialogue::~AddProfileDialogue()
 {
     delete ui;
+}
+
+void AddProfileDialogue::onProfileNameChanged(const QString &name)
+{
+    validName = !name.isEmpty();
+    checkIsValid();
 }
 
 void AddProfileDialogue::onScanButtonClicked()
@@ -75,20 +85,33 @@ void AddProfileDialogue::checkBase64SSURI(const QString &str)
 {
     if (!SSValidator::validate(str)) {
         ui->ssuriEdit->setStyleSheet("background: pink");
-        ui->buttonBox->setEnabled(false);
+        validURI = false;
     }
     else {
         ui->ssuriEdit->setStyleSheet("background: #81F279");
-        ui->buttonBox->setEnabled(true);
+        validURI = true;
     }
+    checkIsValid();
 }
 
 void AddProfileDialogue::onAccepted()
 {
     emit inputAccepted(ui->profileNameEdit->text(), ui->ssuriCheckBox->isChecked(), ui->ssuriEdit->text());
+    this->accept();
 }
 
 void AddProfileDialogue::onRejected()
 {
     emit inputRejected(enforce);
+    this->reject();
+}
+
+inline void AddProfileDialogue::checkIsValid()
+{
+    if (ui->ssuriCheckBox->isChecked()) {
+        ui->addButton->setEnabled(validName && validURI);
+    }
+    else {
+        ui->addButton->setEnabled(validName);
+    }
 }
