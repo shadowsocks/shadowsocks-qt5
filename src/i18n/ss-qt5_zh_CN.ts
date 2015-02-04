@@ -29,9 +29,19 @@
         <translation>扫描屏幕上的二维码</translation>
     </message>
     <message>
-        <location filename="../addprofiledialogue.ui" line="81"/>
+        <location filename="../addprofiledialogue.ui" line="84"/>
         <source>ss://BASE64-ENCODED-STRING-WITHOUT-PADDING</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../addprofiledialogue.ui" line="109"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../addprofiledialogue.ui" line="119"/>
+        <source>Add</source>
+        <translation>添加</translation>
     </message>
 </context>
 <context>
@@ -381,12 +391,12 @@ Do you want to save it now?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="35"/>
+        <location filename="../main.cpp" line="44"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="35"/>
+        <location filename="../main.cpp" line="44"/>
         <source>Another instance of Shadowsocks-Qt5 is already running.</source>
         <translation>另一个Shadowsocks-Qt5的实例已经在运行了。</translation>
     </message>
@@ -394,7 +404,7 @@ Do you want to save it now?</source>
 <context>
     <name>QRWidget</name>
     <message>
-        <location filename="../qrwidget.cpp" line="48"/>
+        <location filename="../qrwidget.cpp" line="37"/>
         <source>Generating QR code failed.</source>
         <translation>二维码生成失败。</translation>
     </message>
@@ -425,12 +435,12 @@ Do you want to save it now?</source>
 <context>
     <name>ShareDialogue</name>
     <message>
-        <location filename="../sharedialogue.ui" line="26"/>
+        <location filename="../sharedialogue.ui" line="20"/>
         <source>Share Profile</source>
         <translation>分享配置</translation>
     </message>
     <message>
-        <location filename="../sharedialogue.ui" line="58"/>
+        <location filename="../sharedialogue.ui" line="52"/>
         <source>Save QR code as an Image file</source>
         <translation>保存二维码为图像文件</translation>
     </message>
