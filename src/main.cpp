@@ -9,7 +9,7 @@
 
 static void onSIGINT_TERM(int sig)
 {
-    if (sig == SIGINT || sig == SIGTERM) qApp->closeAllWindows();
+    if (sig == SIGINT || sig == SIGTERM) qApp->quit();
 }
 
 int main(int argc, char *argv[])
