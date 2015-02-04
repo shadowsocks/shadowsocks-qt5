@@ -1,3 +1,10 @@
+shadowsocks-qt5 (0.9.2-1) stable; urgency=medium
+
+  * fix ipv6 QR code parsing bug
+  * handle SIGINT and SIGTERM
+
+ -- Symeon Huang <symeon@odroid-u3>  Wed, 04 Feb 2015 13:16:00 +0000
+
 shadowsocks-qt5 (0.9.1-1) stable; urgency=medium
 
   * refine add profile dialog
