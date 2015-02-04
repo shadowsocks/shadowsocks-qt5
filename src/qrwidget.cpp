@@ -1,42 +1,31 @@
 #include <QPainter>
+#include <QStyleOption>
 #include <QDebug>
 #include <qrencode.h>
 #include "qrwidget.h"
 
 QRWidget::QRWidget(QWidget *parent) :
     QWidget(parent)
-{
-    data = "http://www.shadowsocks.org";
-}
+{}
 
-void QRWidget::setQRData(const QByteArray &qrData)
+void QRWidget::setQRData(const QByteArray &data)
 {
-    data = qrData;
-}
-
-void QRWidget::paintEvent(QPaintEvent *)
-{
-    QPainter painter(this);
+    qrImage = QImage(512, 512, QImage::Format_Mono);
+    QPainter painter(&qrImage);
     QRcode *qrcode = QRcode_encodeString(data.constData(), 1, QR_ECLEVEL_L, QR_MODE_8, 1);
     if (qrcode != NULL) {
         QColor fg(Qt::black);
         QColor bg(Qt::white);
         painter.setBrush(bg);
         painter.setPen(Qt::NoPen);
-        const double w = width();
-        const double h = height();
-        painter.drawRect(0, 0, w, h);
+        painter.drawRect(0, 0, 512, 512);
         painter.setBrush(fg);
         const int s = qrcode->width > 0 ? qrcode->width : 1;
-        const double aspect = w / h;
-        const double scale = ((aspect > 1.0) ? h : w) / s;
+        const qreal scale = 512.0 / s;
         for(int y = 0; y < s; y++){
-            const int yy = y * s;
             for(int x = 0; x < s; x++){
-                const int xx = yy + x;
-                const unsigned char b = qrcode->data[xx];
-                if(b &0x01){
-                    const double rx1 = x * scale, ry1 = y * scale;
+                if(qrcode->data[y * s + x] & 0x01){
+                    const qreal rx1 = x * scale, ry1 = y * scale;
                     QRectF r(rx1, ry1, scale, scale);
                     painter.drawRects(&r,1);
                 }
@@ -47,4 +36,24 @@ void QRWidget::paintEvent(QPaintEvent *)
     else {
         qWarning() << tr("Generating QR code failed.");
     }
+}
+
+void QRWidget::paintEvent(QPaintEvent *e)
+{
+    QWidget::paintEvent(e);
+
+    QStyleOption opt;
+    opt.init(this);
+    QPainter painter(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+
+    QSizeF nSize = qrImage.size().scaled(this->size(), Qt::KeepAspectRatio);
+    painter.translate((this->width() - nSize.width()) / 2, (this->height() - nSize.height()) / 2);
+    painter.scale(nSize.width() / qrImage.width(), nSize.height() / qrImage.height());
+    painter.drawImage(0, 0, qrImage);
+}
+
+const QImage& QRWidget::getQRImage() const
+{
+    return qrImage;
 }

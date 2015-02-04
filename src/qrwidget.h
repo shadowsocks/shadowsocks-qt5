@@ -9,10 +9,11 @@ class QRWidget : public QWidget
     Q_OBJECT
 public:
     explicit QRWidget(QWidget *parent = 0);
-    void setQRData(const QByteArray &qrData);
+    void setQRData(const QByteArray &data);
+    const QImage& getQRImage() const;
 
 private:
-    QByteArray data;
+    QImage qrImage;
 
 protected:
     void paintEvent(QPaintEvent *);

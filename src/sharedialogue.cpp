@@ -24,6 +24,6 @@ void ShareDialogue::onSaveButtonClicked()
 {
     QString filename = QFileDialog::getSaveFileName(this, tr("Save QR Code"), QString(), "PNG (*.png)");
     if (!filename.isEmpty()) {
-        ui->qrWidget->grab().save(filename);
+        ui->qrWidget->getQRImage().save(filename);
     }
 }
