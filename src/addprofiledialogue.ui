@@ -52,7 +52,7 @@
       <bool>false</bool>
      </property>
      <property name="toolTip">
-      <string>Scan QR code on screen and decode it to get he SS URI.</string>
+      <string>Scan QR code on screen and decode it to get the SS URI.</string>
      </property>
      <property name="text">
       <string>Scan QR Code on Screen</string>
