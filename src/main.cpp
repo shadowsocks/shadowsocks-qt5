@@ -45,12 +45,14 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    w.show();
     if (w.m_conf->isAutoStart()) {
         w.onStartButtonPressed();
     }
     if (w.m_conf->isAutoHide()) {
-        w.minimizeToSysTray();
+        w.showMinimized();
+    }
+    else {
+        w.show();
     }
 
     return a.exec();
