@@ -384,6 +384,9 @@ void MainWindow::showNotification(const QString &msg)
 
 void MainWindow::deleteProfile()
 {
+    if (ui->stopButton->isEnabled()) {
+        this->onStopButtonPressed();
+    }
     int i = ui->profileComboBox->currentIndex();
     m_conf->deleteProfile(i);
     ui->profileComboBox->removeItem(i);
