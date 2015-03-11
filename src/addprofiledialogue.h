@@ -26,6 +26,7 @@ private:
     bool validName;
     bool validURI;
     QFutureWatcher<void> *fw;
+    QImage convertToGrey(const QImage& input);
 
 private slots:
     void onProfileNameChanged(const QString &name);

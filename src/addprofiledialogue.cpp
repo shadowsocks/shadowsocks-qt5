@@ -42,6 +42,26 @@ AddProfileDialogue::~AddProfileDialogue()
     delete ui;
 }
 
+QImage AddProfileDialogue::convertToGrey(const QImage &input)
+{
+    if (input.isNull()) {
+        return QImage();
+    }
+    QImage ret(input.width(), input.height(), QImage::Format_Indexed8);
+    QVector<QRgb> gtable(256);
+    for (int i = 0; i < 256; ++i) {
+        gtable[i] = qRgb(i, i, i);
+    }
+    ret.setColorTable(gtable);
+    for (int i = 0; i < input.width(); ++i) {
+        for (int j = 0; j < input.height(); ++j) {
+            QRgb val = input.pixel(i, j);
+            ret.setPixel(i, j, qGray(val));
+        }
+    }
+    return ret;
+}
+
 void AddProfileDialogue::onProfileNameChanged(const QString &name)
 {
     validName = !name.isEmpty();
@@ -57,7 +77,8 @@ void AddProfileDialogue::onScanButtonClicked()
     QFuture<void> future = QtConcurrent::run([&]{
         QList<QScreen *> screens = qApp->screens();
         for (QList<QScreen *>::iterator sc = screens.begin(); sc != screens.end(); ++sc) {
-            QImage screenshot = (*sc)->grabWindow(qApp->desktop()->winId()).toImage().convertToFormat(QImage::Format_Indexed8);
+            QImage raw_sc = (*sc)->grabWindow(qApp->desktop()->winId()).toImage();
+            QImage screenshot = convertToGrey(raw_sc);
 
             //use zbar to decode the QR code, if found.
             zbar::ImageScanner scanner;
