@@ -1,6 +1,7 @@
 #include <QScreen>
 #include <QDesktopWidget>
 #include <QtConcurrent>
+#include <QFileDialog>
 #include <zbar.h>
 #include "addprofiledialogue.h"
 #include "ssvalidator.h"
@@ -31,6 +32,7 @@ AddProfileDialogue::AddProfileDialogue(bool _enforce, QWidget *parent) :
 
     connect(ui->profileNameEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::onProfileNameChanged);
     connect(ui->scanButton, &QPushButton::clicked, this, &AddProfileDialogue::onScanButtonClicked);
+    connect(ui->qrfileButton, &QPushButton::clicked, this, &AddProfileDialogue::onQRFileButtonClicked);
     connect(ui->ssuriEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::checkBase64SSURI);
     connect(ui->cancelButton, &QPushButton::clicked, this, &AddProfileDialogue::onRejected);
     connect(ui->addButton, &QPushButton::clicked, this, &AddProfileDialogue::onAccepted);
@@ -62,6 +64,30 @@ QImage AddProfileDialogue::convertToGrey(const QImage &input)
     return ret;
 }
 
+void AddProfileDialogue::setupURIfromQRImg(const QImage &qrimg)
+{
+    QImage gimg = convertToGrey(qrimg);
+
+    //use zbar to decode the QR code
+    zbar::ImageScanner scanner;
+    zbar::Image image(gimg.width(), gimg.height(), "Y800", gimg.bits(), gimg.byteCount());
+    scanner.scan(image);
+    zbar::SymbolSet res_set = scanner.get_results();
+    for (zbar::SymbolIterator it = res_set.symbol_begin(); it != res_set.symbol_end(); ++it) {
+        if (it->get_type() == zbar::ZBAR_QRCODE) {
+            /*
+             * uri will be overwritten if the result is valid
+             * this means always the last uri gets used
+             * therefore, please only leave one QR code for the sake of accuracy
+             */
+            QString result = QString::fromStdString(it->get_data());
+            if (result.left(5).compare("ss://", Qt::CaseInsensitive) == 0) {
+                ui->ssuriEdit->setText(result);
+            }
+        }
+    }
+}
+
 void AddProfileDialogue::onProfileNameChanged(const QString &name)
 {
     validName = !name.isEmpty();
@@ -78,29 +104,19 @@ void AddProfileDialogue::onScanButtonClicked()
         QList<QScreen *> screens = qApp->screens();
         for (QList<QScreen *>::iterator sc = screens.begin(); sc != screens.end(); ++sc) {
             QImage raw_sc = (*sc)->grabWindow(qApp->desktop()->winId()).toImage();
-            QImage screenshot = convertToGrey(raw_sc);
-
-            //use zbar to decode the QR code, if found.
-            zbar::ImageScanner scanner;
-            zbar::Image image(screenshot.width(), screenshot.height(), "Y800", screenshot.bits(), screenshot.byteCount());
-            scanner.scan(image);
-            zbar::SymbolSet res_set = scanner.get_results();
-            for (zbar::SymbolIterator it = res_set.symbol_begin(); it != res_set.symbol_end(); ++it) {
-                if (it->get_type() == zbar::ZBAR_QRCODE) {
-                    /*
-                     * uri will be overwritten if the result is valid
-                     * this means always the last uri gets used
-                     * therefore, please only leave one QR code on all screens for accuracy
-                     */
-                    QString result = QString::fromStdString(it->get_data());
-                    if (result.left(5).compare("ss://", Qt::CaseInsensitive) == 0) {
-                        ui->ssuriEdit->setText(result);
-                    }
-                }
-            }
+            setupURIfromQRImg(raw_sc);
         }
     });
     fw->setFuture(future);
+}
+
+void AddProfileDialogue::onQRFileButtonClicked()
+{
+    QString imgFile = QFileDialog::getOpenFileName(this, tr("Open QR Code Image File"), QString(), "Images (*.png *.xpm *.jpg *.jpeg)");
+    if (!imgFile.isEmpty()) {
+        QImage img(imgFile);
+        setupURIfromQRImg(img);
+    }
 }
 
 void AddProfileDialogue::checkBase64SSURI(const QString &str)

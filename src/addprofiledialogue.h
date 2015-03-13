@@ -27,10 +27,12 @@ private:
     bool validURI;
     QFutureWatcher<void> *fw;
     QImage convertToGrey(const QImage& input);
+    void setupURIfromQRImg(const QImage& qrimg);
 
 private slots:
     void onProfileNameChanged(const QString &name);
     void onScanButtonClicked();
+    void onQRFileButtonClicked();
     void checkBase64SSURI(const QString &str);
     void checkIsValid();
     void onAccepted();
