@@ -167,7 +167,9 @@ void MainWindow::onBackendToolButtonPressed()
 void MainWindow::onCurrentProfileChanged(int i)
 {
     if (i < 0) {//there is no profile
-        AddProfileDialog(true);//enforce
+        onAddButtonClicked(true);//enforce
+        //since there was no profile, configuration is definitely changed
+        emit configurationChanged();
         return;
     }
 
