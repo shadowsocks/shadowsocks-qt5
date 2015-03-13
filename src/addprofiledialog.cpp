@@ -3,13 +3,13 @@
 #include <QtConcurrent>
 #include <QFileDialog>
 #include <zbar.h>
-#include "addprofiledialogue.h"
+#include "addprofiledialog.h"
 #include "ssvalidator.h"
-#include "ui_addprofiledialogue.h"
+#include "ui_addprofiledialog.h"
 
-AddProfileDialogue::AddProfileDialogue(bool _enforce, QWidget *parent) :
+AddProfileDialog::AddProfileDialog(bool _enforce, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::AddProfileDialogue),
+    ui(new Ui::AddProfileDialog),
     enforce(_enforce)
 {
     ui->setupUi(this);
@@ -30,21 +30,21 @@ AddProfileDialogue::AddProfileDialogue(bool _enforce, QWidget *parent) :
         ui->ssuriCheckBox->setEnabled(true);
     });
 
-    connect(ui->profileNameEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::onProfileNameChanged);
-    connect(ui->scanButton, &QPushButton::clicked, this, &AddProfileDialogue::onScanButtonClicked);
-    connect(ui->qrfileButton, &QPushButton::clicked, this, &AddProfileDialogue::onQRFileButtonClicked);
-    connect(ui->ssuriEdit, &QLineEdit::textChanged, this, &AddProfileDialogue::checkBase64SSURI);
-    connect(ui->cancelButton, &QPushButton::clicked, this, &AddProfileDialogue::onRejected);
-    connect(ui->addButton, &QPushButton::clicked, this, &AddProfileDialogue::onAccepted);
-    connect(ui->ssuriCheckBox, &QCheckBox::toggled, this, &AddProfileDialogue::checkIsValid);
+    connect(ui->profileNameEdit, &QLineEdit::textChanged, this, &AddProfileDialog::onProfileNameChanged);
+    connect(ui->scanButton, &QPushButton::clicked, this, &AddProfileDialog::onScanButtonClicked);
+    connect(ui->qrfileButton, &QPushButton::clicked, this, &AddProfileDialog::onQRFileButtonClicked);
+    connect(ui->ssuriEdit, &QLineEdit::textChanged, this, &AddProfileDialog::checkBase64SSURI);
+    connect(ui->cancelButton, &QPushButton::clicked, this, &AddProfileDialog::onRejected);
+    connect(ui->addButton, &QPushButton::clicked, this, &AddProfileDialog::onAccepted);
+    connect(ui->ssuriCheckBox, &QCheckBox::toggled, this, &AddProfileDialog::checkIsValid);
 }
 
-AddProfileDialogue::~AddProfileDialogue()
+AddProfileDialog::~AddProfileDialog()
 {
     delete ui;
 }
 
-QImage AddProfileDialogue::convertToGrey(const QImage &input)
+QImage AddProfileDialog::convertToGrey(const QImage &input)
 {
     if (input.isNull()) {
         return QImage();
@@ -64,7 +64,7 @@ QImage AddProfileDialogue::convertToGrey(const QImage &input)
     return ret;
 }
 
-void AddProfileDialogue::setupURIfromQRImg(const QImage &qrimg)
+void AddProfileDialog::setupURIfromQRImg(const QImage &qrimg)
 {
     QImage gimg = convertToGrey(qrimg);
 
@@ -88,13 +88,13 @@ void AddProfileDialogue::setupURIfromQRImg(const QImage &qrimg)
     }
 }
 
-void AddProfileDialogue::onProfileNameChanged(const QString &name)
+void AddProfileDialog::onProfileNameChanged(const QString &name)
 {
     validName = !name.isEmpty();
     checkIsValid();
 }
 
-void AddProfileDialogue::onScanButtonClicked()
+void AddProfileDialog::onScanButtonClicked()
 {
     /*
      * Somehow using QtConcurrent::map will lead to crash.
@@ -110,7 +110,7 @@ void AddProfileDialogue::onScanButtonClicked()
     fw->setFuture(future);
 }
 
-void AddProfileDialogue::onQRFileButtonClicked()
+void AddProfileDialog::onQRFileButtonClicked()
 {
     QString imgFile = QFileDialog::getOpenFileName(this, tr("Open QR Code Image File"), QString(), "Images (*.png *.xpm *.jpg *.jpeg)");
     if (!imgFile.isEmpty()) {
@@ -119,7 +119,7 @@ void AddProfileDialogue::onQRFileButtonClicked()
     }
 }
 
-void AddProfileDialogue::checkBase64SSURI(const QString &str)
+void AddProfileDialog::checkBase64SSURI(const QString &str)
 {
     if (!SSValidator::validate(str)) {
         ui->ssuriEdit->setStyleSheet("background: pink");
@@ -132,7 +132,7 @@ void AddProfileDialogue::checkBase64SSURI(const QString &str)
     checkIsValid();
 }
 
-void AddProfileDialogue::checkIsValid()
+void AddProfileDialog::checkIsValid()
 {
     if (ui->ssuriCheckBox->isChecked()) {
         ui->addButton->setEnabled(validName && validURI);
@@ -142,13 +142,13 @@ void AddProfileDialogue::checkIsValid()
     }
 }
 
-void AddProfileDialogue::onAccepted()
+void AddProfileDialog::onAccepted()
 {
     emit inputAccepted(ui->profileNameEdit->text(), ui->ssuriCheckBox->isChecked(), ui->ssuriEdit->text());
     this->accept();
 }
 
-void AddProfileDialogue::onRejected()
+void AddProfileDialog::onRejected()
 {
     emit inputRejected(enforce);
     this->reject();

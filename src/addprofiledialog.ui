@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddProfileDialogue</class>
- <widget class="QDialog" name="AddProfileDialogue">
+ <class>AddProfileDialog</class>
+ <widget class="QDialog" name="AddProfileDialog">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -3,7 +3,7 @@
 #include <QWindow>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "sharedialogue.h"
+#include "sharedialog.h"
 
 #ifdef Q_OS_WIN
 #include <QtWin>
@@ -95,8 +95,8 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     connect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentProfileChanged(int)));
 
     connect(ui->backendTypeCombo, &QComboBox::currentTextChanged, this, &MainWindow::onBackendTypeChanged);
-    connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::addProfileDialogue);
-    connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::deleteProfile);
+    connect(ui->addProfileButton, &QToolButton::clicked, this, &MainWindow::onAddButtonClicked);
+    connect(ui->delProfileButton, &QToolButton::clicked, this, &MainWindow::onDeleteButtonClicked);
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::onStartButtonPressed);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::onStopButtonPressed);
     connect(ui->shareButton, &QPushButton::clicked, this, &MainWindow::onShareButtonClicked);
@@ -167,7 +167,7 @@ void MainWindow::onBackendToolButtonPressed()
 void MainWindow::onCurrentProfileChanged(int i)
 {
     if (i < 0) {//there is no profile
-        addProfileDialogue(true);//enforce
+        AddProfileDialog(true);//enforce
         return;
     }
 
@@ -217,19 +217,19 @@ void MainWindow::onCustomArgsEditFinished(const QString &arg)
 
 void MainWindow::onShareButtonClicked()
 {
-    ShareDialogue *shareDlg = new ShareDialogue(current_profile->getSsUrl(), this);
+    ShareDialog *shareDlg = new ShareDialog(current_profile->getSsUrl(), this);
     shareDlg->exec();
 }
 
-void MainWindow::addProfileDialogue(bool enforce = false)
+void MainWindow::onAddButtonClicked(bool enforce = false)
 {
-    addProfileDlg = new AddProfileDialogue(enforce, this);
-    connect(addProfileDlg, &AddProfileDialogue::inputAccepted, this, &MainWindow::onAddProfileDialogueAccepted);
-    connect(addProfileDlg, &AddProfileDialogue::inputRejected, this, &MainWindow::onAddProfileDialogueRejected);
+    addProfileDlg = new AddProfileDialog(enforce, this);
+    connect(addProfileDlg, &AddProfileDialog::inputAccepted, this, &MainWindow::onAddProfileDialogAccepted);
+    connect(addProfileDlg, &AddProfileDialog::inputRejected, this, &MainWindow::onAddProfileDialogRejected);
     addProfileDlg->exec();
 }
 
-void MainWindow::onAddProfileDialogueAccepted(const QString &name, bool u, const QString &uri)
+void MainWindow::onAddProfileDialogAccepted(const QString &name, bool u, const QString &uri)
 {
     if(u) {
         m_conf->addProfileFromSSURI(name, uri);
@@ -244,7 +244,7 @@ void MainWindow::onAddProfileDialogueAccepted(const QString &name, bool u, const
     ui->profileComboBox->setCurrentIndex(ui->profileComboBox->count() - 1);
 }
 
-void MainWindow::onAddProfileDialogueRejected(const bool enforce)
+void MainWindow::onAddProfileDialogRejected(const bool enforce)
 {
     if (enforce) {
         m_conf->addProfile("Unnamed");
@@ -382,7 +382,7 @@ void MainWindow::showNotification(const QString &msg)
 #endif
 }
 
-void MainWindow::deleteProfile()
+void MainWindow::onDeleteButtonClicked()
 {
     if (ui->stopButton->isEnabled()) {
         this->onStopButtonPressed();

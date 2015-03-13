@@ -1,26 +1,26 @@
 #include <QFileDialog>
 #include "qrwidget.h"
-#include "sharedialogue.h"
-#include "ui_sharedialogue.h"
+#include "sharedialog.h"
+#include "ui_sharedialog.h"
 
-ShareDialogue::ShareDialogue(const QByteArray &ssUrl, QWidget *parent) :
+ShareDialog::ShareDialog(const QByteArray &ssUrl, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ShareDialogue)
+    ui(new Ui::ShareDialog)
 {
     ui->setupUi(this);
     ui->qrWidget->setQRData(ssUrl);
     ui->ssUrlEdit->setText(QString(ssUrl));
     ui->ssUrlEdit->setCursorPosition(0);
 
-    connect(ui->saveButton, &QPushButton::clicked, this, &ShareDialogue::onSaveButtonClicked);
+    connect(ui->saveButton, &QPushButton::clicked, this, &ShareDialog::onSaveButtonClicked);
 }
 
-ShareDialogue::~ShareDialogue()
+ShareDialog::~ShareDialog()
 {
     delete ui;
 }
 
-void ShareDialogue::onSaveButtonClicked()
+void ShareDialog::onSaveButtonClicked()
 {
     QString filename = QFileDialog::getSaveFileName(this, tr("Save QR Code"), QString(), "PNG (*.png)");
     if (!filename.isEmpty()) {

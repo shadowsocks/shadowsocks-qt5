@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ShareDialogue</class>
- <widget class="QDialog" name="ShareDialogue">
+ <class>ShareDialog</class>
+ <widget class="QDialog" name="ShareDialog">
   <property name="geometry">
    <rect>
     <x>0</x>

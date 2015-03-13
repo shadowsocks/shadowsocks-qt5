@@ -23,7 +23,7 @@
 #include "ssvalidator.h"
 #include "ip4validator.h"
 #include "portvalidator.h"
-#include "addprofiledialogue.h"
+#include "addprofiledialog.h"
 
 #ifdef UBUNTU_UNITY
 #undef signals
@@ -59,14 +59,14 @@ public slots:
 
 private slots:
     inline void onStopButtonPressed() { ssProcess->stop(); }
-    void addProfileDialogue(bool);
+    void onAddButtonClicked(bool);
     void onBackendTypeChanged(const QString &);
-    void deleteProfile();
+    void onDeleteButtonClicked();
     void onLAddrEditFinished(const QString &);
     void onLPortEditFinished(const QString &);
     void onMethodChanged(const QString &);
-    void onAddProfileDialogueAccepted(const QString &, bool, const QString &);
-    void onAddProfileDialogueRejected(const bool);
+    void onAddProfileDialogAccepted(const QString &, bool, const QString &);
+    void onAddProfileDialogRejected(const bool);
     void onBackendToolButtonPressed();
     void onConfigurationChanged(bool);
     void onCurrentProfileChanged(int);
@@ -97,7 +97,7 @@ private slots:
     void saveConfig();
 
 private:
-    AddProfileDialogue *addProfileDlg;
+    AddProfileDialog *addProfileDlg;
     bool verboseOutput;
     IP4Validator ipv4addrValidator;
     PortValidator portValidator;

@@ -3,27 +3,27 @@ SOURCES      += src/main.cpp\
                 src/ss_process.cpp \
                 src/ip4validator.cpp \
                 src/portvalidator.cpp \
-                src/addprofiledialogue.cpp \
+                src/addprofiledialog.cpp \
                 src/ssvalidator.cpp \
                 src/ssprofile.cpp \
                 src/configuration.cpp \
                 src/qrwidget.cpp \
-                src/sharedialogue.cpp
+                src/sharedialog.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ss_process.h \
                 src/ssprofile.h \
                 src/ip4validator.h \
                 src/portvalidator.h \
-                src/addprofiledialogue.h \
+                src/addprofiledialog.h \
                 src/ssvalidator.h \
                 src/configuration.h \
                 src/qrwidget.h \
-                src/sharedialogue.h
+                src/sharedialog.h
 
 FORMS        += src/mainwindow.ui \
-                src/addprofiledialogue.ui \
-                src/sharedialogue.ui
+                src/addprofiledialog.ui \
+                src/sharedialog.ui
 
 RESOURCES    += src/icons.qrc \
                 src/translations.qrc
