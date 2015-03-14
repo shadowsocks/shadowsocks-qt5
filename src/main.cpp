@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     else {
         a.setFont(QFont("Segoe UI", 9, QFont::Normal, false));
     }
+    QIcon::setThemeName("Breeze");
 #endif
 
     QTranslator ssqt5t;

@@ -1,0 +1,8 @@
+[Icon Theme]
+Name=Breeze
+Directories=actions
+
+[actions]
+Size=22
+Context=Actions
+Type=Fixed
