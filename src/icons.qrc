@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
+        <file alias="actions/application-exit.png">icons/Breeze/actions/application-exit.png</file>
         <file alias="actions/document-open.png">icons/Breeze/actions/document-open.png</file>
         <file alias="actions/document-revert.png">icons/Breeze/actions/document-revert.png</file>
         <file alias="actions/document-save.png">icons/Breeze/actions/document-save.png</file>
@@ -7,7 +8,7 @@
         <file alias="actions/edit-copy.png">icons/Breeze/actions/edit-copy.png</file>
         <file alias="actions/help-about.png">icons/Breeze/actions/help-about.png</file>
         <file alias="actions/list-add.png">icons/Breeze/actions/list-add.png</file>
-        <file alias="actions/list-delete.png">icons/Breeze/actions/list-delete.png</file>
+        <file alias="actions/list-remove.png">icons/Breeze/actions/list-remove.png</file>
         <file alias="actions/media-playback-start.png">icons/Breeze/actions/media-playback-start.png</file>
         <file alias="actions/media-playback-stop.png">icons/Breeze/actions/media-playback-stop.png</file>
         <file alias="index.theme">icons/Breeze/index.theme</file>

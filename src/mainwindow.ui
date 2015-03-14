@@ -282,7 +282,7 @@ Note: This has nothing to with your shadowsocks server</string>
              <string>-</string>
             </property>
             <property name="icon">
-             <iconset theme="list-delete">
+             <iconset theme="list-remove">
               <normaloff/>
              </iconset>
             </property>
