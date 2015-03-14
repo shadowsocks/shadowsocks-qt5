@@ -368,7 +368,7 @@ Note: This has nothing to with your shadowsocks server</string>
              <string>Share</string>
             </property>
             <property name="icon">
-             <iconset theme="edit-copy">
+             <iconset theme="document-share">
               <normaloff/>
              </iconset>
             </property>
