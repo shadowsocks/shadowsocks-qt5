@@ -2,46 +2,56 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
-    <name>AddProfileDialogue</name>
+    <name>AddProfileDialog</name>
     <message>
-        <location filename="../addprofiledialogue.ui" line="20"/>
+        <location filename="../addprofiledialog.ui" line="20"/>
         <source>Add Profile</source>
         <translation>添加配置</translation>
     </message>
     <message>
-        <location filename="../addprofiledialogue.ui" line="35"/>
+        <location filename="../addprofiledialog.ui" line="35"/>
         <source>Profile Name</source>
         <translation>配置名称</translation>
     </message>
     <message>
-        <location filename="../addprofiledialogue.ui" line="45"/>
+        <location filename="../addprofiledialog.ui" line="45"/>
         <source>Base64 Encoded URI (Optional)</source>
-        <translation>Base64编码的统一资源标志符（可选）</translation>
+        <translation>Base64编码的统一资源标识符（可选）</translation>
     </message>
     <message>
-        <location filename="../addprofiledialogue.ui" line="55"/>
-        <source>Scan QR code on screen and decode it to get he SS URI.</source>
-        <translation>扫描屏幕上的二维码并解码获取统一资源标志符。</translation>
+        <location filename="../addprofiledialog.ui" line="55"/>
+        <source>Scan QR code on screen and decode it to get the SS URI.</source>
+        <translation>扫描屏幕上的二维码并解码获取统一资源标识符。</translation>
     </message>
     <message>
-        <location filename="../addprofiledialogue.ui" line="58"/>
+        <location filename="../addprofiledialog.ui" line="58"/>
         <source>Scan QR Code on Screen</source>
         <translation>扫描屏幕上的二维码</translation>
     </message>
     <message>
-        <location filename="../addprofiledialogue.ui" line="84"/>
+        <location filename="../addprofiledialog.ui" line="71"/>
+        <source>From QR Code Image File</source>
+        <translation>解码二维码图像文件</translation>
+    </message>
+    <message>
+        <location filename="../addprofiledialog.ui" line="94"/>
         <source>ss://BASE64-ENCODED-STRING-WITHOUT-PADDING</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../addprofiledialogue.ui" line="109"/>
+        <location filename="../addprofiledialog.ui" line="119"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../addprofiledialogue.ui" line="119"/>
+        <location filename="../addprofiledialog.ui" line="129"/>
         <source>Add</source>
         <translation>添加</translation>
+    </message>
+    <message>
+        <location filename="../addprofiledialog.cpp" line="115"/>
+        <source>Open QR Code Image File</source>
+        <translation>打开二维码图像文件</translation>
     </message>
 </context>
 <context>
@@ -90,10 +100,6 @@
         <location filename="../mainwindow.ui" line="133"/>
         <source>Timeout</source>
         <translation>超时</translation>
-    </message>
-    <message>
-        <source>Domain or IP Address</source>
-        <translation type="vanished">域名或IP地址</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="160"/>
@@ -177,10 +183,6 @@ If ss-qt5 crashed, you may need to delete shared memeory files manually to avoid
 如果ss-qt5崩溃了，你可能需要手动删除共享内存文件以避免错误</translation>
     </message>
     <message>
-        <source>Path to command-line Shadowsocks backend (libQtShadowsocks doesn&apos;t apply).</source>
-        <translation type="vanished">命令行Shadowsocks后端的路径（libQtShadowsocks不适用）。</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="282"/>
         <source>-</source>
         <translation></translation>
@@ -196,18 +198,14 @@ If ss-qt5 crashed, you may need to delete shared memeory files manually to avoid
         <translation>自定义参数</translation>
     </message>
     <message>
-        <source>Additional arguments for command-line Shadowsocks backend (libQtShadowsocks doesn&apos;t apply).</source>
-        <translation type="vanished">命令行Shadowsocks后端的额外参数（libQtShadowsocks不适用）。</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="328"/>
-        <location filename="../mainwindow.cpp" line="347"/>
+        <location filename="../mainwindow.cpp" line="349"/>
         <source>Start</source>
         <translation>启动</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="340"/>
-        <location filename="../mainwindow.cpp" line="348"/>
+        <location filename="../mainwindow.cpp" line="350"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -232,21 +230,9 @@ If ss-qt5 crashed, you may need to delete shared memeory files manually to avoid
         <translation>使用透明背景</translation>
     </message>
     <message>
-        <source>Start backend automatically when started and the current profile is valid.</source>
-        <translation type="vanished">启动后如果当前配置有效则自动启动后端。</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="492"/>
         <source>Autostart if profile is valid</source>
         <translation>配置有效则自动启动</translation>
-    </message>
-    <message>
-        <source>This will enable application minimise to system tray.
-If system tray icon doesn&apos;t show or malfunction, please uncheck this option.
-Need application restart to take effect.</source>
-        <translation type="vanished">该选项使得程序能最小化到系统托盘。
-如果系统托盘不显示或者异常，请取消勾选本项。
-程序需要重新启动以生效。</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="592"/>
@@ -322,10 +308,6 @@ Otherwise, simply use 127.0.0.1</source>
         <translation>除错级别的日志</translation>
     </message>
     <message>
-        <source>For portable purpose</source>
-        <translation type="vanished">适用于便携版</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="569"/>
         <source>Use relative path instead of absolute path</source>
         <translation>使用相对路径而不是绝对路径</translation>
@@ -345,43 +327,43 @@ Need application restart to take effect</source>
         <translation>使用系统托盘</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="328"/>
-        <location filename="../mainwindow.cpp" line="346"/>
+        <location filename="../mainwindow.cpp" line="330"/>
+        <location filename="../mainwindow.cpp" line="348"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="296"/>
+        <location filename="../mainwindow.cpp" line="298"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="296"/>
+        <location filename="../mainwindow.cpp" line="298"/>
         <source>Invalid profile or configuration.</source>
         <translation>无效的配置或设置。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="349"/>
+        <location filename="../mainwindow.cpp" line="351"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="398"/>
+        <location filename="../mainwindow.cpp" line="403"/>
         <source>Profile: %1 Started</source>
         <translation>配置：%1 已启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="406"/>
+        <location filename="../mainwindow.cpp" line="411"/>
         <source>Profile: %1 Stopped</source>
         <translation>配置：%1 已停止</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="435"/>
+        <location filename="../mainwindow.cpp" line="440"/>
         <source>Save Changes</source>
         <translation>保存变更</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="435"/>
+        <location filename="../mainwindow.cpp" line="440"/>
         <source>Configuration has been changed.
 Do you want to save it now?</source>
         <translation>设置已经被变更。
@@ -391,12 +373,12 @@ Do you want to save it now?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="44"/>
+        <location filename="../main.cpp" line="45"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="44"/>
+        <location filename="../main.cpp" line="45"/>
         <source>Another instance of Shadowsocks-Qt5 is already running.</source>
         <translation>另一个Shadowsocks-Qt5的实例已经在运行了。</translation>
     </message>
@@ -433,19 +415,19 @@ Do you want to save it now?</source>
     </message>
 </context>
 <context>
-    <name>ShareDialogue</name>
+    <name>ShareDialog</name>
     <message>
-        <location filename="../sharedialogue.ui" line="20"/>
+        <location filename="../sharedialog.ui" line="20"/>
         <source>Share Profile</source>
         <translation>分享配置</translation>
     </message>
     <message>
-        <location filename="../sharedialogue.ui" line="52"/>
+        <location filename="../sharedialog.ui" line="52"/>
         <source>Save QR code as an Image file</source>
         <translation>保存二维码为图像文件</translation>
     </message>
     <message>
-        <location filename="../sharedialogue.cpp" line="25"/>
+        <location filename="../sharedialog.cpp" line="25"/>
         <source>Save QR Code</source>
         <translation>保存二维码</translation>
     </message>
