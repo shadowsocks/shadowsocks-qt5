@@ -346,8 +346,8 @@ void MainWindow::createSystemTray()
         //desktop systray
         systrayMenu = new QMenu(this);
         systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
-        systrayMenu->addAction(QIcon::fromTheme("run-build", QIcon::fromTheme("start")), tr("Start"), this, SLOT(onStartButtonPressed()));
-        systrayMenu->addAction(QIcon::fromTheme("process-stop", QIcon::fromTheme("stop")), tr("Stop"), this, SLOT(onStopButtonPressed()));
+        systrayMenu->addAction(QIcon::fromTheme("media-playback-start", QIcon::fromTheme("start")), tr("Start"), this, SLOT(onStartButtonPressed()));
+        systrayMenu->addAction(QIcon::fromTheme("media-playback-stop", QIcon::fromTheme("stop")), tr("Stop"), this, SLOT(onStopButtonPressed()));
         systrayMenu->addAction(QIcon::fromTheme("exit"), tr("Quit"), this, SLOT(close()));
         systrayMenu->actions().at(2)->setVisible(false);
 
@@ -446,7 +446,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
             saveConfig();
         }
     }
-    QWidget::closeEvent(e);
+    QMainWindow::closeEvent(e);
 }
 
 void MainWindow::onProcessReadyRead(const QByteArray &o)
