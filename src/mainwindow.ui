@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
-    <normaloff>:/icon/shadowsocks-qt5.png</normaloff>:/icon/shadowsocks-qt5.png</iconset>
+    <normaloff>:/icons/icons/shadowsocks-qt5.png</normaloff>:/icons/icons/shadowsocks-qt5.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -282,7 +282,7 @@ Note: This has nothing to with your shadowsocks server</string>
              <string>-</string>
             </property>
             <property name="icon">
-             <iconset theme="list-remove">
+             <iconset theme="list-delete">
               <normaloff/>
              </iconset>
             </property>
