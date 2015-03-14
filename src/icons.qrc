@@ -1,5 +1,15 @@
 <RCC>
     <qresource prefix="/">
         <file>icon/shadowsocks-qt5.png</file>
+        <file>icon/document-open.svg</file>
+        <file>icon/document-revert.svg</file>
+        <file>icon/document-save.svg</file>
+        <file>icon/document-share.svg</file>
+        <file>icon/edit-copy.svg</file>
+        <file>icon/help-about.svg</file>
+        <file>icon/list-add.svg</file>
+        <file>icon/list-delete.svg</file>
+        <file>icon/media-playback-start.svg</file>
+        <file>icon/media-playback-stop.svg</file>
     </qresource>
 </RCC>
