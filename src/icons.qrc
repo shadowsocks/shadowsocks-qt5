@@ -1,16 +1,16 @@
 <RCC>
-    <qresource prefix="/">
-        <file>icon/shadowsocks-qt5.png</file>
-        <file alias="actions/document-open.svg">icon/breeze/actions/document-open.svg</file>
-        <file alias="actions/document-revert.svg">icon/breeze/actions/document-revert.svg</file>
-        <file alias="actions/document-save.svg">icon/breeze/actions/document-save.svg</file>
-        <file alias="actions/document-share.svg">icon/breeze/actions/document-share.svg</file>
-        <file alias="actions/edit-copy.svg">icon/breeze/actions/edit-copy.svg</file>
-        <file alias="actions/help-about.svg">icon/breeze/actions/help-about.svg</file>
-        <file alias="actions/list-add.svg">icon/breeze/actions/list-add.svg</file>
-        <file alias="actions/list-delete.sv">icon/breeze/actions/list-delete.svg</file>
-        <file alias="actions/media-playback-start.svg">icon/breeze/actions/media-playback-start.svg</file>
-        <file alias="actions/media-playback-stop.svg">icon/breeze/actions/media-playback-stop.svg</file>
-	<file alias="index.theme">icon/breeze/index.theme</file>
+    <qresource prefix="/icons">
+        <file alias="actions/document-open.png">icons/Breeze/actions/document-open.png</file>
+        <file alias="actions/document-revert.png">icons/Breeze/actions/document-revert.png</file>
+        <file alias="actions/document-save.png">icons/Breeze/actions/document-save.png</file>
+        <file alias="actions/document-share.png">icons/Breeze/actions/document-share.png</file>
+        <file alias="actions/edit-copy.png">icons/Breeze/actions/edit-copy.png</file>
+        <file alias="actions/help-about.png">icons/Breeze/actions/help-about.png</file>
+        <file alias="actions/list-add.png">icons/Breeze/actions/list-add.png</file>
+        <file alias="actions/list-delete.png">icons/Breeze/actions/list-delete.png</file>
+        <file alias="actions/media-playback-start.png">icons/Breeze/actions/media-playback-start.png</file>
+        <file alias="actions/media-playback-stop.png">icons/Breeze/actions/media-playback-stop.png</file>
+        <file alias="index.theme">icons/Breeze/index.theme</file>
+        <file>icons/shadowsocks-qt5.png</file>
     </qresource>
 </RCC>

@@ -360,7 +360,7 @@ void MainWindow::createSystemTray()
             systrayMenu->actions().at(2)->setVisible(false);
         });
 
-        systray = new QSystemTrayIcon(QIcon(":/icon/shadowsocks-qt5.png"), this);
+        systray = new QSystemTrayIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"), this);
         systray->setToolTip(QString("Shadowsocks-Qt5"));
         systray->setContextMenu(systrayMenu);
         connect(systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
