@@ -22,7 +22,7 @@ OTHER_FILES  += README.md \
                 shadowsocks-qt5.desktop
 
 desktop.files = shadowsocks-qt5.desktop
-ssicon.files  = src/icon/shadowsocks-qt5.png
+ssicon.files  = src/icons/shadowsocks-qt5.png
 
 isEmpty(INSTALL_PREFIX) {
     unix: INSTALL_PREFIX = /usr
