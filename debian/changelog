@@ -1,3 +1,9 @@
+shadowsocks-qt5 (0.9.3-2) stable; urgency=medium
+
+  * fix missing desktop icon
+
+ -- Symeon Huang <hzwhuang@gmail>  Sat, 14 Mar 2015 16:40:00 +0000
+
 shadowsocks-qt5 (0.9.3-1) stable; urgency=medium
 
   * add a button to open QR code image file in add profile dialog
