@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     }
     if (w.m_conf->isAutoHide()) {
         w.showMinimized();
+        w.hide();
     }
     else {
         w.show();
