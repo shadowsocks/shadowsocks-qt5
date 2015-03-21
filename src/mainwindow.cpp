@@ -370,7 +370,7 @@ void MainWindow::createSystemTray()
         systray->setIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"));
         systray->setToolTip(QString("Shadowsocks-Qt5"));
         systray->setContextMenu(systrayMenu);
-        connect(systray, &QSystemTrayIcon::activated, this, &MainWindow::systrayActivated);
+        connect(systray, &QSystemTrayIcon::activated, this, &MainWindow::onSystrayActivated);
         systray->show();
 #endif
 }
@@ -426,7 +426,7 @@ void MainWindow::showWindow()
     ui->startButton->setFocus();
 }
 
-void MainWindow::systrayActivated(QSystemTrayIcon::ActivationReason r)
+void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)
 {
     if (r != QSystemTrayIcon::Context) {
         showWindow();

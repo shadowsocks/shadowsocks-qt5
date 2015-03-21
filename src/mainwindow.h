@@ -81,7 +81,7 @@ private slots:
     void onServerEditFinished(const QString &);
     void showWindow();
     void onSPortEditFinished(const QString &);
-    void systrayActivated(QSystemTrayIcon::ActivationReason);
+    void onSystrayActivated(QSystemTrayIcon::ActivationReason);
     void onTimeoutChanged(int);
 #ifdef Q_OS_LINUX
     void onTcpFastOpenChanged(bool);
