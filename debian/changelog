@@ -1,3 +1,9 @@
+shadowsocks-qt5 (0.9.4-1) stable; urgency=medium
+
+  * minor improvements and fixes
+
+ -- Symeon Huang <hzwhuang@gmail>  Sat, 21 Mar 2015 10:42:00 +0000
+
 shadowsocks-qt5 (0.9.3-2) stable; urgency=medium
 
   * fix missing desktop icon
