@@ -61,7 +61,13 @@ MainWindow::MainWindow(bool verbose, QWidget *parent) :
     ui->useSystrayCheck->setChecked(m_conf->isUseSystray());
     ui->singleInstanceCheck->setChecked(m_conf->isSingleInstance());
 
-    systray = NULL;
+    /*
+     * There is a bug on KDE Frameworks 5: https://bugs.kde.org/show_bug.cgi?id=343976
+     * As a simple work around, we give up our ownership and use deleteLater() function
+     * in MainWindow's destructor.
+     *
+     */
+    systray = new QSystemTrayIcon;
     if (m_conf->isUseSystray()) {
         createSystemTray();
     }
@@ -145,10 +151,9 @@ MainWindow::~MainWindow()
     if (ui->stopButton->isEnabled()) {//stop if it's still running
         ssProcess->stop();//prevent crashes
     }
+    systray->deleteLater();
     delete ui;
     delete m_conf;
-    if (systray != NULL)
-        systray->deleteLater();
 }
 
 const QString MainWindow::aboutText = "<h3>Cross-Platform Shadowsocks GUI Client</h3><p>Version: " + QString(APP_VERSION) + "</p><p>Copyright © 2014-2015 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>";
@@ -362,13 +367,6 @@ void MainWindow::createSystemTray()
             systrayMenu->actions().at(2)->setVisible(false);
         });
 
-        /*
-         * There is a bug on KDE Frameworks 5: https://bugs.kde.org/show_bug.cgi?id=343976
-         * As a simple work around, we give up our ownership and use deleteLater() function
-         * in MainWindow's destructor
-         */
-        //systray = new QSystemTrayIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"), this);
-        systray = new QSystemTrayIcon;
         systray->setIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"));
         systray->setToolTip(QString("Shadowsocks-Qt5"));
         systray->setContextMenu(systrayMenu);
