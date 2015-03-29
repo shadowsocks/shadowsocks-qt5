@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     }
     w.show();
     if (w.m_conf->isAutoHide()) {
-        w.showMinimized();
+        w.minimizeToSysTray();
     }
 
     return a.exec();
