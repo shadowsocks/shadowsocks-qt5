@@ -13,7 +13,7 @@ void QRWidget::setQRData(const QByteArray &data)
     qrImage = QImage(512, 512, QImage::Format_Mono);
     QPainter painter(&qrImage);
     QRcode *qrcode = QRcode_encodeString(data.constData(), 1, QR_ECLEVEL_L, QR_MODE_8, 1);
-    if (qrcode != NULL) {
+    if (qrcode) {
         QColor fg(Qt::black);
         QColor bg(Qt::white);
         painter.setBrush(bg);
