@@ -3,6 +3,19 @@ Shadowsocks-Qt5
 
 Please check [project's wiki](https://github.com/librehat/shadowsocks-qt5/wiki) for "how-tos".
 
+V2.0
+----
+
+`master` branch is used as a development branch for upcoming version 2.0. For old-stable code, please check `0.x` branch.
+
+### TODO ###
+
+- Rewrite UI
+- Enable multiple profiles at the same time
+- Server latency test
+- Remove all other backends except for `libQtShadowsocks`
+- New flat icon
+
 Introduction
 ------------
 
