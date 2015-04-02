@@ -49,9 +49,14 @@ int main(int argc, char *argv[])
     if (w.m_conf->isAutoStart()) {
         w.onStartButtonPressed();
     }
-    w.show();
     if (w.m_conf->isAutoHide()) {
-        w.minimizeToSysTray();
+        w.showMinimized();
+#ifdef Q_OS_WIN
+        w.hide();
+#endif
+    }
+    else {
+        w.show();
     }
 
     return a.exec();
