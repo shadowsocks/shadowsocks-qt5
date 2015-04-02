@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>400</height>
+    <height>424</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -144,6 +144,23 @@
       <item row="0" column="1">
        <widget class="QLineEdit" name="nameEdit"/>
       </item>
+      <item row="11" column="1">
+       <widget class="QComboBox" name="logLevelComboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="0">
+       <widget class="QLabel" name="logLevelLabel">
+        <property name="text">
+         <string>Log Level</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -172,6 +189,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>nameEdit</tabstop>
+  <tabstop>serverAddrEdit</tabstop>
+  <tabstop>serverPortEdit</tabstop>
+  <tabstop>pwdEdit</tabstop>
+  <tabstop>localAddrEdit</tabstop>
+  <tabstop>localPortEdit</tabstop>
+  <tabstop>encryptComboBox</tabstop>
+  <tabstop>timeoutSpinBox</tabstop>
+  <tabstop>logLevelComboBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

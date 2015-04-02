@@ -1,3 +1,8 @@
+/*
+ * EditDialog Class
+ * Copyright 2015 Symeon Huang <hzwhuang@gmail.com>
+ */
+
 #ifndef EDITDIALOG_H
 #define EDITDIALOG_H
 

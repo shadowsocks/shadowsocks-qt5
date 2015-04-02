@@ -1,3 +1,8 @@
+/*
+ * ShareDialog Class
+ * Copyright 2014-2015 Symeon Huang <hzwhuang@gmail.com>
+ */
+
 #ifndef SHAREDIALOG_H
 #define SHAREDIALOG_H
 

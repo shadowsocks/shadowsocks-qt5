@@ -1,3 +1,8 @@
+/*
+ * LogDialog Class
+ * Copyright 2015 Symeon Huang <hzwhuang@gmail.com>
+ */
+
 #ifndef LOGDIALOG_H
 #define LOGDIALOG_H
 
@@ -14,6 +19,11 @@ class LogDialog : public QDialog
 public:
     explicit LogDialog(QWidget *parent = 0);
     ~LogDialog();
+
+    void clear();
+
+public slots:
+    void append(const QString &);
 
 private:
     Ui::LogDialog *ui;

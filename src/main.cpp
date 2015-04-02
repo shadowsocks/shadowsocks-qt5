@@ -37,22 +37,17 @@ int main(int argc, char *argv[])
     ssqt5t.load(QLocale::system(), "ss-qt5", "_", ":/i18n");
     a.installTranslator(&ssqt5t);
 
-    MainWindow w(a.arguments().contains("-v"));
-
+    MainWindow w;
+/*
     QSharedMemory sharedMem;
     sharedMem.setKey("shadowsocks-qt5");
     if (!sharedMem.create(1) && w.m_conf->isSingleInstance()) {
         QMessageBox::critical(&w, QObject::tr("Error"), QObject::tr("Another instance of Shadowsocks-Qt5 is already running."));
         return -1;
     }
+*/
 
-    if (w.m_conf->isAutoStart()) {
-        w.onStartButtonPressed();
-    }
     w.show();
-    if (w.m_conf->isAutoHide()) {
-        w.minimizeToSysTray();
-    }
 
     return a.exec();
 }

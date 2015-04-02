@@ -74,10 +74,12 @@
     </property>
     <widget class="QMenu" name="menuAdd">
      <property name="title">
-      <string>Add</string>
+      <string>&amp;Add</string>
      </property>
      <property name="icon">
-      <iconset theme="list-add"/>
+      <iconset theme="list-add">
+       <normaloff/>
+      </iconset>
      </property>
      <addaction name="actionManual"/>
      <addaction name="actionURI"/>
@@ -110,6 +112,8 @@
     </property>
     <addaction name="actionAbout"/>
     <addaction name="actionAbout_Qt"/>
+    <addaction name="separator"/>
+    <addaction name="actionReport_Bug"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuConnection"/>
@@ -118,88 +122,110 @@
   </widget>
   <action name="actionManual">
    <property name="text">
-    <string>Manual</string>
+    <string>&amp;Manual</string>
    </property>
   </action>
   <action name="actionQR_Code">
    <property name="text">
-    <string>Scan QR Code on Screen</string>
+    <string>&amp;Scan QR Code on Screen</string>
    </property>
   </action>
   <action name="actionQR_Code_from_File">
    <property name="text">
-    <string>QR Code from File</string>
+    <string>&amp;QR Code from File</string>
    </property>
   </action>
   <action name="actionURI">
    <property name="text">
-    <string>URI</string>
+    <string>&amp;URI</string>
    </property>
   </action>
   <action name="actionDelete">
    <property name="icon">
-    <iconset theme="list-remove"/>
+    <iconset theme="list-remove">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Delete</string>
+    <string>&amp;Delete</string>
    </property>
   </action>
   <action name="actionEdit">
    <property name="icon">
-    <iconset theme="document-edit"/>
+    <iconset theme="document-edit">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Edit</string>
+    <string>&amp;Edit</string>
    </property>
   </action>
   <action name="actionConnect">
    <property name="icon">
-    <iconset theme="network-connect"/>
+    <iconset theme="network-connect">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Connect</string>
+    <string>&amp;Connect</string>
    </property>
   </action>
   <action name="actionDisconnect">
    <property name="icon">
-    <iconset theme="network-disconnect"/>
+    <iconset theme="network-disconnect">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Disconnect</string>
+    <string>D&amp;isconnect</string>
    </property>
   </action>
   <action name="actionQuit">
    <property name="icon">
-    <iconset theme="application-exit"/>
+    <iconset theme="application-exit">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Quit</string>
+    <string>&amp;Quit</string>
    </property>
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset theme="help-about"/>
+    <iconset theme="help-about">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
   </action>
   <action name="actionAbout_Qt">
    <property name="text">
-    <string>About Qt</string>
+    <string>About &amp;Qt</string>
    </property>
   </action>
   <action name="actionGeneral_Settings">
    <property name="text">
-    <string>General Settings</string>
+    <string>&amp;General Settings</string>
    </property>
   </action>
   <action name="actionShare">
    <property name="icon">
-    <iconset theme="document-share"/>
+    <iconset theme="document-share">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Share</string>
+    <string>&amp;Share</string>
+   </property>
+  </action>
+  <action name="actionReport_Bug">
+   <property name="icon">
+    <iconset theme="tools-report-bug"/>
+   </property>
+   <property name="text">
+    <string>Report Bug</string>
    </property>
   </action>
  </widget>

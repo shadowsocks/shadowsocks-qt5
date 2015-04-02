@@ -12,3 +12,14 @@ LogDialog::~LogDialog()
 {
     delete ui;
 }
+
+void LogDialog::clear()
+{
+    ui->logBrowser->clear();
+}
+
+void LogDialog::append(const QString &str)
+{
+    ui->logBrowser->append(str);
+    ui->logBrowser->moveCursor(QTextCursor::End);
+}

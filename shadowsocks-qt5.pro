@@ -5,14 +5,13 @@
 #-------------------------------------------------
 
 QT        += core gui widgets network concurrent
-win32: QT += winextras
 linux: QT += dbus
 
 CONFIG    += c++11
 
 TARGET     = ss-qt5
 TEMPLATE   = app
-VERSION    = 0.9.4
+VERSION    = 1.9.9
 DEFINES   += APP_VERSION=\\\"$$VERSION\\\"
 
 include(src/ss-qt5.pri)
