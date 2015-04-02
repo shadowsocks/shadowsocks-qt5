@@ -9,7 +9,8 @@ SOURCES      += src/main.cpp\
                 src/configuration.cpp \
                 src/qrwidget.cpp \
                 src/sharedialog.cpp \
-    $$PWD/editdialog.cpp
+    $$PWD/editdialog.cpp \
+    $$PWD/logdialog.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ss_process.h \
@@ -21,12 +22,14 @@ HEADERS      += src/mainwindow.h \
                 src/configuration.h \
                 src/qrwidget.h \
                 src/sharedialog.h \
-    $$PWD/editdialog.h
+    $$PWD/editdialog.h \
+    $$PWD/logdialog.h
 
 FORMS        += src/mainwindow.ui \
                 src/addprofiledialog.ui \
                 src/sharedialog.ui \
-    $$PWD/editdialog.ui
+    $$PWD/editdialog.ui \
+    $$PWD/logdialog.ui
 
 RESOURCES    += src/icons.qrc \
                 src/translations.qrc
