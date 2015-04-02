@@ -93,6 +93,8 @@
     <addaction name="separator"/>
     <addaction name="actionConnect"/>
     <addaction name="actionDisconnect"/>
+    <addaction name="separator"/>
+    <addaction name="actionView_Log"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -121,21 +123,33 @@
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionManual">
+   <property name="icon">
+    <iconset theme="edit-guides"/>
+   </property>
    <property name="text">
     <string>&amp;Manual</string>
    </property>
   </action>
   <action name="actionQR_Code">
+   <property name="icon">
+    <iconset theme="edit-image-face-recognize"/>
+   </property>
    <property name="text">
     <string>&amp;Scan QR Code on Screen</string>
    </property>
   </action>
   <action name="actionQR_Code_from_File">
+   <property name="icon">
+    <iconset theme="document-open"/>
+   </property>
    <property name="text">
     <string>&amp;QR Code from File</string>
    </property>
   </action>
   <action name="actionURI">
+   <property name="icon">
+    <iconset theme="text-field"/>
+   </property>
    <property name="text">
     <string>&amp;URI</string>
    </property>
@@ -206,6 +220,9 @@
    </property>
   </action>
   <action name="actionGeneral_Settings">
+   <property name="icon">
+    <iconset theme="configure"/>
+   </property>
    <property name="text">
     <string>&amp;General Settings</string>
    </property>
@@ -222,10 +239,20 @@
   </action>
   <action name="actionReport_Bug">
    <property name="icon">
-    <iconset theme="tools-report-bug"/>
+    <iconset theme="tools-report-bug">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Report Bug</string>
+    <string>&amp;Report Bug</string>
+   </property>
+  </action>
+  <action name="actionView_Log">
+   <property name="icon">
+    <iconset theme="view-list-text"/>
+   </property>
+   <property name="text">
+    <string>View Log</string>
    </property>
   </action>
  </widget>
