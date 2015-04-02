@@ -3,14 +3,14 @@
         <file alias="actions/application-exit.png">icons/Breeze/actions/application-exit.png</file>
         <file alias="actions/document-open.png">icons/Breeze/actions/document-open.png</file>
         <file alias="actions/document-revert.png">icons/Breeze/actions/document-revert.png</file>
+        <file alias="actions/document-edit.png">icons/Breeze/actions/document-edit.png</file>
         <file alias="actions/document-save.png">icons/Breeze/actions/document-save.png</file>
         <file alias="actions/document-share.png">icons/Breeze/actions/document-share.png</file>
-        <file alias="actions/edit-copy.png">icons/Breeze/actions/edit-copy.png</file>
         <file alias="actions/help-about.png">icons/Breeze/actions/help-about.png</file>
         <file alias="actions/list-add.png">icons/Breeze/actions/list-add.png</file>
         <file alias="actions/list-remove.png">icons/Breeze/actions/list-remove.png</file>
-        <file alias="actions/media-playback-start.png">icons/Breeze/actions/media-playback-start.png</file>
-        <file alias="actions/media-playback-stop.png">icons/Breeze/actions/media-playback-stop.png</file>
+        <file alias="actions/network-connect.png">icons/Breeze/actions/network-connect.png</file>
+        <file alias="actions/network-disconnect.png">icons/Breeze/actions/network-disconnect.png</file>
         <file alias="index.theme">icons/Breeze/index.theme</file>
         <file>icons/shadowsocks-qt5.png</file>
     </qresource>

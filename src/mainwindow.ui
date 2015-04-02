@@ -6,24 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>450</width>
     <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>600</width>
-    <height>400</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>600</width>
+    <width>400</width>
     <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Control Panel</string>
+   <string>Connection Manager</string>
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
@@ -32,607 +26,184 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="generalTab">
-       <attribute name="title">
-        <string>General</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_2" rowstretch="10,0,0">
-        <item row="0" column="2" rowspan="2">
-         <layout class="QGridLayout" name="gridLayout_r">
-          <item row="4" column="0">
-           <widget class="QLabel" name="lportLabel">
-            <property name="text">
-             <string>Local Port</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="pwdLabel">
-            <property name="text">
-             <string>Password</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="pwdEdit">
-            <property name="echoMode">
-             <enum>QLineEdit::PasswordEchoOnEdit</enum>
-            </property>
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="sportLabel">
-            <property name="text">
-             <string>Server Port</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="laddrEdit">
-            <property name="toolTip">
-             <string>Local socks proxy address
-Use 0.0.0.0 if you want to share this proxy to all connected devices
-Or use intranet IP address to share proxy to devices in local network
-Otherwise, simply use 127.0.0.1</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="lportEdit">
-            <property name="toolTip">
-             <string>Local socks proxy port</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="serverLabel">
-            <property name="text">
-             <string>Server Address</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QSpinBox" name="timeoutSpinBox">
-            <property name="correctionMode">
-             <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
-            </property>
-            <property name="suffix">
-             <string notr="true"> second(s)</string>
-            </property>
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <number>3600</number>
-            </property>
-            <property name="singleStep">
-             <number>30</number>
-            </property>
-            <property name="value">
-             <number>600</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="laddrLabel">
-            <property name="text">
-             <string>Local Address</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="timeoutLabel">
-            <property name="text">
-             <string>Timeout</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="serverEdit">
-            <property name="toolTip">
-             <string>Shadowsocks server's domain or IP address</string>
-            </property>
-            <property name="maxLength">
-             <number>200</number>
-            </property>
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="sportEdit">
-            <property name="toolTip">
-             <string>Shadowsocks server's port</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="methodLabel">
-            <property name="text">
-             <string>Encryption Method</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QComboBox" name="methodComboBox">
-            <property name="currentText">
-             <string notr="true"/>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0" colspan="2">
-           <widget class="QCheckBox" name="tfoCheckBox">
-            <property name="toolTip">
-             <string>Only available in Linux with Kernel &gt;= 3.7
-Not every port of Shadowsocks support this option.</string>
-            </property>
-            <property name="text">
-             <string>Use TCP Fast Open if available</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="0" rowspan="2">
-         <layout class="QGridLayout" name="gridLayout_l">
-          <item row="1" column="1" colspan="4">
-           <widget class="QComboBox" name="backendTypeCombo">
-            <property name="toolTip">
-             <string>Choose which type of Shadowsocks backend to use
-Note: This has nothing to with your shadowsocks server</string>
-            </property>
-            <property name="currentIndex">
-             <number>-1</number>
-            </property>
-            <item>
-             <property name="text">
-              <string>Shadowsocks-libev</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Shadowsocks-NodeJS</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Shadowsocks-Go</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Shadowsocks-Python</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>libQtShadowsocks</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="backendLabel">
-            <property name="text">
-             <string>Backend</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QToolButton" name="backendToolButton">
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-open">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QToolButton" name="addProfileButton">
-            <property name="text">
-             <string>+</string>
-            </property>
-            <property name="icon">
-             <iconset theme="list-add">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="backendTypeLabel">
-            <property name="text">
-             <string>Backend Type</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1" colspan="3">
-           <widget class="QLineEdit" name="backendEdit">
-            <property name="cursor">
-             <cursorShape>ForbiddenCursor</cursorShape>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
-            <property name="toolTip">
-             <string>Path to command-line Shadowsocks backend (libQtShadowsocks doesn't apply)</string>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-            <property name="clearButtonEnabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QToolButton" name="delProfileButton">
-            <property name="text">
-             <string>-</string>
-            </property>
-            <property name="icon">
-             <iconset theme="list-remove">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="profileLabel">
-            <property name="text">
-             <string>Profile</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" colspan="2">
-           <widget class="QComboBox" name="profileComboBox"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="customArgLabel">
-            <property name="text">
-             <string>Custom Arguments</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1" colspan="4">
-           <widget class="QLineEdit" name="customArgEdit">
-            <property name="toolTip">
-             <string>Additional arguments for command-line Shadowsocks backend (libQtShadowsocks doesn't apply)</string>
-            </property>
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QPushButton" name="startButton">
-            <property name="text">
-             <string>Start</string>
-            </property>
-            <property name="icon">
-             <iconset theme="media-playback-start">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stopButton">
-            <property name="text">
-             <string>Stop</string>
-            </property>
-            <property name="icon">
-             <iconset theme="media-playback-stop">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacerStartStop">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="shareButton">
-            <property name="toolTip">
-             <string>Generate QR code to share current profile</string>
-            </property>
-            <property name="text">
-             <string>Share</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-share">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="1" rowspan="3">
-         <widget class="Line" name="vLine">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <layout class="QHBoxLayout" name="profileButtonLayout">
-          <item>
-           <widget class="QPushButton" name="profileResetButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Reset</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-revert">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacerPBL">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="profileSaveButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Save</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-save">
-              <normaloff/>
-             </iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="logTab">
-       <attribute name="title">
-        <string>Log</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QTextBrowser" name="logBrowser">
-          <property name="styleSheet">
-           <string notr="true">color: rgb(236, 236, 236);
-background-color: rgb(0, 0, 0);</string>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="lineWidth">
-           <number>0</number>
-          </property>
-          <property name="openExternalLinks">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="miscTab">
-       <attribute name="title">
-        <string>Miscellaneous</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="5" column="0" colspan="3">
-         <widget class="QCheckBox" name="translucentCheck">
-          <property name="text">
-           <string>Use translucent background</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="3">
-         <widget class="QCheckBox" name="autostartCheck">
-          <property name="toolTip">
-           <string>Start backend automatically if current profile is valid when ss-qt5 started</string>
-          </property>
-          <property name="text">
-           <string>Autostart if profile is valid</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="0" colspan="3">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="11" column="2">
-         <widget class="QPushButton" name="miscSaveButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Save</string>
-          </property>
-          <property name="icon">
-           <iconset theme="document-save">
-            <normaloff/>
-           </iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="0">
-         <widget class="QPushButton" name="aboutButton">
-          <property name="text">
-           <string>About</string>
-          </property>
-          <property name="icon">
-           <iconset theme="help-about">
-            <normaloff/>
-           </iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0" colspan="3">
-         <widget class="QCheckBox" name="autohideCheck">
-          <property name="text">
-           <string>Auto hide main window when started</string>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="1">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="2" column="0" colspan="3">
-         <widget class="QCheckBox" name="debugCheck">
-          <property name="text">
-           <string>Debug-level log</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0" colspan="3">
-         <widget class="QCheckBox" name="relativePathCheck">
-          <property name="toolTip">
-           <string>Use relative path to backend executables</string>
-          </property>
-          <property name="text">
-           <string>Use relative path instead of absolute path</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0" colspan="3">
-         <widget class="QCheckBox" name="useSystrayCheck">
-          <property name="toolTip">
-           <string>This will enable application minimise to system tray
-If system tray icon doesn't show or malfunction, please uncheck this option
-Need application restart to take effect</string>
-          </property>
-          <property name="text">
-           <string>Use system tray</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0" colspan="3">
-         <widget class="QCheckBox" name="singleInstanceCheck">
-          <property name="toolTip">
-           <string>Only one ss-qt5 instance is allowed to run
-If ss-qt5 crashed, you may need to delete shared memeory files manually to avoid errors</string>
-          </property>
-          <property name="text">
-           <string>Allow only one instance running</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
+     <widget class="QTableView" name="connectionView"/>
     </item>
    </layout>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllToolBarAreas</set>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonFollowStyle</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionConnect"/>
+   <addaction name="actionDisconnect"/>
+   <addaction name="separator"/>
+   <addaction name="actionEdit"/>
+   <addaction name="actionDelete"/>
+   <addaction name="actionShare"/>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>450</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuConnection">
+    <property name="title">
+     <string>&amp;Connection</string>
+    </property>
+    <widget class="QMenu" name="menuAdd">
+     <property name="title">
+      <string>Add</string>
+     </property>
+     <property name="icon">
+      <iconset theme="list-add"/>
+     </property>
+     <addaction name="actionManual"/>
+     <addaction name="actionURI"/>
+     <addaction name="actionQR_Code_from_File"/>
+     <addaction name="actionQR_Code"/>
+    </widget>
+    <addaction name="actionEdit"/>
+    <addaction name="actionShare"/>
+    <addaction name="menuAdd"/>
+    <addaction name="actionDelete"/>
+    <addaction name="separator"/>
+    <addaction name="actionConnect"/>
+    <addaction name="actionDisconnect"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Fi&amp;le</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settin&amp;gs</string>
+    </property>
+    <addaction name="actionGeneral_Settings"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="actionAbout_Qt"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuConnection"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionManual">
+   <property name="text">
+    <string>Manual</string>
+   </property>
+  </action>
+  <action name="actionQR_Code">
+   <property name="text">
+    <string>Scan QR Code on Screen</string>
+   </property>
+  </action>
+  <action name="actionQR_Code_from_File">
+   <property name="text">
+    <string>QR Code from File</string>
+   </property>
+  </action>
+  <action name="actionURI">
+   <property name="text">
+    <string>URI</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="icon">
+    <iconset theme="list-remove"/>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </action>
+  <action name="actionEdit">
+   <property name="icon">
+    <iconset theme="document-edit"/>
+   </property>
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="actionConnect">
+   <property name="icon">
+    <iconset theme="network-connect"/>
+   </property>
+   <property name="text">
+    <string>Connect</string>
+   </property>
+  </action>
+  <action name="actionDisconnect">
+   <property name="icon">
+    <iconset theme="network-disconnect"/>
+   </property>
+   <property name="text">
+    <string>Disconnect</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset theme="application-exit"/>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset theme="help-about"/>
+   </property>
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionGeneral_Settings">
+   <property name="text">
+    <string>General Settings</string>
+   </property>
+  </action>
+  <action name="actionShare">
+   <property name="icon">
+    <iconset theme="document-share"/>
+   </property>
+   <property name="text">
+    <string>Share</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <tabstops>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>profileComboBox</tabstop>
-  <tabstop>addProfileButton</tabstop>
-  <tabstop>delProfileButton</tabstop>
-  <tabstop>backendTypeCombo</tabstop>
-  <tabstop>backendToolButton</tabstop>
-  <tabstop>customArgEdit</tabstop>
-  <tabstop>serverEdit</tabstop>
-  <tabstop>sportEdit</tabstop>
-  <tabstop>pwdEdit</tabstop>
-  <tabstop>laddrEdit</tabstop>
-  <tabstop>lportEdit</tabstop>
-  <tabstop>methodComboBox</tabstop>
-  <tabstop>timeoutSpinBox</tabstop>
-  <tabstop>tfoCheckBox</tabstop>
-  <tabstop>profileResetButton</tabstop>
-  <tabstop>profileSaveButton</tabstop>
-  <tabstop>startButton</tabstop>
-  <tabstop>stopButton</tabstop>
-  <tabstop>shareButton</tabstop>
-  <tabstop>logBrowser</tabstop>
-  <tabstop>debugCheck</tabstop>
-  <tabstop>autostartCheck</tabstop>
-  <tabstop>autohideCheck</tabstop>
-  <tabstop>translucentCheck</tabstop>
-  <tabstop>relativePathCheck</tabstop>
-  <tabstop>useSystrayCheck</tabstop>
-  <tabstop>singleInstanceCheck</tabstop>
-  <tabstop>aboutButton</tabstop>
-  <tabstop>miscSaveButton</tabstop>
- </tabstops>
  <resources>
   <include location="icons.qrc"/>
  </resources>
