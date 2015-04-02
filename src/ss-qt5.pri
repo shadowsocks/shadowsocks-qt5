@@ -8,7 +8,8 @@ SOURCES      += src/main.cpp\
                 src/ssprofile.cpp \
                 src/configuration.cpp \
                 src/qrwidget.cpp \
-                src/sharedialog.cpp
+                src/sharedialog.cpp \
+    $$PWD/editdialog.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ss_process.h \
@@ -19,11 +20,13 @@ HEADERS      += src/mainwindow.h \
                 src/ssvalidator.h \
                 src/configuration.h \
                 src/qrwidget.h \
-                src/sharedialog.h
+                src/sharedialog.h \
+    $$PWD/editdialog.h
 
 FORMS        += src/mainwindow.ui \
                 src/addprofiledialog.ui \
-                src/sharedialog.ui
+                src/sharedialog.ui \
+    $$PWD/editdialog.ui
 
 RESOURCES    += src/icons.qrc \
                 src/translations.qrc
