@@ -8,8 +8,6 @@
 
 #include <QObject>
 #include <QtShadowsocks>
-#include "editdialog.h"
-#include "logdialog.h"
 
 class Connection : public QObject
 {
@@ -18,23 +16,23 @@ public:
     explicit Connection(const QString &_name, const QSS::Profile &_profile, const int &_loglevel, QObject *parent = 0);
     ~Connection();
 
+    const QString& getName() const;
+    QByteArray getURI() const;
+
 signals:
     void stateChanged(bool started);
 
 public slots:
     void start();
     void stop();
-    void edit();
-    void shareDialog();
-    void logDialog();
 
 private:
     QString name;
     QSS::Controller *controller;
     QSS::Profile profile;
     int logLevel;
-    EditDialog *editDlg;
-    LogDialog *logDlg;
+
+    friend class EditDialog;
 };
 
 #endif // CONNECTION_H
