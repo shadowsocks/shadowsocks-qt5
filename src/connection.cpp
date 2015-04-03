@@ -3,11 +3,11 @@
 
 using namespace QSS;
 
-Connection::Connection(const QString &_name, const QSS::Profile &_profile, const int &_loglevel, QObject *parent) :
+Connection::Connection(const QString &_name, const QSS::Profile &_profile, const bool _debug, QObject *parent) :
     QObject(parent),
     name(_name),
     profile(_profile),
-    logLevel(_loglevel)
+    debug(_debug)
 {
     controller = new Controller(true, this);
 

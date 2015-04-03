@@ -145,12 +145,15 @@
        <widget class="QLineEdit" name="nameEdit"/>
       </item>
       <item row="11" column="1">
-       <widget class="QComboBox" name="logLevelComboBox">
+       <widget class="QCheckBox" name="debugCheckBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Debug</string>
         </property>
        </widget>
       </item>
@@ -198,7 +201,6 @@
   <tabstop>localPortEdit</tabstop>
   <tabstop>encryptComboBox</tabstop>
   <tabstop>timeoutSpinBox</tabstop>
-  <tabstop>logLevelComboBox</tabstop>
  </tabstops>
  <resources/>
  <connections>

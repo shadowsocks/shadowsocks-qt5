@@ -13,7 +13,7 @@ class Connection : public QObject
 {
     Q_OBJECT
 public:
-    explicit Connection(const QString &_name, const QSS::Profile &_profile, const int &_loglevel, QObject *parent = 0);
+    explicit Connection(const QString &_name, const QSS::Profile &_profile, const bool _debug, QObject *parent = 0);
     ~Connection();
 
     const QString& getName() const;
@@ -30,7 +30,7 @@ private:
     QString name;
     QSS::Controller *controller;
     QSS::Profile profile;
-    int logLevel;
+    bool debug;
 
     friend class EditDialog;
 };

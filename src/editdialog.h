@@ -24,6 +24,9 @@ public:
 private:
     Ui::EditDialog *ui;
     Connection *connection;
+
+private slots:
+    void save();
 };
 
 #endif // EDITDIALOG_H
