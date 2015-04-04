@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "connection.h"
 #include <QApplication>
 #include <QTranslator>
 #include <QLibraryInfo>
@@ -13,6 +14,8 @@ static void onSIGINT_TERM(int sig)
 
 int main(int argc, char *argv[])
 {
+    qRegisterMetaTypeStreamOperators<SQProfile>("SQProfile");
+
     QApplication a(argc, argv);
 
     signal(SIGINT, onSIGINT_TERM);

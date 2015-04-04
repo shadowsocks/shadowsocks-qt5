@@ -9,14 +9,31 @@
 #include <QObject>
 #include <QtShadowsocks>
 
+struct SQProfile
+{
+    bool debug;
+    quint16 serverPort;
+    quint16 localPort;
+    QString name;
+    QString serverAddress;
+    QString localAddress;
+    QString method;
+    QString password;
+    int timeout;
+};
+Q_DECLARE_METATYPE(SQProfile)
+
+QDataStream& operator << (QDataStream &out, const SQProfile &p);
+QDataStream& operator >> (QDataStream &in, SQProfile &p);
+
 class Connection : public QObject
 {
     Q_OBJECT
 public:
-    explicit Connection(const QString &_name, const QSS::Profile &profile, const bool _debug, QObject *parent = 0);
-    Connection(Connection&&) = default;
+    explicit Connection(const SQProfile &_profile, QObject *parent = 0);
     ~Connection();
 
+    const SQProfile &getProfile() const;
     const QString& getName() const;
     QByteArray getURI() const;
     bool isValid() const;
@@ -29,15 +46,7 @@ public slots:
     void stop();
 
 private:
-    bool debug;
-    quint16 serverPort;
-    quint16 localPort;
-    QString name;
-    QString serverAddress;
-    QString localAddress;
-    QString method;
-    QString password;
-    int timeout;
+    SQProfile profile;
     QSS::Controller *controller;
 
     friend class EditDialog;

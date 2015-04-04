@@ -20,15 +20,15 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     //Maybe we shouldn't validate local address using IPv4 format?
     ui->localAddrEdit->setValidator(addrValidator);
 
-    ui->nameEdit->setText(connection->name);
-    ui->serverAddrEdit->setText(connection->serverAddress);
-    ui->serverPortEdit->setText(QString::number(connection->serverPort));
-    ui->localAddrEdit->setText(connection->localAddress);
-    ui->localPortEdit->setText(QString::number(connection->localPort));
-    ui->pwdEdit->setText(connection->password);
-    ui->encryptComboBox->setCurrentText(connection->method.toUpper());
-    ui->timeoutSpinBox->setValue(connection->timeout);
-    ui->debugCheckBox->setChecked(connection->debug);
+    ui->nameEdit->setText(connection->profile.name);
+    ui->serverAddrEdit->setText(connection->profile.serverAddress);
+    ui->serverPortEdit->setText(QString::number(connection->profile.serverPort));
+    ui->localAddrEdit->setText(connection->profile.localAddress);
+    ui->localPortEdit->setText(QString::number(connection->profile.localPort));
+    ui->pwdEdit->setText(connection->profile.password);
+    ui->encryptComboBox->setCurrentText(connection->profile.method.toUpper());
+    ui->timeoutSpinBox->setValue(connection->profile.timeout);
+    ui->debugCheckBox->setChecked(connection->profile.debug);
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &EditDialog::save);
 }
@@ -40,14 +40,14 @@ EditDialog::~EditDialog()
 
 void EditDialog::save()
 {
-    connection->name = ui->nameEdit->text();
-    connection->serverAddress = ui->serverAddrEdit->text();
-    connection->serverPort = ui->serverPortEdit->text().toUShort();
-    connection->localAddress = ui->localAddrEdit->text();
-    connection->localPort = ui->localPortEdit->text().toUShort();
-    connection->password = ui->pwdEdit->text();
-    connection->method = ui->encryptComboBox->currentText();
-    connection->timeout = ui->timeoutSpinBox->value();
-    connection->debug = ui->debugCheckBox->isChecked();
+    connection->profile.name = ui->nameEdit->text();
+    connection->profile.serverAddress = ui->serverAddrEdit->text();
+    connection->profile.serverPort = ui->serverPortEdit->text().toUShort();
+    connection->profile.localAddress = ui->localAddrEdit->text();
+    connection->profile.localPort = ui->localPortEdit->text().toUShort();
+    connection->profile.password = ui->pwdEdit->text();
+    connection->profile.method = ui->encryptComboBox->currentText();
+    connection->profile.timeout = ui->timeoutSpinBox->value();
+    connection->profile.debug = ui->debugCheckBox->isChecked();
     this->accept();
 }

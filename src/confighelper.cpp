@@ -29,6 +29,8 @@ ConfigHelper::~ConfigHelper()
 
 const QStringList ConfigHelper::headerLabels = QStringList() << tr("Name") << tr("Status") << tr("Lag") << tr("Last used");
 
+const QString ConfigHelper::profilePrefix = "Profile";
+
 QStandardItemModel *ConfigHelper::getModel() const
 {
     return model;
@@ -36,12 +38,27 @@ QStandardItemModel *ConfigHelper::getModel() const
 
 void ConfigHelper::save()
 {
-    //TODO save all profiles back
+    int size = connectionList.size();
+    settings->beginWriteArray(profilePrefix);
+    for (int i = 0; i < size; ++i) {
+        settings->setArrayIndex(i);
+        QVariant value = QVariant::fromValue<SQProfile>(connectionList.at(i)->getProfile());
+        settings->setValue("QProfile", value);
+    }
+    settings->endArray();
 }
 
 void ConfigHelper::readConfiguration()
 {
-    //TODO parse JSON file, fill in connectionList
+    int size = settings->beginReadArray(profilePrefix);
+    for (int i = 0; i < size; ++i) {
+        settings->setArrayIndex(i);
+        QVariant value = settings->value("SQProfile");
+        SQProfile profile = value.value<SQProfile>();
+        Connection *con = new Connection(profile, this);
+        connectionList.append(con);
+    }
+    settings->endArray();
 }
 
 void ConfigHelper::fillModel()

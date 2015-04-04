@@ -21,12 +21,13 @@ private:
     QSettings *settings;
     QStandardItemModel *model;
     QString configFile;
-    QList<Connection> connectionList;
+    QList<Connection*> connectionList;
 
     void readConfiguration();
     void fillModel();
 
     static const QStringList headerLabels;
+    static const QString profilePrefix;
 };
 
 #endif // CONFIGHELPER_H
