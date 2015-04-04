@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "ss_process.h"
 #include <QApplication>
 #include <QTranslator>
 #include <QLibraryInfo>

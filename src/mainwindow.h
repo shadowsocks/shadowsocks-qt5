@@ -42,19 +42,23 @@ private slots:
     inline void onAbout() { QMessageBox::about(this, tr("About"), aboutText); }
     void showWindow();
     void onSystrayActivated(QSystemTrayIcon::ActivationReason);
+    void onReportBug();
 
 private:
     QString jsonconfigFile;
     QMenu *systrayMenu;
     QSystemTrayIcon *systray;
-    static const QString aboutText;
     Ui::MainWindow *ui;
 #ifdef UBUNTU_UNITY
     GtkWidget *showItem;
 #endif
+
     void createSystemTray();
     void showNotification(const QString &);
     void blockChildrenSignals(bool);
+
+    static const QString aboutText;
+    static const QUrl issueUrl;
 
 protected:
     void closeEvent(QCloseEvent *);

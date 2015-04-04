@@ -2,11 +2,12 @@
 #include "ui_mainwindow.h"
 #include "connection.h"
 
-#include <QMenu>
 #include <QCoreApplication>
+#include <QDesktopServices>
 #include <QDesktopWidget>
-#include <QWindow>
 #include <QDir>
+#include <QMenu>
+#include <QWindow>
 
 #ifdef Q_OS_LINUX
 #include <QDBusMessage>
@@ -42,6 +43,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Move to the center of the screen
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
+
+    connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
+    connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
+    connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
+    connect(ui->actionReport_Bug, &QAction::triggered, this, &MainWindow::onReportBug);
 }
 
 MainWindow::~MainWindow()
@@ -51,6 +57,8 @@ MainWindow::~MainWindow()
 }
 
 const QString MainWindow::aboutText = "<h3>Cross-Platform Shadowsocks GUI Client</h3><p>Version: " + QString(APP_VERSION) + "</p><p>Copyright © 2014-2015 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>";
+
+const QUrl MainWindow::issueUrl = QUrl("https://github.com/librehat/shadowsocks-qt5/issues");
 
 void MainWindow::minimizeToSysTray()
 {
@@ -143,6 +151,11 @@ void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)
     if (r != QSystemTrayIcon::Context) {
         showWindow();
     }
+}
+
+void MainWindow::onReportBug()
+{
+    QDesktopServices::openUrl(issueUrl);
 }
 
 void MainWindow::closeEvent(QCloseEvent *)
