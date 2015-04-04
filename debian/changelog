@@ -1,3 +1,9 @@
+shadowsocks-qt5 (0.9.5-1) stable; urgency=medium
+
+  * minor improvements and fixes
+
+ -- Symeon Huang <hzwhuang@gmail>  Sat, 04 Apr 2015 16:35:00 +0000
+
 shadowsocks-qt5 (0.9.4-1) stable; urgency=medium
 
   * minor improvements and fixes
