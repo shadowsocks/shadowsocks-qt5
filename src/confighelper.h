@@ -20,6 +20,8 @@ public:
     //The parent of con will be this ConfigHelper instance
     void addConnection(Connection *con);
     void deleteRow(int row);
+    void updateRow(int row);
+    Connection *connectionAt(int row);
 
 private:
     QSettings *settings;

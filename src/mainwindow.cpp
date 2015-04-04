@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
     connect(ui->actionManual, &QAction::triggered, this, &MainWindow::onAddManually);
     connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::onDelete);
+    connect(ui->actionEdit, &QAction::triggered, this, &MainWindow::onEdit);
+    connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReport_Bug, &QAction::triggered, this, &MainWindow::onReportBug);
@@ -155,6 +157,25 @@ void MainWindow::onAddManually()
 void MainWindow::onDelete()
 {
     configHelper->deleteRow(ui->connectionView->currentIndex().row());
+}
+
+void MainWindow::onEdit()
+{
+    editRow(ui->connectionView->currentIndex().row());
+}
+
+void MainWindow::onDoubleClicked(const QModelIndex &index)
+{
+    editRow(index.row());
+}
+
+void MainWindow::editRow(int row)
+{
+    Connection *con = configHelper->connectionAt(row);
+    EditDialog *editDlg = new EditDialog(con, this);
+    if (editDlg->exec()) {
+        configHelper->updateRow(row);
+    }
 }
 
 void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)

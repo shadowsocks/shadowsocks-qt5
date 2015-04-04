@@ -41,6 +41,8 @@ public:
 private slots:
     void onAddManually();
     void onDelete();
+    void onEdit();
+    void onDoubleClicked(const QModelIndex &index);
     inline void onAbout() { QMessageBox::about(this, tr("About"), aboutText); }
     void showWindow();
     void onSystrayActivated(QSystemTrayIcon::ActivationReason);
@@ -55,6 +57,7 @@ private:
     GtkWidget *showItem;
 #endif
 
+    void editRow(int row);
     void createSystemTray();
     void showNotification(const QString &);
     void blockChildrenSignals(bool);
