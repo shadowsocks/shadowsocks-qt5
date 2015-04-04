@@ -7,6 +7,7 @@
 #define CONNECTION_H
 
 #include <QObject>
+#include <QDateTime>
 #include <QtShadowsocks>
 
 struct SQProfile
@@ -20,6 +21,8 @@ struct SQProfile
     QString method;
     QString password;
     int timeout;
+    int lag;
+    QDateTime lastTime;
 };
 Q_DECLARE_METATYPE(SQProfile)
 
@@ -50,6 +53,7 @@ private:
     QSS::Controller *controller;
 
     friend class EditDialog;
+    friend class ConfigHelper;
 };
 
 #endif // CONNECTION_H

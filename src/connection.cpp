@@ -1,17 +1,15 @@
 #include "connection.h"
 #include "ssvalidator.h"
 
-using namespace QSS;
-
 QDataStream& operator << (QDataStream &out, const SQProfile &p)
 {
-    out << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout;
+    out << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.lag << p.lastTime;
     return out;
 }
 
 QDataStream& operator >> (QDataStream &in, SQProfile &p)
 {
-    in >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout;
+    in >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.lag >> p.lastTime;
     return in;
 }
 
@@ -19,9 +17,9 @@ Connection::Connection(const SQProfile &_profile, QObject *parent) :
     QObject(parent),
     profile(_profile)
 {
-    controller = new Controller(true, this);
+    controller = new QSS::Controller(true, this);
 
-    connect(controller, &Controller::runningStateChanged, this, &Connection::stateChanged);
+    connect(controller, &QSS::Controller::runningStateChanged, this, &Connection::stateChanged);
 }
 
 Connection::~Connection()
@@ -58,7 +56,7 @@ bool Connection::isValid() const
 
 void Connection::start()
 {
-    Profile qssprofile;
+    QSS::Profile qssprofile;
     qssprofile.server = profile.serverAddress;
     qssprofile.server_port = profile.serverPort;
     qssprofile.local_address = profile.localAddress;
@@ -68,6 +66,7 @@ void Connection::start()
     qssprofile.timeout = profile.timeout;
     controller->setup(qssprofile);
     controller->start();
+    profile.lastTime = QDateTime::currentDateTime();
 }
 
 void Connection::stop()

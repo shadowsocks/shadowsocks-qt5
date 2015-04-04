@@ -17,9 +17,10 @@ ConfigHelper::ConfigHelper(QObject *parent) :
 
     settings = new QSettings(configFile, QSettings::IniFormat, this);
 
-    model = new QStandardItemModel(0, 4, this);
+    model = new QStandardItemModel(0, 3, this);
     model->setHorizontalHeaderLabels(headerLabels);
     readConfiguration();
+    fillModel();
 }
 
 ConfigHelper::~ConfigHelper()
@@ -27,7 +28,7 @@ ConfigHelper::~ConfigHelper()
     save();
 }
 
-const QStringList ConfigHelper::headerLabels = QStringList() << tr("Name") << tr("Status") << tr("Lag") << tr("Last used");
+const QStringList ConfigHelper::headerLabels = QStringList() << tr("Name") << tr("Lag") << tr("Last used");
 
 const QString ConfigHelper::profilePrefix = "Profile";
 
@@ -63,5 +64,12 @@ void ConfigHelper::readConfiguration()
 
 void ConfigHelper::fillModel()
 {
-    //TODO use connectionList to fill model
+    for (auto it = connectionList.begin(); it != connectionList.end(); ++it) {
+        QList<QStandardItem *> items;
+        QStandardItem *name = new QStandardItem((*it)->profile.name);
+        QStandardItem *lag = new QStandardItem(QString::number((*it)->profile.lag));
+        QStandardItem *last = new QStandardItem((*it)->profile.lastTime.toString());
+        items << name << lag << last;
+        model->appendRow(items);
+    }
 }
