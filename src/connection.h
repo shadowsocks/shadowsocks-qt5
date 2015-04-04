@@ -55,5 +55,6 @@ private:
     friend class EditDialog;
     friend class ConfigHelper;
 };
+Q_DECLARE_METATYPE(Connection*)
 
 #endif // CONNECTION_H

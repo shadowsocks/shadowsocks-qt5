@@ -19,12 +19,14 @@ public:
 
     //The parent of con will be this ConfigHelper instance
     void addConnection(Connection *con);
+    void deleteRow(int row);
 
 private:
     QSettings *settings;
     QStandardItemModel *model;
     QString configFile;
     QList<Connection*> connectionList;
+    void appendConnectionToList(Connection *con);
 
     void readConfiguration();
     void fillModel();

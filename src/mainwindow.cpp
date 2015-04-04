@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
     connect(ui->actionManual, &QAction::triggered, this, &MainWindow::onAddManually);
+    connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::onDelete);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReport_Bug, &QAction::triggered, this, &MainWindow::onReportBug);
@@ -149,6 +150,11 @@ void MainWindow::onAddManually()
     } else {
         newCon->deleteLater();
     }
+}
+
+void MainWindow::onDelete()
+{
+    configHelper->deleteRow(ui->connectionView->currentIndex().row());
 }
 
 void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)

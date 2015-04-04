@@ -53,8 +53,22 @@ void ConfigHelper::addConnection(Connection *con)
 {
     con->setParent(this);
     connectionList.append(con);
+    appendConnectionToList(con);
+}
+
+void ConfigHelper::deleteRow(int row)
+{
+    Connection *removed = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
+    connectionList.removeAll(removed);
+    model->removeRow(row);
+}
+
+void ConfigHelper::appendConnectionToList(Connection *con)
+{
     QList<QStandardItem *> items;
-    QStandardItem *name = new QStandardItem(con->profile.name);
+    QStandardItem *name = new QStandardItem();
+    name->setData(QVariant(con->profile.name), Qt::DisplayRole);
+    name->setData(QVariant::fromValue(con), Qt::UserRole);
     QStandardItem *lag = new QStandardItem(QString::number(con->profile.lag));
     QStandardItem *last = new QStandardItem(con->profile.lastTime.toString());
     items << name << lag << last;
@@ -77,11 +91,6 @@ void ConfigHelper::readConfiguration()
 void ConfigHelper::fillModel()
 {
     for (auto it = connectionList.begin(); it != connectionList.end(); ++it) {
-        QList<QStandardItem *> items;
-        QStandardItem *name = new QStandardItem((*it)->profile.name);
-        QStandardItem *lag = new QStandardItem(QString::number((*it)->profile.lag));
-        QStandardItem *last = new QStandardItem((*it)->profile.lastTime.toString());
-        items << name << lag << last;
-        model->appendRow(items);
+        appendConnectionToList(*it);
     }
 }

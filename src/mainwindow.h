@@ -40,6 +40,7 @@ public:
 
 private slots:
     void onAddManually();
+    void onDelete();
     inline void onAbout() { QMessageBox::about(this, tr("About"), aboutText); }
     void showWindow();
     void onSystrayActivated(QSystemTrayIcon::ActivationReason);
