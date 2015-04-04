@@ -1,11 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "connection.h"
 
 #include <QCoreApplication>
 #include <QDesktopServices>
 #include <QDesktopWidget>
-#include <QDir>
 #include <QMenu>
 #include <QWindow>
 
@@ -22,15 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //initialisation
-#ifdef Q_OS_WIN
-    jsonconfigFile = QCoreApplication::applicationDirPath() + "/config.json";
-#else
-    QDir ssConfigDir = QDir::homePath() + "/.config/shadowsocks-qt5";
-    jsonconfigFile = ssConfigDir.absolutePath() + "/config.json";
-    if (!ssConfigDir.exists()) {
-        ssConfigDir.mkpath(ssConfigDir.absolutePath());
-    }
-#endif
+    configHelper = new ConfigHelper(this);
+    ui->connectionView->setModel(configHelper->getModel());
 
     /*
      * There is a bug on KDE Frameworks 5: https://bugs.kde.org/show_bug.cgi?id=343976

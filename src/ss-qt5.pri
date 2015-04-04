@@ -8,7 +8,8 @@ SOURCES      += src/main.cpp\
                 src/sharedialog.cpp \
                 src/editdialog.cpp \
                 src/logdialog.cpp \
-                src/connection.cpp
+                src/connection.cpp \
+                src/confighelper.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ip4validator.h \
@@ -19,7 +20,8 @@ HEADERS      += src/mainwindow.h \
                 src/sharedialog.h \
                 src/editdialog.h \
                 src/logdialog.h \
-                src/connection.h
+                src/connection.h \
+                src/confighelper.h
 
 FORMS        += src/mainwindow.ui \
                 src/addprofiledialog.ui \

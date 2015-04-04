@@ -11,7 +11,7 @@
 #include <QSystemTrayIcon>
 #include <QMessageBox>
 #include <QCloseEvent>
-#include "connection.h"
+#include "confighelper.h"
 
 #ifdef UBUNTU_UNITY
 #undef signals
@@ -45,7 +45,7 @@ private slots:
     void onReportBug();
 
 private:
-    QString jsonconfigFile;
+    ConfigHelper *configHelper;
     QMenu *systrayMenu;
     QSystemTrayIcon *systray;
     Ui::MainWindow *ui;
@@ -57,6 +57,7 @@ private:
     void showNotification(const QString &);
     void blockChildrenSignals(bool);
 
+    static const QStringList headerLabels;
     static const QString aboutText;
     static const QUrl issueUrl;
 
