@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QCoreApplication>
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QMenu>

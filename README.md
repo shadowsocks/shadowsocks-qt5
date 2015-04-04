@@ -13,7 +13,8 @@ V2.0
 - Rewrite UI
 - Enable multiple profiles at the same time
 - Server latency test
-- Remove all other backends except for `libQtShadowsocks`
+- INI format configuration file
+- ~~Remove all other backends except for `libQtShadowsocks`~~
 - New flat icon
 
 Introduction

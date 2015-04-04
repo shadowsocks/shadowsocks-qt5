@@ -21,13 +21,13 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     ui->localAddrEdit->setValidator(addrValidator);
 
     ui->nameEdit->setText(connection->name);
-    ui->serverAddrEdit->setText(connection->profile.server);
-    ui->serverPortEdit->setText(QString::number(connection->profile.server_port));
-    ui->localAddrEdit->setText(connection->profile.local_address);
-    ui->localPortEdit->setText(QString::number(connection->profile.local_port));
-    ui->pwdEdit->setText(connection->profile.password);
-    ui->encryptComboBox->setCurrentText(connection->profile.method.toUpper());
-    ui->timeoutSpinBox->setValue(connection->profile.timeout);
+    ui->serverAddrEdit->setText(connection->serverAddress);
+    ui->serverPortEdit->setText(QString::number(connection->serverPort));
+    ui->localAddrEdit->setText(connection->localAddress);
+    ui->localPortEdit->setText(QString::number(connection->localPort));
+    ui->pwdEdit->setText(connection->password);
+    ui->encryptComboBox->setCurrentText(connection->method.toUpper());
+    ui->timeoutSpinBox->setValue(connection->timeout);
     ui->debugCheckBox->setChecked(connection->debug);
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &EditDialog::save);
@@ -41,13 +41,13 @@ EditDialog::~EditDialog()
 void EditDialog::save()
 {
     connection->name = ui->nameEdit->text();
-    connection->profile.server = ui->serverAddrEdit->text();
-    connection->profile.server_port = ui->serverPortEdit->text().toUShort();
-    connection->profile.local_address = ui->localAddrEdit->text();
-    connection->profile.local_port = ui->localPortEdit->text().toUShort();
-    connection->profile.password = ui->pwdEdit->text();
-    connection->profile.method = ui->encryptComboBox->currentText();
-    connection->profile.timeout = ui->timeoutSpinBox->value();
+    connection->serverAddress = ui->serverAddrEdit->text();
+    connection->serverPort = ui->serverPortEdit->text().toUShort();
+    connection->localAddress = ui->localAddrEdit->text();
+    connection->localPort = ui->localPortEdit->text().toUShort();
+    connection->password = ui->pwdEdit->text();
+    connection->method = ui->encryptComboBox->currentText();
+    connection->timeout = ui->timeoutSpinBox->value();
     connection->debug = ui->debugCheckBox->isChecked();
     this->accept();
 }

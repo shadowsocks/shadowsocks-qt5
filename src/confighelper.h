@@ -1,6 +1,7 @@
 #ifndef CONFIGHELPER_H
 #define CONFIGHELPER_H
 
+#include <QSettings>
 #include <QStandardItemModel>
 #include <QList>
 #include "connection.h"
@@ -17,9 +18,10 @@ public:
     void save();
 
 private:
+    QSettings *settings;
     QStandardItemModel *model;
-    QString jsonconfigFile;
-    QList<Connection*> connectionList;
+    QString configFile;
+    QList<Connection> connectionList;
 
     void readConfiguration();
     void fillModel();
