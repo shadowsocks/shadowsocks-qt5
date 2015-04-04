@@ -29,6 +29,8 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     ui->encryptComboBox->setCurrentText(connection->profile.method.toUpper());
     ui->timeoutSpinBox->setValue(connection->profile.timeout);
     ui->debugCheckBox->setChecked(connection->debug);
+
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &EditDialog::save);
 }
 
 EditDialog::~EditDialog()
@@ -47,4 +49,5 @@ void EditDialog::save()
     connection->profile.method = ui->encryptComboBox->currentText();
     connection->profile.timeout = ui->timeoutSpinBox->value();
     connection->debug = ui->debugCheckBox->isChecked();
+    this->accept();
 }
