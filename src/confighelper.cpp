@@ -49,6 +49,18 @@ void ConfigHelper::save()
     settings->endArray();
 }
 
+void ConfigHelper::addConnection(Connection *con)
+{
+    con->setParent(this);
+    connectionList.append(con);
+    QList<QStandardItem *> items;
+    QStandardItem *name = new QStandardItem(con->profile.name);
+    QStandardItem *lag = new QStandardItem(QString::number(con->profile.lag));
+    QStandardItem *last = new QStandardItem(con->profile.lastTime.toString());
+    items << name << lag << last;
+    model->appendRow(items);
+}
+
 void ConfigHelper::readConfiguration()
 {
     int size = settings->beginReadArray(profilePrefix);

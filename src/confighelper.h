@@ -17,6 +17,9 @@ public:
     QStandardItemModel *getModel() const;
     void save();
 
+    //The parent of con will be this ConfigHelper instance
+    void addConnection(Connection *con);
+
 private:
     QSettings *settings;
     QStandardItemModel *model;

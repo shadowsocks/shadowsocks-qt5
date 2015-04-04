@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "connection.h"
+#include "editdialog.h"
+
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QMenu>
@@ -35,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
+    connect(ui->actionManual, &QAction::triggered, this, &MainWindow::onAddManually);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReport_Bug, &QAction::triggered, this, &MainWindow::onReportBug);
@@ -134,6 +138,17 @@ void MainWindow::showWindow()
     this->setWindowState(Qt::WindowActive);
     this->activateWindow();
     ui->connectionView->setFocus();
+}
+
+void MainWindow::onAddManually()
+{
+    Connection *newCon = new Connection;
+    EditDialog *editDlg = new EditDialog(newCon, this);
+    if (editDlg->exec()) {//accepted
+        configHelper->addConnection(newCon);
+    } else {
+        newCon->deleteLater();
+    }
 }
 
 void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)

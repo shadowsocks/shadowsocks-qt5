@@ -39,6 +39,7 @@ public:
     void minimizeToSysTray();
 
 private slots:
+    void onAddManually();
     inline void onAbout() { QMessageBox::about(this, tr("About"), aboutText); }
     void showWindow();
     void onSystrayActivated(QSystemTrayIcon::ActivationReason);
