@@ -11,7 +11,6 @@
 class SSValidator
 {
 public:
-    SSValidator();
     static bool validate(QString input);
     static bool validatePort(const QString &port);
     static bool validateMethod(const QString &method);

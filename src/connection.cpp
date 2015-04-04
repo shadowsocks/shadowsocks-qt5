@@ -1,5 +1,5 @@
 #include "connection.h"
-#include "sharedialog.h"
+#include "ssvalidator.h"
 
 using namespace QSS;
 
@@ -37,6 +37,16 @@ QByteArray Connection::getURI() const
     QByteArray ba = QByteArray(ssurl.toStdString().c_str()).toBase64();
     ba.prepend("ss://");
     return ba;
+}
+
+bool Connection::isValid() const
+{
+    if (profile.server.isEmpty() || profile.local_address.isEmpty() || profile.timeout < 1 || !SSValidator::validateMethod(profile.method)) {
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 
 void Connection::start()

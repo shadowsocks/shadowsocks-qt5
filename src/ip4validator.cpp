@@ -23,8 +23,8 @@ QValidator::State IP4Validator::validate(QString &input, int &) const
           emptyGroup = true;
           continue;
         }
-        int value = slist[i].toInt(&ok);
-        if(!ok || value < 0 || value > 255) {
+        ushort value = slist[i].toUShort(&ok);
+        if(!ok || value > 255) {
             return Invalid;
         }
     }

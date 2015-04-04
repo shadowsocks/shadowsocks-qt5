@@ -18,6 +18,7 @@ public:
 
     const QString& getName() const;
     QByteArray getURI() const;
+    bool isValid() const;
 
 signals:
     void stateChanged(bool started);

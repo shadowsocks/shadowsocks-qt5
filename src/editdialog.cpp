@@ -40,9 +40,9 @@ void EditDialog::save()
 {
     connection->name = ui->nameEdit->text();
     connection->profile.server = ui->serverAddrEdit->text();
-    connection->profile.server_port = ui->serverPortEdit->text().toInt();
+    connection->profile.server_port = ui->serverPortEdit->text().toUShort();
     connection->profile.local_address = ui->localAddrEdit->text();
-    connection->profile.local_port = ui->localPortEdit->text().toInt();
+    connection->profile.local_port = ui->localPortEdit->text().toUShort();
     connection->profile.password = ui->pwdEdit->text();
     connection->profile.method = ui->encryptComboBox->currentText();
     connection->profile.timeout = ui->timeoutSpinBox->value();

@@ -2,9 +2,6 @@
 
 const QStringList SSValidator::supportedMethod = QStringList() << "TABLE" << "RC4" << "RC4-MD5" << "AES-128-CFB" << "AES-192-CFB" << "AES-256-CFB" << "BF-CFB" << "CAMELLIA-128-CFB" << "CAMELLIA-192-CFB" << "CAMELLIA-256-CFB" << "CAST5-CFB" << "CHACHA20"<< "DES-CFB" << "IDEA-CFB" << "RC2-CFB" << "SALSA20" << "SEED-CFB";//all upper-case
 
-SSValidator::SSValidator()
-{}
-
 bool SSValidator::validate(QString input)
 {
     //must begin with ss:// to distinguish from random base64 encoded strings
@@ -45,12 +42,8 @@ bool SSValidator::validate(QString input)
 bool SSValidator::validatePort(const QString &port)
 {
     bool ok;
-    int portNum = port.toInt(&ok);
-    if (portNum >= 0 && portNum <= 65535 && ok) {
-        return true;
-    }
-    else
-        return false;
+    port.toUShort(&ok);
+    return ok;
 }
 
 bool SSValidator::validateMethod(const QString &method)
