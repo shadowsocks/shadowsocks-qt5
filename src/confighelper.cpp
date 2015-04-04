@@ -44,7 +44,7 @@ void ConfigHelper::save()
     for (int i = 0; i < size; ++i) {
         settings->setArrayIndex(i);
         QVariant value = QVariant::fromValue<SQProfile>(connectionList.at(i)->getProfile());
-        settings->setValue("QProfile", value);
+        settings->setValue("SQProfile", value);
     }
     settings->endArray();
 }
