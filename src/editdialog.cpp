@@ -1,5 +1,8 @@
 #include "editdialog.h"
 #include "ui_editdialog.h"
+#include "ssvalidator.h"
+#include "ip4validator.h"
+#include "portvalidator.h"
 
 EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     QDialog(parent),
@@ -7,6 +10,15 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     connection(_connection)
 {
     ui->setupUi(this);
+
+    /* initialisation and validator setup */
+    ui->encryptComboBox->addItems(SSValidator::supportedMethod);
+    IP4Validator *addrValidator = new IP4Validator(this);
+    PortValidator *portValidator = new PortValidator(this);
+    ui->serverPortEdit->setValidator(portValidator);
+    ui->localPortEdit->setValidator(portValidator);
+    //Maybe we shouldn't validate local address using IPv4 format?
+    ui->localAddrEdit->setValidator(addrValidator);
 
     ui->nameEdit->setText(connection->name);
     ui->serverAddrEdit->setText(connection->profile.server);
