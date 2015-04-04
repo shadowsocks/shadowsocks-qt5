@@ -26,7 +26,23 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTableView" name="connectionView"/>
+     <widget class="QTableView" name="connectionView">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <property name="showGrid">
+       <bool>false</bool>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -65,7 +81,7 @@
      <x>0</x>
      <y>0</y>
      <width>450</width>
-     <height>30</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConnection">
@@ -124,7 +140,9 @@
   </widget>
   <action name="actionManual">
    <property name="icon">
-    <iconset theme="edit-guides"/>
+    <iconset theme="edit-guides">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Manual</string>
@@ -132,7 +150,9 @@
   </action>
   <action name="actionQR_Code">
    <property name="icon">
-    <iconset theme="edit-image-face-recognize"/>
+    <iconset theme="edit-image-face-recognize">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Scan QR Code on Screen</string>
@@ -140,7 +160,9 @@
   </action>
   <action name="actionQR_Code_from_File">
    <property name="icon">
-    <iconset theme="document-open"/>
+    <iconset theme="document-open">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;QR Code from File</string>
@@ -148,7 +170,9 @@
   </action>
   <action name="actionURI">
    <property name="icon">
-    <iconset theme="text-field"/>
+    <iconset theme="text-field">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;URI</string>
@@ -221,7 +245,9 @@
   </action>
   <action name="actionGeneral_Settings">
    <property name="icon">
-    <iconset theme="configure"/>
+    <iconset theme="configure">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;General Settings</string>
@@ -249,10 +275,12 @@
   </action>
   <action name="actionView_Log">
    <property name="icon">
-    <iconset theme="view-list-text"/>
+    <iconset theme="view-list-text">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>View Log</string>
+    <string>&amp;View Log</string>
    </property>
   </action>
  </widget>
