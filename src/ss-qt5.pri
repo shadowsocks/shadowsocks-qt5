@@ -1,12 +1,9 @@
 SOURCES      += src/main.cpp\
                 src/mainwindow.cpp \
-                src/ss_process.cpp \
                 src/ip4validator.cpp \
                 src/portvalidator.cpp \
                 src/addprofiledialog.cpp \
                 src/ssvalidator.cpp \
-                src/ssprofile.cpp \
-                src/configuration.cpp \
                 src/qrwidget.cpp \
                 src/sharedialog.cpp \
                 src/editdialog.cpp \
@@ -14,13 +11,10 @@ SOURCES      += src/main.cpp\
                 src/connection.cpp
 
 HEADERS      += src/mainwindow.h \
-                src/ss_process.h \
-                src/ssprofile.h \
                 src/ip4validator.h \
                 src/portvalidator.h \
                 src/addprofiledialog.h \
                 src/ssvalidator.h \
-                src/configuration.h \
                 src/qrwidget.h \
                 src/sharedialog.h \
                 src/editdialog.h \
