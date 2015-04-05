@@ -7,28 +7,8 @@
 #define CONNECTION_H
 
 #include <QObject>
-#include <QDateTime>
 #include <QtShadowsocks>
-
-struct SQProfile
-{
-    bool autoStart;
-    bool debug;
-    quint16 serverPort;
-    quint16 localPort;
-    QString name;
-    QString serverAddress;
-    QString localAddress;
-    QString method;
-    QString password;
-    int timeout;
-    int lag;
-    QDateTime lastTime;
-};
-Q_DECLARE_METATYPE(SQProfile)
-
-QDataStream& operator << (QDataStream &out, const SQProfile &p);
-QDataStream& operator >> (QDataStream &in, SQProfile &p);
+#include "sqprofile.h"
 
 class Connection : public QObject
 {

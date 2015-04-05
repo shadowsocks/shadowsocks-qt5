@@ -1,18 +1,6 @@
 #include "connection.h"
 #include "ssvalidator.h"
 
-QDataStream& operator << (QDataStream &out, const SQProfile &p)
-{
-    out << p.autoStart << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.lag << p.lastTime;
-    return out;
-}
-
-QDataStream& operator >> (QDataStream &in, SQProfile &p)
-{
-    in >> p.autoStart >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.lag >> p.lastTime;
-    return in;
-}
-
 Connection::Connection(QObject *parent) : QObject(parent) {}
 
 Connection::Connection(const SQProfile &_profile, QObject *parent) :

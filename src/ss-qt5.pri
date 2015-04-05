@@ -10,7 +10,8 @@ SOURCES      += src/main.cpp\
                 src/connection.cpp \
                 src/confighelper.cpp \
                 src/urihelper.cpp \
-    $$PWD/uriinputdialog.cpp
+                src/uriinputdialog.cpp \
+                src/sqprofile.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ip4validator.h \
@@ -23,7 +24,8 @@ HEADERS      += src/mainwindow.h \
                 src/connection.h \
                 src/confighelper.h \
                 src/urihelper.h \
-    $$PWD/uriinputdialog.h
+                src/uriinputdialog.h \
+                src/sqprofile.h
 
 FORMS        += src/mainwindow.ui \
                 src/sharedialog.ui \
