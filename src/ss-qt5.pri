@@ -2,7 +2,6 @@ SOURCES      += src/main.cpp\
                 src/mainwindow.cpp \
                 src/ip4validator.cpp \
                 src/portvalidator.cpp \
-                src/addprofiledialog.cpp \
                 src/ssvalidator.cpp \
                 src/qrwidget.cpp \
                 src/sharedialog.cpp \
@@ -14,7 +13,6 @@ SOURCES      += src/main.cpp\
 HEADERS      += src/mainwindow.h \
                 src/ip4validator.h \
                 src/portvalidator.h \
-                src/addprofiledialog.h \
                 src/ssvalidator.h \
                 src/qrwidget.h \
                 src/sharedialog.h \
@@ -24,7 +22,6 @@ HEADERS      += src/mainwindow.h \
                 src/confighelper.h
 
 FORMS        += src/mainwindow.ui \
-                src/addprofiledialog.ui \
                 src/sharedialog.ui \
                 src/editdialog.ui \
                 src/logdialog.ui

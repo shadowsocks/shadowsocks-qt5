@@ -20,7 +20,6 @@ ConfigHelper::ConfigHelper(QObject *parent) :
     model = new QStandardItemModel(0, 3, this);
     model->setHorizontalHeaderLabels(headerLabels);
     readConfiguration();
-    fillModel();
 }
 
 ConfigHelper::~ConfigHelper()
@@ -39,11 +38,12 @@ QStandardItemModel *ConfigHelper::getModel() const
 
 void ConfigHelper::save()
 {
-    int size = connectionList.size();
+    int size = model->rowCount();
     settings->beginWriteArray(profilePrefix);
     for (int i = 0; i < size; ++i) {
         settings->setArrayIndex(i);
-        QVariant value = QVariant::fromValue<SQProfile>(connectionList.at(i)->getProfile());
+        Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
+        QVariant value = QVariant::fromValue<SQProfile>(con->getProfile());
         settings->setValue("SQProfile", value);
     }
     settings->endArray();
@@ -52,14 +52,13 @@ void ConfigHelper::save()
 void ConfigHelper::addConnection(Connection *con)
 {
     con->setParent(this);
-    connectionList.append(con);
     appendConnectionToList(con);
 }
 
 void ConfigHelper::deleteRow(int row)
 {
     Connection *removed = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
-    connectionList.removeAll(removed);
+    removed->deleteLater();
     model->removeRow(row);
 }
 
@@ -96,14 +95,7 @@ void ConfigHelper::readConfiguration()
         QVariant value = settings->value("SQProfile");
         SQProfile profile = value.value<SQProfile>();
         Connection *con = new Connection(profile, this);
-        connectionList.append(con);
+        appendConnectionToList(con);
     }
     settings->endArray();
-}
-
-void ConfigHelper::fillModel()
-{
-    for (auto it = connectionList.begin(); it != connectionList.end(); ++it) {
-        appendConnectionToList(*it);
-    }
 }

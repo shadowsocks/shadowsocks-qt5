@@ -27,11 +27,9 @@ private:
     QSettings *settings;
     QStandardItemModel *model;
     QString configFile;
-    QList<Connection*> connectionList;
     void appendConnectionToList(Connection *con);
 
     void readConfiguration();
-    void fillModel();
 
     static const QStringList headerLabels;
     static const QString profilePrefix;
