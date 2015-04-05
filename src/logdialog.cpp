@@ -1,11 +1,13 @@
 #include "logdialog.h"
 #include "ui_logdialog.h"
 
-LogDialog::LogDialog(QWidget *parent) :
+LogDialog::LogDialog(const QString &str, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LogDialog)
 {
     ui->setupUi(this);
+    ui->logBrowser->setText(str);
+    ui->logBrowser->moveCursor(QTextCursor::End);
 }
 
 LogDialog::~LogDialog()

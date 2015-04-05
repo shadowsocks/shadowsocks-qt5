@@ -17,7 +17,7 @@ class LogDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit LogDialog(QWidget *parent = 0);
+    explicit LogDialog(const QString &, QWidget *parent = 0);
     ~LogDialog();
 
     void clear();

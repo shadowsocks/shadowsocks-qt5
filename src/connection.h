@@ -21,11 +21,13 @@ public:
 
     const SQProfile &getProfile() const;
     const QString& getName() const;
+    const QString& getLog() const;
     QByteArray getURI() const;
     bool isValid() const;
 
 signals:
     void stateChanged(bool started);
+    void newLogAvailable(const QString &);
 
 public slots:
     void start();
@@ -34,9 +36,13 @@ public slots:
 private:
     SQProfile profile;
     QSS::Controller *controller;
+    QString log;
 
     friend class EditDialog;
     friend class ConfigHelper;
+
+private slots:
+    void onNewLog(const QString &);
 };
 Q_DECLARE_METATYPE(Connection*)
 

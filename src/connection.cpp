@@ -1,7 +1,11 @@
 #include "connection.h"
 #include "ssvalidator.h"
 
-Connection::Connection(QObject *parent) : QObject(parent) {}
+Connection::Connection(QObject *parent) : QObject(parent)
+{
+    controller = new QSS::Controller(true, this);
+    connect(controller, &QSS::Controller::runningStateChanged, this, &Connection::stateChanged);
+}
 
 Connection::Connection(const SQProfile &_profile, QObject *parent) :
     Connection(parent)
@@ -35,6 +39,11 @@ const QString& Connection::getName() const
     return profile.name;
 }
 
+const QString& Connection::getLog() const
+{
+    return log;
+}
+
 QByteArray Connection::getURI() const
 {
     QString ssurl = QString("%1:%2@%3:%4").arg(profile.method.toLower()).arg(profile.password).arg(profile.serverAddress).arg(QString::number(profile.serverPort));
@@ -55,6 +64,11 @@ bool Connection::isValid() const
 
 void Connection::start()
 {
+    disconnect(controller, &QSS::Controller::debug, this, &Connection::onNewLog);
+    disconnect(controller, &QSS::Controller::error, this, &Connection::onNewLog);
+
+    connect(controller, profile.debug ? &QSS::Controller::debug : &QSS::Controller::error, this, &Connection::onNewLog);
+
     QSS::Profile qssprofile;
     qssprofile.server = profile.serverAddress;
     qssprofile.server_port = profile.serverPort;
@@ -73,3 +87,8 @@ void Connection::stop()
     controller->stop();
 }
 
+void Connection::onNewLog(const QString &str)
+{
+    log.append(str);
+    emit newLogAvailable(str);
+}

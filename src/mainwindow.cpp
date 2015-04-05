@@ -6,6 +6,7 @@
 #include "urihelper.h"
 #include "uriinputdialog.h"
 #include "sharedialog.h"
+#include "logdialog.h"
 
 #include <QDesktopServices>
 #include <QDesktopWidget>
@@ -52,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionEdit, &QAction::triggered, this, &MainWindow::onEdit);
     connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
     connect(ui->actionShare, &QAction::triggered, this, &MainWindow::onShare);
+    connect(ui->actionView_Log, &QAction::triggered, this, &MainWindow::onViewLog);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReport_Bug, &QAction::triggered, this, &MainWindow::onReportBug);
@@ -228,6 +230,14 @@ void MainWindow::onShare()
     QByteArray uri = configHelper->connectionAt(ui->connectionView->currentIndex().row())->getURI();
     ShareDialog *shareDlg = new ShareDialog(uri, this);
     shareDlg->exec();
+}
+
+void MainWindow::onViewLog()
+{
+    Connection *con = configHelper->connectionAt(ui->connectionView->currentIndex().row());
+    LogDialog *logDlg = new LogDialog(con->getLog(), this);
+    connect(con, &Connection::newLogAvailable, logDlg, &LogDialog::append);
+    logDlg->exec();
 }
 
 void MainWindow::newProfile(Connection *newCon)
