@@ -105,9 +105,9 @@
      <addaction name="actionQR_Code_from_File"/>
      <addaction name="actionQR_Code"/>
     </widget>
+    <addaction name="menuAdd"/>
     <addaction name="actionEdit"/>
     <addaction name="actionShare"/>
-    <addaction name="menuAdd"/>
     <addaction name="actionDelete"/>
     <addaction name="separator"/>
     <addaction name="actionConnect"/>
@@ -119,6 +119,9 @@
     <property name="title">
      <string>Fi&amp;le</string>
     </property>
+    <addaction name="actionImport_Profiles_From_Configuration"/>
+    <addaction name="actionRemove_All_Profiles"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
@@ -284,6 +287,16 @@
    </property>
    <property name="text">
     <string>&amp;View Log</string>
+   </property>
+  </action>
+  <action name="actionImport_Profiles_From_Configuration">
+   <property name="text">
+    <string>Import Profiles From Configuration</string>
+   </property>
+  </action>
+  <action name="actionRemove_All_Profiles">
+   <property name="text">
+    <string>Remove All Profiles</string>
    </property>
   </action>
  </widget>
