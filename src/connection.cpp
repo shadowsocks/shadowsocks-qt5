@@ -3,13 +3,13 @@
 
 QDataStream& operator << (QDataStream &out, const SQProfile &p)
 {
-    out << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.lag << p.lastTime;
+    out << p.autoStart << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.lag << p.lastTime;
     return out;
 }
 
 QDataStream& operator >> (QDataStream &in, SQProfile &p)
 {
-    in >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.lag >> p.lastTime;
+    in >> p.autoStart >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.lag >> p.lastTime;
     return in;
 }
 

@@ -12,6 +12,7 @@
 
 struct SQProfile
 {
+    bool autoStart;
     bool debug;
     quint16 serverPort;
     quint16 localPort;
