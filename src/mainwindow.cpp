@@ -5,6 +5,7 @@
 #include "editdialog.h"
 #include "urihelper.h"
 #include "uriinputdialog.h"
+#include "sharedialog.h"
 
 #include <QDesktopServices>
 #include <QDesktopWidget>
@@ -50,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::onDelete);
     connect(ui->actionEdit, &QAction::triggered, this, &MainWindow::onEdit);
     connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
+    connect(ui->actionShare, &QAction::triggered, this, &MainWindow::onShare);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReport_Bug, &QAction::triggered, this, &MainWindow::onReportBug);
@@ -214,6 +216,13 @@ void MainWindow::onEdit()
 void MainWindow::onDoubleClicked(const QModelIndex &index)
 {
     editRow(index.row());
+}
+
+void MainWindow::onShare()
+{
+    QByteArray uri = configHelper->connectionAt(ui->connectionView->currentIndex().row())->getURI();
+    ShareDialog *shareDlg = new ShareDialog(uri, this);
+    shareDlg->exec();
 }
 
 void MainWindow::newProfile(Connection *newCon)
