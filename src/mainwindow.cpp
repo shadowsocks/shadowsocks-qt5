@@ -55,6 +55,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReport_Bug, &QAction::triggered, this, &MainWindow::onReportBug);
+
+    connect(ui->connectionView, &QTableView::activated, this, &MainWindow::checkCurrentIndex);
+
+    checkCurrentIndex(ui->connectionView->currentIndex());
 }
 
 MainWindow::~MainWindow()
@@ -206,6 +210,7 @@ void MainWindow::onAddFromURI()
 void MainWindow::onDelete()
 {
     configHelper->deleteRow(ui->connectionView->currentIndex().row());
+    checkCurrentIndex(ui->connectionView->currentIndex());
 }
 
 void MainWindow::onEdit()
@@ -242,6 +247,17 @@ void MainWindow::editRow(int row)
     if (editDlg->exec()) {
         configHelper->updateRow(row);
     }
+}
+
+void MainWindow::checkCurrentIndex(const QModelIndex &index)
+{
+    const bool valid = index.isValid();
+    ui->actionConnect->setEnabled(valid);
+    ui->actionDisconnect->setEnabled(valid);
+    ui->actionEdit->setEnabled(valid);
+    ui->actionDelete->setEnabled(valid);
+    ui->actionShare->setEnabled(valid);
+    ui->actionView_Log->setEnabled(valid);
 }
 
 void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)

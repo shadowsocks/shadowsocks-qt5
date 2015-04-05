@@ -9,7 +9,8 @@ SQProfile::SQProfile()
     name = QObject::tr("Unamed Profile");
     localAddress = QString("127.0.0.1");
     method = QString("RC4-MD5");
-    timeout = 60;
+    timeout = 600;
+    lag = -1;
 }
 
 QDataStream& operator << (QDataStream &out, const SQProfile &p)
