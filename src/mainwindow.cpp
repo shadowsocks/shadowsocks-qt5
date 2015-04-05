@@ -125,7 +125,7 @@ void MainWindow::createSystemTray()
         //desktop systray
         systrayMenu = new QMenu(this);
         systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
-        systrayMenu->addAction(QIcon::fromTheme("application-exit", QIcon::fromTheme("exit")), tr("Quit"), qApp, SLOT(exit()));
+        systrayMenu->addAction(QIcon::fromTheme("application-exit", QIcon::fromTheme("exit")), tr("Quit"), qApp, SLOT(quit()));
 
         systray->setIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"));
         systray->setToolTip(QString("Shadowsocks-Qt5"));
