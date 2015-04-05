@@ -13,13 +13,24 @@ QDataStream& operator >> (QDataStream &in, SQProfile &p)
     return in;
 }
 
-Connection::Connection(const SQProfile &_profile, QObject *parent) :
-    QObject(parent),
-    profile(_profile)
-{
-    controller = new QSS::Controller(true, this);
+Connection::Connection(QObject *parent) : QObject(parent) {}
 
-    connect(controller, &QSS::Controller::runningStateChanged, this, &Connection::stateChanged);
+Connection::Connection(const SQProfile &_profile, QObject *parent) :
+    Connection(parent)
+{
+    profile = _profile;
+}
+
+Connection::Connection(QString uri, QObject *parent) :
+    Connection(parent)
+{
+    uri.remove(0, 5);//remove the prefix "ss://" from uri
+    QStringList resultList = QString(QByteArray::fromBase64(QByteArray(uri.toStdString().c_str()))).split(':');
+    profile.method = resultList.takeFirst().toUpper();
+    profile.serverPort = resultList.takeLast().toShort();
+    QStringList ser = resultList.join(':').split('@');//there are lots of ':' in IPv6 address
+    profile.serverAddress = ser.takeLast();
+    profile.password = ser.join('@');//incase there is a '@' in password
 }
 
 Connection::~Connection()

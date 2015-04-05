@@ -33,7 +33,9 @@ class Connection : public QObject
 {
     Q_OBJECT
 public:
-    explicit Connection(const SQProfile &_profil = SQProfile(), QObject *parent = 0);
+    Connection(QObject *parent = 0);
+    Connection(const SQProfile &_profile, QObject *parent = 0);
+    Connection(QString uri, QObject *parent = 0);
     ~Connection();
 
     const SQProfile &getProfile() const;

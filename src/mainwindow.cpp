@@ -3,10 +3,14 @@
 
 #include "connection.h"
 #include "editdialog.h"
+#include "urihelper.h"
+#include "uriinputdialog.h"
 
 #include <QDesktopServices>
 #include <QDesktopWidget>
+#include <QFileDialog>
 #include <QMenu>
+#include <QScreen>
 #include <QWindow>
 
 #ifdef Q_OS_LINUX
@@ -24,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //initialisation
     configHelper = new ConfigHelper(this);
     ui->connectionView->setModel(configHelper->getModel());
+    ui->connectionView->resizeColumnsToContents();
 
     /*
      * There is a bug on KDE Frameworks 5: https://bugs.kde.org/show_bug.cgi?id=343976
@@ -39,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
     connect(ui->actionManual, &QAction::triggered, this, &MainWindow::onAddManually);
+    connect(ui->actionQR_Code, &QAction::triggered, this, &MainWindow::onAddScreenQRCode);
+    connect(ui->actionQR_Code_from_File, &QAction::triggered, this, &MainWindow::onAddQRCodeFile);
+    connect(ui->actionURI, &QAction::triggered, this, &MainWindow::onAddFromURI);
     connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::onDelete);
     connect(ui->actionEdit, &QAction::triggered, this, &MainWindow::onEdit);
     connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
@@ -146,12 +154,51 @@ void MainWindow::showWindow()
 void MainWindow::onAddManually()
 {
     Connection *newCon = new Connection;
-    EditDialog *editDlg = new EditDialog(newCon, this);
-    if (editDlg->exec()) {//accepted
-        configHelper->addConnection(newCon);
-    } else {
-        newCon->deleteLater();
+    newProfile(newCon);
+}
+
+void MainWindow::onAddScreenQRCode()
+{
+    QString uri;
+    QList<QScreen *> screens = qApp->screens();
+    for (QList<QScreen *>::iterator sc = screens.begin(); sc != screens.end(); ++sc) {
+        QImage raw_sc = (*sc)->grabWindow(qApp->desktop()->winId()).toImage();
+        QString result = URIHelper::decodeImage(raw_sc);
+        if (!result.isNull()) {
+            uri = result;
+        }
     }
+    if (uri.isNull()) {
+        QMessageBox::critical(this, tr("QR Code Not Found"), tr("Can't find any QR code image that contains valid URI on your screen(s)."));
+    } else {
+        Connection *newCon = new Connection(uri, this);
+        newProfile(newCon);
+    }
+}
+
+void MainWindow::onAddQRCodeFile()
+{
+    QString qrFile = QFileDialog::getOpenFileName(this, tr("Open QR Code Image File"), QString(), "Images (*.png *jpg *jpeg *xpm)");
+    if (!qrFile.isNull()) {
+        QImage img(qrFile);
+        QString uri = URIHelper::decodeImage(img);
+        if (uri.isNull()) {
+            QMessageBox::critical(this, tr("QR Code Not Found"), tr("Can't find any QR code image that contains valid URI on your screen(s)."));
+        } else {
+            Connection *newCon = new Connection(uri, this);
+            newProfile(newCon);
+        }
+    }
+}
+
+void MainWindow::onAddFromURI()
+{
+    URIInputDialog *inputDlg = new URIInputDialog(this);
+    connect(inputDlg, &URIInputDialog::acceptedURI, [&](const QString &uri){
+        Connection *newCon = new Connection(uri, this);
+        newProfile(newCon);
+    });
+    inputDlg->exec();
 }
 
 void MainWindow::onDelete()
@@ -167,6 +214,16 @@ void MainWindow::onEdit()
 void MainWindow::onDoubleClicked(const QModelIndex &index)
 {
     editRow(index.row());
+}
+
+void MainWindow::newProfile(Connection *newCon)
+{
+    EditDialog *editDlg = new EditDialog(newCon, this);
+    if (editDlg->exec()) {//accepted
+        configHelper->addConnection(newCon);
+    } else {
+        newCon->deleteLater();
+    }
 }
 
 void MainWindow::editRow(int row)

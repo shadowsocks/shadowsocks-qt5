@@ -40,6 +40,9 @@ public:
 
 private slots:
     void onAddManually();
+    void onAddScreenQRCode();
+    void onAddQRCodeFile();
+    void onAddFromURI();
     void onDelete();
     void onEdit();
     void onDoubleClicked(const QModelIndex &index);
@@ -57,6 +60,7 @@ private:
     GtkWidget *showItem;
 #endif
 
+    void newProfile(Connection *);
     void editRow(int row);
     void createSystemTray();
     void showNotification(const QString &);

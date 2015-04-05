@@ -8,7 +8,9 @@ SOURCES      += src/main.cpp\
                 src/editdialog.cpp \
                 src/logdialog.cpp \
                 src/connection.cpp \
-                src/confighelper.cpp
+                src/confighelper.cpp \
+                src/urihelper.cpp \
+    $$PWD/uriinputdialog.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ip4validator.h \
@@ -19,12 +21,15 @@ HEADERS      += src/mainwindow.h \
                 src/editdialog.h \
                 src/logdialog.h \
                 src/connection.h \
-                src/confighelper.h
+                src/confighelper.h \
+                src/urihelper.h \
+    $$PWD/uriinputdialog.h
 
 FORMS        += src/mainwindow.ui \
                 src/sharedialog.ui \
                 src/editdialog.ui \
-                src/logdialog.ui
+                src/logdialog.ui \
+    $$PWD/uriinputdialog.ui
 
 RESOURCES    += src/icons.qrc \
                 src/translations.qrc
