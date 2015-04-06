@@ -114,6 +114,9 @@ void Connection::stop()
 
 void Connection::onNewLog(const QString &str)
 {
+    if(!log.endsWith('\n') && !log.isEmpty()) {
+        log.append('\n');
+    }
     log.append(str);
     emit newLogAvailable(str);
 }
