@@ -27,7 +27,7 @@ ConfigHelper::~ConfigHelper()
     save();
 }
 
-const QStringList ConfigHelper::headerLabels = QStringList() << tr("Name") << tr("Lag") << tr("Last used");
+const QStringList ConfigHelper::headerLabels = QStringList() << tr("Name") << tr("Lag (ms)") << tr("Last used");
 
 const QString ConfigHelper::profilePrefix = "Profile";
 
@@ -69,6 +69,12 @@ void ConfigHelper::updateNameAtRow(int row)
 {
     Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
     model->setData(model->index(row, 0), QVariant(con->profile.name), Qt::DisplayRole);
+}
+
+void ConfigHelper::updateLagAtRow(int row)
+{
+    Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
+    model->setData(model->index(row, 1), QVariant(convertToLagString(con->profile.lag)));
 }
 
 void ConfigHelper::updateTimeAtRow(int row)

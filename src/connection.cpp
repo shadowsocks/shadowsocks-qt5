@@ -85,6 +85,7 @@ bool Connection::start()
     connect(controller, profile.debug ? &QSS::Controller::debug : &QSS::Controller::error, this, &Connection::onNewLog);
 
     profile.lastTime = QDateTime::currentDateTime();
+    latencyTest();//perform a latency test automatically when start() is called
 
     QSS::Profile qssprofile;
     qssprofile.server = profile.serverAddress;

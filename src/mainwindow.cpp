@@ -244,6 +244,7 @@ void MainWindow::onConnect()
     int row = ui->connectionView->currentIndex().row();
     configHelper->connectionAt(row)->start();
     updateConnectionStatus(row);
+    configHelper->updateLagAtRow(row);
     configHelper->updateTimeAtRow(row);
 }
 

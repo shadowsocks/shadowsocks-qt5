@@ -21,10 +21,10 @@ public:
     void addConnection(Connection *con);
     void deleteRow(int row);
     void updateNameAtRow(int row);
+    void updateLagAtRow(int row);//update lag in model (won't perform latency test)
     void updateTimeAtRow(int row);
     Connection *connectionAt(int row);
-    void latencyTestAtRow(int row);
-    QString convertToLagString(const int &lag);
+    void latencyTestAtRow(int row);//perform a latency test and update lag in model
 
     /* some functions used to communicate with SettingsDialog */
     bool isHideWindowOnStartup() const;
@@ -47,6 +47,8 @@ private:
 
     static const QStringList headerLabels;
     static const QString profilePrefix;
+
+    static QString convertToLagString(const int &lag);
 
 private slots:
     void onConnectionStateChanged(bool running);
