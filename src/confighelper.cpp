@@ -47,6 +47,9 @@ void ConfigHelper::save()
         settings->setValue("SQProfile", value);
     }
     settings->endArray();
+
+    settings->setValue("HideWindowOnStartup", QVariant(hideWindowOnStartup));
+    settings->setValue("OnlyOneInstance", QVariant(onlyOneInstace));
 }
 
 void ConfigHelper::addConnection(Connection *con)
@@ -75,6 +78,22 @@ Connection* ConfigHelper::connectionAt(int row)
     return model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
 }
 
+bool ConfigHelper::isHideWindowOnStartup() const
+{
+    return hideWindowOnStartup;
+}
+
+bool ConfigHelper::isOnlyOneInstance() const
+{
+    return onlyOneInstace;
+}
+
+void ConfigHelper::setGeneralSettings(bool hide, bool oneInstance)
+{
+    hideWindowOnStartup = hide;
+    onlyOneInstace = oneInstance;
+}
+
 void ConfigHelper::appendConnectionToList(Connection *con)
 {
     connect(con, &Connection::stateChanged, this, &ConfigHelper::onConnectionStateChanged);
@@ -99,6 +118,9 @@ void ConfigHelper::readConfiguration()
         appendConnectionToList(con);
     }
     settings->endArray();
+
+    hideWindowOnStartup = settings->value("HideWindowOnStartup").toBool();
+    onlyOneInstace = settings->value("OnlyOneInstance").toBool();
 }
 
 void ConfigHelper::onConnectionStateChanged(bool running)

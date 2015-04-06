@@ -7,6 +7,7 @@
 #include "uriinputdialog.h"
 #include "sharedialog.h"
 #include "logdialog.h"
+#include "settingsdialog.h"
 
 #include <QDesktopServices>
 #include <QDesktopWidget>
@@ -54,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
     connect(ui->actionShare, &QAction::triggered, this, &MainWindow::onShare);
     connect(ui->actionView_Log, &QAction::triggered, this, &MainWindow::onViewLog);
+    connect(ui->actionGeneral_Settings, &QAction::triggered, this, &MainWindow::onGeneralSettings);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReport_Bug, &QAction::triggered, this, &MainWindow::onReportBug);
@@ -238,6 +240,12 @@ void MainWindow::onViewLog()
     LogDialog *logDlg = new LogDialog(con->getLog(), this);
     connect(con, &Connection::newLogAvailable, logDlg, &LogDialog::append);
     logDlg->exec();
+}
+
+void MainWindow::onGeneralSettings()
+{
+    SettingsDialog *sDlg = new SettingsDialog(configHelper, this);
+    sDlg->exec();
 }
 
 void MainWindow::newProfile(Connection *newCon)

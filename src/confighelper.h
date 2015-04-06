@@ -23,12 +23,19 @@ public:
     void updateRow(int row);
     Connection *connectionAt(int row);
 
+    /* some functions used to communicate with SettingsDialog */
+    bool isHideWindowOnStartup() const;
+    bool isOnlyOneInstance() const;
+    void setGeneralSettings(bool hide, bool oneInstance);
+
 private:
+    bool hideWindowOnStartup;
+    bool onlyOneInstace;
     QSettings *settings;
     QStandardItemModel *model;
     QString configFile;
-    void appendConnectionToList(Connection *con);
 
+    void appendConnectionToList(Connection *con);
     void readConfiguration();
 
     static const QStringList headerLabels;

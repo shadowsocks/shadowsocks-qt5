@@ -48,6 +48,7 @@ private slots:
     void onDoubleClicked(const QModelIndex &index);
     void onShare();
     void onViewLog();
+    void onGeneralSettings();
     void checkCurrentIndex(const QModelIndex &index);
     inline void onAbout() { QMessageBox::about(this, tr("About"), aboutText); }
     void showWindow();
