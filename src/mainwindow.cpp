@@ -91,6 +91,11 @@ void MainWindow::minimizeToSysTray()
 #endif
 }
 
+bool MainWindow::isOnlyOneInstance() const
+{
+    return configHelper->isOnlyOneInstance();
+}
+
 #ifdef UBUNTU_UNITY
 void onShow(GtkCheckMenuItem *menu, gpointer data)
 {

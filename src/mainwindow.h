@@ -37,6 +37,7 @@ public:
 
 public:
     void minimizeToSysTray();
+    bool isOnlyOneInstance() const;
 
 private slots:
     void onAddManually();
