@@ -25,6 +25,7 @@ public:
     void updateTimeAtRow(int row);
     Connection *connectionAt(int row);
     void latencyTestAtRow(int row);//perform a latency test and update lag in model
+    void startAllAutoStart();//start those connections marked as auto-start
 
     /* some functions used to communicate with SettingsDialog */
     bool isHideWindowOnStartup() const;

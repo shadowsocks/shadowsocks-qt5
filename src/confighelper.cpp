@@ -191,3 +191,18 @@ void ConfigHelper::onConnectionStateChanged(bool running)
         model->item(row, i)->setFont(font);
     }
 }
+
+void ConfigHelper::startAllAutoStart()
+{
+    int size = model->rowCount();
+    for (int i = 0; i < size; ++i) {
+        Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
+        if (con->profile.autoStart) {
+            con->start();
+            //update lag
+            model->setData(model->index(i, 1), QVariant(convertToLagString(con->profile.lag)));
+            //update time
+            model->setData(model->index(i, 2), QVariant(con->profile.lastTime.toString()));
+        }
+    }
+}

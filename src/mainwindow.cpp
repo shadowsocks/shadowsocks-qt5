@@ -71,6 +71,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->connectionView, &QTableView::activated, this, &MainWindow::checkCurrentIndex);
 
     checkCurrentIndex(ui->connectionView->currentIndex());
+
+    configHelper->startAllAutoStart();//do this at last so that all signal-slot should've been connected
 }
 
 MainWindow::~MainWindow()
