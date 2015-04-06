@@ -12,9 +12,10 @@ V2.0
 
 - ~~Rewrite UI~~
 - ~~Enable multiple profiles at the same time~~
-- Server latency test
+- ~~Server latency test~~
 - ~~INI format configuration file~~
 - ~~Remove all other backends except for `libQtShadowsocks`~~
+- Traffic statistics
 - New flat icon
 
 Introduction

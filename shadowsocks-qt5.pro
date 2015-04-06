@@ -17,7 +17,6 @@ DEFINES   += APP_VERSION=\\\"$$VERSION\\\"
 include(src/ss-qt5.pri)
 
 OTHER_FILES  += README.md \
-                gui-config.json \
                 shadowsocks-qt5.desktop
 
 desktop.files = shadowsocks-qt5.desktop
