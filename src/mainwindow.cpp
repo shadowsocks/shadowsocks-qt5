@@ -238,12 +238,17 @@ void MainWindow::onShare()
 
 void MainWindow::onConnect()
 {
-    configHelper->connectionAt(ui->connectionView->currentIndex().row())->start();
+    int row = ui->connectionView->currentIndex().row();
+    configHelper->connectionAt(row)->start();
+    updateConnectionStatus(row);
+    configHelper->updateTimeAtRow(row);
 }
 
 void MainWindow::onDisconnect()
 {
-    configHelper->connectionAt(ui->connectionView->currentIndex().row())->stop();
+    int row = ui->connectionView->currentIndex().row();
+    configHelper->connectionAt(row)->stop();
+    updateConnectionStatus(row);
 }
 
 void MainWindow::onViewLog()
@@ -258,6 +263,13 @@ void MainWindow::onGeneralSettings()
 {
     SettingsDialog *sDlg = new SettingsDialog(configHelper, this);
     sDlg->exec();
+}
+
+void MainWindow::updateConnectionStatus(int row)
+{
+    const bool &running = configHelper->connectionAt(row)->isRunning();
+    ui->actionConnect->setEnabled(!running);
+    ui->actionDisconnect->setEnabled(running);
 }
 
 void MainWindow::newProfile(Connection *newCon)
@@ -275,7 +287,7 @@ void MainWindow::editRow(int row)
     Connection *con = configHelper->connectionAt(row);
     EditDialog *editDlg = new EditDialog(con, this);
     if (editDlg->exec()) {
-        configHelper->updateRow(row);
+        configHelper->updateNameAtRow(row);
     }
 }
 
@@ -290,9 +302,7 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
     ui->actionView_Log->setEnabled(valid);
 
     if (valid) {
-        const bool &running = configHelper->connectionAt(index.row())->isRunning();
-        ui->actionConnect->setEnabled(!running);
-        ui->actionDisconnect->setEnabled(running);
+        updateConnectionStatus(index.row());
     }
 }
 

@@ -31,7 +31,7 @@ signals:
     void newLogAvailable(const QString &);
 
 public slots:
-    void start();
+    bool start();
     void stop();
 
 private:

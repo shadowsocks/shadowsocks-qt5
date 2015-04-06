@@ -20,7 +20,8 @@ public:
     //The parent of con will be this ConfigHelper instance
     void addConnection(Connection *con);
     void deleteRow(int row);
-    void updateRow(int row);
+    void updateNameAtRow(int row);
+    void updateTimeAtRow(int row);
     Connection *connectionAt(int row);
 
     /* some functions used to communicate with SettingsDialog */

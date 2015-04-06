@@ -65,11 +65,15 @@ void ConfigHelper::deleteRow(int row)
     model->removeRow(row);
 }
 
-void ConfigHelper::updateRow(int row)
+void ConfigHelper::updateNameAtRow(int row)
 {
     Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
     model->setData(model->index(row, 0), QVariant(con->profile.name), Qt::DisplayRole);
-    model->setData(model->index(row, 1), QVariant(QString::number(con->profile.lag)));
+}
+
+void ConfigHelper::updateTimeAtRow(int row)
+{
+    Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
     model->setData(model->index(row, 2), QVariant(con->profile.lastTime.toString()));
 }
 

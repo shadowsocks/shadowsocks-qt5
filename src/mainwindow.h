@@ -66,6 +66,7 @@ private:
     GtkWidget *showItem;
 #endif
 
+    void updateConnectionStatus(int row);
     void newProfile(Connection *);
     void editRow(int row);
     void createSystemTray();

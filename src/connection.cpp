@@ -1,7 +1,9 @@
 #include "connection.h"
 #include "ssvalidator.h"
 
-Connection::Connection(QObject *parent) : QObject(parent)
+Connection::Connection(QObject *parent) :
+    QObject(parent),
+    running(false)
 {
     controller = new QSS::Controller(true, this);
     connect(controller, &QSS::Controller::runningStateChanged, [&](bool run){
@@ -70,12 +72,13 @@ const bool &Connection::isRunning() const
     return running;
 }
 
-void Connection::start()
+bool Connection::start()
 {
     disconnect(controller, &QSS::Controller::debug, this, &Connection::onNewLog);
     disconnect(controller, &QSS::Controller::error, this, &Connection::onNewLog);
-
     connect(controller, profile.debug ? &QSS::Controller::debug : &QSS::Controller::error, this, &Connection::onNewLog);
+
+    profile.lastTime = QDateTime::currentDateTime();
 
     QSS::Profile qssprofile;
     qssprofile.server = profile.serverAddress;
@@ -86,8 +89,7 @@ void Connection::start()
     qssprofile.password = profile.password;
     qssprofile.timeout = profile.timeout;
     controller->setup(qssprofile);
-    controller->start();
-    profile.lastTime = QDateTime::currentDateTime();
+    return controller->start();
 }
 
 void Connection::stop()
