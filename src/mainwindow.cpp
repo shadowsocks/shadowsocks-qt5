@@ -96,6 +96,11 @@ bool MainWindow::isOnlyOneInstance() const
     return configHelper->isOnlyOneInstance();
 }
 
+bool MainWindow::isHideWindowOnStartup() const
+{
+    return configHelper->isHideWindowOnStartup();
+}
+
 #ifdef UBUNTU_UNITY
 void onShow(GtkCheckMenuItem *menu, gpointer data)
 {

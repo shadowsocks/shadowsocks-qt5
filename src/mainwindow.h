@@ -38,6 +38,7 @@ public:
 public:
     void minimizeToSysTray();
     bool isOnlyOneInstance() const;
+    bool isHideWindowOnStartup() const;
 
 private slots:
     void onAddManually();
