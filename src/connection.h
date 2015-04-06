@@ -20,10 +20,11 @@ public:
     ~Connection();
 
     const SQProfile &getProfile() const;
-    const QString& getName() const;
-    const QString& getLog() const;
+    const QString &getName() const;
+    const QString &getLog() const;
     QByteArray getURI() const;
     bool isValid() const;
+    const bool &isRunning() const;
 
 signals:
     void stateChanged(bool started);
@@ -36,6 +37,7 @@ public slots:
 private:
     SQProfile profile;
     QSS::Controller *controller;
+    bool running;
     QString log;
 
     friend class EditDialog;

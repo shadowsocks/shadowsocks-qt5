@@ -4,7 +4,10 @@
 Connection::Connection(QObject *parent) : QObject(parent)
 {
     controller = new QSS::Controller(true, this);
-    connect(controller, &QSS::Controller::runningStateChanged, this, &Connection::stateChanged);
+    connect(controller, &QSS::Controller::runningStateChanged, [&](bool run){
+        running = run;
+        emit stateChanged(run);
+    });
 }
 
 Connection::Connection(const SQProfile &_profile, QObject *parent) :
@@ -60,6 +63,11 @@ bool Connection::isValid() const
     else {
         return true;
     }
+}
+
+const bool &Connection::isRunning() const
+{
+    return running;
 }
 
 void Connection::start()
