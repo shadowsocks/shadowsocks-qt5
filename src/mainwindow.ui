@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
+    <width>400</width>
     <height>400</height>
    </rect>
   </property>
@@ -84,7 +84,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>450</width>
+     <width>400</width>
      <height>29</height>
     </rect>
    </property>
@@ -114,6 +114,7 @@
     <addaction name="actionConnect"/>
     <addaction name="actionDisconnect"/>
     <addaction name="actionTest_Latency"/>
+    <addaction name="actionTeat_All_Latency"/>
     <addaction name="separator"/>
     <addaction name="actionView_Log"/>
    </widget>
@@ -121,8 +122,6 @@
     <property name="title">
      <string>Fi&amp;le</string>
     </property>
-    <addaction name="actionImport_Profiles_From_Configuration"/>
-    <addaction name="actionRemove_All_Profiles"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -291,16 +290,6 @@
     <string>&amp;View Log</string>
    </property>
   </action>
-  <action name="actionImport_Profiles_From_Configuration">
-   <property name="text">
-    <string>&amp;Import Profiles From Configuration</string>
-   </property>
-  </action>
-  <action name="actionRemove_All_Profiles">
-   <property name="text">
-    <string>&amp;Remove All Profiles</string>
-   </property>
-  </action>
   <action name="actionTest_Latency">
    <property name="icon">
     <iconset theme="flag">
@@ -312,6 +301,11 @@
    </property>
    <property name="toolTip">
     <string>Test the lag of selected connection</string>
+   </property>
+  </action>
+  <action name="actionTeat_All_Latency">
+   <property name="text">
+    <string>Teat All Connections &amp;Latency</string>
    </property>
   </action>
  </widget>

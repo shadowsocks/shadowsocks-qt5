@@ -31,6 +31,9 @@ public:
     bool isOnlyOneInstance() const;
     void setGeneralSettings(bool hide, bool oneInstance);
 
+public slots:
+    void testAllLags();
+
 signals:
     void connected(const QString &name);
     void disconnected(const QString &name);

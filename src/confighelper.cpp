@@ -108,6 +108,16 @@ QString ConfigHelper::convertToLagString(const int &lag)
     return lagStr;
 }
 
+void ConfigHelper::testAllLags()
+{
+    int size = model->rowCount();
+    for (int i = 0; i < size; ++i) {
+        Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
+        con->latencyTest();
+        model->setData(model->index(i, 1), QVariant(convertToLagString(con->profile.lag)));
+    }
+}
+
 bool ConfigHelper::isHideWindowOnStartup() const
 {
     return hideWindowOnStartup;

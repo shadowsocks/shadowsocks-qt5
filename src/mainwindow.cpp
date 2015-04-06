@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->connectionView->resizeColumnsToContents();
     connect(configHelper, &ConfigHelper::connected, this, &MainWindow::onConnectionConnected);
     connect(configHelper, &ConfigHelper::disconnected, this, &MainWindow::onConnectionDisconnected);
+    connect(ui->actionTeat_All_Latency, &QAction::triggered, configHelper, &ConfigHelper::testAllLags);
 
     /*
      * There is a bug on KDE Frameworks 5: https://bugs.kde.org/show_bug.cgi?id=343976
