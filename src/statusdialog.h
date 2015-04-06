@@ -20,6 +20,9 @@ private:
     Ui::StatusDialog *ui;
     Connection *con;
 
+    static QString convertToHumanReadable(quint64 bytes);
+    static const QStringList units;
+
 private slots:
     void onStatusChanged(bool);
     void onBytesReadChanged(const quint64 &);

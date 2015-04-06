@@ -12,16 +12,20 @@ StatusDialog::StatusDialog(Connection *c, QWidget *parent) :
     ui->serverAddrLabel->setText(con->profile.serverAddress);
     ui->serverPortLabel->setText(QString::number(con->profile.serverPort));
     ui->statusLabel->setText(con->isRunning() ? tr("Connected") : tr("Disconnected"));
-    ui->brLabel->setText(QString::number(con->profile.bytesRead));
-    ui->bsLabel->setText(QString::number(con->profile.bytesSent));
+    onBytesReadChanged(con->profile.bytesRead);
+    onBytesSentChanged(con->profile.bytesSent);
 
     connect(con, &Connection::stateChanged, this, &StatusDialog::onStatusChanged);
+    connect(con, &Connection::bytesReadChanged, this, &StatusDialog::onBytesReadChanged);
+    connect(con, &Connection::bytesSentChanged, this, &StatusDialog::onBytesSentChanged);
 }
 
 StatusDialog::~StatusDialog()
 {
     delete ui;
 }
+
+const QStringList StatusDialog::units = QStringList() << "B" << "KiB" << "MiB" << "GiB" << "TiB";
 
 void StatusDialog::onStatusChanged(bool b)
 {
@@ -30,10 +34,18 @@ void StatusDialog::onStatusChanged(bool b)
 
 void StatusDialog::onBytesReadChanged(const quint64 &b)
 {
-    ui->brLabel->setText(QString::number(b));
+    ui->brLabel->setText(convertToHumanReadable(b));
 }
 
 void StatusDialog::onBytesSentChanged(const quint64 &b)
 {
-    ui->bsLabel->setText(QString::number(b));
+    ui->bsLabel->setText(convertToHumanReadable(b));
+}
+
+QString StatusDialog::convertToHumanReadable(quint64 bytes)
+{
+    int unitId = 0;
+    for (; bytes > 1024; bytes /= 1024, unitId++);
+    QString str = QString::number(bytes) + units.at(unitId);
+    return str;
 }
