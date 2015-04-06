@@ -25,6 +25,7 @@ public:
     QByteArray getURI() const;
     bool isValid() const;
     const bool &isRunning() const;
+    void latencyTest();
 
 signals:
     void stateChanged(bool started);

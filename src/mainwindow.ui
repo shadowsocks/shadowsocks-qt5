@@ -73,6 +73,7 @@
    </attribute>
    <addaction name="actionConnect"/>
    <addaction name="actionDisconnect"/>
+   <addaction name="actionLatency_Test"/>
    <addaction name="separator"/>
    <addaction name="actionEdit"/>
    <addaction name="actionDelete"/>
@@ -112,6 +113,7 @@
     <addaction name="separator"/>
     <addaction name="actionConnect"/>
     <addaction name="actionDisconnect"/>
+    <addaction name="actionLatency_Test"/>
     <addaction name="separator"/>
     <addaction name="actionView_Log"/>
    </widget>
@@ -291,12 +293,20 @@
   </action>
   <action name="actionImport_Profiles_From_Configuration">
    <property name="text">
-    <string>Import Profiles From Configuration</string>
+    <string>&amp;Import Profiles From Configuration</string>
    </property>
   </action>
   <action name="actionRemove_All_Profiles">
    <property name="text">
-    <string>Remove All Profiles</string>
+    <string>&amp;Remove All Profiles</string>
+   </property>
+  </action>
+  <action name="actionLatency_Test">
+   <property name="icon">
+    <iconset theme="flag"/>
+   </property>
+   <property name="text">
+    <string>Latency Test</string>
    </property>
   </action>
  </widget>

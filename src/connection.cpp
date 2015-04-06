@@ -72,6 +72,12 @@ const bool &Connection::isRunning() const
     return running;
 }
 
+void Connection::latencyTest()
+{
+    QSS::Address server(profile.serverAddress, profile.serverPort);
+    profile.lag = server.ping();
+}
+
 bool Connection::start()
 {
     disconnect(controller, &QSS::Controller::debug, this, &Connection::onNewLog);

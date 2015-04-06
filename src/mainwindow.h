@@ -49,6 +49,7 @@ private slots:
     void onShare();
     void onConnect();
     void onDisconnect();
+    void onLatencyTest();
     void onViewLog();
     void onGeneralSettings();
     void checkCurrentIndex(const QModelIndex &index);

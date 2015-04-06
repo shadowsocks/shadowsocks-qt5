@@ -23,6 +23,8 @@ public:
     void updateNameAtRow(int row);
     void updateTimeAtRow(int row);
     Connection *connectionAt(int row);
+    void latencyTestAtRow(int row);
+    QString convertToLagString(const int &lag);
 
     /* some functions used to communicate with SettingsDialog */
     bool isHideWindowOnStartup() const;

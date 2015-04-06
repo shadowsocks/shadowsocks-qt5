@@ -82,6 +82,26 @@ Connection* ConfigHelper::connectionAt(int row)
     return model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
 }
 
+void ConfigHelper::latencyTestAtRow(int row)
+{
+    Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
+    con->latencyTest();
+    model->setData(model->index(row, 1), QVariant(convertToLagString(con->profile.lag)));
+}
+
+QString ConfigHelper::convertToLagString(const int &lag)
+{
+    QString lagStr;
+    if (lag == -1) {
+        lagStr = tr("Error");
+    } else if (lag == -2) {
+        lagStr = tr("Unknown");
+    } else {
+        lagStr = QString::number(lag);
+    }
+    return lagStr;
+}
+
 bool ConfigHelper::isHideWindowOnStartup() const
 {
     return hideWindowOnStartup;
@@ -105,7 +125,7 @@ void ConfigHelper::appendConnectionToList(Connection *con)
     QStandardItem *name = new QStandardItem();
     name->setData(QVariant(con->profile.name), Qt::DisplayRole);
     name->setData(QVariant::fromValue(con), Qt::UserRole);
-    QStandardItem *lag = new QStandardItem(QString::number(con->profile.lag));
+    QStandardItem *lag = new QStandardItem(convertToLagString(con->profile.lag));
     QStandardItem *last = new QStandardItem(con->profile.lastTime.toString());
     items << name << lag << last;
     model->appendRow(items);
