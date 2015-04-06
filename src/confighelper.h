@@ -33,6 +33,9 @@ private:
 
     static const QStringList headerLabels;
     static const QString profilePrefix;
+
+private slots:
+    void onConnectionStateChanged(bool running);
 };
 
 #endif // CONFIGHELPER_H

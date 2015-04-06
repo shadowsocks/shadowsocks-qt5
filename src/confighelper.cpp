@@ -77,6 +77,7 @@ Connection* ConfigHelper::connectionAt(int row)
 
 void ConfigHelper::appendConnectionToList(Connection *con)
 {
+    connect(con, &Connection::stateChanged, this, &ConfigHelper::onConnectionStateChanged);
     QList<QStandardItem *> items;
     QStandardItem *name = new QStandardItem();
     name->setData(QVariant(con->profile.name), Qt::DisplayRole);
@@ -98,4 +99,27 @@ void ConfigHelper::readConfiguration()
         appendConnectionToList(con);
     }
     settings->endArray();
+}
+
+void ConfigHelper::onConnectionStateChanged(bool running)
+{
+    Connection *c = qobject_cast<Connection*>(sender());
+    if (!c) {
+        return;
+    }
+
+    QFont font;
+    font.setBold(running);
+
+    int size = model->rowCount();
+    int row = 0;
+    for (; row < size; ++row) {
+        if(model->data(model->index(row, 0), Qt::UserRole).value<Connection *>() == c) {
+            break;
+        }
+    }
+    int cols = model->columnCount();
+    for (int i = 0; i < cols; ++i) {
+        model->item(row, i)->setFont(font);
+    }
 }
