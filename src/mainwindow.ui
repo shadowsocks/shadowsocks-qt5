@@ -73,7 +73,7 @@
    </attribute>
    <addaction name="actionConnect"/>
    <addaction name="actionDisconnect"/>
-   <addaction name="actionLatency_Test"/>
+   <addaction name="actionTest_Latency"/>
    <addaction name="separator"/>
    <addaction name="actionEdit"/>
    <addaction name="actionDelete"/>
@@ -113,7 +113,7 @@
     <addaction name="separator"/>
     <addaction name="actionConnect"/>
     <addaction name="actionDisconnect"/>
-    <addaction name="actionLatency_Test"/>
+    <addaction name="actionTest_Latency"/>
     <addaction name="separator"/>
     <addaction name="actionView_Log"/>
    </widget>
@@ -301,12 +301,17 @@
     <string>&amp;Remove All Profiles</string>
    </property>
   </action>
-  <action name="actionLatency_Test">
+  <action name="actionTest_Latency">
    <property name="icon">
-    <iconset theme="flag"/>
+    <iconset theme="flag">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Latency Test</string>
+    <string>&amp;Test Latency</string>
+   </property>
+   <property name="toolTip">
+    <string>Test the lag of selected connection</string>
    </property>
   </action>
  </widget>

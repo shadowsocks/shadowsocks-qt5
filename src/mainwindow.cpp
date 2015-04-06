@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionShare, &QAction::triggered, this, &MainWindow::onShare);
     connect(ui->actionConnect, &QAction::triggered, this, &MainWindow::onConnect);
     connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::onDisconnect);
-    connect(ui->actionLatency_Test, &QAction::triggered, this, &MainWindow::onLatencyTest);
+    connect(ui->actionTest_Latency, &QAction::triggered, this, &MainWindow::onLatencyTest);
     connect(ui->actionView_Log, &QAction::triggered, this, &MainWindow::onViewLog);
     connect(ui->actionGeneral_Settings, &QAction::triggered, this, &MainWindow::onGeneralSettings);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
@@ -304,7 +304,7 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
     const bool valid = index.isValid();
     ui->actionConnect->setEnabled(valid);
     ui->actionDisconnect->setEnabled(valid);
-    ui->actionLatency_Test->setEnabled(valid);
+    ui->actionTest_Latency->setEnabled(valid);
     ui->actionEdit->setEnabled(valid);
     ui->actionDelete->setEnabled(valid);
     ui->actionShare->setEnabled(valid);
