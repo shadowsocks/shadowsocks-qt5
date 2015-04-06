@@ -10,10 +10,10 @@ V2.0
 
 ### TODO ###
 
-- Rewrite UI
-- Enable multiple profiles at the same time
+- ~~Rewrite UI~~
+- ~~Enable multiple profiles at the same time~~
 - Server latency test
-- INI format configuration file
+- ~~INI format configuration file~~
 - ~~Remove all other backends except for `libQtShadowsocks`~~
 - New flat icon
 
