@@ -56,6 +56,8 @@ private slots:
     void showWindow();
     void onSystrayActivated(QSystemTrayIcon::ActivationReason);
     void onReportBug();
+    void onConnectionConnected(const QString &name);
+    void onConnectionDisconnected(const QString &name);
 
 private:
     ConfigHelper *configHelper;

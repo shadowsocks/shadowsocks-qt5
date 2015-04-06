@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
     configHelper = new ConfigHelper(this);
     ui->connectionView->setModel(configHelper->getModel());
     ui->connectionView->resizeColumnsToContents();
+    connect(configHelper, &ConfigHelper::connected, this, &MainWindow::onConnectionConnected);
+    connect(configHelper, &ConfigHelper::disconnected, this, &MainWindow::onConnectionDisconnected);
 
     /*
      * There is a bug on KDE Frameworks 5: https://bugs.kde.org/show_bug.cgi?id=343976
@@ -321,4 +323,14 @@ void MainWindow::onReportBug()
 void MainWindow::closeEvent(QCloseEvent *)
 {
     minimizeToSysTray();
+}
+
+void MainWindow::onConnectionConnected(const QString &name)
+{
+    showNotification(name + " connected");
+}
+
+void MainWindow::onConnectionDisconnected(const QString &name)
+{
+    showNotification(name + " disconnected");
 }

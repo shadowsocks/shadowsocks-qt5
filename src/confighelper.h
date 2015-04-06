@@ -29,6 +29,10 @@ public:
     bool isOnlyOneInstance() const;
     void setGeneralSettings(bool hide, bool oneInstance);
 
+signals:
+    void connected(const QString &name);
+    void disconnected(const QString &name);
+
 private:
     bool hideWindowOnStartup;
     bool onlyOneInstace;

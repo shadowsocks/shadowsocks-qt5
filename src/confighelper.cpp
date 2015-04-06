@@ -134,6 +134,12 @@ void ConfigHelper::onConnectionStateChanged(bool running)
         return;
     }
 
+    if (running) {
+        emit connected(c->getName());
+    } else {
+        emit disconnected(c->getName());
+    }
+
     QFont font;
     font.setBold(running);
 
