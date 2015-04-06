@@ -47,6 +47,8 @@ private slots:
     void onEdit();
     void onDoubleClicked(const QModelIndex &index);
     void onShare();
+    void onConnect();
+    void onDisconnect();
     void onViewLog();
     void onGeneralSettings();
     void checkCurrentIndex(const QModelIndex &index);

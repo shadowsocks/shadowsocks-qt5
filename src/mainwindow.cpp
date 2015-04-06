@@ -54,6 +54,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionEdit, &QAction::triggered, this, &MainWindow::onEdit);
     connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
     connect(ui->actionShare, &QAction::triggered, this, &MainWindow::onShare);
+    connect(ui->actionConnect, &QAction::triggered, this, &MainWindow::onConnect);
+    connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::onDisconnect);
     connect(ui->actionView_Log, &QAction::triggered, this, &MainWindow::onViewLog);
     connect(ui->actionGeneral_Settings, &QAction::triggered, this, &MainWindow::onGeneralSettings);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
@@ -234,6 +236,16 @@ void MainWindow::onShare()
     shareDlg->exec();
 }
 
+void MainWindow::onConnect()
+{
+    configHelper->connectionAt(ui->connectionView->currentIndex().row())->start();
+}
+
+void MainWindow::onDisconnect()
+{
+    configHelper->connectionAt(ui->connectionView->currentIndex().row())->stop();
+}
+
 void MainWindow::onViewLog()
 {
     Connection *con = configHelper->connectionAt(ui->connectionView->currentIndex().row());
@@ -276,6 +288,12 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
     ui->actionDelete->setEnabled(valid);
     ui->actionShare->setEnabled(valid);
     ui->actionView_Log->setEnabled(valid);
+
+    if (valid) {
+        const bool &running = configHelper->connectionAt(index.row())->isRunning();
+        ui->actionConnect->setEnabled(!running);
+        ui->actionDisconnect->setEnabled(running);
+    }
 }
 
 void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)
