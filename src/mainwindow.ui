@@ -117,6 +117,7 @@
     <addaction name="actionTeat_All_Latency"/>
     <addaction name="separator"/>
     <addaction name="actionView_Log"/>
+    <addaction name="actionStatus"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -306,6 +307,11 @@
   <action name="actionTeat_All_Latency">
    <property name="text">
     <string>Teat All Connections &amp;Latency</string>
+   </property>
+  </action>
+  <action name="actionStatus">
+   <property name="text">
+    <string>Status</string>
    </property>
   </action>
  </widget>

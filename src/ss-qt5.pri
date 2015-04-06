@@ -12,7 +12,8 @@ SOURCES      += src/main.cpp\
                 src/urihelper.cpp \
                 src/uriinputdialog.cpp \
                 src/sqprofile.cpp \
-                src/settingsdialog.cpp
+                src/settingsdialog.cpp \
+                src/statusdialog.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ip4validator.h \
@@ -27,14 +28,16 @@ HEADERS      += src/mainwindow.h \
                 src/urihelper.h \
                 src/uriinputdialog.h \
                 src/sqprofile.h \
-                src/settingsdialog.h
+                src/settingsdialog.h \
+                src/statusdialog.h
 
 FORMS        += src/mainwindow.ui \
                 src/sharedialog.ui \
                 src/editdialog.ui \
                 src/logdialog.ui \
                 src/uriinputdialog.ui \
-                src/settingsdialog.ui
+                src/settingsdialog.ui \
+                src/statusdialog.ui
 
 RESOURCES    += src/icons.qrc \
                 src/translations.qrc

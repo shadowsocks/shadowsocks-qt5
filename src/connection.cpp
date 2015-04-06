@@ -10,6 +10,14 @@ Connection::Connection(QObject *parent) :
         running = run;
         emit stateChanged(run);
     });
+    connect(controller, &QSS::Controller::bytesReceivedChanged, [&](const quint64 &b) {
+        emit bytesReadChanged(b);
+        profile.bytesRead = b;
+    });
+    connect(controller, &QSS::Controller::bytesSentChanged, [&](const quint64 &b) {
+        emit bytesSentChanged(b);
+        profile.bytesSent = b;
+    });
 }
 
 Connection::Connection(const SQProfile &_profile, QObject *parent) :

@@ -30,6 +30,8 @@ public:
 signals:
     void stateChanged(bool started);
     void newLogAvailable(const QString &);
+    void bytesReadChanged(const quint64 &);
+    void bytesSentChanged(const quint64 &);
 
 public slots:
     bool start();
@@ -43,6 +45,7 @@ private:
 
     friend class EditDialog;
     friend class ConfigHelper;
+    friend class StatusDialog;
 
 private slots:
     void onNewLog(const QString &);

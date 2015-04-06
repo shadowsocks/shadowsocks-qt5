@@ -7,6 +7,7 @@
 #include "uriinputdialog.h"
 #include "sharedialog.h"
 #include "logdialog.h"
+#include "statusdialog.h"
 #include "settingsdialog.h"
 
 #include <QDesktopServices>
@@ -61,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::onDisconnect);
     connect(ui->actionTest_Latency, &QAction::triggered, this, &MainWindow::onLatencyTest);
     connect(ui->actionView_Log, &QAction::triggered, this, &MainWindow::onViewLog);
+    connect(ui->actionStatus, &QAction::triggered, this, &MainWindow::onStatus);
     connect(ui->actionGeneral_Settings, &QAction::triggered, this, &MainWindow::onGeneralSettings);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
@@ -279,6 +281,13 @@ void MainWindow::onViewLog()
     logDlg->exec();
 }
 
+void MainWindow::onStatus()
+{
+    Connection *con = configHelper->connectionAt(ui->connectionView->currentIndex().row());
+    StatusDialog *statusDlg = new StatusDialog(con, this);
+    statusDlg->exec();
+}
+
 void MainWindow::onGeneralSettings()
 {
     SettingsDialog *sDlg = new SettingsDialog(configHelper, this);
@@ -321,6 +330,7 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
     ui->actionDelete->setEnabled(valid);
     ui->actionShare->setEnabled(valid);
     ui->actionView_Log->setEnabled(valid);
+    ui->actionStatus->setEnabled(valid);
 
     if (valid) {
         updateConnectionStatus(index.row());

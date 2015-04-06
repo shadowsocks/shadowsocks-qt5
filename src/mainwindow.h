@@ -53,6 +53,7 @@ private slots:
     void onDisconnect();
     void onLatencyTest();
     void onViewLog();
+    void onStatus();
     void onGeneralSettings();
     void checkCurrentIndex(const QModelIndex &index);
     inline void onAbout() { QMessageBox::about(this, tr("About"), aboutText); }
