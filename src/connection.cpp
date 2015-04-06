@@ -10,13 +10,13 @@ Connection::Connection(QObject *parent) :
         running = run;
         emit stateChanged(run);
     });
-    connect(controller, &QSS::Controller::bytesReceivedChanged, [&](const quint64 &b) {
-        emit bytesReadChanged(b);
-        profile.bytesRead = b;
+    connect(controller, &QSS::Controller::newBytesReceived, [&](const quint64 &b) {
+        profile.bytesRead += b;
+        emit bytesReadChanged(profile.bytesRead);
     });
-    connect(controller, &QSS::Controller::bytesSentChanged, [&](const quint64 &b) {
-        emit bytesSentChanged(b);
-        profile.bytesSent = b;
+    connect(controller, &QSS::Controller::newBytesSent, [&](const quint64 &b) {
+        profile.bytesSent += b;
+        emit bytesSentChanged(profile.bytesSent);
     });
 }
 
