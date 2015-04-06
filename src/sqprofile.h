@@ -19,6 +19,8 @@ struct SQProfile
     QString password;
     int timeout;
     int lag;
+    quint64 bytesRead;
+    quint64 bytesSent;
     QDateTime lastTime;
 };
 Q_DECLARE_METATYPE(SQProfile)
