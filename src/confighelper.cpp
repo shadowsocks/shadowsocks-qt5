@@ -91,11 +91,17 @@ void ConfigHelper::latencyTestAtRow(int row)
 QString ConfigHelper::convertToLagString(const int &lag)
 {
     QString lagStr;
-    if (lag == -1) {
+    switch (lag) {
+    case -1:
+        lagStr = tr("Timeout");
+        break;
+    case -2:
         lagStr = tr("Error");
-    } else if (lag == -2) {
+        break;
+    case -3:
         lagStr = tr("Unknown");
-    } else {
+        break;
+    default:
         lagStr = QString::number(lag);
     }
     return lagStr;

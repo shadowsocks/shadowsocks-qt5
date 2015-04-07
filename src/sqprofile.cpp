@@ -10,7 +10,7 @@ SQProfile::SQProfile()
     localAddress = QString("127.0.0.1");
     method = QString("RC4-MD5");
     timeout = 600;
-    lag = -2;//-1 is unable to connect, -2 is unknown (untested)
+    lag = -3;//-1: timeout, -2: error, -3: unknown(untested)
     bytesRead = 0;
     bytesSent = 0;
 }
