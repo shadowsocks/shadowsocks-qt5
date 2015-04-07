@@ -68,6 +68,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReport_Bug, &QAction::triggered, this, &MainWindow::onReportBug);
 
+    //the mouse click event is not part of activated signal on Windows
+#ifdef Q_OS_WIN
+    connect(ui->connectionView, &QTableView::clicked, this, &MainWindow::checkCurrentIndex);
+#endif
     connect(ui->connectionView, &QTableView::activated, this, &MainWindow::checkCurrentIndex);
 
     checkCurrentIndex(ui->connectionView->currentIndex());
@@ -366,10 +370,10 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::onConnectionConnected(const QString &name)
 {
-    showNotification(name + " connected");
+    showNotification(name + " " + tr("connected"));
 }
 
 void MainWindow::onConnectionDisconnected(const QString &name)
 {
-    showNotification(name + " disconnected");
+    showNotification(name + " " + tr("disconnected"));
 }
