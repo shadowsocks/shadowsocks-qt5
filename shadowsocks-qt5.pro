@@ -11,7 +11,7 @@ CONFIG    += c++11
 
 TARGET     = ss-qt5
 TEMPLATE   = app
-VERSION    = 1.9.9
+VERSION    = 2.0.0
 DEFINES   += APP_VERSION=\\\"$$VERSION\\\"
 
 include(src/ss-qt5.pri)
