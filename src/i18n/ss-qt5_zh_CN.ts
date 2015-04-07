@@ -4,383 +4,569 @@
 <context>
     <name>AddProfileDialog</name>
     <message>
-        <location filename="../addprofiledialog.ui" line="20"/>
         <source>Add Profile</source>
-        <translation>添加配置</translation>
+        <translation type="vanished">添加配置</translation>
     </message>
     <message>
-        <location filename="../addprofiledialog.ui" line="35"/>
+        <source>Profile Name</source>
+        <translation type="vanished">配置名称</translation>
+    </message>
+    <message>
+        <source>Base64 Encoded URI (Optional)</source>
+        <translation type="vanished">Base64编码的统一资源标识符（可选）</translation>
+    </message>
+    <message>
+        <source>Scan QR code on screen and decode it to get the SS URI.</source>
+        <translation type="vanished">扫描屏幕上的二维码并解码获取统一资源标识符。</translation>
+    </message>
+    <message>
+        <source>Scan QR Code on Screen</source>
+        <translation type="vanished">扫描屏幕上的二维码</translation>
+    </message>
+    <message>
+        <source>From QR Code Image File</source>
+        <translation type="vanished">解码二维码图像文件</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="vanished">取消</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="vanished">添加</translation>
+    </message>
+    <message>
+        <source>Open QR Code Image File</source>
+        <translation type="vanished">打开二维码图像文件</translation>
+    </message>
+</context>
+<context>
+    <name>ConfigHelper</name>
+    <message>
+        <location filename="../confighelper.cpp" line="30"/>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <location filename="../confighelper.cpp" line="30"/>
+        <source>Lag (ms)</source>
+        <translation>延迟 （毫秒）</translation>
+    </message>
+    <message>
+        <location filename="../confighelper.cpp" line="30"/>
+        <source>Last used</source>
+        <translation>最近一次使用</translation>
+    </message>
+    <message>
+        <location filename="../confighelper.cpp" line="102"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../confighelper.cpp" line="104"/>
+        <source>Unknown</source>
+        <translation>未知</translation>
+    </message>
+</context>
+<context>
+    <name>EditDialog</name>
+    <message>
+        <location filename="../editdialog.ui" line="14"/>
+        <source>Profile Editor</source>
+        <translation>配置编辑器</translation>
+    </message>
+    <message>
+        <location filename="../editdialog.ui" line="29"/>
+        <source>Timeout</source>
+        <translation>超时</translation>
+    </message>
+    <message>
+        <location filename="../editdialog.ui" line="68"/>
+        <source>Encryption Method</source>
+        <translation>加密方式</translation>
+    </message>
+    <message>
+        <location filename="../editdialog.ui" line="82"/>
+        <source>Local Port</source>
+        <translation>本地端口</translation>
+    </message>
+    <message>
+        <location filename="../editdialog.ui" line="92"/>
+        <source>Local Address</source>
+        <translation>本地地址</translation>
+    </message>
+    <message>
+        <location filename="../editdialog.ui" line="109"/>
+        <source>Password</source>
+        <translation>密钥</translation>
+    </message>
+    <message>
+        <location filename="../editdialog.ui" line="123"/>
+        <source>Server Port</source>
+        <translation>服务器端口</translation>
+    </message>
+    <message>
+        <location filename="../editdialog.ui" line="133"/>
+        <source>Server Address</source>
+        <translation>服务器地址</translation>
+    </message>
+    <message>
+        <location filename="../editdialog.ui" line="140"/>
         <source>Profile Name</source>
         <translation>配置名称</translation>
     </message>
     <message>
-        <location filename="../addprofiledialog.ui" line="45"/>
-        <source>Base64 Encoded URI (Optional)</source>
-        <translation>Base64编码的统一资源标识符（可选）</translation>
+        <location filename="../editdialog.ui" line="156"/>
+        <source>Debug</source>
+        <translation>调试</translation>
     </message>
     <message>
-        <location filename="../addprofiledialog.ui" line="55"/>
-        <source>Scan QR code on screen and decode it to get the SS URI.</source>
-        <translation>扫描屏幕上的二维码并解码获取统一资源标识符。</translation>
+        <location filename="../editdialog.ui" line="163"/>
+        <source>Log Level</source>
+        <translation>日志级别</translation>
     </message>
     <message>
-        <location filename="../addprofiledialog.ui" line="58"/>
-        <source>Scan QR Code on Screen</source>
-        <translation>扫描屏幕上的二维码</translation>
+        <location filename="../editdialog.ui" line="176"/>
+        <source>Auto connect on applicatioin start</source>
+        <translation>程序启动时自动连接</translation>
     </message>
     <message>
-        <location filename="../addprofiledialog.ui" line="71"/>
-        <source>From QR Code Image File</source>
-        <translation>解码二维码图像文件</translation>
+        <location filename="../editdialog.ui" line="183"/>
+        <source>Automation</source>
+        <translation>自动化</translation>
     </message>
+</context>
+<context>
+    <name>LogDialog</name>
     <message>
-        <location filename="../addprofiledialog.ui" line="94"/>
-        <source>ss://BASE64-ENCODED-STRING-WITHOUT-PADDING</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../addprofiledialog.ui" line="119"/>
-        <source>Cancel</source>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <location filename="../addprofiledialog.ui" line="129"/>
-        <source>Add</source>
-        <translation>添加</translation>
-    </message>
-    <message>
-        <location filename="../addprofiledialog.cpp" line="115"/>
-        <source>Open QR Code Image File</source>
-        <translation>打开二维码图像文件</translation>
+        <location filename="../logdialog.ui" line="14"/>
+        <source>Log Viewer</source>
+        <translation>日志查看器</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="26"/>
         <source>Control Panel</source>
-        <translation>控制面板</translation>
+        <translation type="vanished">控制面板</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="41"/>
         <source>General</source>
-        <translation>通用</translation>
+        <translation type="vanished">通用</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="49"/>
         <source>Local Port</source>
-        <translation>本地端口</translation>
+        <translation type="vanished">本地端口</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="56"/>
         <source>Password</source>
-        <translation>密钥</translation>
+        <translation type="vanished">密钥</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="73"/>
         <source>Server Port</source>
-        <translation>服务器端口</translation>
+        <translation type="vanished">服务器端口</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="90"/>
         <source>Local socks proxy port</source>
-        <translation>本地套接字代理端口</translation>
+        <translation type="vanished">本地套接字代理端口</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="97"/>
         <source>Server Address</source>
-        <translation>服务器地址</translation>
+        <translation type="vanished">服务器地址</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="126"/>
         <source>Local Address</source>
-        <translation>本地地址</translation>
+        <translation type="vanished">本地地址</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="133"/>
         <source>Timeout</source>
-        <translation>超时</translation>
+        <translation type="vanished">超时</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="160"/>
         <source>Encryption Method</source>
-        <translation>加密方式</translation>
+        <translation type="vanished">加密方式</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="174"/>
         <source>Only available in Linux with Kernel &gt;= 3.7
 Not every port of Shadowsocks support this option.</source>
-        <translation>仅在Linux内核版本&gt;=3.7时可用
+        <translation type="vanished">仅在Linux内核版本&gt;=3.7时可用
 不是所有版本的Shadowsocks都支持该选项。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="178"/>
         <source>Use TCP Fast Open if available</source>
-        <translation>使用TCP Fast Open（如果可用）</translation>
+        <translation type="vanished">使用TCP Fast Open（如果可用）</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="189"/>
         <source>Choose which type of Shadowsocks backend to use
 Note: This has nothing to with your shadowsocks server</source>
-        <translation>选择要使用的Shadowsocks后端类型
+        <translation type="vanished">选择要使用的Shadowsocks后端类型
 注意：此项与你的Shadowsocks服务器没有任何关系</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="197"/>
-        <source>Shadowsocks-libev</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="202"/>
-        <source>Shadowsocks-NodeJS</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="207"/>
-        <source>Shadowsocks-Go</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="212"/>
-        <source>Shadowsocks-Python</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="217"/>
-        <source>libQtShadowsocks</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="225"/>
         <source>Backend</source>
-        <translation>后端</translation>
+        <translation type="vanished">后端</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="232"/>
-        <source>...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="244"/>
-        <source>+</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="256"/>
         <source>Backend Type</source>
-        <translation>后端类型</translation>
+        <translation type="vanished">后端类型</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="566"/>
         <source>Use relative path to backend executables</source>
-        <translation>使用到后端的相对路径</translation>
+        <translation type="vanished">使用到后端的相对路径</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="588"/>
         <source>Only one ss-qt5 instance is allowed to run
 If ss-qt5 crashed, you may need to delete shared memeory files manually to avoid errors</source>
-        <translation>仅允许一个ss-qt5实例运行
+        <translation type="vanished">仅允许一个ss-qt5实例运行
 如果ss-qt5崩溃了，你可能需要手动删除共享内存文件以避免错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="282"/>
-        <source>-</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="294"/>
         <source>Profile</source>
-        <translation>配置</translation>
+        <translation type="vanished">配置</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="304"/>
         <source>Custom Arguments</source>
-        <translation>自定义参数</translation>
+        <translation type="vanished">自定义参数</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="328"/>
-        <location filename="../mainwindow.cpp" line="349"/>
         <source>Start</source>
-        <translation>启动</translation>
+        <translation type="vanished">启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="340"/>
-        <location filename="../mainwindow.cpp" line="350"/>
         <source>Stop</source>
-        <translation>停止</translation>
+        <translation type="vanished">停止</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="368"/>
         <source>Share</source>
-        <translation>分享</translation>
+        <translation type="vanished">分享</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="394"/>
         <source>Reset</source>
-        <translation>重置</translation>
+        <translation type="vanished">重置</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="437"/>
         <source>Log</source>
-        <translation>日志</translation>
+        <translation type="vanished">日志</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="482"/>
         <source>Use translucent background</source>
-        <translation>使用透明背景</translation>
+        <translation type="vanished">使用透明背景</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="492"/>
         <source>Autostart if profile is valid</source>
-        <translation>配置有效则自动启动</translation>
+        <translation type="vanished">配置有效则自动启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="592"/>
         <source>Allow only one instance running</source>
-        <translation>仅允许一个实例运行</translation>
+        <translation type="vanished">仅允许一个实例运行</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="422"/>
-        <location filename="../mainwindow.ui" line="515"/>
         <source>Save</source>
-        <translation>保存</translation>
+        <translation type="vanished">保存</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="80"/>
         <source>Local socks proxy address
 Use 0.0.0.0 if you want to share this proxy to all connected devices
 Or use intranet IP address to share proxy to devices in local network
 Otherwise, simply use 127.0.0.1</source>
-        <translation>本地套接字代理地址
+        <translation type="vanished">本地套接字代理地址
 使用 0.0.0.0 如果你想共享本代理给所有联结的设备
 或者使用内网IP地址以仅共享给本地网络的设备
 否则，请使用 127.0.0.1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="140"/>
         <source>Shadowsocks server&apos;s domain or IP address</source>
-        <translation>Shadowsocks服务器域名或IP地址</translation>
+        <translation type="vanished">Shadowsocks服务器域名或IP地址</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="153"/>
         <source>Shadowsocks server&apos;s port</source>
-        <translation>Shadowsocks服务器端口</translation>
+        <translation type="vanished">Shadowsocks服务器端口</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="269"/>
         <source>Path to command-line Shadowsocks backend (libQtShadowsocks doesn&apos;t apply)</source>
-        <translation>命令行Shadowsocks后端的路径（libQtShadowsocks不适用）</translation>
+        <translation type="vanished">命令行Shadowsocks后端的路径（libQtShadowsocks不适用）</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="314"/>
         <source>Additional arguments for command-line Shadowsocks backend (libQtShadowsocks doesn&apos;t apply)</source>
-        <translation>命令行Shadowsocks后端的额外参数（libQtShadowsocks不适用）</translation>
+        <translation type="vanished">命令行Shadowsocks后端的额外参数（libQtShadowsocks不适用）</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="365"/>
         <source>Generate QR code to share current profile</source>
-        <translation>生成二维码分享当前配置</translation>
+        <translation type="vanished">生成二维码分享当前配置</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="476"/>
         <source>Miscellaneous</source>
-        <translation>杂项</translation>
+        <translation type="vanished">杂项</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="489"/>
         <source>Start backend automatically if current profile is valid when ss-qt5 started</source>
-        <translation>如果当前配置有效，则在ss-qt5启动时自动启动后端</translation>
+        <translation type="vanished">如果当前配置有效，则在ss-qt5启动时自动启动后端</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="527"/>
-        <location filename="../mainwindow.h" line="89"/>
+        <location filename="../mainwindow.h" line="59"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="539"/>
         <source>Auto hide main window when started</source>
-        <translation>启动后自动隐藏主窗口</translation>
+        <translation type="vanished">启动后自动隐藏主窗口</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="559"/>
         <source>Debug-level log</source>
-        <translation>除错级别的日志</translation>
+        <translation type="vanished">除错级别的日志</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="569"/>
         <source>Use relative path instead of absolute path</source>
-        <translation>使用相对路径而不是绝对路径</translation>
+        <translation type="vanished">使用相对路径而不是绝对路径</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="576"/>
         <source>This will enable application minimise to system tray
 If system tray icon doesn&apos;t show or malfunction, please uncheck this option
 Need application restart to take effect</source>
-        <translation>该选项使得程序能最小化到系统托盘
+        <translation type="vanished">该选项使得程序能最小化到系统托盘
 如果系统托盘不显示或者异常，请取消勾选本项
 程序需要重新启动以生效</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="581"/>
         <source>Use system tray</source>
-        <translation>使用系统托盘</translation>
+        <translation type="vanished">使用系统托盘</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="330"/>
-        <location filename="../mainwindow.cpp" line="348"/>
+        <location filename="../mainwindow.cpp" line="133"/>
+        <location filename="../mainwindow.cpp" line="149"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="298"/>
+        <location filename="../mainwindow.cpp" line="202"/>
+        <location filename="../mainwindow.cpp" line="216"/>
+        <source>QR Code Not Found</source>
+        <translation>未找到二维码</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="202"/>
+        <location filename="../mainwindow.cpp" line="216"/>
+        <source>Can&apos;t find any QR code image that contains valid URI on your screen(s).</source>
+        <translation>无法在您的屏幕上找到任何包含有效URI的二维码图像。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="211"/>
+        <source>Open QR Code Image File</source>
+        <translation>打开二维码图像文件</translation>
+    </message>
+    <message>
         <source>Error</source>
-        <translation>错误</translation>
+        <translation type="vanished">错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="298"/>
         <source>Invalid profile or configuration.</source>
-        <translation>无效的配置或设置。</translation>
+        <translation type="vanished">无效的配置或设置。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="351"/>
+        <location filename="../mainwindow.cpp" line="150"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="403"/>
         <source>Profile: %1 Started</source>
-        <translation>配置：%1 已启动</translation>
+        <translation type="vanished">配置：%1 已启动</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="411"/>
         <source>Profile: %1 Stopped</source>
-        <translation>配置：%1 已停止</translation>
+        <translation type="vanished">配置：%1 已停止</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="440"/>
         <source>Save Changes</source>
-        <translation>保存变更</translation>
+        <translation type="vanished">保存变更</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="440"/>
         <source>Configuration has been changed.
 Do you want to save it now?</source>
-        <translation>设置已经被变更。
+        <translation type="vanished">设置已经被变更。
 你想要现在保存吗？</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="20"/>
+        <source>Connection Manager</source>
+        <translation>连接编辑器</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="54"/>
+        <source>toolBar</source>
+        <translation>工具栏</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="93"/>
+        <source>&amp;Connection</source>
+        <translation>&amp;连接</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="97"/>
+        <source>&amp;Add</source>
+        <translation>&amp;添加</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="124"/>
+        <source>Fi&amp;le</source>
+        <translation>&amp;文件</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="131"/>
+        <source>Settin&amp;gs</source>
+        <translation>&amp;设置</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="137"/>
+        <source>Help</source>
+        <translation>帮助</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="156"/>
+        <source>&amp;Manually</source>
+        <translation>&amp;手动</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="159"/>
+        <source>Add connection manually</source>
+        <translation>手动添加连接</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="179"/>
+        <source>&amp;From QR Code Image File</source>
+        <translation>&amp;自二维码图像文件</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="182"/>
+        <source>From QR code image file</source>
+        <translation>自二维码图像文件</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="235"/>
+        <source>&amp;Disconnect</source>
+        <translation>&amp;断开连接</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="260"/>
+        <source>About Qt</source>
+        <translation>关于Qt</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="300"/>
+        <source>View &amp;Log</source>
+        <translation>&amp;查看日志</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="318"/>
+        <source>Test All Connections Latency</source>
+        <translation>测试所有连接的延迟</translation>
+    </message>
+    <message>
+        <source>&amp;Manual</source>
+        <translation type="vanished">&amp;手动</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="169"/>
+        <source>&amp;Scan QR Code on Screen</source>
+        <translation>&amp;扫描屏幕上的二维码</translation>
+    </message>
+    <message>
+        <source>&amp;QR Code from File</source>
+        <translation type="vanished">&amp;来自二维码文件</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="192"/>
+        <source>&amp;URI</source>
+        <translation>&amp;URI</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="195"/>
+        <source>Add connection from URI</source>
+        <translation>从URI添加连接</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="205"/>
+        <source>&amp;Delete</source>
+        <translation>&amp;删除</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="215"/>
+        <source>&amp;Edit</source>
+        <translation>&amp;编辑</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="225"/>
+        <source>&amp;Connect</source>
+        <translation>&amp;连接</translation>
+    </message>
+    <message>
+        <source>D&amp;isconnect</source>
+        <translation type="vanished">&amp;断开连接</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="245"/>
+        <source>&amp;Quit</source>
+        <translation>&amp;退出</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="255"/>
+        <source>&amp;About</source>
+        <translation>&amp;关于</translation>
+    </message>
+    <message>
+        <source>About &amp;Qt</source>
+        <translation type="vanished">关于&amp;Qt</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="270"/>
+        <source>&amp;General Settings</source>
+        <translation>&amp;常规设置</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="280"/>
+        <source>&amp;Share</source>
+        <translation>&amp;分享</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="290"/>
+        <source>&amp;Report Bug</source>
+        <translation>&amp;报告错误</translation>
+    </message>
+    <message>
+        <source>&amp;View Log</source>
+        <translation type="vanished">&amp;查看日志</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="310"/>
+        <source>&amp;Test Latency</source>
+        <translation>&amp;测试延迟</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="313"/>
+        <source>Test the lag of selected connection</source>
+        <translation>测试所选连接的延迟</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="323"/>
+        <source>Status</source>
+        <translation>状态</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="45"/>
+        <location filename="../main.cpp" line="46"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="45"/>
+        <location filename="../main.cpp" line="46"/>
         <source>Another instance of Shadowsocks-Qt5 is already running.</source>
         <translation>另一个Shadowsocks-Qt5的实例已经在运行了。</translation>
+    </message>
+    <message>
+        <location filename="../sqprofile.cpp" line="9"/>
+        <source>Unamed Profile</source>
+        <translation>未命名配置</translation>
     </message>
 </context>
 <context>
@@ -394,24 +580,38 @@ Do you want to save it now?</source>
 <context>
     <name>SS_Process</name>
     <message>
-        <location filename="../ss_process.cpp" line="66"/>
         <source>Aborted: Invalid Backend Type.</source>
-        <translation>终止：无效的后端类型。</translation>
+        <translation type="vanished">终止：无效的后端类型。</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="74"/>
         <source>Backend arguments are </source>
-        <translation>后端参数为</translation>
+        <translation type="vanished">后端参数为</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="141"/>
         <source>Backend started. PID: </source>
-        <translation>后端已启动。PID：</translation>
+        <translation type="vanished">后端已启动。PID：</translation>
     </message>
     <message>
-        <location filename="../ss_process.cpp" line="147"/>
         <source>Backend exited. Exit Code: </source>
-        <translation>后端已退出。退出代码：</translation>
+        <translation type="vanished">后端已退出。退出代码：</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <location filename="../settingsdialog.ui" line="14"/>
+        <source>General Settings</source>
+        <translation>常规设置</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="20"/>
+        <source>Allow only one instance running</source>
+        <translation>仅允许一个实例运行</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="27"/>
+        <source>Hide window on startup</source>
+        <translation>启动时隐藏窗口</translation>
     </message>
 </context>
 <context>
@@ -430,6 +630,65 @@ Do you want to save it now?</source>
         <location filename="../sharedialog.cpp" line="25"/>
         <source>Save QR Code</source>
         <translation>保存二维码</translation>
+    </message>
+</context>
+<context>
+    <name>StatusDialog</name>
+    <message>
+        <location filename="../statusdialog.ui" line="14"/>
+        <location filename="../statusdialog.ui" line="65"/>
+        <source>Status</source>
+        <translation>状态</translation>
+    </message>
+    <message>
+        <location filename="../statusdialog.ui" line="23"/>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <location filename="../statusdialog.ui" line="37"/>
+        <source>Server Address</source>
+        <translation>服务器地址</translation>
+    </message>
+    <message>
+        <location filename="../statusdialog.ui" line="51"/>
+        <source>Server Port</source>
+        <translation>服务器端口</translation>
+    </message>
+    <message>
+        <location filename="../statusdialog.ui" line="79"/>
+        <source>Bytes Sent</source>
+        <translation>已发送字节</translation>
+    </message>
+    <message>
+        <location filename="../statusdialog.ui" line="93"/>
+        <source>Bytes Read</source>
+        <translation>已接受字节</translation>
+    </message>
+    <message>
+        <location filename="../statusdialog.cpp" line="14"/>
+        <location filename="../statusdialog.cpp" line="32"/>
+        <source>Connected</source>
+        <translation>已连接</translation>
+    </message>
+    <message>
+        <location filename="../statusdialog.cpp" line="14"/>
+        <location filename="../statusdialog.cpp" line="32"/>
+        <source>Disconnected</source>
+        <translation>未连接</translation>
+    </message>
+</context>
+<context>
+    <name>URIInputDialog</name>
+    <message>
+        <location filename="../uriinputdialog.ui" line="14"/>
+        <source>URI Input Dialog</source>
+        <translation>URI输入对话框</translation>
+    </message>
+    <message>
+        <location filename="../uriinputdialog.ui" line="20"/>
+        <source>Please input ss:// URI</source>
+        <translation>请输入 ss:// URI</translation>
     </message>
 </context>
 </TS>
