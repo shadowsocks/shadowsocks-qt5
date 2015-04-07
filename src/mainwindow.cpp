@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->connectionView->resizeColumnsToContents();
     connect(configHelper, &ConfigHelper::connected, this, &MainWindow::onConnectionConnected);
     connect(configHelper, &ConfigHelper::disconnected, this, &MainWindow::onConnectionDisconnected);
-    connect(ui->actionTeat_All_Latency, &QAction::triggered, configHelper, &ConfigHelper::testAllLags);
+    connect(ui->actionTest_All_Latency, &QAction::triggered, configHelper, &ConfigHelper::testAllLags);
 
     /*
      * There is a bug on KDE Frameworks 5: https://bugs.kde.org/show_bug.cgi?id=343976
@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
-    connect(ui->actionManual, &QAction::triggered, this, &MainWindow::onAddManually);
+    connect(ui->actionManually, &QAction::triggered, this, &MainWindow::onAddManually);
     connect(ui->actionQR_Code, &QAction::triggered, this, &MainWindow::onAddScreenQRCode);
     connect(ui->actionQR_Code_from_File, &QAction::triggered, this, &MainWindow::onAddQRCodeFile);
     connect(ui->actionURI, &QAction::triggered, this, &MainWindow::onAddFromURI);

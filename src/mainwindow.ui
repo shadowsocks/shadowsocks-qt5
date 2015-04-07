@@ -101,7 +101,7 @@
        <normaloff/>
       </iconset>
      </property>
-     <addaction name="actionManual"/>
+     <addaction name="actionManually"/>
      <addaction name="actionURI"/>
      <addaction name="actionQR_Code_from_File"/>
      <addaction name="actionQR_Code"/>
@@ -114,7 +114,7 @@
     <addaction name="actionConnect"/>
     <addaction name="actionDisconnect"/>
     <addaction name="actionTest_Latency"/>
-    <addaction name="actionTeat_All_Latency"/>
+    <addaction name="actionTest_All_Latency"/>
     <addaction name="separator"/>
     <addaction name="actionView_Log"/>
     <addaction name="actionStatus"/>
@@ -146,14 +146,17 @@
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
-  <action name="actionManual">
+  <action name="actionManually">
    <property name="icon">
     <iconset theme="edit-guides">
      <normaloff/>
     </iconset>
    </property>
    <property name="text">
-    <string>&amp;Manual</string>
+    <string>&amp;Manually</string>
+   </property>
+   <property name="toolTip">
+    <string>Add connection manually</string>
    </property>
   </action>
   <action name="actionQR_Code">
@@ -173,7 +176,10 @@
     </iconset>
    </property>
    <property name="text">
-    <string>&amp;QR Code from File</string>
+    <string>&amp;From QR Code Image File</string>
+   </property>
+   <property name="toolTip">
+    <string>From QR code image file</string>
    </property>
   </action>
   <action name="actionURI">
@@ -184,6 +190,9 @@
    </property>
    <property name="text">
     <string>&amp;URI</string>
+   </property>
+   <property name="toolTip">
+    <string>Add connection from URI</string>
    </property>
   </action>
   <action name="actionDelete">
@@ -223,7 +232,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>D&amp;isconnect</string>
+    <string>&amp;Disconnect</string>
    </property>
   </action>
   <action name="actionQuit">
@@ -248,7 +257,7 @@
   </action>
   <action name="actionAbout_Qt">
    <property name="text">
-    <string>About &amp;Qt</string>
+    <string>About Qt</string>
    </property>
   </action>
   <action name="actionGeneral_Settings">
@@ -288,7 +297,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>&amp;View Log</string>
+    <string>View &amp;Log</string>
    </property>
   </action>
   <action name="actionTest_Latency">
@@ -304,9 +313,9 @@
     <string>Test the lag of selected connection</string>
    </property>
   </action>
-  <action name="actionTeat_All_Latency">
+  <action name="actionTest_All_Latency">
    <property name="text">
-    <string>Teat All Connections &amp;Latency</string>
+    <string>Test All Connections Latency</string>
    </property>
   </action>
   <action name="actionStatus">
