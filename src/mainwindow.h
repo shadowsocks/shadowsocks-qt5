@@ -35,10 +35,31 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-public:
-    void minimizeToSysTray();
     bool isOnlyOneInstance() const;
     bool isHideWindowOnStartup() const;
+
+public slots:
+    void minimizeToSysTray();
+
+private:
+    ConfigHelper *configHelper;
+    QMenu *systrayMenu;
+    QSystemTrayIcon *systray;
+    Ui::MainWindow *ui;
+#ifdef UBUNTU_UNITY
+    GtkWidget *showItem;
+#endif
+
+    void updateConnectionStatus(int row);
+    void newProfile(Connection *);
+    void editRow(int row);
+    void createSystemTray();
+    void showNotification(const QString &);
+    void blockChildrenSignals(bool);
+
+    static const QStringList headerLabels;
+    static const QString aboutText;
+    static const QUrl issueUrl;
 
 private slots:
     void onAddManually();
@@ -62,26 +83,6 @@ private slots:
     void onReportBug();
     void onConnectionConnected(const QString &name);
     void onConnectionDisconnected(const QString &name);
-
-private:
-    ConfigHelper *configHelper;
-    QMenu *systrayMenu;
-    QSystemTrayIcon *systray;
-    Ui::MainWindow *ui;
-#ifdef UBUNTU_UNITY
-    GtkWidget *showItem;
-#endif
-
-    void updateConnectionStatus(int row);
-    void newProfile(Connection *);
-    void editRow(int row);
-    void createSystemTray();
-    void showNotification(const QString &);
-    void blockChildrenSignals(bool);
-
-    static const QStringList headerLabels;
-    static const QString aboutText;
-    static const QUrl issueUrl;
 
 protected:
     void closeEvent(QCloseEvent *);

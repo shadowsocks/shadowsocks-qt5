@@ -147,6 +147,7 @@ void MainWindow::createSystemTray()
         //desktop systray
         systrayMenu = new QMenu(this);
         systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
+        systrayMenu->addAction(tr("Hide"), this, SLOT(minimizeToSysTray()));
         systrayMenu->addAction(QIcon::fromTheme("application-exit", QIcon::fromTheme("exit")), tr("Quit"), qApp, SLOT(quit()));
 
         systray->setIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"));
@@ -357,8 +358,9 @@ void MainWindow::onReportBug()
     QDesktopServices::openUrl(issueUrl);
 }
 
-void MainWindow::closeEvent(QCloseEvent *)
+void MainWindow::closeEvent(QCloseEvent *e)
 {
+    e->ignore();
     minimizeToSysTray();
 }
 
