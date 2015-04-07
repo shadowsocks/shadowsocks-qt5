@@ -1,6 +1,5 @@
 #include "connection.h"
 #include "ssvalidator.h"
-#include "qtshadowsocks/addresstester.h"
 
 Connection::Connection(QObject *parent) :
     QObject(parent),
