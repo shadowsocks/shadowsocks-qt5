@@ -224,6 +224,7 @@ void MainWindow::onAddQRCodeFile()
 void MainWindow::onAddFromURI()
 {
     URIInputDialog *inputDlg = new URIInputDialog(this);
+    connect(inputDlg, &URIInputDialog::finished, inputDlg, &URIInputDialog::deleteLater);
     connect(inputDlg, &URIInputDialog::acceptedURI, [&](const QString &uri){
         Connection *newCon = new Connection(uri, this);
         newProfile(newCon);
@@ -251,6 +252,7 @@ void MainWindow::onShare()
 {
     QByteArray uri = configHelper->connectionAt(ui->connectionView->currentIndex().row())->getURI();
     ShareDialog *shareDlg = new ShareDialog(uri, this);
+    connect(shareDlg, &ShareDialog::finished, shareDlg, &ShareDialog::deleteLater);
     shareDlg->exec();
 }
 
@@ -278,6 +280,7 @@ void MainWindow::onViewLog()
 {
     Connection *con = configHelper->connectionAt(ui->connectionView->currentIndex().row());
     LogDialog *logDlg = new LogDialog(con->getLog(), this);
+    connect(logDlg, &LogDialog::finished, logDlg, &LogDialog::deleteLater);
     connect(con, &Connection::newLogAvailable, logDlg, &LogDialog::append);
     logDlg->exec();
 }
@@ -286,12 +289,14 @@ void MainWindow::onStatus()
 {
     Connection *con = configHelper->connectionAt(ui->connectionView->currentIndex().row());
     StatusDialog *statusDlg = new StatusDialog(con, this);
+    connect(statusDlg, &StatusDialog::finished, statusDlg, &StatusDialog::deleteLater);
     statusDlg->exec();
 }
 
 void MainWindow::onGeneralSettings()
 {
     SettingsDialog *sDlg = new SettingsDialog(configHelper, this);
+    connect(sDlg, &SettingsDialog::finished, sDlg, &SettingsDialog::deleteLater);
     sDlg->exec();
 }
 
@@ -305,6 +310,7 @@ void MainWindow::updateConnectionStatus(int row)
 void MainWindow::newProfile(Connection *newCon)
 {
     EditDialog *editDlg = new EditDialog(newCon, this);
+    connect(editDlg, &EditDialog::finished, editDlg, &EditDialog::deleteLater);
     if (editDlg->exec()) {//accepted
         configHelper->addConnection(newCon);
     } else {
@@ -316,6 +322,7 @@ void MainWindow::editRow(int row)
 {
     Connection *con = configHelper->connectionAt(row);
     EditDialog *editDlg = new EditDialog(con, this);
+    connect(editDlg, &EditDialog::finished, editDlg, &EditDialog::deleteLater);
     if (editDlg->exec()) {
         configHelper->updateNameAtRow(row);
     }
