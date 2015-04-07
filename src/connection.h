@@ -29,6 +29,7 @@ public:
 
 signals:
     void stateChanged(bool started);
+    void pingFinished(const int);
     void newLogAvailable(const QString &);
     void bytesReadChanged(const quint64 &);
     void bytesSentChanged(const quint64 &);
@@ -49,6 +50,7 @@ private:
 
 private slots:
     void onNewLog(const QString &);
+    void onLagTestFinished(int);
 };
 Q_DECLARE_METATYPE(Connection*)
 

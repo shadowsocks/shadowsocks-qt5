@@ -71,12 +71,6 @@ void ConfigHelper::updateNameAtRow(int row)
     model->setData(model->index(row, 0), QVariant(con->profile.name), Qt::DisplayRole);
 }
 
-void ConfigHelper::updateLagAtRow(int row)
-{
-    Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
-    model->setData(model->index(row, 1), QVariant(convertToLagString(con->profile.lag)));
-}
-
 void ConfigHelper::updateTimeAtRow(int row)
 {
     Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
@@ -92,7 +86,6 @@ void ConfigHelper::latencyTestAtRow(int row)
 {
     Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
     con->latencyTest();
-    model->setData(model->index(row, 1), QVariant(convertToLagString(con->profile.lag)));
 }
 
 QString ConfigHelper::convertToLagString(const int &lag)
@@ -114,7 +107,6 @@ void ConfigHelper::testAllLags()
     for (int i = 0; i < size; ++i) {
         Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
         con->latencyTest();
-        model->setData(model->index(i, 1), QVariant(convertToLagString(con->profile.lag)));
     }
 }
 
@@ -137,6 +129,7 @@ void ConfigHelper::setGeneralSettings(bool hide, bool oneInstance)
 void ConfigHelper::appendConnectionToList(Connection *con)
 {
     connect(con, &Connection::stateChanged, this, &ConfigHelper::onConnectionStateChanged);
+    connect(con, &Connection::pingFinished, this, &ConfigHelper::onConnectionPingFinished);
     QList<QStandardItem *> items;
     QStandardItem *name = new QStandardItem();
     name->setData(QVariant(con->profile.name), Qt::DisplayRole);
@@ -189,6 +182,23 @@ void ConfigHelper::onConnectionStateChanged(bool running)
     int cols = model->columnCount();
     for (int i = 0; i < cols; ++i) {
         model->item(row, i)->setFont(font);
+    }
+}
+
+void ConfigHelper::onConnectionPingFinished(const int lag)
+{
+    Connection *c = qobject_cast<Connection *>(sender());
+    if (!c) {
+        return;
+    }
+
+    int size = model->rowCount();
+    for (int i = 0; i < size; ++i) {
+        Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
+        if (con == c) {
+            model->setData(model->index(i, 1), QVariant(convertToLagString(lag)));
+            break;
+        }
     }
 }
 

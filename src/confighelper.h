@@ -21,7 +21,6 @@ public:
     void addConnection(Connection *con);
     void deleteRow(int row);
     void updateNameAtRow(int row);
-    void updateLagAtRow(int row);//update lag in model (won't perform latency test)
     void updateTimeAtRow(int row);
     Connection *connectionAt(int row);
     void latencyTestAtRow(int row);//perform a latency test and update lag in model
@@ -56,6 +55,7 @@ private:
 
 private slots:
     void onConnectionStateChanged(bool running);
+    void onConnectionPingFinished(const int lag);
 };
 
 #endif // CONFIGHELPER_H

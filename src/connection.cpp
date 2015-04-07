@@ -1,5 +1,6 @@
 #include "connection.h"
 #include "ssvalidator.h"
+#include "qtshadowsocks/addresstester.h"
 
 Connection::Connection(QObject *parent) :
     QObject(parent),
@@ -83,7 +84,10 @@ const bool &Connection::isRunning() const
 void Connection::latencyTest()
 {
     QSS::Address server(profile.serverAddress, profile.serverPort);
-    profile.lag = server.ping();
+    QSS::AddressTester *addrTester = new QSS::AddressTester(server.getIPAddress(), profile.serverPort, this);
+    connect(addrTester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLagTestFinished);
+    connect(addrTester, &QSS::AddressTester::lagTestFinished, addrTester, &QSS::AddressTester::deleteLater);
+    addrTester->startLagTest();
 }
 
 bool Connection::start()
@@ -119,4 +123,10 @@ void Connection::onNewLog(const QString &str)
     }
     log.append(str);
     emit newLogAvailable(str);
+}
+
+void Connection::onLagTestFinished(int lag)
+{
+    profile.lag = lag;
+    emit pingFinished(lag);
 }
