@@ -264,9 +264,14 @@ void MainWindow::onShare()
 void MainWindow::onConnect()
 {
     int row = ui->connectionView->currentIndex().row();
-    configHelper->connectionAt(row)->start();
-    updateConnectionStatus(row);
-    configHelper->updateTimeAtRow(row);
+    Connection *con = configHelper->connectionAt(row);
+    if (con->isValid()) {
+        con->start();
+        updateConnectionStatus(row);
+        configHelper->updateTimeAtRow(row);
+    } else {
+        QMessageBox::critical(this, tr("Invalid"), tr("The connection's profile is invalid!"));
+    }
 }
 
 void MainWindow::onDisconnect()

@@ -11,6 +11,8 @@ URIInputDialog::URIInputDialog(QWidget *parent) :
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
     connect(ui->uriEdit, &QLineEdit::textChanged, this, &URIInputDialog::onURIChanged);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &URIInputDialog::onAccepted);
+
+    this->adjustSize();
 }
 
 URIInputDialog::~URIInputDialog()

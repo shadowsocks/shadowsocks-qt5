@@ -31,6 +31,12 @@
        <verstretch>10</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>256</width>
+       <height>256</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item alignment="Qt::AlignBottom">

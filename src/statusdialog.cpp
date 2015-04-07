@@ -18,6 +18,8 @@ StatusDialog::StatusDialog(Connection *c, QWidget *parent) :
     connect(con, &Connection::stateChanged, this, &StatusDialog::onStatusChanged);
     connect(con, &Connection::bytesReadChanged, this, &StatusDialog::onBytesReadChanged);
     connect(con, &Connection::bytesSentChanged, this, &StatusDialog::onBytesSentChanged);
+
+    this->adjustSize();
 }
 
 StatusDialog::~StatusDialog()

@@ -22,7 +22,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="uriEdit"/>
+    <widget class="QLineEdit" name="uriEdit">
+     <property name="minimumSize">
+      <size>
+       <width>300</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer">
@@ -32,7 +39,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>0</height>
       </size>
      </property>
     </spacer>

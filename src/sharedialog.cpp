@@ -13,6 +13,8 @@ ShareDialog::ShareDialog(const QByteArray &ssUrl, QWidget *parent) :
     ui->ssUrlEdit->setCursorPosition(0);
 
     connect(ui->saveButton, &QPushButton::clicked, this, &ShareDialog::onSaveButtonClicked);
+
+    this->adjustSize();
 }
 
 ShareDialog::~ShareDialog()

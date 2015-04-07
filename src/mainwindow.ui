@@ -42,6 +42,9 @@
       <property name="sortingEnabled">
        <bool>true</bool>
       </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
       <attribute name="verticalHeaderVisible">
        <bool>false</bool>
       </attribute>
@@ -51,7 +54,7 @@
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Tool Bar</string>
    </property>
    <property name="movable">
     <bool>false</bool>
@@ -85,8 +88,11 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>29</height>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>true</bool>
    </property>
    <widget class="QMenu" name="menuConnection">
     <property name="title">

@@ -17,6 +17,8 @@ SettingsDialog::SettingsDialog(ConfigHelper *ch, QWidget *parent) :
     connect(ui->oneInstanceCheckBox, &QCheckBox::stateChanged, this, &SettingsDialog::onChanged);
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+
+    this->adjustSize();
 }
 
 SettingsDialog::~SettingsDialog()

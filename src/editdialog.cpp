@@ -32,6 +32,8 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     ui->debugCheckBox->setChecked(connection->profile.debug);
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &EditDialog::save);
+
+    this->adjustSize();
 }
 
 EditDialog::~EditDialog()

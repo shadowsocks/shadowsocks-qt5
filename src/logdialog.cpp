@@ -8,6 +8,7 @@ LogDialog::LogDialog(const QString &str, QWidget *parent) :
     ui->setupUi(this);
     ui->logBrowser->setText(str);
     ui->logBrowser->moveCursor(QTextCursor::End);
+    this->adjustSize();
 }
 
 LogDialog::~LogDialog()
