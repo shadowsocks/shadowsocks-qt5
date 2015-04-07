@@ -25,7 +25,7 @@ StatusDialog::~StatusDialog()
     delete ui;
 }
 
-const QStringList StatusDialog::units = QStringList() << "B" << "KiB" << "MiB" << "GiB" << "TiB";
+const QStringList StatusDialog::units = QStringList() << " B" << " KiB" << " MiB" << " GiB" << " TiB";
 
 void StatusDialog::onStatusChanged(bool b)
 {
