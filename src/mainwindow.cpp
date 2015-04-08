@@ -358,7 +358,11 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
 void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)
 {
     if (r != QSystemTrayIcon::Context) {
-        showWindow();
+        if (this->isVisible()) {
+            minimizeToSysTray();
+        } else {
+            showWindow();
+        }
     }
 }
 
