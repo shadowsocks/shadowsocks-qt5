@@ -6,7 +6,7 @@ Please check [project's wiki](https://github.com/librehat/shadowsocks-qt5/wiki) 
 Introduction
 ------------
 
-Shadowsocks-Qt5 is a native and cross-platform GUI client for [Shadowsocks](http://shadowsocks.org).
+Shadowsocks-Qt5 is a native and cross-platform [shadowsocks](http://shadowsocks.org) GUI client with advanced features.
 
 Features
 --------
@@ -20,8 +20,7 @@ Features
 Note
 ----
 
-- If `ss-qt5` crashes and the **only one instance** mode is checked, you may need to manually delete `/tmp/qipc_sharedmemory_ShadowsocksQt*` and `/tmp/qipc_systemsem_ShadowsocksQt*`. Otherwise, `ss-qt5` will complain that another instance is already running.
-- Don't be panic if you encounter a bug. Please feel free to open [issues](https://github.com/librehat/shadowsocks-qt5/issues). Just remember to run from terminal or `cmd` and paste the output to the description of issue.
+If `ss-qt5` crashes and the **only one instance** mode is checked, you may need to manually delete `/tmp/qipc_sharedmemory_ShadowsocksQt*` and `/tmp/qipc_systemsem_ShadowsocksQt*`. Otherwise, `ss-qt5` will complain that another instance is already running.
 
 LICENSE
 -------
