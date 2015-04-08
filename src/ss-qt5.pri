@@ -45,7 +45,6 @@ RESOURCES    += src/icons.qrc \
 TRANSLATIONS  = src/i18n/ss-qt5_zh_CN.ts
 
 win32: RC_FILE = src/ss-qt5.rc
-mac:   ICON    = src/ss-qt5.icns
 
 isEmpty(BOTAN_VER) {
     BOTAN_VER = 1.10
