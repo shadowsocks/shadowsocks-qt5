@@ -48,7 +48,6 @@ private:
     void appendConnectionToList(Connection *con);
     void readConfiguration();
 
-    static const QStringList headerLabels;
     static const QString profilePrefix;
 
     static QString convertToLagString(const int &lag);
