@@ -50,10 +50,14 @@ private:
     GtkWidget *showItem;
 #endif
 
+    bool ubuntuUnity;
+    bool isUbuntuUnity() const;
+
     void updateConnectionStatus(int row);
     void newProfile(Connection *);
     void editRow(int row);
     void createSystemTray();
+    void createAppIndicator();
     void showNotification(const QString &);
     void blockChildrenSignals(bool);
 

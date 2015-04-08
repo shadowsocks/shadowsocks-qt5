@@ -1,3 +1,14 @@
+shadowsocks-qt5 (2.0.0-1) stable; urgency=medium
+
+  * brand new 2.0 UI
+  * connect to multiple profiles at the same time
+  * traffic statistics
+  * server latency test
+  * system tray improvements
+  * use libQtShadowsocks as sole backend
+
+ -- Symeon Huang <hzwhuang@gmail>  Wed, 08 Apr 2015 13:08:00 +0100
+
 shadowsocks-qt5 (0.9.4-1) stable; urgency=medium
 
   * minor improvements and fixes

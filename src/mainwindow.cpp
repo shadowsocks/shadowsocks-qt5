@@ -16,6 +16,7 @@
 #include <QMenu>
 #include <QScreen>
 #include <QWindow>
+#include <stdlib.h>
 
 #ifdef Q_OS_LINUX
 #include <QDBusMessage>
@@ -30,6 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //initialisation
+    QString de(getenv("XDG_CURRENT_DESKTOP"));
+    ubuntuUnity = (de.toLower() == "unity");
+
     configHelper = new ConfigHelper(this);
     ui->connectionView->setModel(configHelper->getModel());
     ui->connectionView->resizeColumnsToContents();
@@ -44,7 +48,11 @@ MainWindow::MainWindow(QWidget *parent) :
      *
      */
     systray = new QSystemTrayIcon;
-    createSystemTray();
+    if (isUbuntuUnity()) {
+        createAppIndicator();
+    } else {
+        createSystemTray();
+    }
 
     //Move to the center of the screen
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
@@ -92,8 +100,12 @@ const QUrl MainWindow::issueUrl = QUrl("https://github.com/librehat/shadowsocks-
 void MainWindow::minimizeToSysTray()
 {
 #ifdef UBUNTU_UNITY
-    qApp->topLevelWindows().at(0)->hide();
-    gtk_check_menu_item_set_active((GtkCheckMenuItem*)showItem, false);
+    if (isUbuntuUnity()) {
+        qApp->topLevelWindows().at(0)->hide();
+        gtk_check_menu_item_set_active((GtkCheckMenuItem*)showItem, false);
+    } else {
+        this->hide();
+    }
 #else
     this->hide();
 #endif
@@ -128,38 +140,51 @@ void onQuit(GtkMenu *, gpointer data)
 }
 #endif
 
-void MainWindow::createSystemTray()
+bool MainWindow::isUbuntuUnity() const
 {
 #ifdef UBUNTU_UNITY
-        AppIndicator *indicator = app_indicator_new("Shadowsocks-Qt5", "shadowsocks-qt5", APP_INDICATOR_CATEGORY_OTHER);
-        GtkWidget *menu = gtk_menu_new();
-
-        showItem = gtk_check_menu_item_new_with_label(tr("Show").toLocal8Bit().constData());
-        gtk_check_menu_item_set_active((GtkCheckMenuItem*)showItem, true);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), showItem);
-        g_signal_connect(showItem, "toggled", G_CALLBACK(onShow), qApp);
-        gtk_widget_show(showItem);
-
-        GtkWidget *exitItem = gtk_image_menu_item_new_from_stock(GTK_STOCK_QUIT, NULL);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), exitItem);
-        g_signal_connect(exitItem, "activate", G_CALLBACK(onQuit), qApp);
-        gtk_widget_show(exitItem);
-
-        app_indicator_set_status(indicator, APP_INDICATOR_STATUS_ACTIVE);
-        app_indicator_set_menu(indicator, GTK_MENU(menu));
+    return ubuntuUnity;
 #else
-        //desktop systray
-        systrayMenu = new QMenu(this);
-        systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
-        systrayMenu->addAction(tr("Hide"), this, SLOT(minimizeToSysTray()));
-        systrayMenu->addAction(QIcon::fromTheme("application-exit", QIcon::fromTheme("exit")), tr("Quit"), qApp, SLOT(quit()));
-
-        systray->setIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"));
-        systray->setToolTip(QString("Shadowsocks-Qt5"));
-        systray->setContextMenu(systrayMenu);
-        connect(systray, &QSystemTrayIcon::activated, this, &MainWindow::onSystrayActivated);
-        systray->show();
+    return false;
 #endif
+}
+
+void MainWindow::createAppIndicator()
+{
+#ifdef UBUNTU_UNITY
+    AppIndicator *indicator = app_indicator_new("Shadowsocks-Qt5", "shadowsocks-qt5", APP_INDICATOR_CATEGORY_OTHER);
+    GtkWidget *menu = gtk_menu_new();
+
+    showItem = gtk_check_menu_item_new_with_label(tr("Show").toLocal8Bit().constData());
+    gtk_check_menu_item_set_active((GtkCheckMenuItem*)showItem, true);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu), showItem);
+    g_signal_connect(showItem, "toggled", G_CALLBACK(onShow), qApp);
+    gtk_widget_show(showItem);
+
+    GtkWidget *exitItem = gtk_image_menu_item_new_from_stock(GTK_STOCK_QUIT, NULL);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu), exitItem);
+    g_signal_connect(exitItem, "activate", G_CALLBACK(onQuit), qApp);
+    gtk_widget_show(exitItem);
+
+    app_indicator_set_status(indicator, APP_INDICATOR_STATUS_ACTIVE);
+    app_indicator_set_menu(indicator, GTK_MENU(menu));
+#else
+    QMessageBox::critical(this, tr("Error"), tr("The application wasn't built with aplication indicator support."));
+#endif
+}
+
+void MainWindow::createSystemTray()
+{
+    systrayMenu = new QMenu(this);
+    systrayMenu->addAction(tr("Show"), this, SLOT(showWindow()));
+    systrayMenu->addAction(tr("Hide"), this, SLOT(minimizeToSysTray()));
+    systrayMenu->addAction(QIcon::fromTheme("application-exit", QIcon::fromTheme("exit")), tr("Quit"), qApp, SLOT(quit()));
+
+    systray->setIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"));
+    systray->setToolTip(QString("Shadowsocks-Qt5"));
+    systray->setContextMenu(systrayMenu);
+    connect(systray, &QSystemTrayIcon::activated, this, &MainWindow::onSystrayActivated);
+    systray->show();
 }
 
 void MainWindow::showNotification(const QString &msg)
@@ -358,7 +383,11 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
 void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)
 {
     if (r != QSystemTrayIcon::Context) {
-        showWindow();
+        if (this->isVisible()) {
+            minimizeToSysTray();
+        } else {
+            showWindow();
+        }
     }
 }
 

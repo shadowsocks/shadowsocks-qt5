@@ -17,6 +17,8 @@ ConfigHelper::ConfigHelper(QObject *parent) :
 
     settings = new QSettings(configFile, QSettings::IniFormat, this);
 
+    QStringList headerLabels = QStringList() << tr("Name") << tr("Lag (ms)") << tr("Last used");
+
     model = new QStandardItemModel(0, 3, this);
     model->setHorizontalHeaderLabels(headerLabels);
     readConfiguration();
@@ -26,8 +28,6 @@ ConfigHelper::~ConfigHelper()
 {
     save();
 }
-
-const QStringList ConfigHelper::headerLabels = QStringList() << tr("Name") << tr("Lag (ms)") << tr("Last used");
 
 const QString ConfigHelper::profilePrefix = "Profile";
 
