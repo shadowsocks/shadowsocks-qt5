@@ -128,15 +128,14 @@ void onShow(GtkCheckMenuItem *menu, gpointer data)
     QWindow *w = static_cast<QApplication *>(data)->topLevelWindows().at(0);
     if (checked) {
         w->show();
-    }
-    else {
+    } else {
         w->hide();
     }
 }
 
 void onQuit(GtkMenu *, gpointer data)
 {
-    static_cast<QApplication *>(data)->closeAllWindows();
+    static_cast<QApplication *>(data)->quit();
 }
 #endif
 
