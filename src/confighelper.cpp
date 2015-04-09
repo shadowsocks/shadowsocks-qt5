@@ -90,9 +90,9 @@ void ConfigHelper::importGuiConfigJson(const QString &file)
         SQProfile p;
         p.name = json["profile"].toString();
         p.serverAddress = json["server"].toString();
-        p.serverPort = json["server_port"].toString().toShort();
+        p.serverPort = json["server_port"].toString().toUShort();
         p.localAddress = json["local_address"].toString();
-        p.localPort = json["local_port"].toString().toShort();
+        p.localPort = json["local_port"].toString().toUShort();
         p.method = json["method"].toString();
         p.password = json["password"].toString();
         p.timeout = json["timeout"].toString().toInt();
