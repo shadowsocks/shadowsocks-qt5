@@ -129,6 +129,7 @@
     <property name="title">
      <string>Fi&amp;le</string>
     </property>
+    <addaction name="actionImportGUIJson"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -326,7 +327,20 @@
   </action>
   <action name="actionStatus">
    <property name="text">
-    <string>Stat&amp;us</string>
+    <string>Status</string>
+   </property>
+  </action>
+  <action name="actionSave_All_Connections">
+   <property name="text">
+    <string>Save All Connections</string>
+   </property>
+  </action>
+  <action name="actionImportGUIJson">
+   <property name="text">
+    <string>&amp;Import Connections from gui-config.json</string>
+   </property>
+   <property name="toolTip">
+    <string>Import connections from old version configuration file</string>
    </property>
   </action>
  </widget>

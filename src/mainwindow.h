@@ -66,6 +66,7 @@ private:
     static const QUrl issueUrl;
 
 private slots:
+    void onImportGuiJson();
     void onAddManually();
     void onAddScreenQRCode();
     void onAddQRCodeFile();

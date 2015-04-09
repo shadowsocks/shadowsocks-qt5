@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Move to the center of the screen
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
+    connect(ui->actionImportGUIJson, &QAction::triggered, this, &MainWindow::onImportGuiJson);
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
     connect(ui->actionManually, &QAction::triggered, this, &MainWindow::onAddManually);
     connect(ui->actionQR_Code, &QAction::triggered, this, &MainWindow::onAddScreenQRCode);
@@ -208,6 +209,14 @@ void MainWindow::showWindow()
     this->setWindowState(Qt::WindowActive);
     this->activateWindow();
     ui->connectionView->setFocus();
+}
+
+void MainWindow::onImportGuiJson()
+{
+    QString file = QFileDialog::getOpenFileName(this, tr("Import Connections from gui-config.json"), QString(), "JSON File (*.json)");
+    if (!file.isNull()) {
+        configHelper->importGuiConfigJson(file);
+    }
 }
 
 void MainWindow::onAddManually()

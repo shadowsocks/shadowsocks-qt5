@@ -1,6 +1,11 @@
 #include "confighelper.h"
 #include <QDir>
 #include <QCoreApplication>
+#include <QDebug>
+#include <QJsonParseError>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
 
 ConfigHelper::ConfigHelper(QObject *parent) :
     QObject(parent)
@@ -50,6 +55,50 @@ void ConfigHelper::save()
 
     settings->setValue("HideWindowOnStartup", QVariant(hideWindowOnStartup));
     settings->setValue("OnlyOneInstance", QVariant(onlyOneInstace));
+}
+
+void ConfigHelper::importGuiConfigJson(const QString &file)
+{
+    QFile JSONFile(file);
+    JSONFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    if (!JSONFile.isOpen()) {
+        qCritical() << "Error: cannot open " << file;
+    }
+    if(!JSONFile.isReadable()) {
+        qCritical() << "Error: cannot read " << file;
+    }
+
+    QJsonParseError pe;
+    QJsonDocument JSONDoc = QJsonDocument::fromJson(JSONFile.readAll(), &pe);
+    JSONFile.close();
+    if (pe.error != QJsonParseError::NoError) {
+        qCritical() << pe.errorString();
+    }
+    if (JSONDoc.isEmpty()) {
+        qCritical() << "JSON Document" << file << "is empty!";
+        return;
+    }
+    QJsonObject JSONObj = JSONDoc.object();
+    QJsonArray CONFArray = JSONObj["configs"].toArray();
+    if (CONFArray.isEmpty()) {
+        qWarning() << "configs in " << file << " is empty.";
+        return;
+    }
+
+    for (QJsonArray::iterator it = CONFArray.begin(); it != CONFArray.end(); ++it) {
+        QJsonObject json = (*it).toObject();
+        SQProfile p;
+        p.name = json["profile"].toString();
+        p.serverAddress = json["server"].toString();
+        p.serverPort = json["server_port"].toString().toShort();
+        p.localAddress = json["local_address"].toString();
+        p.localPort = json["local_port"].toString().toShort();
+        p.method = json["method"].toString();
+        p.password = json["password"].toString();
+        p.timeout = json["timeout"].toString().toInt();
+        Connection *con = new Connection(p, this);
+        appendConnectionToList(con);
+    }
 }
 
 void ConfigHelper::addConnection(Connection *con)
