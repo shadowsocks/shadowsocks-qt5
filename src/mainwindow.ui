@@ -23,6 +23,9 @@
    <iconset resource="icons.qrc">
     <normaloff>:/icons/icons/shadowsocks-qt5.png</normaloff>:/icons/icons/shadowsocks-qt5.png</iconset>
   </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonFollowStyle</enum>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -88,11 +91,8 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>21</height>
+     <height>29</height>
     </rect>
-   </property>
-   <property name="nativeMenuBar">
-    <bool>true</bool>
    </property>
    <widget class="QMenu" name="menuConnection">
     <property name="title">
@@ -238,7 +238,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>&amp;Disconnect</string>
+    <string>D&amp;isconnect</string>
    </property>
   </action>
   <action name="actionQuit">
@@ -263,7 +263,7 @@
   </action>
   <action name="actionAbout_Qt">
    <property name="text">
-    <string>About Qt</string>
+    <string>About &amp;Qt</string>
    </property>
   </action>
   <action name="actionGeneral_Settings">
@@ -321,12 +321,12 @@
   </action>
   <action name="actionTest_All_Latency">
    <property name="text">
-    <string>Test All Connections Latency</string>
+    <string>Test All C&amp;onnections Latency</string>
    </property>
   </action>
   <action name="actionStatus">
    <property name="text">
-    <string>Status</string>
+    <string>Stat&amp;us</string>
    </property>
   </action>
  </widget>
