@@ -48,6 +48,9 @@
       <property name="wordWrap">
        <bool>false</bool>
       </property>
+      <property name="cornerButtonEnabled">
+       <bool>false</bool>
+      </property>
       <attribute name="verticalHeaderVisible">
        <bool>false</bool>
       </attribute>
@@ -327,7 +330,7 @@
   </action>
   <action name="actionStatus">
    <property name="text">
-    <string>Status</string>
+    <string>Stat&amp;us</string>
    </property>
   </action>
   <action name="actionSave_All_Connections">
