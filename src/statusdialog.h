@@ -27,6 +27,7 @@ private slots:
     void onStatusChanged(bool);
     void onBytesReadChanged(const quint64 &);
     void onBytesSentChanged(const quint64 &);
+    void onResetClicked();
 };
 
 #endif // STATUSDIALOG_H

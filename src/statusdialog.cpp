@@ -18,6 +18,7 @@ StatusDialog::StatusDialog(Connection *c, QWidget *parent) :
     connect(con, &Connection::stateChanged, this, &StatusDialog::onStatusChanged);
     connect(con, &Connection::bytesReadChanged, this, &StatusDialog::onBytesReadChanged);
     connect(con, &Connection::bytesSentChanged, this, &StatusDialog::onBytesSentChanged);
+    connect(ui->resetButton, &QPushButton::clicked, this, &StatusDialog::onResetClicked);
 
     this->adjustSize();
 }
@@ -50,4 +51,12 @@ QString StatusDialog::convertToHumanReadable(quint64 bytes)
     for (; bytes > 1024; bytes /= 1024, unitId++);
     QString str = QString::number(bytes) + units.at(unitId);
     return str;
+}
+
+void StatusDialog::onResetClicked()
+{
+    con->profile.bytesRead = 0;
+    con->profile.bytesSent = 0;
+    onBytesReadChanged(0);
+    onBytesSentChanged(0);
 }
