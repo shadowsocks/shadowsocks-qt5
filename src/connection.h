@@ -47,6 +47,7 @@ private:
     friend class EditDialog;
     friend class ConfigHelper;
     friend class StatusDialog;
+    friend class LogDialog;
 
 private slots:
     void onNewLog(const QString &);

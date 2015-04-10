@@ -319,9 +319,8 @@ void MainWindow::onLatencyTest()
 void MainWindow::onViewLog()
 {
     Connection *con = configHelper->connectionAt(ui->connectionView->currentIndex().row());
-    LogDialog *logDlg = new LogDialog(con->getLog(), this);
+    LogDialog *logDlg = new LogDialog(con, this);
     connect(logDlg, &LogDialog::finished, logDlg, &LogDialog::deleteLater);
-    connect(con, &Connection::newLogAvailable, logDlg, &LogDialog::append);
     logDlg->exec();
 }
 
