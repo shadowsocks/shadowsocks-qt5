@@ -65,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionURI, &QAction::triggered, this, &MainWindow::onAddFromURI);
     connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::onDelete);
     connect(ui->actionEdit, &QAction::triggered, this, &MainWindow::onEdit);
-    connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
     connect(ui->actionShare, &QAction::triggered, this, &MainWindow::onShare);
     connect(ui->actionConnect, &QAction::triggered, this, &MainWindow::onConnect);
     connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::onDisconnect);
@@ -79,6 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->connectionView, &QTableView::clicked, this, &MainWindow::checkCurrentIndex);
     connect(ui->connectionView, &QTableView::activated, this, &MainWindow::checkCurrentIndex);
+    connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
 
     checkCurrentIndex(ui->connectionView->currentIndex());
 
@@ -283,7 +283,12 @@ void MainWindow::onEdit()
 
 void MainWindow::onDoubleClicked(const QModelIndex &index)
 {
-    editRow(index.row());
+    int row = index.row();
+    if (configHelper->connectionAt(row)->isRunning()) {
+        onStatus();
+    } else {
+        editRow(row);
+    }
 }
 
 void MainWindow::onShare()
