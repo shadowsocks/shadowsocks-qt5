@@ -11,6 +11,7 @@ StatusDialog::StatusDialog(Connection *c, QWidget *parent) :
     ui->nameLabel->setText(con->getName());
     ui->serverAddrLabel->setText(con->profile.serverAddress);
     ui->serverPortLabel->setText(QString::number(con->profile.serverPort));
+    ui->localPortLabel->setText(QString::number(con->profile.localPort));
     ui->statusLabel->setText(con->isRunning() ? tr("Connected") : tr("Disconnected"));
     onBytesReadChanged(con->profile.bytesRead);
     onBytesSentChanged(con->profile.bytesSent);
