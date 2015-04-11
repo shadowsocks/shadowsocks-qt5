@@ -87,6 +87,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+#ifdef Q_OS_WIN
+    systray->hide();
+#endif
     systray->deleteLater();
     delete ui;
 }
