@@ -88,6 +88,7 @@ private slots:
     void onReportBug();
     void onConnectionConnected(const QString &name);
     void onConnectionDisconnected(const QString &name);
+    void onCustomContextMenuRequested(const QPoint &pos);
 
 protected:
     void closeEvent(QCloseEvent *);

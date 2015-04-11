@@ -80,6 +80,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->connectionView, &QTableView::activated, this, &MainWindow::checkCurrentIndex);
     connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
 
+    /* set custom context menu */
+    ui->connectionView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->connectionView, &QTableView::customContextMenuRequested, this, &MainWindow::onCustomContextMenuRequested);
+
     checkCurrentIndex(ui->connectionView->currentIndex());
 
     configHelper->startAllAutoStart();//do this at last so that all signal-slot should've been connected
@@ -422,4 +426,10 @@ void MainWindow::onConnectionConnected(const QString &name)
 void MainWindow::onConnectionDisconnected(const QString &name)
 {
     showNotification(name + " " + tr("disconnected"));
+}
+
+void MainWindow::onCustomContextMenuRequested(const QPoint &pos)
+{
+    this->checkCurrentIndex(ui->connectionView->indexAt(pos));
+    ui->menuConnection->popup(ui->connectionView->viewport()->mapToGlobal(pos));
 }
