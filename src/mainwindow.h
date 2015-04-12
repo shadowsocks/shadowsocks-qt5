@@ -50,8 +50,8 @@ private:
     GtkWidget *showItem;
 #endif
 
-    bool ubuntuUnity;
-    bool isUbuntuUnity() const;
+    bool useAppIndicator;
+    bool isUsingAppIndicator() const;
 
     void updateConnectionStatus(int row);
     void newProfile(Connection *);
@@ -61,7 +61,8 @@ private:
     void showNotification(const QString &);
     void blockChildrenSignals(bool);
 
-    static const QStringList headerLabels;
+    //desktop environments that need application indicator
+    static const QStringList appIndicatorDE;
     static const QString aboutText;
     static const QUrl issueUrl;
 

@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //initialisation
     QString de(getenv("XDG_CURRENT_DESKTOP"));
-    ubuntuUnity = (de.toLower() == "unity");
+    useAppIndicator = appIndicatorDE.contains(de, Qt::CaseInsensitive);
 
     configHelper = new ConfigHelper(this);
     ui->connectionView->setModel(configHelper->getModel());
@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
      *
      */
     systray = new QSystemTrayIcon;
-    if (isUbuntuUnity()) {
+    if (isUsingAppIndicator()) {
         createAppIndicator();
     } else {
         createSystemTray();
@@ -98,6 +98,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+const QStringList MainWindow::appIndicatorDE = QStringList() << "Unity" << "XFCE";
+
 const QString MainWindow::aboutText = "<h3>Cross-Platform Shadowsocks GUI Client</h3><p>Version: " + QString(APP_VERSION) + "</p><p>Copyright © 2014-2015 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>";
 
 const QUrl MainWindow::issueUrl = QUrl("https://github.com/librehat/shadowsocks-qt5/issues");
@@ -105,7 +107,7 @@ const QUrl MainWindow::issueUrl = QUrl("https://github.com/librehat/shadowsocks-
 void MainWindow::minimizeToSysTray()
 {
 #ifdef UBUNTU_UNITY
-    if (isUbuntuUnity()) {
+    if (isUsingAppIndicator()) {
         qApp->topLevelWindows().at(0)->hide();
         gtk_check_menu_item_set_active((GtkCheckMenuItem*)showItem, false);
     } else {
@@ -144,10 +146,10 @@ void onQuit(GtkMenu *, gpointer data)
 }
 #endif
 
-bool MainWindow::isUbuntuUnity() const
+bool MainWindow::isUsingAppIndicator() const
 {
 #ifdef UBUNTU_UNITY
-    return ubuntuUnity;
+    return useAppIndicator;
 #else
     return false;
 #endif
