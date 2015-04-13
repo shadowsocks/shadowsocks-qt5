@@ -63,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionQR_Code, &QAction::triggered, this, &MainWindow::onAddScreenQRCode);
     connect(ui->actionQR_Code_from_File, &QAction::triggered, this, &MainWindow::onAddQRCodeFile);
     connect(ui->actionURI, &QAction::triggered, this, &MainWindow::onAddFromURI);
+    connect(ui->actionFrom_config_json, &QAction::triggered, this, &MainWindow::onAddFromConfigJSON);
     connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::onDelete);
     connect(ui->actionEdit, &QAction::triggered, this, &MainWindow::onEdit);
     connect(ui->actionShare, &QAction::triggered, this, &MainWindow::onShare);
@@ -274,6 +275,17 @@ void MainWindow::onAddFromURI()
         newProfile(newCon);
     });
     inputDlg->exec();
+}
+
+void MainWindow::onAddFromConfigJSON()
+{
+    QString file = QFileDialog::getOpenFileName(this, tr("Open config.json"), QString(), "JSON (*.json)");
+    if (!file.isNull()) {
+        Connection *con = configHelper->configJsonToConnection(file);
+        if (con) {
+            newProfile(con);
+        }
+    }
 }
 
 void MainWindow::onDelete()

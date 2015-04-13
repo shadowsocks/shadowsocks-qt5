@@ -18,6 +18,7 @@ public:
     void save();
 
     void importGuiConfigJson(const QString &file);
+    Connection* configJsonToConnection(const QString &file);
     //The parent of con will be this ConfigHelper instance
     void addConnection(Connection *con);
     void deleteRow(int row);

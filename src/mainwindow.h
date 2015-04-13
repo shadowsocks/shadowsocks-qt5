@@ -72,6 +72,7 @@ private slots:
     void onAddScreenQRCode();
     void onAddQRCodeFile();
     void onAddFromURI();
+    void onAddFromConfigJSON();
     void onDelete();
     void onEdit();
     void onDoubleClicked(const QModelIndex &index);

@@ -114,6 +114,7 @@
      <addaction name="actionURI"/>
      <addaction name="actionQR_Code_from_File"/>
      <addaction name="actionQR_Code"/>
+     <addaction name="actionFrom_config_json"/>
     </widget>
     <addaction name="menuAdd"/>
     <addaction name="actionEdit"/>
@@ -344,6 +345,11 @@
    </property>
    <property name="toolTip">
     <string>Import connections from old version configuration file</string>
+   </property>
+  </action>
+  <action name="actionFrom_config_json">
+   <property name="text">
+    <string>From config.json</string>
    </property>
   </action>
  </widget>

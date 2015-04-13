@@ -101,6 +101,40 @@ void ConfigHelper::importGuiConfigJson(const QString &file)
     }
 }
 
+Connection* ConfigHelper::configJsonToConnection(const QString &file)
+{
+    QFile JSONFile(file);
+    JSONFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    if (!JSONFile.isOpen()) {
+        qCritical() << "Error: cannot open " << file;
+    }
+    if(!JSONFile.isReadable()) {
+        qCritical() << "Error: cannot read " << file;
+    }
+
+    QJsonParseError pe;
+    QJsonDocument JSONDoc = QJsonDocument::fromJson(JSONFile.readAll(), &pe);
+    JSONFile.close();
+    if (pe.error != QJsonParseError::NoError) {
+        qCritical() << pe.errorString();
+    }
+    if (JSONDoc.isEmpty()) {
+        qCritical() << "JSON Document" << file << "is empty!";
+        return nullptr;
+    }
+    QJsonObject configObj = JSONDoc.object();
+    SQProfile p;
+    p.serverAddress = configObj["server"].toString();
+    p.serverPort = configObj["server_port"].toInt();
+    p.localAddress = configObj["local_address"].toString();
+    p.localPort = configObj["local_port"].toInt();
+    p.method = configObj["method"].toString();
+    p.password = configObj["password"].toString();
+    p.timeout = configObj["timeout"].toInt();
+    Connection *con = new Connection(p, this);
+    return con;
+}
+
 void ConfigHelper::addConnection(Connection *con)
 {
     con->setParent(this);
