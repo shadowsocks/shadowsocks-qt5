@@ -9,6 +9,7 @@
 #include <QObject>
 #include <QtShadowsocks>
 #include "sqprofile.h"
+#include "controllerthread.h"
 
 class Connection : public QObject
 {
@@ -39,8 +40,8 @@ public slots:
     void stop();
 
 private:
+    ControllerThread *controllerThread;
     SQProfile profile;
-    QSS::Controller *controller;
     bool running;
     QString log;
 

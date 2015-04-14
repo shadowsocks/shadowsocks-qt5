@@ -5,19 +5,20 @@ Connection::Connection(QObject *parent) :
     QObject(parent),
     running(false)
 {
-    controller = new QSS::Controller(true, this);
-    connect(controller, &QSS::Controller::runningStateChanged, [&](bool run){
+    controllerThread = new ControllerThread(this);
+    connect(controllerThread, &ControllerThread::stateChanged, [&](bool run){
         running = run;
         emit stateChanged(run);
     });
-    connect(controller, &QSS::Controller::newBytesReceived, [&](const quint64 &b) {
+    connect(controllerThread, &ControllerThread::newBytesRead, [&](const quint64 &b) {
         profile.bytesRead += b;
         emit bytesReadChanged(profile.bytesRead);
     });
-    connect(controller, &QSS::Controller::newBytesSent, [&](const quint64 &b) {
+    connect(controllerThread, &ControllerThread::newBytesSent, [&](const quint64 &b) {
         profile.bytesSent += b;
         emit bytesSentChanged(profile.bytesSent);
     });
+    connect(controllerThread, &ControllerThread::logAvailable, this, &Connection::onNewLog);
 }
 
 Connection::Connection(const SQProfile &_profile, QObject *parent) :
@@ -40,6 +41,8 @@ Connection::Connection(QString uri, QObject *parent) :
 
 Connection::~Connection()
 {
+    controllerThread->quit();
+    controllerThread->wait();
 }
 
 const SQProfile& Connection::getProfile() const
@@ -91,10 +94,6 @@ void Connection::latencyTest()
 
 bool Connection::start()
 {
-    disconnect(controller, &QSS::Controller::debug, this, &Connection::onNewLog);
-    disconnect(controller, &QSS::Controller::error, this, &Connection::onNewLog);
-    connect(controller, profile.debug ? &QSS::Controller::debug : &QSS::Controller::error, this, &Connection::onNewLog);
-
     profile.lastTime = QDateTime::currentDateTime();
     latencyTest();//perform a latency test automatically when start() is called
 
@@ -106,13 +105,16 @@ bool Connection::start()
     qssprofile.method = profile.method;
     qssprofile.password = profile.password;
     qssprofile.timeout = profile.timeout;
-    controller->setup(qssprofile);
-    return controller->start();
+
+    controllerThread->setup(profile.debug, qssprofile);
+    controllerThread->start();
+    return true;
 }
 
 void Connection::stop()
 {
-    controller->stop();
+    controllerThread->stop();
+    controllerThread->quit();
 }
 
 void Connection::onNewLog(const QString &str)
