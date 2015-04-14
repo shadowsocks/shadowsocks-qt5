@@ -40,9 +40,9 @@ int main(int argc, char *argv[])
     a.installTranslator(&ssqt5t);
 
     MainWindow w;
+    QSharedMemory sharedMem;
+    sharedMem.setKey("Shadowsocks-Qt5");
     if (w.isOnlyOneInstance()) {
-        QSharedMemory sharedMem;
-        sharedMem.setKey("Shadowsocks-Qt5");
         if (!sharedMem.create(1)) {
             QMessageBox::critical(&w, QObject::tr("Error"), QObject::tr("Another instance of Shadowsocks-Qt5 is already running."));
             return -1;
