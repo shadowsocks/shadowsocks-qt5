@@ -41,8 +41,7 @@ Connection::Connection(QString uri, QObject *parent) :
 
 Connection::~Connection()
 {
-    controllerThread->quit();
-    controllerThread->wait();
+    stop();
 }
 
 const SQProfile& Connection::getProfile() const
@@ -115,6 +114,7 @@ void Connection::stop()
 {
     controllerThread->stop();
     controllerThread->quit();
+    controllerThread->wait();
 }
 
 void Connection::onNewLog(const QString &str)
