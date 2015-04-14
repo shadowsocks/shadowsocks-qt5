@@ -111,9 +111,10 @@ void Connection::start()
 
 void Connection::stop()
 {
-    controllerThread->stop();
     controllerThread->quit();
     controllerThread->wait();
+    running = false;
+    emit stateChanged(running);
 }
 
 void Connection::onNewLog(const QString &str)

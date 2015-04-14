@@ -12,15 +12,11 @@ public:
     void setup(bool _debug, const QSS::Profile &_profile);
     void run() Q_DECL_OVERRIDE;
 
-public slots:
-    void stop();
-
 signals:
     void logAvailable(const QString &);
     void stateChanged(bool);
     void newBytesRead(quint64);
     void newBytesSent(quint64);
-    void stopRequested();
 
 private:
     bool debug;
