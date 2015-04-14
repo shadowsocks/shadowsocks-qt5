@@ -53,7 +53,6 @@ private:
     bool useAppIndicator;
     bool isUsingAppIndicator() const;
 
-    void updateConnectionStatus(int row);
     void newProfile(Connection *);
     void editRow(int row);
     void createSystemTray();
@@ -79,6 +78,7 @@ private slots:
     void onShare();
     void onConnect();
     void onDisconnect();
+    void onConnectionStatusChanged(const int row, const bool running);
     void onLatencyTest();
     void onViewLog();
     void onStatus();

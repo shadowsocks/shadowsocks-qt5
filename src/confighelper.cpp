@@ -272,6 +272,7 @@ void ConfigHelper::onConnectionStateChanged(bool running)
     for (int i = 0; i < cols; ++i) {
         model->item(row, i)->setFont(font);
     }
+    emit rowStatusChanged(row, running);
 }
 
 void ConfigHelper::onConnectionPingFinished(const int lag)

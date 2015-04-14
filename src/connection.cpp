@@ -91,7 +91,7 @@ void Connection::latencyTest()
     addrTester->startLagTest();
 }
 
-bool Connection::start()
+void Connection::start()
 {
     profile.lastTime = QDateTime::currentDateTime();
     latencyTest();//perform a latency test automatically when start() is called
@@ -107,7 +107,6 @@ bool Connection::start()
 
     controllerThread->setup(profile.debug, qssprofile);
     controllerThread->start();
-    return true;
 }
 
 void Connection::stop()

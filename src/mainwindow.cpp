@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->connectionView->resizeColumnsToContents();
     connect(configHelper, &ConfigHelper::connected, this, &MainWindow::onConnectionConnected);
     connect(configHelper, &ConfigHelper::disconnected, this, &MainWindow::onConnectionDisconnected);
+    connect(configHelper, &ConfigHelper::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
     connect(ui->actionTest_All_Latency, &QAction::triggered, configHelper, &ConfigHelper::testAllLags);
 
     /*
@@ -323,7 +324,6 @@ void MainWindow::onConnect()
     Connection *con = configHelper->connectionAt(row);
     if (con->isValid()) {
         con->start();
-        updateConnectionStatus(row);
         configHelper->updateTimeAtRow(row);
     } else {
         QMessageBox::critical(this, tr("Invalid"), tr("The connection's profile is invalid!"));
@@ -334,7 +334,14 @@ void MainWindow::onDisconnect()
 {
     int row = ui->connectionView->currentIndex().row();
     configHelper->connectionAt(row)->stop();
-    updateConnectionStatus(row);
+}
+
+void MainWindow::onConnectionStatusChanged(const int row, const bool running)
+{
+    if (ui->connectionView->currentIndex().row() == row) {
+        ui->actionConnect->setEnabled(!running);
+        ui->actionDisconnect->setEnabled(running);
+    }
 }
 
 void MainWindow::onLatencyTest()
@@ -363,13 +370,6 @@ void MainWindow::onGeneralSettings()
     SettingsDialog *sDlg = new SettingsDialog(configHelper, this);
     connect(sDlg, &SettingsDialog::finished, sDlg, &SettingsDialog::deleteLater);
     sDlg->exec();
-}
-
-void MainWindow::updateConnectionStatus(int row)
-{
-    const bool &running = configHelper->connectionAt(row)->isRunning();
-    ui->actionConnect->setEnabled(!running);
-    ui->actionDisconnect->setEnabled(running);
 }
 
 void MainWindow::newProfile(Connection *newCon)
@@ -406,7 +406,9 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
     ui->actionStatus->setEnabled(valid);
 
     if (valid) {
-        updateConnectionStatus(index.row());
+        const bool &running = configHelper->connectionAt(index.row())->isRunning();
+        ui->actionConnect->setEnabled(!running);
+        ui->actionDisconnect->setEnabled(running);
     }
 }
 

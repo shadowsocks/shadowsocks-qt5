@@ -36,7 +36,7 @@ signals:
     void bytesSentChanged(const quint64 &);
 
 public slots:
-    bool start();
+    void start();
     void stop();
 
 private:

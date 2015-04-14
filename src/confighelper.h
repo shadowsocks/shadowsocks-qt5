@@ -39,6 +39,7 @@ public slots:
 signals:
     void connected(const QString &name);
     void disconnected(const QString &name);
+    void rowStatusChanged(const int row, const bool running);
 
 private:
     bool hideWindowOnStartup;
