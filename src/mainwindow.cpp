@@ -110,7 +110,7 @@ void MainWindow::minimizeToSysTray()
 {
 #ifdef UBUNTU_UNITY
     if (isUsingAppIndicator()) {
-        qApp->topLevelWindows().at(0)->hide();
+        qApp->allWindows().at(0)->hide();
         gtk_check_menu_item_set_active((GtkCheckMenuItem*)showItem, false);
     } else {
         this->hide();
@@ -134,7 +134,7 @@ bool MainWindow::isHideWindowOnStartup() const
 void onShow(GtkCheckMenuItem *menu, gpointer data)
 {
     bool checked = gtk_check_menu_item_get_active(menu);
-    QWindow *w = static_cast<QApplication *>(data)->topLevelWindows().at(0);
+    QWindow *w = static_cast<QApplication *>(data)->allWindows().at(0);
     if (checked) {
         w->show();
     } else {
