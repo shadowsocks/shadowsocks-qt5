@@ -50,7 +50,11 @@ int main(int argc, char *argv[])
     }
     w.show();
     if (w.isHideWindowOnStartup()) {
-        w.minimizeToSysTray();
+        if (w.isUsingAppIndicator()) {
+            QTimer::singleShot(5, &w, SLOT(minimizeToSysTray()));
+        } else {
+            w.minimizeToSysTray();
+        }
     }
 
     return a.exec();

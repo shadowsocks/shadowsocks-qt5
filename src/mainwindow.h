@@ -37,6 +37,7 @@ public:
 
     bool isOnlyOneInstance() const;
     bool isHideWindowOnStartup() const;
+    bool isUsingAppIndicator() const;
 
 public slots:
     void minimizeToSysTray();
@@ -51,7 +52,6 @@ private:
 #endif
 
     bool useAppIndicator;
-    bool isUsingAppIndicator() const;
 
     void newProfile(Connection *);
     void editRow(int row);
