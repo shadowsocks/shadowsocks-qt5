@@ -89,6 +89,10 @@ MainWindow::MainWindow(QWidget *parent) :
     checkCurrentIndex(ui->connectionView->currentIndex());
 
     configHelper->startAllAutoStart();//do this at last so that all signal-slot should've been connected
+
+    if (isHideWindowOnStartup()) {
+        QTimer::singleShot(5,this, SLOT(minimizeToSysTray()));
+    }
 }
 
 MainWindow::~MainWindow()

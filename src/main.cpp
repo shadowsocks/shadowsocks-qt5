@@ -49,9 +49,6 @@ int main(int argc, char *argv[])
         }
     }
     w.show();
-    if (w.isHideWindowOnStartup()) {
-        w.minimizeToSysTray();
-    }
 
     return a.exec();
 }
