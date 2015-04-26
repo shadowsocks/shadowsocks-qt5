@@ -266,30 +266,14 @@
         <translation>自二维码图像文件</translation>
     </message>
     <message>
-        <source>&amp;Disconnect</source>
-        <translation type="vanished">&amp;断开连接</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="311"/>
         <source>View &amp;Log</source>
         <translation>&amp;查看日志</translation>
     </message>
     <message>
-        <source>Test All Connections Latency</source>
-        <translation type="vanished">测试所有连接的延迟</translation>
-    </message>
-    <message>
-        <source>&amp;Manual</source>
-        <translation type="vanished">&amp;手动</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="180"/>
         <source>&amp;Scan QR Code on Screen</source>
         <translation>&amp;扫描屏幕上的二维码</translation>
-    </message>
-    <message>
-        <source>&amp;QR Code from File</source>
-        <translation type="vanished">&amp;来自二维码文件</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="203"/>
@@ -299,7 +283,7 @@
     <message>
         <location filename="../mainwindow.ui" line="206"/>
         <source>Add connection from URI</source>
-        <translation>从URI添加连接</translation>
+        <translation>从 URI 添加连接</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="216"/>
@@ -334,7 +318,7 @@
     <message>
         <location filename="../mainwindow.ui" line="271"/>
         <source>About &amp;Qt</source>
-        <translation>关于&amp;Qt</translation>
+        <translation>关于 &amp;Qt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="281"/>
@@ -369,7 +353,7 @@
     <message>
         <location filename="../mainwindow.ui" line="344"/>
         <source>&amp;Import Connections from gui-config.json</source>
-        <translation>&amp;从gui-config.json导入连接</translation>
+        <translation>&amp;从 gui-config.json导入连接</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="347"/>
@@ -379,11 +363,7 @@
     <message>
         <location filename="../mainwindow.ui" line="352"/>
         <source>From config.json</source>
-        <translation>来自 config.json</translation>
-    </message>
-    <message>
-        <source>&amp;View Log</source>
-        <translation type="vanished">&amp;查看日志</translation>
+        <translation>自 config.json</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="321"/>
@@ -394,10 +374,6 @@
         <location filename="../mainwindow.ui" line="324"/>
         <source>Test the lag of selected connection</source>
         <translation>测试所选连接的延迟</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation type="vanished">状态</translation>
     </message>
 </context>
 <context>
@@ -410,7 +386,7 @@
     <message>
         <location filename="../main.cpp" line="47"/>
         <source>Another instance of Shadowsocks-Qt5 is already running.</source>
-        <translation>另一个Shadowsocks-Qt5的实例已经在运行了。</translation>
+        <translation>另一个 Shadowsocks-Qt5 的实例已经在运行了。</translation>
     </message>
     <message>
         <location filename="../sqprofile.cpp" line="9"/>
@@ -504,14 +480,6 @@
         <location filename="../statusdialog.ui" line="120"/>
         <source>Read</source>
         <translation>已接收</translation>
-    </message>
-    <message>
-        <source>Bytes Sent</source>
-        <translation type="vanished">已发送字节</translation>
-    </message>
-    <message>
-        <source>Bytes Read</source>
-        <translation type="vanished">已接受字节</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="15"/>
