@@ -18,6 +18,8 @@ void ControllerThread::run()
     connect(&controller, &QSS::Controller::newBytesReceived, this, &ControllerThread::newBytesRead);
     connect(&controller, &QSS::Controller::newBytesSent, this, &ControllerThread::newBytesSent);
     controller.setup(profile);
-    controller.start();
+    if (!controller.start()) {
+        emit failed();
+    }
     exec();
 }

@@ -34,6 +34,7 @@ signals:
     void newLogAvailable(const QString &);
     void bytesReadChanged(const quint64 &);
     void bytesSentChanged(const quint64 &);
+    void startFailed();
 
 public slots:
     void start();

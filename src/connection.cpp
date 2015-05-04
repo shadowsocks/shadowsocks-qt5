@@ -19,6 +19,7 @@ Connection::Connection(QObject *parent) :
         emit bytesSentChanged(profile.bytesSent);
     });
     connect(controllerThread, &ControllerThread::logAvailable, this, &Connection::onNewLog);
+    connect(controllerThread, &ControllerThread::failed, this, &Connection::startFailed);
 }
 
 Connection::Connection(const SQProfile &_profile, QObject *parent) :

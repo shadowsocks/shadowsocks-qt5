@@ -219,6 +219,7 @@ void ConfigHelper::appendConnectionToList(Connection *con)
 {
     connect(con, &Connection::stateChanged, this, &ConfigHelper::onConnectionStateChanged);
     connect(con, &Connection::pingFinished, this, &ConfigHelper::onConnectionPingFinished);
+    connect(con, &Connection::startFailed, this, &ConfigHelper::connectionStartFailed);
     QList<QStandardItem *> items;
     QStandardItem *name = new QStandardItem();
     name->setData(QVariant(con->profile.name), Qt::DisplayRole);
