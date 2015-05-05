@@ -1,7 +1,7 @@
 Source: shadowsocks-qt5
 Section: net
 Priority: extra
-Maintainer: Symeon Huang <hzwhuang@gmail.org>
+Maintainer: Symeon Huang <hzwhuang@gmail.com>
 Build-Depends: debhelper (>= 9),
                pkg-config,
                qt5-qmake,
