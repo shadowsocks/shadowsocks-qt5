@@ -1,5 +1,7 @@
 #include "connection.h"
 #include "ssvalidator.h"
+#include <QHostInfo>
+#include <QHostAddress>
 
 Connection::Connection(QObject *parent) :
     QObject(parent),
@@ -85,8 +87,15 @@ const bool &Connection::isRunning() const
 
 void Connection::latencyTest()
 {
-    QSS::Address server(profile.serverAddress, profile.serverPort);
-    QSS::AddressTester *addrTester = new QSS::AddressTester(server.getIPAddress(), profile.serverPort, this);
+    QHostAddress serverAddr(profile.serverAddress);
+    if (serverAddr.isNull()) {
+        //TODO use a non-blocking function
+        QList<QHostAddress> results = QHostInfo::fromName(profile.serverAddress).addresses();
+        if (!results.isEmpty()) {
+            serverAddr = results.first();
+        }
+    }
+    QSS::AddressTester *addrTester = new QSS::AddressTester(serverAddr, profile.serverPort, this);
     connect(addrTester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLagTestFinished);
     connect(addrTester, &QSS::AddressTester::lagTestFinished, addrTester, &QSS::AddressTester::deleteLater);
     addrTester->startLagTest();
