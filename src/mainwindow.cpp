@@ -104,7 +104,7 @@ MainWindow::~MainWindow()
 
 const QStringList MainWindow::appIndicatorDE = QStringList() << "Unity" << "XFCE";
 
-const QString MainWindow::aboutText = "<h3>Cross-Platform Shadowsocks GUI Client</h3><p>Version: " + QString(APP_VERSION) + "</p><p>Copyright © 2014-2015 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>";
+const QString MainWindow::aboutText = "<h1>Shadowsocks-Qt5</h1><p><b>Version " + QStringLiteral(APP_VERSION) + "</b><br />Using libQtShadowsocks " + QSS::Common::version() + "</p><p>Copyright © 2014-2015 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>";
 
 const QUrl MainWindow::issueUrl = QUrl("https://github.com/librehat/shadowsocks-qt5/issues");
 
