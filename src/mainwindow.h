@@ -57,7 +57,6 @@ private:
     void editRow(int row);
     void createSystemTray();
     void createAppIndicator();
-    void showNotification(const QString &);
     void blockChildrenSignals(bool);
 
     //desktop environments that need application indicator
@@ -85,11 +84,10 @@ private slots:
     void onGeneralSettings();
     void checkCurrentIndex(const QModelIndex &index);
     inline void onAbout() { QMessageBox::about(this, tr("About"), aboutText); }
+    void showNotification(const QString &);
     void showWindow();
     void onSystrayActivated(QSystemTrayIcon::ActivationReason);
     void onReportBug();
-    void onConnectionConnected(const QString &name);
-    void onConnectionDisconnected(const QString &name);
     void onCustomContextMenuRequested(const QPoint &pos);
 
 protected:

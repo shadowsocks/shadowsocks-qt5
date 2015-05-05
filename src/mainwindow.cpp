@@ -37,12 +37,11 @@ MainWindow::MainWindow(QWidget *parent) :
     configHelper = new ConfigHelper(this);
     ui->connectionView->setModel(configHelper->getModel());
     ui->connectionView->resizeColumnsToContents();
-    connect(configHelper, &ConfigHelper::connected, this, &MainWindow::onConnectionConnected);
-    connect(configHelper, &ConfigHelper::disconnected, this, &MainWindow::onConnectionDisconnected);
     connect(configHelper, &ConfigHelper::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
     connect(configHelper, &ConfigHelper::connectionStartFailed, [this] {
         QMessageBox::critical(this, tr("Connect Failed"), tr("Local address or port may be invalid or already in use."));
     });
+    connect(configHelper, &ConfigHelper::message, this, &MainWindow::showNotification);
     connect(ui->actionTest_All_Latency, &QAction::triggered, configHelper, &ConfigHelper::testAllLags);
 
     /*
@@ -435,16 +434,6 @@ void MainWindow::closeEvent(QCloseEvent *e)
 {
     e->ignore();
     minimizeToSysTray();
-}
-
-void MainWindow::onConnectionConnected(const QString &name)
-{
-    showNotification(name + " " + tr("connected"));
-}
-
-void MainWindow::onConnectionDisconnected(const QString &name)
-{
-    showNotification(name + " " + tr("disconnected"));
 }
 
 void MainWindow::onCustomContextMenuRequested(const QPoint &pos)

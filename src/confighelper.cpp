@@ -254,9 +254,9 @@ void ConfigHelper::onConnectionStateChanged(bool running)
     }
 
     if (running) {
-        emit connected(c->getName());
+        emit message(c->getName() + " " + tr("connected"));
     } else {
-        emit disconnected(c->getName());
+        emit message(c->getName() + " " + tr("disconnected"));
     }
 
     QFont font;
@@ -290,6 +290,12 @@ void ConfigHelper::onConnectionPingFinished(const int lag)
             model->setData(model->index(i, 1), QVariant(convertToLagString(lag)));
             break;
         }
+    }
+
+    if (lag == -1) {//TIMEOUT
+        emit message(c->getName() + " " + tr("timed out"));
+    } else if (lag == -2) {//ERROR
+        emit message(c->getName() + " " + tr("latency test failed"));
     }
 }
 
