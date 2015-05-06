@@ -269,6 +269,11 @@ void ConfigHelper::onConnectionStateChanged(bool running)
             break;
         }
     }
+    if(row == size)
+    {
+        //row not exists, deleted
+        return;
+    }
     int cols = model->columnCount();
     for (int i = 0; i < cols; ++i) {
         model->item(row, i)->setFont(font);
