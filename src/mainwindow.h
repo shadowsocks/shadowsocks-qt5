@@ -41,6 +41,7 @@ public:
 
 public slots:
     void minimizeToSysTray();
+    void onShowSignalRecv();
 
 private:
     ConfigHelper *configHelper;

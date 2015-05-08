@@ -122,6 +122,20 @@ void MainWindow::minimizeToSysTray()
 #endif
 }
 
+void MainWindow::onShowSignalRecv()
+{
+#ifdef UBUNTU_UNITY
+    if (isUsingAppIndicator()) {
+        qApp->topLevelWindows().at(0)->show();
+        gtk_check_menu_item_set_active((GtkCheckMenuItem*)showItem, true);
+    } else {
+        this->showWindow();
+    }
+#else
+    this->showWindow();
+#endif
+}
+
 bool MainWindow::isOnlyOneInstance() const
 {
     return configHelper->isOnlyOneInstance();

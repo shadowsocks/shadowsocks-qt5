@@ -8,8 +8,15 @@
 #include <QDebug>
 #include <signal.h>
 
-static void onSIGINT_TERM(int sig)
+MainWindow *mw = nullptr;
+
+static void onSignalRecv(int sig)
 {
+    if (sig == SIGUSR1) {
+        if (mw) {
+            mw->onShowSignalRecv();
+        }
+    }
     if (sig == SIGINT || sig == SIGTERM) qApp->quit();
 }
 
@@ -19,8 +26,9 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    signal(SIGINT, onSIGINT_TERM);
-    signal(SIGTERM, onSIGINT_TERM);
+    signal(SIGINT, onSignalRecv);
+    signal(SIGTERM, onSignalRecv);
+    signal(SIGUSR1, onSignalRecv);
 
     a.setApplicationName(QString("shadowsocks-qt5"));
     a.setApplicationDisplayName(QString("Shadowsocks-Qt5"));
@@ -41,6 +49,7 @@ int main(int argc, char *argv[])
     a.installTranslator(&ssqt5t);
 
     MainWindow w;
+    mw = &w;
 
     QSharedMemory sharedMem;
     sharedMem.setKey("Shadowsocks-Qt5");
@@ -64,8 +73,13 @@ int main(int argc, char *argv[])
             } else {
                 qCritical() << sharedMem.errorString();
             }
-            QString errStr = QObject::tr("Another instance of Shadowsocks-Qt5 (PID: %1) is already running.").arg(pid);
-            QMessageBox::critical(&w, QObject::tr("Error"), errStr);
+
+            //try to send a signal to show previous process's main window
+            if (kill(pid, SIGUSR1) != 0) {
+                QString errStr = QObject::tr("Failed to communicate with previously running instance of Shadowsocks-Qt5 (PID: %1). It might already crashed.").arg(pid);
+                QMessageBox::critical(&w, QObject::tr("Error"), errStr);
+            }
+            //either way, this process has to quit
             return -1;
         }
     }
