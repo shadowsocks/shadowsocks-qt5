@@ -123,8 +123,10 @@ void Connection::stop()
 {
     controllerThread->quit();
     controllerThread->wait();
-    running = false;
-    emit stateChanged(running);
+    if (running != false) {
+        running = false;
+        emit stateChanged(running);
+    }
 }
 
 void Connection::onNewLog(const QString &str)
