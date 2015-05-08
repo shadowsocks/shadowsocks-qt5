@@ -5,6 +5,7 @@
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QSharedMemory>
+#include <QDebug>
 #include <signal.h>
 
 static void onSIGINT_TERM(int sig)
@@ -40,14 +41,35 @@ int main(int argc, char *argv[])
     a.installTranslator(&ssqt5t);
 
     MainWindow w;
+
     QSharedMemory sharedMem;
     sharedMem.setKey("Shadowsocks-Qt5");
     if (w.isOnlyOneInstance()) {
-        if (!sharedMem.create(1)) {
-            QMessageBox::critical(&w, QObject::tr("Error"), QObject::tr("Another instance of Shadowsocks-Qt5 is already running."));
+        qint64 pid = -1;
+        if (sharedMem.create(sizeof(qint64))) {
+            pid = a.applicationPid();
+            if (sharedMem.lock()) {
+                *reinterpret_cast<qint64*>(sharedMem.data()) = pid;
+                sharedMem.unlock();
+            } else {
+                qCritical() << sharedMem.errorString();
+            }
+        } else {
+            if (!sharedMem.attach(QSharedMemory::ReadOnly)) {
+                qCritical() << sharedMem.errorString();
+            }
+            if (sharedMem.lock()) {
+                pid = *reinterpret_cast<qint64*>(sharedMem.data());
+                sharedMem.unlock();
+            } else {
+                qCritical() << sharedMem.errorString();
+            }
+            QString errStr = QObject::tr("Another instance of Shadowsocks-Qt5 (PID: %1) is already running.").arg(pid);
+            QMessageBox::critical(&w, QObject::tr("Error"), errStr);
             return -1;
         }
     }
+
     w.show();
     if (w.isHideWindowOnStartup()) {
         if (w.isUsingAppIndicator()) {
