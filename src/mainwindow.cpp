@@ -237,7 +237,7 @@ void MainWindow::showWindow()
 
 void MainWindow::onImportGuiJson()
 {
-    QString file = QFileDialog::getOpenFileName(this, tr("Import Connections from gui-config.json"), QString(), "JSON File (*.json)");
+    QString file = QFileDialog::getOpenFileName(this, tr("Import Connections from gui-config.json"), QString(), "GUI Configuration (gui-config.json)");
     if (!file.isNull()) {
         configHelper->importGuiConfigJson(file);
     }
