@@ -13,6 +13,7 @@
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QMenu>
 #include <QScreen>
 #include <QWindow>
@@ -104,8 +105,6 @@ MainWindow::~MainWindow()
 }
 
 const QStringList MainWindow::appIndicatorDE = QStringList() << "Unity" << "XFCE";
-
-const QString MainWindow::aboutText = QString("<h1>Shadowsocks-Qt5</h1><p><b>Version %1</b><br />Using libQtShadowsocks %2<br />Using Botan %3.%4.%5</p><p>Copyright © 2014-2015 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>").arg(QStringLiteral(APP_VERSION)).arg(QSS::Common::version().data()).arg(Botan::version_major()).arg(Botan::version_minor()).arg(Botan::version_patch());
 
 const QUrl MainWindow::issueUrl = QUrl("https://github.com/librehat/shadowsocks-qt5/issues");
 
@@ -438,6 +437,12 @@ void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)
             showWindow();
         }
     }
+}
+
+void MainWindow::onAbout()
+{
+    QString text = QString("<h1>Shadowsocks-Qt5</h1><p><b>Version %1</b><br />Using libQtShadowsocks %2<br />Using Botan %3.%4.%5</p><p>Copyright © 2014-2015 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>").arg(QStringLiteral(APP_VERSION)).arg(QSS::Common::version().data()).arg(Botan::version_major()).arg(Botan::version_minor()).arg(Botan::version_patch());
+    QMessageBox::about(this, tr("About"), text);
 }
 
 void MainWindow::onReportBug()

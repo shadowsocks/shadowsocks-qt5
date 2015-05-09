@@ -9,7 +9,6 @@
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
-#include <QMessageBox>
 #include <QCloseEvent>
 #include "confighelper.h"
 
@@ -62,7 +61,6 @@ private:
 
     //desktop environments that need application indicator
     static const QStringList appIndicatorDE;
-    static const QString aboutText;
     static const QUrl issueUrl;
 
 private slots:
@@ -84,10 +82,10 @@ private slots:
     void onStatus();
     void onGeneralSettings();
     void checkCurrentIndex(const QModelIndex &index);
-    inline void onAbout() { QMessageBox::about(this, tr("About"), aboutText); }
     void showNotification(const QString &);
     void showWindow();
     void onSystrayActivated(QSystemTrayIcon::ActivationReason);
+    void onAbout();
     void onReportBug();
     void onCustomContextMenuRequested(const QPoint &pos);
 

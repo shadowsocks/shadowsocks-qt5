@@ -4,6 +4,7 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QLocale>
+#include <QMessageBox>
 #include <QSharedMemory>
 #include <QDebug>
 #include <signal.h>
