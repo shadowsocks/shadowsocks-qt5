@@ -13,11 +13,13 @@ MainWindow *mw = nullptr;
 
 static void onSignalRecv(int sig)
 {
+#ifdef Q_OS_UNIX
     if (sig == SIGUSR1) {
         if (mw) {
             mw->onShowSignalRecv();
         }
     }
+#endif
     if (sig == SIGINT || sig == SIGTERM) qApp->quit();
 }
 
@@ -29,7 +31,9 @@ int main(int argc, char *argv[])
 
     signal(SIGINT, onSignalRecv);
     signal(SIGTERM, onSignalRecv);
+#ifdef Q_OS_UNIX
     signal(SIGUSR1, onSignalRecv);
+#endif
 
     a.setApplicationName(QString("shadowsocks-qt5"));
     a.setApplicationDisplayName(QString("Shadowsocks-Qt5"));
@@ -75,11 +79,15 @@ int main(int argc, char *argv[])
                 qCritical() << sharedMem.errorString();
             }
 
+#ifdef Q_OS_UNIX
             //try to send a signal to show previous process's main window
             if (kill(pid, SIGUSR1) != 0) {
                 QString errStr = QObject::tr("Failed to communicate with previously running instance of Shadowsocks-Qt5 (PID: %1). It might already crashed.").arg(pid);
                 QMessageBox::critical(&w, QObject::tr("Error"), errStr);
             }
+#else
+            QMessageBox::critical(&w, QObject::tr("Error"), QObject::tr("Another instance of Shadowsocks-Qt5 (PID: %1) is already running.").arg(pid));
+#endif
             //either way, this process has to quit
             return -1;
         }
