@@ -88,14 +88,33 @@ void ConfigHelper::importGuiConfigJson(const QString &file)
     for (QJsonArray::iterator it = CONFArray.begin(); it != CONFArray.end(); ++it) {
         QJsonObject json = (*it).toObject();
         SQProfile p;
-        p.name = json["profile"].toString();
+        /*
+         * shadowsocks-csharp uses remarks to store profile name, which is different from
+         * old shadowsocks-qt5's implementation. It also uses int to store ports directly
+         * and it doesn't have some certain keys.
+         */
+        if (json.contains("remarks")) {
+            p.name = json["remarks"].toString();
+            p.serverPort = json["server_port"].toUShort();
+            //shadowsocks-csharp has only global local port (all profiles use the same port)
+            p.localPort = JSONObj["localPort"].toUShort();
+            if (JSONObj["shareOverLan"].toBool()) {
+                /*
+                 * it can only configure share over LAN or not (also a global value)
+                 * which is basically 0.0.0.0 or 127.0.0.1 (which is the default)
+                 */
+                p.localAddress = QString("0.0.0.0");
+            }
+        } else {
+            p.name = json["profile"].toString();
+            p.serverPort = json["server_port"].toString().toUShort();
+            p.localAddress = json["local_address"].toString();
+            p.localPort = json["local_port"].toString().toUShort();
+            p.timeout = json["timeout"].toString().toInt();
+        }
         p.serverAddress = json["server"].toString();
-        p.serverPort = json["server_port"].toString().toUShort();
-        p.localAddress = json["local_address"].toString();
-        p.localPort = json["local_port"].toString().toUShort();
         p.method = json["method"].toString();
         p.password = json["password"].toString();
-        p.timeout = json["timeout"].toString().toInt();
         Connection *con = new Connection(p, this);
         appendConnectionToList(con);
     }
