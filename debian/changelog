@@ -1,18 +1,13 @@
 shadowsocks-qt5 (2.3.2-1) stable; urgency=medium
 
-  * fix compile errors
-
- -- Symeon Huang <hzwhuang@gmail>  Sat, 09 May 2015 14:20:00 +0100
-
-shadowsocks-qt5 (2.3.1-1) stable; urgency=medium
-
   * fix crashes when deleting connections
   * fix a running signal bug
   * support importing shadowsocks-gui and shadowsocks-csharp's gui-config.json
   * add Pantheon to application indicator desktop environment list
   * show the previously running instance of ss-qt5 if it's the second process and it's in only one instance mode
+  * fix compile errors
 
- -- Symeon Huang <hzwhuang@gmail>  Sat, 09 May 2015 13:17:00 +0100
+ -- Symeon Huang <hzwhuang@gmail>  Sat, 09 May 2015 15:27:00 +0100
 
 shadowsocks-qt5 (2.3.0-1) stable; urgency=medium
 
