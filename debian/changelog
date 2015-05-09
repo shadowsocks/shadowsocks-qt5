@@ -1,3 +1,9 @@
+shadowsocks-qt5 (2.3.2-1) stable; urgency=medium
+
+  * fix compile errors
+
+ -- Symeon Huang <hzwhuang@gmail>  Sat, 09 May 2015 14:20:00 +0100
+
 shadowsocks-qt5 (2.3.1-1) stable; urgency=medium
 
   * fix crashes when deleting connections
