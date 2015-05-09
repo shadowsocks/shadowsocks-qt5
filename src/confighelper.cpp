@@ -95,9 +95,9 @@ void ConfigHelper::importGuiConfigJson(const QString &file)
          */
         if (json.contains("remarks")) {
             p.name = json["remarks"].toString();
-            p.serverPort = json["server_port"].toUShort();
+            p.serverPort = json["server_port"].toInt();
             //shadowsocks-csharp has only global local port (all profiles use the same port)
-            p.localPort = JSONObj["localPort"].toUShort();
+            p.localPort = JSONObj["localPort"].toInt();
             if (JSONObj["shareOverLan"].toBool()) {
                 /*
                  * it can only configure share over LAN or not (also a global value)
