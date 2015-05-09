@@ -104,7 +104,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-const QStringList MainWindow::appIndicatorDE = QStringList() << "Unity" << "XFCE";
+const QStringList MainWindow::appIndicatorDE = QStringList() << "Unity" << "XFCE" << "Pantheon";
 
 const QUrl MainWindow::issueUrl = QUrl("https://github.com/librehat/shadowsocks-qt5/issues");
 
