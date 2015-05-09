@@ -441,7 +441,7 @@ void MainWindow::onSystrayActivated(QSystemTrayIcon::ActivationReason r)
 
 void MainWindow::onAbout()
 {
-    QString text = QString("<h1>Shadowsocks-Qt5</h1><p><b>Version %1</b><br />Using libQtShadowsocks %2<br />Using Botan %3.%4.%5</p><p>Copyright © 2014-2015 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>Licensed under LGPLv3<br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>").arg(QStringLiteral(APP_VERSION)).arg(QSS::Common::version().data()).arg(Botan::version_major()).arg(Botan::version_minor()).arg(Botan::version_patch());
+    QString text = QString("<h1>Shadowsocks-Qt5</h1><p><b>Version %1</b><br />Using libQtShadowsocks %2<br />Using Botan %3.%4.%5</p><p>Copyright © 2014-2015 Symeon Huang (<a href='https://twitter.com/librehat'>@librehat</a>)</p><p>License: <a href='http://www.gnu.org/licenses/lgpl.html'>GNU Lesser General Public License Version 3</a><br />Project Hosted at <a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>").arg(QStringLiteral(APP_VERSION)).arg(QSS::Common::version().data()).arg(Botan::version_major()).arg(Botan::version_minor()).arg(Botan::version_patch());
     QMessageBox::about(this, tr("About"), text);
 }
 
