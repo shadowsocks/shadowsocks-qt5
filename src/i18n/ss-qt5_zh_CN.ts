@@ -19,19 +19,39 @@
         <translation>最近一次使用</translation>
     </message>
     <message>
-        <location filename="../confighelper.cpp" line="179"/>
+        <location filename="../confighelper.cpp" line="198"/>
         <source>Timeout</source>
         <translation>超时</translation>
     </message>
     <message>
-        <location filename="../confighelper.cpp" line="182"/>
+        <location filename="../confighelper.cpp" line="201"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../confighelper.cpp" line="185"/>
+        <location filename="../confighelper.cpp" line="204"/>
         <source>Unknown</source>
         <translation>未知</translation>
+    </message>
+    <message>
+        <location filename="../confighelper.cpp" line="276"/>
+        <source>connected</source>
+        <translation>已连接</translation>
+    </message>
+    <message>
+        <location filename="../confighelper.cpp" line="278"/>
+        <source>disconnected</source>
+        <translation>已断开</translation>
+    </message>
+    <message>
+        <location filename="../confighelper.cpp" line="320"/>
+        <source>timed out</source>
+        <translation>超时</translation>
+    </message>
+    <message>
+        <location filename="../confighelper.cpp" line="322"/>
+        <source>latency test failed</source>
+        <translation>延迟测试失败</translation>
     </message>
 </context>
 <context>
@@ -133,80 +153,88 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.h" line="87"/>
+        <location filename="../mainwindow.cpp" line="445"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="166"/>
-        <location filename="../mainwindow.cpp" line="187"/>
+        <location filename="../mainwindow.cpp" line="182"/>
+        <location filename="../mainwindow.cpp" line="203"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="44"/>
+        <source>Connect Failed</source>
+        <translation>连接失败</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="44"/>
+        <source>Local address or port may be invalid or already in use.</source>
+        <translation>本地地址或者端口无效或者已被占用。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="196"/>
         <source>The application wasn&apos;t built with aplication indicator support.</source>
         <translation>本程序没有编译对应用程序提示器的支持。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="188"/>
+        <location filename="../mainwindow.cpp" line="204"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="224"/>
+        <location filename="../mainwindow.cpp" line="240"/>
         <source>Import Connections from gui-config.json</source>
         <translation>从gui-config.json导入连接</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="248"/>
-        <location filename="../mainwindow.cpp" line="262"/>
+        <location filename="../mainwindow.cpp" line="264"/>
+        <location filename="../mainwindow.cpp" line="278"/>
         <source>QR Code Not Found</source>
         <translation>未找到二维码</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="248"/>
-        <location filename="../mainwindow.cpp" line="262"/>
+        <location filename="../mainwindow.cpp" line="264"/>
+        <location filename="../mainwindow.cpp" line="278"/>
         <source>Can&apos;t find any QR code image that contains valid URI on your screen(s).</source>
         <translation>无法在您的屏幕上找到任何包含有效URI的二维码图像。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="257"/>
+        <location filename="../mainwindow.cpp" line="273"/>
         <source>Open QR Code Image File</source>
         <translation>打开二维码图像文件</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="283"/>
+        <location filename="../mainwindow.cpp" line="299"/>
         <source>Open config.json</source>
         <translation>打开 config.json</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="329"/>
+        <location filename="../mainwindow.cpp" line="345"/>
         <source>Invalid</source>
         <translation>无效</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="329"/>
+        <location filename="../mainwindow.cpp" line="345"/>
         <source>The connection&apos;s profile is invalid!</source>
         <translation>当前连接的配置无效！</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="439"/>
         <source>connected</source>
-        <translation>已连接</translation>
+        <translation type="vanished">已连接</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="444"/>
         <source>disconnected</source>
-        <translation>已断开</translation>
+        <translation type="vanished">已断开</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="196"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="189"/>
+        <location filename="../mainwindow.cpp" line="205"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
@@ -379,14 +407,18 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="47"/>
+        <location filename="../main.cpp" line="80"/>
+        <source>Failed to communicate with previously running instance of Shadowsocks-Qt5 (PID: %1). It might already crashed.</source>
+        <translation>无法与先前运行的Shadowsocks-Qt5实例（PID: %1）通讯。可能已经崩溃了。</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="81"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="47"/>
         <source>Another instance of Shadowsocks-Qt5 is already running.</source>
-        <translation>另一个 Shadowsocks-Qt5 的实例已经在运行了。</translation>
+        <translation type="vanished">另一个 Shadowsocks-Qt5 的实例已经在运行了。</translation>
     </message>
     <message>
         <location filename="../sqprofile.cpp" line="9"/>
