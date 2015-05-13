@@ -128,6 +128,9 @@
     <addaction name="separator"/>
     <addaction name="actionView_Log"/>
     <addaction name="actionStatus"/>
+    <addaction name="separator"/>
+    <addaction name="actionMoveUp"/>
+    <addaction name="actionMoveDown"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -355,10 +358,28 @@
   </action>
   <action name="actionSaveManually">
    <property name="icon">
-    <iconset theme="document-save"/>
+    <iconset theme="document-save">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Save Manually</string>
+    <string>&amp;Save Manually</string>
+   </property>
+  </action>
+  <action name="actionMoveUp">
+   <property name="icon">
+    <iconset theme="go-up"/>
+   </property>
+   <property name="text">
+    <string>&amp;Move Up</string>
+   </property>
+  </action>
+  <action name="actionMoveDown">
+   <property name="icon">
+    <iconset theme="go-down"/>
+   </property>
+   <property name="text">
+    <string>Mo&amp;ve Down</string>
    </property>
   </action>
  </widget>

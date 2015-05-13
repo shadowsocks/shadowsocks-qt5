@@ -80,6 +80,8 @@ private slots:
     void onLatencyTest();
     void onViewLog();
     void onStatus();
+    void onMoveUp();
+    void onMoveDown();
     void onGeneralSettings();
     void checkCurrentIndex(const QModelIndex &index);
     void showNotification(const QString &);

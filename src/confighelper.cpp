@@ -234,6 +234,25 @@ void ConfigHelper::setGeneralSettings(bool hide, bool oneInstance)
     onlyOneInstace = oneInstance;
 }
 
+int ConfigHelper::size() const
+{
+    return model->rowCount();
+}
+
+QModelIndex ConfigHelper::moveUp(int row)
+{
+    QList<QStandardItem*> src = model->takeRow(row);
+    model->insertRow(row - 1, src);
+    return model->index(row - 1, 0);
+}
+
+QModelIndex ConfigHelper::moveDown(int row)
+{
+    QList<QStandardItem*> src = model->takeRow(row);
+    model->insertRow(row + 1, src);
+    return model->index(row + 1, 0);
+}
+
 void ConfigHelper::appendConnectionToList(Connection *con)
 {
     connect(con, &Connection::stateChanged, this, &ConfigHelper::onConnectionStateChanged);

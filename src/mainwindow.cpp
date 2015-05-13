@@ -78,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionTest_Latency, &QAction::triggered, this, &MainWindow::onLatencyTest);
     connect(ui->actionView_Log, &QAction::triggered, this, &MainWindow::onViewLog);
     connect(ui->actionStatus, &QAction::triggered, this, &MainWindow::onStatus);
+    connect(ui->actionMoveUp, &QAction::triggered, this, &MainWindow::onMoveUp);
+    connect(ui->actionMoveDown, &QAction::triggered, this, &MainWindow::onMoveDown);
     connect(ui->actionGeneral_Settings, &QAction::triggered, this, &MainWindow::onGeneralSettings);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
@@ -382,6 +384,20 @@ void MainWindow::onStatus()
     statusDlg->exec();
 }
 
+void MainWindow::onMoveUp()
+{
+    QModelIndex index = configHelper->moveUp(ui->connectionView->currentIndex().row());
+    ui->connectionView->setCurrentIndex(index);
+    checkCurrentIndex(index);
+}
+
+void MainWindow::onMoveDown()
+{
+    QModelIndex index = configHelper->moveDown(ui->connectionView->currentIndex().row());
+    ui->connectionView->setCurrentIndex(index);
+    checkCurrentIndex(index);
+}
+
 void MainWindow::onGeneralSettings()
 {
     SettingsDialog *sDlg = new SettingsDialog(configHelper, this);
@@ -426,6 +442,9 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
         const bool &running = configHelper->connectionAt(index.row())->isRunning();
         ui->actionConnect->setEnabled(!running);
         ui->actionDisconnect->setEnabled(running);
+
+        ui->actionMoveUp->setEnabled(index.row() > 0);
+        ui->actionMoveDown->setEnabled(index.row() < configHelper->size() - 1);
     }
 }
 

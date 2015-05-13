@@ -32,6 +32,10 @@ public:
     bool isOnlyOneInstance() const;
     void setGeneralSettings(bool hide, bool oneInstance);
 
+    int size() const;
+    QModelIndex moveUp(int row);
+    QModelIndex moveDown(int row);
+
 public slots:
     void testAllLags();
     void save();

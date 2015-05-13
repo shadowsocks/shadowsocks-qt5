@@ -10,6 +10,8 @@
         <file alias="actions/edit-guides.png">icons/Breeze/actions/edit-guides.png</file>
         <file alias="actions/edit-image-face-recognize.png">icons/Breeze/actions/edit-image-face-recognize.png</file>
         <file alias="actions/flag.png">icons/Breeze/actions/flag.png</file>
+        <file alias="actions/go-down.png">icons/Breeze/actions/go-down.png</file>
+        <file alias="actions/go-up.png">icons/Breeze/actions/go-up.png</file>
         <file alias="actions/help-about.png">icons/Breeze/actions/help-about.png</file>
         <file alias="actions/list-add.png">icons/Breeze/actions/list-add.png</file>
         <file alias="actions/list-remove.png">icons/Breeze/actions/list-remove.png</file>
