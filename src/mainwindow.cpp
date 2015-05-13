@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QMessageBox::critical(this, tr("Connect Failed"), tr("Local address or port may be invalid or already in use."));
     });
     connect(configHelper, &ConfigHelper::message, this, &MainWindow::showNotification);
+    connect(ui->actionSaveManually, &QAction::triggered, configHelper, &ConfigHelper::save);
     connect(ui->actionTest_All_Latency, &QAction::triggered, configHelper, &ConfigHelper::testAllLags);
 
     /*

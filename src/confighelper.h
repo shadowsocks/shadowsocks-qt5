@@ -15,7 +15,6 @@ public:
     ~ConfigHelper();
 
     QStandardItemModel *getModel() const;
-    void save();
 
     void importGuiConfigJson(const QString &file);
     Connection* configJsonToConnection(const QString &file);
@@ -35,6 +34,7 @@ public:
 
 public slots:
     void testAllLags();
+    void save();
 
 signals:
     void rowStatusChanged(const int row, const bool running);

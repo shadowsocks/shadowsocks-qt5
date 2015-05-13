@@ -134,6 +134,7 @@
      <string>Fi&amp;le</string>
     </property>
     <addaction name="actionImportGUIJson"/>
+    <addaction name="actionSaveManually"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -349,7 +350,15 @@
   </action>
   <action name="actionFrom_config_json">
    <property name="text">
-    <string>From config.json</string>
+    <string>From &amp;config.json</string>
+   </property>
+  </action>
+  <action name="actionSaveManually">
+   <property name="icon">
+    <iconset theme="document-save"/>
+   </property>
+   <property name="text">
+    <string>Save Manually</string>
    </property>
   </action>
  </widget>
