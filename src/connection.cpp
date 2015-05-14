@@ -89,16 +89,10 @@ void Connection::latencyTest()
 {
     QHostAddress serverAddr(profile.serverAddress);
     if (serverAddr.isNull()) {
-        //TODO use a non-blocking function
-        QList<QHostAddress> results = QHostInfo::fromName(profile.serverAddress).addresses();
-        if (!results.isEmpty()) {
-            serverAddr = results.first();
-        }
+        QHostInfo::lookupHost(profile.serverAddress, this, SLOT(onServerAddressLookedUp(QHostInfo)));
+    } else {
+        testAddressLatency(serverAddr);
     }
-    QSS::AddressTester *addrTester = new QSS::AddressTester(serverAddr, profile.serverPort, this);
-    connect(addrTester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLagTestFinished);
-    connect(addrTester, &QSS::AddressTester::lagTestFinished, addrTester, &QSS::AddressTester::deleteLater);
-    addrTester->startLagTest();
 }
 
 void Connection::start()
@@ -129,6 +123,14 @@ void Connection::stop()
     }
 }
 
+void Connection::testAddressLatency(const QHostAddress &addr)
+{
+    QSS::AddressTester *addrTester = new QSS::AddressTester(addr, profile.serverPort, this);
+    connect(addrTester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLagTestFinished);
+    connect(addrTester, &QSS::AddressTester::lagTestFinished, addrTester, &QSS::AddressTester::deleteLater);
+    addrTester->startLagTest();
+}
+
 void Connection::onNewLog(const QString &str)
 {
     if(!log.endsWith('\n') && !log.isEmpty()) {
@@ -136,6 +138,15 @@ void Connection::onNewLog(const QString &str)
     }
     log.append(str);
     emit newLogAvailable(str);
+}
+
+void Connection::onServerAddressLookedUp(const QHostInfo &host)
+{
+    if (host.error() == QHostInfo::NoError) {
+        testAddressLatency(host.addresses().first());
+    } else {
+        onLagTestFinished(-2);
+    }
 }
 
 void Connection::onLagTestFinished(int lag)

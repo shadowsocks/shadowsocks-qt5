@@ -46,6 +46,8 @@ private:
     bool running;
     QString log;
 
+    void testAddressLatency(const QHostAddress &addr);
+
     friend class EditDialog;
     friend class ConfigHelper;
     friend class StatusDialog;
@@ -53,6 +55,7 @@ private:
 
 private slots:
     void onNewLog(const QString &);
+    void onServerAddressLookedUp(const QHostInfo &host);
     void onLagTestFinished(int);
 };
 Q_DECLARE_METATYPE(Connection*)
