@@ -224,9 +224,7 @@ void MainWindow::showNotification(const QString &msg)
     method.setArguments(args);
     QDBusConnection::sessionBus().asyncCall(method);
 #else
-    if (systray) {
-        systray->showMessage("Shadowsocks-Qt5", msg);
-    }
+    systray->showMessage("Shadowsocks-Qt5", msg);
 #endif
 }
 
