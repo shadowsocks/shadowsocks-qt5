@@ -437,14 +437,13 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
     ui->actionShare->setEnabled(valid);
     ui->actionViewLog->setEnabled(valid);
     ui->actionStatus->setEnabled(valid);
+    ui->actionMoveUp->setEnabled(valid ? index.row() > 0 : false);
+    ui->actionMoveDown->setEnabled(valid ? index.row() < configHelper->size() - 1 : false);
 
     if (valid) {
         const bool &running = configHelper->connectionAt(index.row())->isRunning();
         ui->actionConnect->setEnabled(!running);
         ui->actionDisconnect->setEnabled(running);
-
-        ui->actionMoveUp->setEnabled(index.row() > 0);
-        ui->actionMoveDown->setEnabled(index.row() < configHelper->size() - 1);
     }
 }
 
