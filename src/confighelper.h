@@ -24,7 +24,7 @@ public:
     void updateNameAtRow(int row);
     void updateTimeAtRow(int row);
     Connection *connectionAt(int row);
-    void latencyTestAtRow(int row);//perform a latency test and update lag in model
+    void latencyTestAtRow(int row);//perform a latency test and update it in model
     void startAllAutoStart();//start those connections marked as auto-start
 
     /* some functions used to communicate with SettingsDialog */
@@ -57,11 +57,11 @@ private:
 
     static const QString profilePrefix;
 
-    static QString convertToLagString(const int &lag);
+    static QString convertToLatencyString(const int latency);
 
 private slots:
     void onConnectionStateChanged(bool running);
-    void onConnectionPingFinished(const int lag);
+    void onConnectionPingFinished(const int latency);
 };
 
 #endif // CONFIGHELPER_H

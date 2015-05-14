@@ -99,7 +99,7 @@ void Connection::start()
 {
     profile.lastTime = QDateTime::currentDateTime();
     //perform a latency test if the latency is unknown
-    if (profile.lag == -3) {
+    if (profile.latency == -3) {
         latencyTest();
     }
 
@@ -129,7 +129,7 @@ void Connection::stop()
 void Connection::testAddressLatency(const QHostAddress &addr)
 {
     QSS::AddressTester *addrTester = new QSS::AddressTester(addr, profile.serverPort, this);
-    connect(addrTester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLagTestFinished);
+    connect(addrTester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLatencyTestFinished);
     connect(addrTester, &QSS::AddressTester::lagTestFinished, addrTester, &QSS::AddressTester::deleteLater);
     addrTester->startLagTest();
 }
@@ -148,12 +148,12 @@ void Connection::onServerAddressLookedUp(const QHostInfo &host)
     if (host.error() == QHostInfo::NoError) {
         testAddressLatency(host.addresses().first());
     } else {
-        onLagTestFinished(-2);
+        onLatencyTestFinished(-2);
     }
 }
 
-void Connection::onLagTestFinished(int lag)
+void Connection::onLatencyTestFinished(int latency)
 {
-    profile.lag = lag;
-    emit pingFinished(lag);
+    profile.latency = latency;
+    emit pingFinished(latency);
 }

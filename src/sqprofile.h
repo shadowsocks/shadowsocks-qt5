@@ -18,7 +18,7 @@ struct SQProfile
     QString method;
     QString password;
     int timeout;
-    int lag;
+    int latency;
     quint64 bytesRead;
     quint64 bytesSent;
     QDateTime lastTime;

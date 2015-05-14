@@ -325,7 +325,7 @@
     <string>&amp;Test Latency</string>
    </property>
    <property name="toolTip">
-    <string>Test the lag of selected connection</string>
+    <string>Test the latency of selected connection</string>
    </property>
   </action>
   <action name="actionTest_All_Latency">
@@ -368,7 +368,9 @@
   </action>
   <action name="actionMoveUp">
    <property name="icon">
-    <iconset theme="go-up"/>
+    <iconset theme="go-up">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Move Up</string>
@@ -376,7 +378,9 @@
   </action>
   <action name="actionMoveDown">
    <property name="icon">
-    <iconset theme="go-down"/>
+    <iconset theme="go-down">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Mo&amp;ve Down</string>

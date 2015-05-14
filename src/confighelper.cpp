@@ -22,7 +22,7 @@ ConfigHelper::ConfigHelper(QObject *parent) :
 
     settings = new QSettings(configFile, QSettings::IniFormat, this);
 
-    QStringList headerLabels = QStringList() << tr("Name") << tr("Lag (ms)") << tr("Last used");
+    QStringList headerLabels = QStringList() << tr("Name") << tr("Latency (ms)") << tr("Last used");
 
     model = new QStandardItemModel(0, 3, this);
     model->setHorizontalHeaderLabels(headerLabels);
@@ -190,23 +190,23 @@ void ConfigHelper::latencyTestAtRow(int row)
     con->latencyTest();
 }
 
-QString ConfigHelper::convertToLagString(const int &lag)
+QString ConfigHelper::convertToLatencyString(const int latency)
 {
-    QString lagStr;
-    switch (lag) {
+    QString latencyStr;
+    switch (latency) {
     case -1:
-        lagStr = tr("Timeout");
+        latencyStr = tr("Timeout");
         break;
     case -2:
-        lagStr = tr("Error");
+        latencyStr = tr("Error");
         break;
     case -3:
-        lagStr = tr("Unknown");
+        latencyStr = tr("Unknown");
         break;
     default:
-        lagStr = QString::number(lag);
+        latencyStr = QString::number(latency);
     }
-    return lagStr;
+    return latencyStr;
 }
 
 void ConfigHelper::testAllLags()
@@ -262,9 +262,9 @@ void ConfigHelper::appendConnectionToList(Connection *con)
     QStandardItem *name = new QStandardItem();
     name->setData(QVariant(con->profile.name), Qt::DisplayRole);
     name->setData(QVariant::fromValue(con), Qt::UserRole);
-    QStandardItem *lag = new QStandardItem(convertToLagString(con->profile.lag));
+    QStandardItem *latency = new QStandardItem(convertToLatencyString(con->profile.latency));
     QStandardItem *last = new QStandardItem(con->profile.lastTime.toString());
-    items << name << lag << last;
+    items << name << latency << last;
     model->appendRow(items);
 }
 
@@ -307,9 +307,8 @@ void ConfigHelper::onConnectionStateChanged(bool running)
             break;
         }
     }
-    if(row == size)
-    {
-        //row not exists, deleted
+    if(row == size) {
+        //row doesn't exist (already deleted)
         return;
     }
     int cols = model->columnCount();
@@ -319,7 +318,7 @@ void ConfigHelper::onConnectionStateChanged(bool running)
     emit rowStatusChanged(row, running);
 }
 
-void ConfigHelper::onConnectionPingFinished(const int lag)
+void ConfigHelper::onConnectionPingFinished(const int latency)
 {
     Connection *c = qobject_cast<Connection *>(sender());
     if (!c) {
@@ -330,14 +329,14 @@ void ConfigHelper::onConnectionPingFinished(const int lag)
     for (int i = 0; i < size; ++i) {
         Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
         if (con == c) {
-            model->setData(model->index(i, 1), QVariant(convertToLagString(lag)));
+            model->setData(model->index(i, 1), QVariant(convertToLatencyString(latency)));
             break;
         }
     }
 
-    if (lag == -1) {//TIMEOUT
+    if (latency == -1) {//TIMEOUT
         emit message(c->getName() + " " + tr("timed out"));
-    } else if (lag == -2) {//ERROR
+    } else if (latency == -2) {//ERROR
         emit message(c->getName() + " " + tr("latency test failed"));
     }
 }
@@ -349,8 +348,8 @@ void ConfigHelper::startAllAutoStart()
         Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
         if (con->profile.autoStart) {
             con->start();
-            //update lag
-            model->setData(model->index(i, 1), QVariant(convertToLagString(con->profile.lag)));
+            //update latency
+            model->setData(model->index(i, 1), QVariant(convertToLatencyString(con->profile.latency)));
             //update time
             model->setData(model->index(i, 2), QVariant(con->profile.lastTime.toString()));
         }
