@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     connect(configHelper, &ConfigHelper::message, this, &MainWindow::showNotification);
     connect(ui->actionSaveManually, &QAction::triggered, configHelper, &ConfigHelper::save);
-    connect(ui->actionTest_All_Latency, &QAction::triggered, configHelper, &ConfigHelper::testAllLatency);
+    connect(ui->actionTestAllLatency, &QAction::triggered, configHelper, &ConfigHelper::testAllLatency);
 
     /*
      * There is a bug on KDE Frameworks 5: https://bugs.kde.org/show_bug.cgi?id=343976
@@ -66,24 +66,24 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionImportGUIJson, &QAction::triggered, this, &MainWindow::onImportGuiJson);
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
     connect(ui->actionManually, &QAction::triggered, this, &MainWindow::onAddManually);
-    connect(ui->actionQR_Code, &QAction::triggered, this, &MainWindow::onAddScreenQRCode);
-    connect(ui->actionQR_Code_from_File, &QAction::triggered, this, &MainWindow::onAddQRCodeFile);
+    connect(ui->actionQRCode, &QAction::triggered, this, &MainWindow::onAddScreenQRCode);
+    connect(ui->actionQRCodeFromFile, &QAction::triggered, this, &MainWindow::onAddQRCodeFile);
     connect(ui->actionURI, &QAction::triggered, this, &MainWindow::onAddFromURI);
-    connect(ui->actionFrom_config_json, &QAction::triggered, this, &MainWindow::onAddFromConfigJSON);
+    connect(ui->actionFromConfigJson, &QAction::triggered, this, &MainWindow::onAddFromConfigJSON);
     connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::onDelete);
     connect(ui->actionEdit, &QAction::triggered, this, &MainWindow::onEdit);
     connect(ui->actionShare, &QAction::triggered, this, &MainWindow::onShare);
     connect(ui->actionConnect, &QAction::triggered, this, &MainWindow::onConnect);
     connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::onDisconnect);
-    connect(ui->actionTest_Latency, &QAction::triggered, this, &MainWindow::onLatencyTest);
-    connect(ui->actionView_Log, &QAction::triggered, this, &MainWindow::onViewLog);
+    connect(ui->actionTestLatency, &QAction::triggered, this, &MainWindow::onLatencyTest);
+    connect(ui->actionViewLog, &QAction::triggered, this, &MainWindow::onViewLog);
     connect(ui->actionStatus, &QAction::triggered, this, &MainWindow::onStatus);
     connect(ui->actionMoveUp, &QAction::triggered, this, &MainWindow::onMoveUp);
     connect(ui->actionMoveDown, &QAction::triggered, this, &MainWindow::onMoveDown);
-    connect(ui->actionGeneral_Settings, &QAction::triggered, this, &MainWindow::onGeneralSettings);
+    connect(ui->actionGeneralSettings, &QAction::triggered, this, &MainWindow::onGeneralSettings);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
-    connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
-    connect(ui->actionReport_Bug, &QAction::triggered, this, &MainWindow::onReportBug);
+    connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
+    connect(ui->actionReportBug, &QAction::triggered, this, &MainWindow::onReportBug);
 
     connect(ui->connectionView, &QTableView::clicked, this, &MainWindow::checkCurrentIndex);
     connect(ui->connectionView, &QTableView::activated, this, &MainWindow::checkCurrentIndex);
@@ -431,11 +431,11 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
     const bool valid = index.isValid();
     ui->actionConnect->setEnabled(valid);
     ui->actionDisconnect->setEnabled(valid);
-    ui->actionTest_Latency->setEnabled(valid);
+    ui->actionTestLatency->setEnabled(valid);
     ui->actionEdit->setEnabled(valid);
     ui->actionDelete->setEnabled(valid);
     ui->actionShare->setEnabled(valid);
-    ui->actionView_Log->setEnabled(valid);
+    ui->actionViewLog->setEnabled(valid);
     ui->actionStatus->setEnabled(valid);
 
     if (valid) {

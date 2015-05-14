@@ -82,7 +82,7 @@
    </attribute>
    <addaction name="actionConnect"/>
    <addaction name="actionDisconnect"/>
-   <addaction name="actionTest_Latency"/>
+   <addaction name="actionTestLatency"/>
    <addaction name="separator"/>
    <addaction name="actionEdit"/>
    <addaction name="actionDelete"/>
@@ -112,9 +112,9 @@
      </property>
      <addaction name="actionManually"/>
      <addaction name="actionURI"/>
-     <addaction name="actionQR_Code_from_File"/>
-     <addaction name="actionQR_Code"/>
-     <addaction name="actionFrom_config_json"/>
+     <addaction name="actionQRCodeFromFile"/>
+     <addaction name="actionQRCode"/>
+     <addaction name="actionFromConfigJson"/>
     </widget>
     <addaction name="menuAdd"/>
     <addaction name="actionEdit"/>
@@ -123,10 +123,10 @@
     <addaction name="separator"/>
     <addaction name="actionConnect"/>
     <addaction name="actionDisconnect"/>
-    <addaction name="actionTest_Latency"/>
-    <addaction name="actionTest_All_Latency"/>
+    <addaction name="actionTestLatency"/>
+    <addaction name="actionTestAllLatency"/>
     <addaction name="separator"/>
-    <addaction name="actionView_Log"/>
+    <addaction name="actionViewLog"/>
     <addaction name="actionStatus"/>
     <addaction name="separator"/>
     <addaction name="actionMoveUp"/>
@@ -145,16 +145,16 @@
     <property name="title">
      <string>Settin&amp;gs</string>
     </property>
-    <addaction name="actionGeneral_Settings"/>
+    <addaction name="actionGeneralSettings"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
-    <addaction name="actionAbout_Qt"/>
+    <addaction name="actionAboutQt"/>
     <addaction name="separator"/>
-    <addaction name="actionReport_Bug"/>
+    <addaction name="actionReportBug"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuConnection"/>
@@ -174,7 +174,7 @@
     <string>Add connection manually</string>
    </property>
   </action>
-  <action name="actionQR_Code">
+  <action name="actionQRCode">
    <property name="icon">
     <iconset theme="edit-image-face-recognize">
      <normaloff/>
@@ -184,7 +184,7 @@
     <string>&amp;Scan QR Code on Screen</string>
    </property>
   </action>
-  <action name="actionQR_Code_from_File">
+  <action name="actionQRCodeFromFile">
    <property name="icon">
     <iconset theme="document-open">
      <normaloff/>
@@ -270,12 +270,12 @@
     <string>&amp;About</string>
    </property>
   </action>
-  <action name="actionAbout_Qt">
+  <action name="actionAboutQt">
    <property name="text">
     <string>About &amp;Qt</string>
    </property>
   </action>
-  <action name="actionGeneral_Settings">
+  <action name="actionGeneralSettings">
    <property name="icon">
     <iconset theme="configure">
      <normaloff/>
@@ -295,7 +295,7 @@
     <string>&amp;Share</string>
    </property>
   </action>
-  <action name="actionReport_Bug">
+  <action name="actionReportBug">
    <property name="icon">
     <iconset theme="tools-report-bug">
      <normaloff/>
@@ -305,7 +305,7 @@
     <string>&amp;Report Bug</string>
    </property>
   </action>
-  <action name="actionView_Log">
+  <action name="actionViewLog">
    <property name="icon">
     <iconset theme="view-list-text">
      <normaloff/>
@@ -315,7 +315,7 @@
     <string>View &amp;Log</string>
    </property>
   </action>
-  <action name="actionTest_Latency">
+  <action name="actionTestLatency">
    <property name="icon">
     <iconset theme="flag">
      <normaloff/>
@@ -328,7 +328,7 @@
     <string>Test the latency of selected connection</string>
    </property>
   </action>
-  <action name="actionTest_All_Latency">
+  <action name="actionTestAllLatency">
    <property name="text">
     <string>Test All C&amp;onnections Latency</string>
    </property>
@@ -336,11 +336,6 @@
   <action name="actionStatus">
    <property name="text">
     <string>Stat&amp;us</string>
-   </property>
-  </action>
-  <action name="actionSave_All_Connections">
-   <property name="text">
-    <string>Save All Connections</string>
    </property>
   </action>
   <action name="actionImportGUIJson">
@@ -351,7 +346,7 @@
     <string>Import connections from old version configuration file</string>
    </property>
   </action>
-  <action name="actionFrom_config_json">
+  <action name="actionFromConfigJson">
    <property name="text">
     <string>From &amp;config.json</string>
    </property>
