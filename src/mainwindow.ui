@@ -339,6 +339,9 @@
    </property>
   </action>
   <action name="actionImportGUIJson">
+   <property name="icon">
+    <iconset theme="document-import"/>
+   </property>
    <property name="text">
     <string>&amp;Import Connections from gui-config.json</string>
    </property>
@@ -347,6 +350,9 @@
    </property>
   </action>
   <action name="actionFromConfigJson">
+   <property name="icon">
+    <iconset theme="document-open"/>
+   </property>
    <property name="text">
     <string>From &amp;config.json</string>
    </property>
