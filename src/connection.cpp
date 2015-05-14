@@ -98,7 +98,10 @@ void Connection::latencyTest()
 void Connection::start()
 {
     profile.lastTime = QDateTime::currentDateTime();
-    latencyTest();//perform a latency test automatically when start() is called
+    //perform a latency test if the latency is unknown
+    if (profile.lag == -3) {
+        latencyTest();
+    }
 
     QSS::Profile qssprofile;
     qssprofile.server = profile.serverAddress;
