@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     connect(configHelper, &ConfigHelper::message, this, &MainWindow::showNotification);
     connect(ui->actionSaveManually, &QAction::triggered, configHelper, &ConfigHelper::save);
-    connect(ui->actionTest_All_Latency, &QAction::triggered, configHelper, &ConfigHelper::testAllLags);
+    connect(ui->actionTest_All_Latency, &QAction::triggered, configHelper, &ConfigHelper::testAllLatency);
 
     /*
      * There is a bug on KDE Frameworks 5: https://bugs.kde.org/show_bug.cgi?id=343976

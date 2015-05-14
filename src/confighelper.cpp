@@ -209,7 +209,7 @@ QString ConfigHelper::convertToLatencyString(const int latency)
     return latencyStr;
 }
 
-void ConfigHelper::testAllLags()
+void ConfigHelper::testAllLatency()
 {
     int size = model->rowCount();
     for (int i = 0; i < size; ++i) {

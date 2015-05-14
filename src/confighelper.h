@@ -37,7 +37,7 @@ public:
     QModelIndex moveDown(int row);
 
 public slots:
-    void testAllLags();
+    void testAllLatency();
     void save();
 
 signals:
