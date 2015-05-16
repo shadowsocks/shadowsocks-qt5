@@ -20,6 +20,7 @@ void ControllerThread::run()
     controller.setup(profile);
     if (!controller.start()) {
         emit failed();
+    } else {
+        exec();
     }
-    exec();
 }
