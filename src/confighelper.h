@@ -57,7 +57,7 @@ private:
 
     static const QString profilePrefix;
 
-    static QString convertToLatencyString(const int latency);
+    static QVariant convertLatencyToVariant(const int latency);
 
 private slots:
     void onConnectionStateChanged(bool running);

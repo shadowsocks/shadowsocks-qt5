@@ -190,23 +190,23 @@ void ConfigHelper::latencyTestAtRow(int row)
     con->latencyTest();
 }
 
-QString ConfigHelper::convertToLatencyString(const int latency)
+QVariant ConfigHelper::convertLatencyToVariant(const int latency)
 {
-    QString latencyStr;
+    QVariant latencyData;
     switch (latency) {
     case -1:
-        latencyStr = tr("Timeout");
+        latencyData = QVariant(tr("Timeout"));
         break;
     case -2:
-        latencyStr = tr("Error");
+        latencyData = QVariant(tr("Error"));
         break;
     case -3:
-        latencyStr = tr("Unknown");
+        latencyData = QVariant(tr("Unknown"));
         break;
     default:
-        latencyStr = QString::number(latency);
+        latencyData = QVariant(latency);
     }
-    return latencyStr;
+    return latencyData;
 }
 
 void ConfigHelper::testAllLatency()
@@ -262,7 +262,8 @@ void ConfigHelper::appendConnectionToList(Connection *con)
     QStandardItem *name = new QStandardItem();
     name->setData(QVariant(con->profile.name), Qt::DisplayRole);
     name->setData(QVariant::fromValue(con), Qt::UserRole);
-    QStandardItem *latency = new QStandardItem(convertToLatencyString(con->profile.latency));
+    QStandardItem *latency = new QStandardItem;
+    latency->setData(convertLatencyToVariant(con->profile.latency), Qt::DisplayRole);
     QStandardItem *last = new QStandardItem(con->profile.lastTime.toString());
     items << name << latency << last;
     model->appendRow(items);
@@ -329,7 +330,7 @@ void ConfigHelper::onConnectionPingFinished(const int latency)
     for (int i = 0; i < size; ++i) {
         Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
         if (con == c) {
-            model->setData(model->index(i, 1), QVariant(convertToLatencyString(latency)));
+            model->setData(model->index(i, 1), convertLatencyToVariant(latency));
             break;
         }
     }
