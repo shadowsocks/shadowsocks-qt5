@@ -348,8 +348,6 @@ void ConfigHelper::startAllAutoStart()
         Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
         if (con->profile.autoStart) {
             con->start();
-            //update latency
-            model->setData(model->index(i, 1), QVariant(convertToLatencyString(con->profile.latency)));
             //update time
             model->setData(model->index(i, 2), QVariant(con->profile.lastTime.toString()));
         }
