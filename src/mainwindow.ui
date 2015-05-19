@@ -60,7 +60,7 @@
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
-    <string>Tool Bar</string>
+    <string>Show Toolbar</string>
    </property>
    <property name="movable">
     <bool>false</bool>
@@ -145,7 +145,6 @@
     <property name="title">
      <string>Settin&amp;gs</string>
     </property>
-    <addaction name="actionGeneralSettings"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -340,7 +339,9 @@
   </action>
   <action name="actionImportGUIJson">
    <property name="icon">
-    <iconset theme="document-import"/>
+    <iconset theme="document-import">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Import Connections from gui-config.json</string>
@@ -351,7 +352,9 @@
   </action>
   <action name="actionFromConfigJson">
    <property name="icon">
-    <iconset theme="document-open"/>
+    <iconset theme="document-open">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>From &amp;config.json</string>

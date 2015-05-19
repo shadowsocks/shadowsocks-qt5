@@ -31,6 +31,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //setup Settings menu
+    ui->menuSettings->addAction(ui->toolBar->toggleViewAction());
+    ui->menuSettings->addSeparator();
+    ui->menuSettings->addAction(ui->actionGeneralSettings);
 
     //initialisation
     QString de(getenv("XDG_CURRENT_DESKTOP"));
