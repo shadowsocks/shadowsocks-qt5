@@ -1,5 +1,3 @@
-#include "mainwindow.h"
-#include "connection.h"
 #include <QApplication>
 #include <QTranslator>
 #include <QLibraryInfo>
@@ -8,6 +6,7 @@
 #include <QSharedMemory>
 #include <QDebug>
 #include <signal.h>
+#include "mainwindow.h"
 
 MainWindow *mw = nullptr;
 
@@ -96,9 +95,9 @@ int main(int argc, char *argv[])
     w.show();
     if (w.isHideWindowOnStartup()) {
         if (w.isUsingAppIndicator()) {
-            QTimer::singleShot(5, &w, SLOT(minimizeToSysTray()));
+            QTimer::singleShot(5, &w, SLOT(minimise()));
         } else {
-            w.minimizeToSysTray();
+            w.minimise();
         }
     }
 

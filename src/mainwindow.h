@@ -8,19 +8,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QSystemTrayIcon>
 #include <QCloseEvent>
 #include "confighelper.h"
-
-#ifdef UBUNTU_UNITY
-#undef signals
-extern "C"
-{
-#include <libappindicator/app-indicator.h>
-#include <gtk/gtk.h>
-}
-#define signals public
-#endif
+#include "statusnotifier.h"
 
 namespace Ui {
 class MainWindow;
@@ -38,29 +28,22 @@ public:
     bool isHideWindowOnStartup() const;
     bool isUsingAppIndicator() const;
 
+signals:
+    void visiblilityChanged(const bool visible);
+
 public slots:
-    void minimizeToSysTray();
+    void minimise();
     void onShowSignalRecv();
 
 private:
     ConfigHelper *configHelper;
-    QMenu *systrayMenu;
-    QSystemTrayIcon *systray;
     Ui::MainWindow *ui;
-#ifdef UBUNTU_UNITY
-    GtkWidget *showItem;
-#endif
-
-    bool useAppIndicator;
+    StatusNotifier *notifierItem;
 
     void newProfile(Connection *);
     void editRow(int row);
-    void createSystemTray();
-    void createAppIndicator();
     void blockChildrenSignals(bool);
 
-    //desktop environments that need application indicator
-    static const QStringList appIndicatorDE;
     static const QUrl issueUrl;
 
 private slots:
@@ -84,12 +67,11 @@ private slots:
     void onMoveDown();
     void onGeneralSettings();
     void checkCurrentIndex(const QModelIndex &index);
-    void showNotification(const QString &);
     void showWindow();
-    void onSystrayActivated(QSystemTrayIcon::ActivationReason);
     void onAbout();
     void onReportBug();
     void onCustomContextMenuRequested(const QPoint &pos);
+    void onStatusNotifierActivated();
 
 protected:
     void closeEvent(QCloseEvent *);

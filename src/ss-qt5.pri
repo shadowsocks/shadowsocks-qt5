@@ -14,7 +14,8 @@ SOURCES      += src/main.cpp\
                 src/sqprofile.cpp \
                 src/settingsdialog.cpp \
                 src/statusdialog.cpp \
-                src/controllerthread.cpp
+                src/controllerthread.cpp \
+                src/statusnotifier.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ip4validator.h \
@@ -31,7 +32,8 @@ HEADERS      += src/mainwindow.h \
                 src/sqprofile.h \
                 src/settingsdialog.h \
                 src/statusdialog.h \
-                src/controllerthread.h
+                src/controllerthread.h \
+                src/statusnotifier.h
 
 FORMS        += src/mainwindow.ui \
                 src/sharedialog.ui \
