@@ -1,3 +1,8 @@
+/*
+ * StatusDialog Class
+ * Copyright 2015 Symeon Huang <hzwhuang@gmail.com>
+ */
+
 #ifndef STATUSDIALOG_H
 #define STATUSDIALOG_H
 
