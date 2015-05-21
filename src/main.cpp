@@ -7,15 +7,16 @@
 #include <QDebug>
 #include <signal.h>
 #include "mainwindow.h"
+#include "statusnotifier.h"
 
-MainWindow *mw = nullptr;
+StatusNotifier *sn = nullptr;
 
 static void onSignalRecv(int sig)
 {
 #ifdef Q_OS_UNIX
     if (sig == SIGUSR1) {
-        if (mw) {
-            mw->onShowSignalRecv();
+        if (sn) {
+            sn->showTopWindow();
         }
     }
 #endif
@@ -53,7 +54,6 @@ int main(int argc, char *argv[])
     a.installTranslator(&ssqt5t);
 
     MainWindow w;
-    mw = &w;
 
     QSharedMemory sharedMem;
     sharedMem.setKey("Shadowsocks-Qt5");
@@ -93,11 +93,15 @@ int main(int argc, char *argv[])
     }
 
     w.show();
+
+    StatusNotifier notifier;
+    sn = &notifier;
+    QObject::connect(&w, &MainWindow::messageArrived, &notifier, &StatusNotifier::showNotification);
     if (w.isHideWindowOnStartup()) {
-        if (w.isUsingAppIndicator()) {
-            QTimer::singleShot(5, &w, SLOT(minimise()));
+        if (notifier.isUsingAppIndicator()) {
+            QTimer::singleShot(5, &notifier, SLOT(hideTopWindow()));
         } else {
-            w.minimise();
+            notifier.hideTopWindow();
         }
     }
 

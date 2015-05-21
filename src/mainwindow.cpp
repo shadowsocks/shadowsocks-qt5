@@ -30,10 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->menuSettings->addAction(ui->actionGeneralSettings);
 
     //initialisation
-    notifierItem = new StatusNotifier(this);
-    connect(this, &MainWindow::visiblilityChanged, notifierItem, &StatusNotifier::onMainWindowVisibilityChanged);
-    connect(notifierItem, &StatusNotifier::activated, this, &MainWindow::onStatusNotifierActivated);
-
     configHelper = new ConfigHelper(this);
     ui->connectionView->setModel(configHelper->getModel());
     ui->connectionView->resizeColumnsToContents();
@@ -41,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(configHelper, &ConfigHelper::connectionStartFailed, [this] {
         QMessageBox::critical(this, tr("Connect Failed"), tr("Local address or port may be invalid or already in use."));
     });
-    connect(configHelper, &ConfigHelper::message, notifierItem, &StatusNotifier::showNotification);
+    connect(configHelper, &ConfigHelper::message, this, &MainWindow::messageArrived);
     connect(ui->actionSaveManually, &QAction::triggered, configHelper, &ConfigHelper::save);
     connect(ui->actionTestAllLatency, &QAction::triggered, configHelper, &ConfigHelper::testAllLatency);
 
@@ -90,26 +86,6 @@ MainWindow::~MainWindow()
 
 const QUrl MainWindow::issueUrl = QUrl("https://github.com/librehat/shadowsocks-qt5/issues");
 
-void MainWindow::minimise()
-{
-    if (notifierItem->isUsingAppIndicator()) {
-        qApp->topLevelWindows().at(0)->hide();
-    } else {
-        this->hide();
-    }
-    emit visiblilityChanged(false);
-}
-
-void MainWindow::onShowSignalRecv()
-{
-    if (notifierItem->isUsingAppIndicator()) {
-        qApp->topLevelWindows().at(0)->show();
-    } else {
-        this->showWindow();
-    }
-    emit visiblilityChanged(true);
-}
-
 bool MainWindow::isOnlyOneInstance() const
 {
     return configHelper->isOnlyOneInstance();
@@ -118,19 +94,6 @@ bool MainWindow::isOnlyOneInstance() const
 bool MainWindow::isHideWindowOnStartup() const
 {
     return configHelper->isHideWindowOnStartup();
-}
-
-bool MainWindow::isUsingAppIndicator() const
-{
-    return notifierItem->isUsingAppIndicator();
-}
-
-void MainWindow::showWindow()
-{
-    this->show();
-    this->setWindowState(Qt::WindowActive);
-    this->activateWindow();
-    ui->connectionView->setFocus();
 }
 
 void MainWindow::onImportGuiJson()
@@ -356,20 +319,11 @@ void MainWindow::onReportBug()
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     e->ignore();
-    minimise();
+    qApp->topLevelWindows().at(0)->hide();
 }
 
 void MainWindow::onCustomContextMenuRequested(const QPoint &pos)
 {
     this->checkCurrentIndex(ui->connectionView->indexAt(pos));
     ui->menuConnection->popup(ui->connectionView->viewport()->mapToGlobal(pos));
-}
-
-void MainWindow::onStatusNotifierActivated()
-{
-    if (this->isVisible()) {
-        minimise();
-    } else {
-        showWindow();
-    }
 }

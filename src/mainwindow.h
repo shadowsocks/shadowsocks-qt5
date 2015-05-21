@@ -10,7 +10,6 @@
 #include <QMainWindow>
 #include <QCloseEvent>
 #include "confighelper.h"
-#include "statusnotifier.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,19 +25,13 @@ public:
 
     bool isOnlyOneInstance() const;
     bool isHideWindowOnStartup() const;
-    bool isUsingAppIndicator() const;
 
 signals:
-    void visiblilityChanged(const bool visible);
-
-public slots:
-    void minimise();
-    void onShowSignalRecv();
+    void messageArrived(const QString& msg);
 
 private:
     ConfigHelper *configHelper;
     Ui::MainWindow *ui;
-    StatusNotifier *notifierItem;
 
     void newProfile(Connection *);
     void editRow(int row);
@@ -67,11 +60,9 @@ private slots:
     void onMoveDown();
     void onGeneralSettings();
     void checkCurrentIndex(const QModelIndex &index);
-    void showWindow();
     void onAbout();
     void onReportBug();
     void onCustomContextMenuRequested(const QPoint &pos);
-    void onStatusNotifierActivated();
 
 protected:
     void closeEvent(QCloseEvent *);

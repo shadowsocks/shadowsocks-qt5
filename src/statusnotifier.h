@@ -28,15 +28,14 @@ public:
 
     bool isUsingAppIndicator() const;
 
-signals:
-    void activated();
-
 public slots:
-    void onMainWindowVisibilityChanged(const bool visible);
+    void hideTopWindow();
+    void showTopWindow();
+    void activate();
     void showNotification(const QString &);
 
 private:
-    GtkWidget *showItem;
+    GtkWidget *minimiseRestoreGtkItem;
     QMenu *systrayMenu;
     QAction *minimiseRestoreAction;
     QSystemTrayIcon *systray;
