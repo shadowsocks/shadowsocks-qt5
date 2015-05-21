@@ -87,6 +87,9 @@
    <addaction name="actionEdit"/>
    <addaction name="actionDelete"/>
    <addaction name="actionShare"/>
+   <addaction name="separator"/>
+   <addaction name="actionMoveUp"/>
+   <addaction name="actionMoveDown"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
