@@ -24,6 +24,7 @@
 #include <QMenu>
 #include <QStringList>
 
+#ifdef Q_OS_UNIX
 #undef signals
 extern "C"
 {
@@ -31,6 +32,7 @@ extern "C"
 #include <gtk/gtk.h>
 }
 #define signals public
+#endif
 
 class StatusNotifier : public QObject
 {
@@ -48,7 +50,11 @@ public slots:
     void showNotification(const QString &);
 
 private:
+#ifdef Q_OS_UNIX
     GtkWidget *minimiseRestoreGtkItem;
+    void createAppIndicator();
+#endif
+
     QMenu *systrayMenu;
     QAction *minimiseRestoreAction;
     QSystemTrayIcon *systray;
@@ -56,7 +62,6 @@ private:
     bool useAppIndicator;
 
     void createSystemTray();
-    void createAppIndicator();
 
     //desktop environments that need application indicator
     static const QStringList appIndicatorDE;
