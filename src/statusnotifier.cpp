@@ -2,7 +2,6 @@
 
 #include <QApplication>
 #include <QWindow>
-#include <QDebug>
 #ifdef Q_OS_UNIX
 #include <QDBusMessage>
 #include <QDBusConnection>
