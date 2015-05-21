@@ -52,6 +52,7 @@ StatusNotifier::~StatusNotifier()
 #ifdef Q_OS_WIN
     systray->hide();
 #endif
+    systrayMenu->deleteLater();
 }
 
 const QStringList StatusNotifier::appIndicatorDE = QStringList() << "Unity" << "XFCE" << "Pantheon";
