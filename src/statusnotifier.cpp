@@ -3,7 +3,7 @@
 #include <QApplication>
 #include <QWindow>
 #include <QDebug>
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusPendingCall>
@@ -119,7 +119,7 @@ void StatusNotifier::activate()
 
 void StatusNotifier::showNotification(const QString &msg)
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
     //Using DBus to send message.
     QDBusMessage method = QDBusMessage::createMethodCall("org.freedesktop.Notifications","/org/freedesktop/Notifications", "org.freedesktop.Notifications", "Notify");
     QVariantList args;

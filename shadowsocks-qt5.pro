@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT        += core gui widgets network
-linux: QT += dbus
+unix: QT  += dbus
 
 CONFIG    += c++11
 
