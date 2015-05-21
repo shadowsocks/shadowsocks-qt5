@@ -195,13 +195,11 @@ QVariant ConfigHelper::convertLatencyToVariant(const int latency)
     QVariant latencyData;
     switch (latency) {
     case -1:
-        latencyData = QVariant(tr("Timeout"));
+        latencyData = QVariant(3000);//>= 3000 ms: timeout
         break;
-    case -2:
-        latencyData = QVariant(tr("Error"));
-        break;
-    case -3:
-        latencyData = QVariant(tr("Unknown"));
+    case -2://error
+    case -3://unknown
+        latencyData = QVariant();//use an empty var so that the sorting can work
         break;
     default:
         latencyData = QVariant(latency);
