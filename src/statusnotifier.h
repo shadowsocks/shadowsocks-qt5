@@ -11,7 +11,6 @@
 #include <QMenu>
 #include <QStringList>
 
-#ifdef UBUNTU_UNITY
 #undef signals
 extern "C"
 {
@@ -19,7 +18,6 @@ extern "C"
 #include <gtk/gtk.h>
 }
 #define signals public
-#endif
 
 class StatusNotifier : public QObject
 {
@@ -38,9 +36,7 @@ public slots:
     void showNotification(const QString &);
 
 private:
-#ifdef UBUNTU_UNITY
     GtkWidget *showItem;
-#endif
     QMenu *systrayMenu;
     QAction *minimiseRestoreAction;
     QSystemTrayIcon *systray;

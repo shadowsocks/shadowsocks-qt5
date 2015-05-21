@@ -10,7 +10,6 @@
 #endif
 #include <stdlib.h>
 
-#ifdef UBUNTU_UNITY
 void onShow(GtkCheckMenuItem *menu, gpointer data)
 {
     bool checked = gtk_check_menu_item_get_active(menu);
@@ -26,7 +25,6 @@ void onQuit(GtkMenu *, gpointer data)
 {
     static_cast<QApplication *>(data)->quit();
 }
-#endif
 
 StatusNotifier::StatusNotifier(QObject *parent) :
     QObject(parent)
@@ -53,16 +51,11 @@ const QStringList StatusNotifier::appIndicatorDE = QStringList() << "Unity" << "
 
 bool StatusNotifier::isUsingAppIndicator() const
 {
-#ifdef UBUNTU_UNITY
     return useAppIndicator;
-#else
-    return false;
-#endif
 }
 
 void StatusNotifier::createAppIndicator()
 {
-#ifdef UBUNTU_UNITY
     AppIndicator *indicator = app_indicator_new("Shadowsocks-Qt5", "shadowsocks-qt5", APP_INDICATOR_CATEGORY_OTHER);
     GtkWidget *menu = gtk_menu_new();
 
@@ -79,9 +72,6 @@ void StatusNotifier::createAppIndicator()
 
     app_indicator_set_status(indicator, APP_INDICATOR_STATUS_ACTIVE);
     app_indicator_set_menu(indicator, GTK_MENU(menu));
-#else
-    qWarning() << tr("The application wasn't built with aplication indicator support.");
-#endif
 }
 
 void StatusNotifier::createSystemTray()
@@ -105,7 +95,6 @@ void StatusNotifier::createSystemTray()
 
 void StatusNotifier::onMainWindowVisibilityChanged(const bool visible)
 {
-#ifdef UBUNTU_UNITY
     if (isUsingAppIndicator()) {
         if (visible) {
             gtk_check_menu_item_set_active((GtkCheckMenuItem*)showItem, true);
@@ -115,9 +104,6 @@ void StatusNotifier::onMainWindowVisibilityChanged(const bool visible)
     } else {
         minimiseRestoreAction->setText(visible ? tr("Minimise") : tr("Restore"));
     }
-#else
-    minimiseRestoreAction->setText(visible ? tr("Minimise") : tr("Restore"));
-#endif
 }
 
 void StatusNotifier::showNotification(const QString &msg)

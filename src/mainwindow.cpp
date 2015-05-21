@@ -92,29 +92,21 @@ const QUrl MainWindow::issueUrl = QUrl("https://github.com/librehat/shadowsocks-
 
 void MainWindow::minimise()
 {
-#ifdef UBUNTU_UNITY
     if (notifierItem->isUsingAppIndicator()) {
         qApp->topLevelWindows().at(0)->hide();
     } else {
         this->hide();
     }
-#else
-    this->hide();
-#endif
     emit visiblilityChanged(false);
 }
 
 void MainWindow::onShowSignalRecv()
 {
-#ifdef UBUNTU_UNITY
     if (notifierItem->isUsingAppIndicator()) {
         qApp->topLevelWindows().at(0)->show();
     } else {
         this->showWindow();
     }
-#else
-    this->showWindow();
-#endif
     emit visiblilityChanged(true);
 }
 

@@ -73,8 +73,5 @@ win32: {
 }
 unix : {
     CONFIG    += link_pkgconfig
-    PKGCONFIG += libqrencode QtShadowsocks botan-$$BOTAN_VER zbar
-    contains(DEFINES, UBUNTU_UNITY): {
-        PKGCONFIG += gtk+-2.0 appindicator-0.1
-    }
+    PKGCONFIG += libqrencode QtShadowsocks botan-$$BOTAN_VER zbar gtk+-2.0 appindicator-0.1
 }
