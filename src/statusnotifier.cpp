@@ -30,6 +30,7 @@ void onQuit(GtkMenu *, gpointer data)
 
 StatusNotifier::StatusNotifier(QObject *parent) :
     QObject(parent),
+    systrayMenu(nullptr),
     minimiseRestoreAction(nullptr)
 {
     systray = new QSystemTrayIcon(this);
@@ -51,7 +52,9 @@ StatusNotifier::~StatusNotifier()
 #ifdef Q_OS_WIN
     systray->hide();
 #endif
-    systrayMenu->deleteLater();
+    if (systrayMenu) {
+        systrayMenu->deleteLater();
+    }
 }
 
 const QStringList StatusNotifier::appIndicatorDE = QStringList() << "Unity" << "XFCE" << "Pantheon";
