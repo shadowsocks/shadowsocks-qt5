@@ -28,6 +28,7 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     ui->pwdEdit->setText(connection->profile.password);
     ui->encryptComboBox->setCurrentText(connection->profile.method.toUpper());
     ui->timeoutSpinBox->setValue(connection->profile.timeout);
+    ui->resetDateSpinBox->setValue(connection->profile.resetDate);
     ui->autoStartCheckBox->setChecked(connection->profile.autoStart);
     ui->debugCheckBox->setChecked(connection->profile.debug);
 
@@ -51,6 +52,7 @@ void EditDialog::save()
     connection->profile.password = ui->pwdEdit->text();
     connection->profile.method = ui->encryptComboBox->currentText();
     connection->profile.timeout = ui->timeoutSpinBox->value();
+    connection->profile.resetDate = ui->resetDateSpinBox->value();
     connection->profile.autoStart = ui->autoStartCheckBox->isChecked();
     connection->profile.debug = ui->debugCheckBox->isChecked();
     this->accept();
