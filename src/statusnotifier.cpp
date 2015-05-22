@@ -2,7 +2,6 @@
 
 #include <QApplication>
 #include <QWindow>
-#include <QDebug>
 #ifdef Q_OS_UNIX
 #include <QDBusMessage>
 #include <QDBusConnection>
@@ -10,6 +9,7 @@
 #endif
 #include <stdlib.h>
 
+#ifdef Q_OS_UNIX
 void onAppIndicatorActivated(GtkMenuItem *item, gpointer data)
 {
     QWindow *w = static_cast<QApplication *>(data)->topLevelWindows().at(0);
@@ -26,20 +26,24 @@ void onQuit(GtkMenu *, gpointer data)
 {
     static_cast<QApplication *>(data)->quit();
 }
+#endif
 
 StatusNotifier::StatusNotifier(QObject *parent) :
     QObject(parent),
     minimiseRestoreAction(nullptr)
 {
+    systray = new QSystemTrayIcon(this);
+#ifdef Q_OS_UNIX
     QString de(getenv("XDG_CURRENT_DESKTOP"));
     useAppIndicator = appIndicatorDE.contains(de, Qt::CaseInsensitive);
-
-    systray = new QSystemTrayIcon(this);
-    if (isUsingAppIndicator()) {
+    if (useAppIndicator) {
         createAppIndicator();
     } else {
+#endif
         createSystemTray();
+#ifdef Q_OS_UNIX
     }
+#endif
 }
 
 StatusNotifier::~StatusNotifier()
@@ -47,6 +51,7 @@ StatusNotifier::~StatusNotifier()
 #ifdef Q_OS_WIN
     systray->hide();
 #endif
+    systrayMenu->deleteLater();
 }
 
 const QStringList StatusNotifier::appIndicatorDE = QStringList() << "Unity" << "XFCE" << "Pantheon";
@@ -56,6 +61,7 @@ bool StatusNotifier::isUsingAppIndicator() const
     return useAppIndicator;
 }
 
+#ifdef Q_OS_UNIX
 void StatusNotifier::createAppIndicator()
 {
     AppIndicator *indicator = app_indicator_new("Shadowsocks-Qt5", "shadowsocks-qt5", APP_INDICATOR_CATEGORY_OTHER);
@@ -74,6 +80,7 @@ void StatusNotifier::createAppIndicator()
     app_indicator_set_status(indicator, APP_INDICATOR_STATUS_ACTIVE);
     app_indicator_set_menu(indicator, GTK_MENU(menu));
 }
+#endif
 
 void StatusNotifier::createSystemTray()
 {
