@@ -12,13 +12,10 @@ Connection::Connection(QObject *parent) :
         running = run;
         emit stateChanged(run);
     });
-    connect(controllerThread, &ControllerThread::newBytesRead, [&](const quint64 &b) {
-        profile.bytesRead += b;
-        emit bytesReadChanged(profile.bytesRead);
-    });
-    connect(controllerThread, &ControllerThread::newBytesSent, [&](const quint64 &b) {
-        profile.bytesSent += b;
-        emit bytesSentChanged(profile.bytesSent);
+    connect(controllerThread, &ControllerThread::newBytes, [&](const quint64 &b) {
+        profile.currentUsage += b;
+        profile.totalUsage += b;
+        emit dataUsageChanged(profile.currentUsage, profile.totalUsage);
     });
     connect(controllerThread, &ControllerThread::logAvailable, this, &Connection::onNewLog);
     connect(controllerThread, &ControllerThread::failed, this, &Connection::startFailed);

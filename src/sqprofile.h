@@ -37,9 +37,11 @@ struct SQProfile
     QString password;
     int timeout;
     int latency;
-    quint64 bytesRead;
-    quint64 bytesSent;
-    QDateTime lastTime;
+    quint64 currentUsage;
+    quint64 totalUsage;
+    QDateTime lastTime;//last time this connection is used
+    QDateTime clearedTime;//the last time currentUsage was automatically reset
+    quint8 resetDate;//on which day of the month (1~31) should the usage gets reset
 };
 Q_DECLARE_METATYPE(SQProfile)
 

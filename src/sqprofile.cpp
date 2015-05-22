@@ -11,18 +11,19 @@ SQProfile::SQProfile()
     method = QString("RC4-MD5");
     timeout = 600;
     latency = -3;//-1: timeout, -2: error, -3: unknown(untested)
-    bytesRead = 0;
-    bytesSent = 0;
+    currentUsage = 0;
+    totalUsage = 0;
+    resetDate = 1;
 }
 
 QDataStream& operator << (QDataStream &out, const SQProfile &p)
 {
-    out << p.autoStart << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.latency << p.bytesRead << p.bytesSent << p.lastTime;
+    out << p.autoStart << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.latency << p.currentUsage << p.totalUsage << p.lastTime << p.clearedTime << p.resetDate;
     return out;
 }
 
 QDataStream& operator >> (QDataStream &in, SQProfile &p)
 {
-    in >> p.autoStart >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.latency >> p.bytesRead >> p.bytesSent >> p.lastTime;
+    in >> p.autoStart >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.latency >> p.currentUsage >> p.totalUsage >> p.lastTime >> p.clearedTime >> p.resetDate;
     return in;
 }

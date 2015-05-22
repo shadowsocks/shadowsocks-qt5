@@ -45,8 +45,7 @@ signals:
     void stateChanged(bool started);
     void pingFinished(const int);
     void newLogAvailable(const QString &);
-    void bytesReadChanged(const quint64 &);
-    void bytesSentChanged(const quint64 &);
+    void dataUsageChanged(const quint64 &current, const quint64 &total);
     void startFailed();
 
 public slots:

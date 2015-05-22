@@ -33,8 +33,7 @@ public:
 signals:
     void logAvailable(const QString &);
     void stateChanged(bool);
-    void newBytesRead(quint64);
-    void newBytesSent(quint64);
+    void newBytes(quint64);
     void failed();
 
 private:

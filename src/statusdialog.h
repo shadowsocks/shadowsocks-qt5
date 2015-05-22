@@ -43,8 +43,7 @@ private:
 
 private slots:
     void onStatusChanged(bool);
-    void onBytesReadChanged(const quint64 &);
-    void onBytesSentChanged(const quint64 &);
+    void onBytesChanged(const quint64 &current, const quint64 &total);
     void onResetClicked();
 };
 

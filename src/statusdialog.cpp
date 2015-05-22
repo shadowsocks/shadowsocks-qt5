@@ -13,12 +13,10 @@ StatusDialog::StatusDialog(Connection *c, QWidget *parent) :
     ui->serverPortLabel->setText(QString::number(con->profile.serverPort));
     ui->localPortLabel->setText(QString::number(con->profile.localPort));
     ui->statusLabel->setText(con->isRunning() ? tr("Connected") : tr("Disconnected"));
-    onBytesReadChanged(con->profile.bytesRead);
-    onBytesSentChanged(con->profile.bytesSent);
+    onBytesChanged(con->profile.currentUsage, con->profile.totalUsage);
 
     connect(con, &Connection::stateChanged, this, &StatusDialog::onStatusChanged);
-    connect(con, &Connection::bytesReadChanged, this, &StatusDialog::onBytesReadChanged);
-    connect(con, &Connection::bytesSentChanged, this, &StatusDialog::onBytesSentChanged);
+    connect(con, &Connection::dataUsageChanged, this, &StatusDialog::onBytesChanged);
     connect(ui->resetButton, &QPushButton::clicked, this, &StatusDialog::onResetClicked);
 
     this->adjustSize();
@@ -36,14 +34,10 @@ void StatusDialog::onStatusChanged(bool b)
     ui->statusLabel->setText(b ? tr("Connected") : tr("Disconnected"));
 }
 
-void StatusDialog::onBytesReadChanged(const quint64 &b)
+void StatusDialog::onBytesChanged(const quint64 &current, const quint64 &total)
 {
-    ui->brLabel->setText(convertToHumanReadable(b));
-}
-
-void StatusDialog::onBytesSentChanged(const quint64 &b)
-{
-    ui->bsLabel->setText(convertToHumanReadable(b));
+    ui->usageTermLabel->setText(convertToHumanReadable(current));
+    ui->usageTotalLabel->setText(convertToHumanReadable(total));
 }
 
 QString StatusDialog::convertToHumanReadable(quint64 bytes)
@@ -56,8 +50,7 @@ QString StatusDialog::convertToHumanReadable(quint64 bytes)
 
 void StatusDialog::onResetClicked()
 {
-    con->profile.bytesRead = 0;
-    con->profile.bytesSent = 0;
-    onBytesReadChanged(0);
-    onBytesSentChanged(0);
+    con->profile.currentUsage = 0;
+    con->profile.totalUsage = 0;
+    onBytesChanged(0, 0);
 }

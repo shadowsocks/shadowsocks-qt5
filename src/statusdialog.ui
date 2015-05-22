@@ -74,14 +74,14 @@
     </widget>
    </item>
    <item row="5" column="0">
-    <widget class="QLabel" name="_bsLabel">
+    <widget class="QLabel" name="_usageTermLabel">
      <property name="text">
-      <string>Sent</string>
+      <string>Data Usage (Term)</string>
      </property>
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="QLabel" name="bsLabel">
+    <widget class="QLabel" name="usageTermLabel">
      <property name="text">
       <string/>
      </property>
@@ -115,14 +115,14 @@
     </widget>
    </item>
    <item row="6" column="0">
-    <widget class="QLabel" name="_brLabel">
+    <widget class="QLabel" name="_usageTotalLabel">
      <property name="text">
-      <string>Read</string>
+      <string>Data Usage (Total)</string>
      </property>
     </widget>
    </item>
    <item row="6" column="1">
-    <widget class="QLabel" name="brLabel">
+    <widget class="QLabel" name="usageTotalLabel">
      <property name="text">
       <string/>
      </property>
