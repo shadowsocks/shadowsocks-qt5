@@ -46,9 +46,10 @@ public:
     void startAllAutoStart();//start those connections marked as auto-start
 
     /* some functions used to communicate with SettingsDialog */
+    int  getToolbarStyle() const;
     bool isHideWindowOnStartup() const;
     bool isOnlyOneInstance() const;
-    void setGeneralSettings(bool hide, bool oneInstance);
+    void setGeneralSettings(int ts, bool hide, bool oneInstance);
 
     int size() const;
     QModelIndex moveUp(int row);
@@ -59,11 +60,13 @@ public slots:
     void save();
 
 signals:
+    void toolbarStyleChanged(const Qt::ToolButtonStyle);
     void rowStatusChanged(const int row, const bool running);
     void connectionStartFailed();
     void message(const QString &msg);
 
 private:
+    int toolbarStyle;
     bool hideWindowOnStartup;
     bool onlyOneInstace;
     QSettings *settings;

@@ -9,10 +9,12 @@ SettingsDialog::SettingsDialog(ConfigHelper *ch, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->toolbarStyleComboBox->setCurrentIndex(helper->getToolbarStyle());
     ui->hideCheckBox->setChecked(helper->isHideWindowOnStartup());
     ui->oneInstanceCheckBox->setChecked(helper->isOnlyOneInstance());
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::onAccepted);
+    connect(ui->toolbarStyleComboBox, &QComboBox::currentTextChanged, this, &SettingsDialog::onChanged);
     connect(ui->hideCheckBox, &QCheckBox::stateChanged, this, &SettingsDialog::onChanged);
     connect(ui->oneInstanceCheckBox, &QCheckBox::stateChanged, this, &SettingsDialog::onChanged);
 
@@ -28,7 +30,9 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::onAccepted()
 {
-    helper->setGeneralSettings(ui->hideCheckBox->isChecked(), ui->oneInstanceCheckBox->isChecked());
+    helper->setGeneralSettings(ui->toolbarStyleComboBox->currentIndex(),
+                               ui->hideCheckBox->isChecked(),
+                               ui->oneInstanceCheckBox->isChecked());
     this->accept();
 }
 

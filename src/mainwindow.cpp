@@ -33,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent) :
     configHelper = new ConfigHelper(this);
     ui->connectionView->setModel(configHelper->getModel());
     ui->connectionView->resizeColumnsToContents();
+    ui->toolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(configHelper->getToolbarStyle()));
+
+    connect(configHelper, &ConfigHelper::toolbarStyleChanged, ui->toolBar, &QToolBar::setToolButtonStyle);
     connect(configHelper, &ConfigHelper::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
     connect(configHelper, &ConfigHelper::connectionStartFailed, [this] {
         QMessageBox::critical(this, tr("Connect Failed"), tr("Local address or port may be invalid or already in use."));
@@ -44,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Move to the center of the screen
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
+    //UI signals
     connect(ui->actionImportGUIJson, &QAction::triggered, this, &MainWindow::onImportGuiJson);
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
     connect(ui->actionManually, &QAction::triggered, this, &MainWindow::onAddManually);

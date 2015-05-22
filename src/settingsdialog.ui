@@ -7,47 +7,76 @@
     <x>0</x>
     <y>0</y>
     <width>340</width>
-    <height>120</height>
+    <height>148</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>General Settings</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QCheckBox" name="oneInstanceCheckBox">
-     <property name="text">
-      <string>Allow only one instance running</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="hideCheckBox">
-     <property name="text">
-      <string>Hide window on startup</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>0</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="5" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="toolbarStyleLabel">
+     <property name="text">
+      <string>Toolbar Style</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="toolbarStyleComboBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Icons Only</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Text Only</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Text Alongside Icons</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Text Under Icons</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>System Style</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QCheckBox" name="oneInstanceCheckBox">
+     <property name="text">
+      <string>Allow only one instance running</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QCheckBox" name="hideCheckBox">
+     <property name="text">
+      <string>Hide window on startup</string>
      </property>
     </widget>
    </item>

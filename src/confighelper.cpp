@@ -53,6 +53,7 @@ void ConfigHelper::save()
     }
     settings->endArray();
 
+    settings->setValue("ToolbarStyle", QVariant(toolbarStyle));
     settings->setValue("HideWindowOnStartup", QVariant(hideWindowOnStartup));
     settings->setValue("OnlyOneInstance", QVariant(onlyOneInstace));
 }
@@ -216,6 +217,11 @@ void ConfigHelper::testAllLatency()
     }
 }
 
+int ConfigHelper::getToolbarStyle() const
+{
+    return toolbarStyle;
+}
+
 bool ConfigHelper::isHideWindowOnStartup() const
 {
     return hideWindowOnStartup;
@@ -226,8 +232,12 @@ bool ConfigHelper::isOnlyOneInstance() const
     return onlyOneInstace;
 }
 
-void ConfigHelper::setGeneralSettings(bool hide, bool oneInstance)
+void ConfigHelper::setGeneralSettings(int ts, bool hide, bool oneInstance)
 {
+    if (toolbarStyle != ts) {
+        emit toolbarStyleChanged(static_cast<Qt::ToolButtonStyle>(ts));
+    }
+    toolbarStyle = ts;
     hideWindowOnStartup = hide;
     onlyOneInstace = oneInstance;
 }
@@ -279,8 +289,9 @@ void ConfigHelper::readConfiguration()
     }
     settings->endArray();
 
+    toolbarStyle = settings->value("ToolbarStyle", QVariant(4)).toInt();
     hideWindowOnStartup = settings->value("HideWindowOnStartup").toBool();
-    onlyOneInstace = settings->value("OnlyOneInstance").toBool();
+    onlyOneInstace = settings->value("OnlyOneInstance", QVariant(true)).toBool();
 }
 
 void ConfigHelper::onConnectionStateChanged(bool running)
