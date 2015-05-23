@@ -13,17 +13,18 @@ SQProfile::SQProfile()
     latency = -3;//-1: timeout, -2: error, -3: unknown(untested)
     currentUsage = 0;
     totalUsage = 0;
+    clearedDate = QDate(2000, 1, 1);
     resetDate = 1;
 }
 
 QDataStream& operator << (QDataStream &out, const SQProfile &p)
 {
-    out << p.autoStart << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.latency << p.currentUsage << p.totalUsage << p.lastTime << p.clearedTime << p.resetDate;
+    out << p.autoStart << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.latency << p.currentUsage << p.totalUsage << p.lastTime << p.clearedDate << p.resetDate;
     return out;
 }
 
 QDataStream& operator >> (QDataStream &in, SQProfile &p)
 {
-    in >> p.autoStart >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.latency >> p.currentUsage >> p.totalUsage >> p.lastTime >> p.clearedTime >> p.resetDate;
+    in >> p.autoStart >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.latency >> p.currentUsage >> p.totalUsage >> p.lastTime >> p.clearedDate >> p.resetDate;
     return in;
 }
