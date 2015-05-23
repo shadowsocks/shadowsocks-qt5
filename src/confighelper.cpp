@@ -284,6 +284,7 @@ void ConfigHelper::readConfiguration()
         settings->setArrayIndex(i);
         QVariant value = settings->value("SQProfile");
         SQProfile profile = value.value<SQProfile>();
+        checkProfileDataUsageReset(profile);
         Connection *con = new Connection(profile, this);
         appendConnectionToList(con);
     }
@@ -292,6 +293,24 @@ void ConfigHelper::readConfiguration()
     toolbarStyle = settings->value("ToolbarStyle", QVariant(4)).toInt();
     hideWindowOnStartup = settings->value("HideWindowOnStartup").toBool();
     onlyOneInstace = settings->value("OnlyOneInstance", QVariant(true)).toBool();
+}
+
+void ConfigHelper::checkProfileDataUsageReset(SQProfile &profile)
+{
+    QDate currentDate = QDate::currentDate();
+    if (!profile.nextResetDate.isValid()){//invalid if the config.ini is old
+        //the default reset day is 1 of every month
+        profile.nextResetDate = QDate(currentDate.year(), currentDate.month(), 1);
+        qDebug() << "config.ini upgraded from old version";
+        profile.totalUsage += profile.currentUsage;//we used to use sent and received
+    }
+
+    if (profile.nextResetDate < currentDate) {//not <= because that'd casue multiple reset on this day
+        profile.currentUsage = 0;
+        while (profile.nextResetDate <= currentDate) {
+            profile.nextResetDate = profile.nextResetDate.addMonths(1);
+        }
+    }
 }
 
 void ConfigHelper::onConnectionStateChanged(bool running)

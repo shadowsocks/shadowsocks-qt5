@@ -75,6 +75,7 @@ private:
 
     void appendConnectionToList(Connection *con);
     void readConfiguration();
+    void checkProfileDataUsageReset(SQProfile &profile);
 
     static const QString profilePrefix;
 

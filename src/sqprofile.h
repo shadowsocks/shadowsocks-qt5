@@ -41,8 +41,7 @@ struct SQProfile
     quint64 currentUsage;
     quint64 totalUsage;
     QDateTime lastTime;//last time this connection is used
-    QDate clearedDate;//the last date when currentUsage was automatically reset
-    quint8 resetDate;//on which day of the month (1~31) should the usage gets reset
+    QDate nextResetDate;//next scheduled date to reset data usage
 };
 Q_DECLARE_METATYPE(SQProfile)
 
