@@ -13,6 +13,7 @@ StatusDialog::StatusDialog(Connection *c, QWidget *parent) :
     ui->serverPortLabel->setText(QString::number(con->profile.serverPort));
     ui->localPortLabel->setText(QString::number(con->profile.localPort));
     ui->statusLabel->setText(con->isRunning() ? tr("Connected") : tr("Disconnected"));
+    ui->dataResetDateLabel->setText(con->profile.nextResetDate.toString(Qt::SystemLocaleShortDate));
     onBytesChanged(con->profile.currentUsage, con->profile.totalUsage);
 
     connect(con, &Connection::stateChanged, this, &StatusDialog::onStatusChanged);

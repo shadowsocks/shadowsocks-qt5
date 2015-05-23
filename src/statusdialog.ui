@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>250</width>
-    <height>276</height>
+    <height>289</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -130,6 +130,20 @@
    </item>
    <item row="3" column="1">
     <widget class="QLabel" name="localPortLabel">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="_dataResetDateLabel">
+     <property name="text">
+      <string>Next Data Reset Date</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QLabel" name="dataResetDateLabel">
      <property name="text">
       <string/>
      </property>
