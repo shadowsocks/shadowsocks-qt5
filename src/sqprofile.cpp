@@ -13,7 +13,8 @@ SQProfile::SQProfile()
     latency = -3;//-1: timeout, -2: error, -3: unknown(untested)
     currentUsage = 0;
     totalUsage = 0;
-    nextResetDate = QDate(2000, 1, 1);
+    QDate currentDate = QDate::currentDate();
+    nextResetDate = QDate(currentDate.year(), currentDate.month() + 1, 1);
 }
 
 QDataStream& operator << (QDataStream &out, const SQProfile &p)

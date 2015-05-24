@@ -187,23 +187,20 @@
       <item row="11" column="0">
        <widget class="QLabel" name="resetDateLabel">
         <property name="text">
-         <string>Data Usage Reset Date</string>
+         <string>Reset Data Usage on</string>
         </property>
        </widget>
       </item>
       <item row="11" column="1">
-       <widget class="QSpinBox" name="resetDateSpinBox">
+       <widget class="QDateEdit" name="resetDateEdit">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>31</number>
+        <property name="calendarPopup">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -244,6 +241,7 @@
   <tabstop>localPortEdit</tabstop>
   <tabstop>encryptComboBox</tabstop>
   <tabstop>timeoutSpinBox</tabstop>
+  <tabstop>resetDateEdit</tabstop>
   <tabstop>autoStartCheckBox</tabstop>
   <tabstop>debugCheckBox</tabstop>
  </tabstops>

@@ -298,7 +298,7 @@ void ConfigHelper::readConfiguration()
 void ConfigHelper::checkProfileDataUsageReset(SQProfile &profile)
 {
     QDate currentDate = QDate::currentDate();
-    if (!profile.nextResetDate.isValid()){//invalid if the config.ini is old
+    if (profile.nextResetDate.isNull()){//invalid if the config.ini is old
         //the default reset day is 1 of every month
         profile.nextResetDate = QDate(currentDate.year(), currentDate.month(), 1);
         qDebug() << "config.ini upgraded from old version";

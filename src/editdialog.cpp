@@ -28,7 +28,8 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     ui->pwdEdit->setText(connection->profile.password);
     ui->encryptComboBox->setCurrentText(connection->profile.method.toUpper());
     ui->timeoutSpinBox->setValue(connection->profile.timeout);
-    ui->resetDateSpinBox->setValue(connection->profile.nextResetDate.day());
+    ui->resetDateEdit->setDate(connection->profile.nextResetDate);
+    ui->resetDateEdit->setMinimumDate(QDate::currentDate());
     ui->autoStartCheckBox->setChecked(connection->profile.autoStart);
     ui->debugCheckBox->setChecked(connection->profile.debug);
 
@@ -52,16 +53,9 @@ void EditDialog::save()
     connection->profile.password = ui->pwdEdit->text();
     connection->profile.method = ui->encryptComboBox->currentText();
     connection->profile.timeout = ui->timeoutSpinBox->value();
+    connection->profile.nextResetDate = ui->resetDateEdit->date();
     connection->profile.autoStart = ui->autoStartCheckBox->isChecked();
     connection->profile.debug = ui->debugCheckBox->isChecked();
-
-    int day = ui->resetDateSpinBox->value();
-    QDate currentDate = QDate::currentDate();
-    QDate nextDate(currentDate.year(), currentDate.month(), day);
-    if (nextDate < currentDate) {
-        nextDate = nextDate.addMonths(1);
-    }
-    connection->profile.nextResetDate = nextDate;
 
     this->accept();
 }
