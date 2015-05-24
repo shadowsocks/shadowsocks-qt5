@@ -187,7 +187,7 @@
       <item row="11" column="0">
        <widget class="QLabel" name="resetDateLabel">
         <property name="text">
-         <string>Reset Data Usage on</string>
+         <string>Reset Data Usage after</string>
         </property>
        </widget>
       </item>
