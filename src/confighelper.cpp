@@ -171,7 +171,7 @@ void ConfigHelper::deleteRow(int row)
 void ConfigHelper::updateNameAtRow(int row)
 {
     Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
-    model->setData(model->index(row, 0), QVariant(con->profile.name), Qt::DisplayRole);
+    model->setData(model->index(row, 0), QVariant(con->profile.name));
 }
 
 void ConfigHelper::updateTimeAtRow(int row)
@@ -198,10 +198,10 @@ QVariant ConfigHelper::convertLatencyToVariant(const int latency)
     case -1:
         latencyData = QVariant(3000);//>= 3000 ms: timeout
         break;
-    case -2://error
     case -3://unknown
-        latencyData = QVariant();//use an empty var so that the sorting can work
+        latencyData = QVariant(0);
         break;
+    case -2://error
     default:
         latencyData = QVariant(latency);
     }
