@@ -23,6 +23,9 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QFormLayout" name="formLayout">
+      <property name="labelAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
       <item row="10" column="0">
        <widget class="QLabel" name="timeoutLabel">
         <property name="text">
