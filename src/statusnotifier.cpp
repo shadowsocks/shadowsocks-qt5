@@ -57,7 +57,7 @@ StatusNotifier::~StatusNotifier()
     }
 }
 
-const QStringList StatusNotifier::appIndicatorDE = QStringList() << "Unity" << "XFCE" << "Pantheon";
+const QStringList StatusNotifier::appIndicatorDE = QStringList() << "Unity" << "XFCE" << "Pantheon" << "GNOME" << "LXDE";
 
 bool StatusNotifier::isUsingAppIndicator() const
 {
