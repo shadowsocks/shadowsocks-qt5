@@ -20,6 +20,7 @@
 #define CONTROLLERTHREAD_H
 
 #include <QThread>
+#include <QMutex>
 #include <QtShadowsocks>
 
 class ControllerThread : public QThread
@@ -39,6 +40,8 @@ signals:
 private:
     bool debug;
     QSS::Profile profile;
+
+    static QMutex mutex;
 };
 
 #endif // CONTROLLERTHREAD_H
