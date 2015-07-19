@@ -79,8 +79,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->connectionView, &QTableView::customContextMenuRequested, this, &MainWindow::onCustomContextMenuRequested);
 
     checkCurrentIndex(ui->connectionView->currentIndex());
-
-    configHelper->startAllAutoStart();//do this at last so that all signal-slot should've been connected
 }
 
 MainWindow::~MainWindow()
@@ -98,6 +96,11 @@ bool MainWindow::isOnlyOneInstance() const
 bool MainWindow::isHideWindowOnStartup() const
 {
     return configHelper->isHideWindowOnStartup();
+}
+
+void MainWindow::startAutoStartConnections()
+{
+    configHelper->startAllAutoStart();
 }
 
 void MainWindow::onImportGuiJson()

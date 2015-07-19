@@ -38,6 +38,8 @@ public:
     bool isOnlyOneInstance() const;
     bool isHideWindowOnStartup() const;
 
+    void startAutoStartConnections();
+
 signals:
     void messageArrived(const QString& msg);
 

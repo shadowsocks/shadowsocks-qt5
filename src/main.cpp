@@ -93,6 +93,7 @@ int main(int argc, char *argv[])
     }
 
     w.show();
+    w.startAutoStartConnections();
 
     StatusNotifier notifier;
     sn = &notifier;
