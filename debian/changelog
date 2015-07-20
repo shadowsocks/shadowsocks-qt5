@@ -1,3 +1,10 @@
+shadowsocks-qt5 (2.4.1-1) stable; urgency=medium
+
+  * use mutex to avoid possible crashes #158
+  * use application indicator on GNOME and LXDE
+
+ -- Symeon Huang <hzwhuang@gmail>  Tue, 26 May 2015 12:02:00 +0100
+
 shadowsocks-qt5 (2.4.0-1) stable; urgency=medium
 
   * add an option to change toolbar style
