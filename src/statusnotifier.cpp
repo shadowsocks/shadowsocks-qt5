@@ -121,6 +121,7 @@ void StatusNotifier::activate()
         w->hide();
     } else {
         w->show();
+        w->requestActivate();
     }
     if (minimiseRestoreAction) {
         minimiseRestoreAction->setText(w->isVisible() ? tr("Minimise") : tr("Restore"));
