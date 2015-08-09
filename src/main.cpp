@@ -5,23 +5,21 @@
 #include <QMessageBox>
 #include <QSharedMemory>
 #include <QDebug>
-#include <signal.h>
 #include "mainwindow.h"
 #include "statusnotifier.h"
 
+#ifdef Q_OS_UNIX
+#include <signal.h>
 StatusNotifier *sn = nullptr;
-
 static void onSignalRecv(int sig)
 {
-#ifdef Q_OS_UNIX
     if (sig == SIGUSR1) {
         if (sn) {
             sn->showTopWindow();
         }
     }
-#endif
-    if (sig == SIGINT || sig == SIGTERM) qApp->quit();
 }
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -29,8 +27,6 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    signal(SIGINT, onSignalRecv);
-    signal(SIGTERM, onSignalRecv);
 #ifdef Q_OS_UNIX
     signal(SIGUSR1, onSignalRecv);
 #endif
@@ -96,7 +92,10 @@ int main(int argc, char *argv[])
     w.startAutoStartConnections();
 
     StatusNotifier notifier;
+#ifdef Q_OS_UNIX
     sn = &notifier;
+#endif
+
     QObject::connect(&w, &MainWindow::messageArrived, &notifier, &StatusNotifier::showNotification);
     if (w.isHideWindowOnStartup()) {
         if (notifier.isUsingAppIndicator()) {
