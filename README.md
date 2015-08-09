@@ -25,6 +25,8 @@ If `ss-qt5` crashes and the **only one instance** mode is checked, you may need 
 LICENSE
 -------
 
+![](http://www.gnu.org/graphics/lgplv3-147x51.png)
+
 Copyright © 2014-2015 Symeon Huang
 
 This project is licensed under version 3 of the GNU Lesser General Public License.
