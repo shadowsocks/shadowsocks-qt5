@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
     w.show();
     w.startAutoStartConnections();
 
-    StatusNotifier notifier;
+    StatusNotifier notifier(w);
     sn = &notifier;
     QObject::connect(&w, &MainWindow::messageArrived, &notifier, &StatusNotifier::showNotification);
     if (w.isHideWindowOnStartup()) {

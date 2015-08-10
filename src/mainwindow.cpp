@@ -323,12 +323,6 @@ void MainWindow::onReportBug()
     QDesktopServices::openUrl(issueUrl);
 }
 
-void MainWindow::closeEvent(QCloseEvent *e)
-{
-    e->ignore();
-    qApp->topLevelWindows().at(0)->hide();
-}
-
 void MainWindow::onCustomContextMenuRequested(const QPoint &pos)
 {
     this->checkCurrentIndex(ui->connectionView->indexAt(pos));

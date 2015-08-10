@@ -77,9 +77,6 @@ private slots:
     void onAbout();
     void onReportBug();
     void onCustomContextMenuRequested(const QPoint &pos);
-
-protected:
-    void closeEvent(QCloseEvent *);
 };
 
 #endif // MAINWINDOW_H
