@@ -62,8 +62,6 @@ private:
 
     bool useAppIndicator;
 
-    void createSystemTray();
-
     //desktop environments that need application indicator
     static const QStringList appIndicatorDE;
 };

@@ -1,18 +1,19 @@
 #include "statusnotifier.h"
-
 #include <QApplication>
-#include <QWindow>
+#include <QEventLoop>
 #ifdef Q_OS_UNIX
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusPendingCall>
 #endif
-#include <stdlib.h>
 
 StatusNotifier::StatusNotifier(MainWindow &w, QObject *parent) :
     QObject(parent),
     window(w)
 {
+    connect(&w, &MainWindow::visibleChanged, this, &StatusNotifier::onWindowVisibleChanged);
+    connect(&w, &MainWindow::messageArrived, this, &StatusNotifier::showNotification);
+
     systray.setIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"));
     systray.setToolTip(QString("Shadowsocks-Qt5"));
     connect(&systray, &QSystemTrayIcon::activated, [this](QSystemTrayIcon::ActivationReason r) {
@@ -28,7 +29,7 @@ StatusNotifier::StatusNotifier(MainWindow &w, QObject *parent) :
 
 #ifdef Q_OS_UNIX
     QString de(getenv("XDG_CURRENT_DESKTOP"));
-    useAppIndicator = appIndicatorDE.contains(de, Qt::CaseInsensitive);
+    useAppIndicator = (appIndicatorDE.contains(de, Qt::CaseInsensitive) && !QT_VERSION_CHECK(5, 4, 2));
     if (useAppIndicator) {
         createAppIndicator();
     } else {
@@ -37,9 +38,6 @@ StatusNotifier::StatusNotifier(MainWindow &w, QObject *parent) :
 #ifdef Q_OS_UNIX
     }
 #endif
-
-    connect(&w, &MainWindow::visibleChanged, this, &StatusNotifier::onWindowVisibleChanged);
-    connect(&w, &MainWindow::messageArrived, this, &StatusNotifier::showNotification);
 }
 
 StatusNotifier::~StatusNotifier()
@@ -91,9 +89,6 @@ bool StatusNotifier::isUsingAppIndicator() const
 {
     return useAppIndicator;
 }
-
-void StatusNotifier::createSystemTray()
-{}
 
 void StatusNotifier::activate()
 {
