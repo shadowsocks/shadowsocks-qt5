@@ -20,7 +20,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QCloseEvent>
 #include "confighelper.h"
 
 namespace Ui {
@@ -42,6 +41,7 @@ public:
 
 signals:
     void messageArrived(const QString& msg);
+    void visibleChanged(bool visible);
 
 private:
     ConfigHelper *configHelper;
@@ -77,6 +77,10 @@ private slots:
     void onAbout();
     void onReportBug();
     void onCustomContextMenuRequested(const QPoint &pos);
+
+protected slots:
+    void hideEvent(QHideEvent *e);
+    void showEvent(QShowEvent *e);
 };
 
 #endif // MAINWINDOW_H

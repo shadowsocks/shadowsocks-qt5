@@ -45,10 +45,9 @@ public:
     bool isUsingAppIndicator() const;
 
 public slots:
-    void hideTopWindow();
-    void showTopWindow();
     void activate();
     void showNotification(const QString &);
+    void onWindowVisibleChanged(bool visible);
 
 private:
 #ifdef Q_OS_UNIX
@@ -56,9 +55,9 @@ private:
     void createAppIndicator();
 #endif
 
-    QMenu *systrayMenu;
+    QMenu systrayMenu;
     QAction *minimiseRestoreAction;
-    QSystemTrayIcon *systray;
+    QSystemTrayIcon systray;
     MainWindow &window;
 
     bool useAppIndicator;

@@ -328,3 +328,15 @@ void MainWindow::onCustomContextMenuRequested(const QPoint &pos)
     this->checkCurrentIndex(ui->connectionView->indexAt(pos));
     ui->menuConnection->popup(ui->connectionView->viewport()->mapToGlobal(pos));
 }
+
+void MainWindow::hideEvent(QHideEvent *e)
+{
+    QMainWindow::hideEvent(e);
+    emit visibleChanged(false);
+}
+
+void MainWindow::showEvent(QShowEvent *e)
+{
+    QMainWindow::showEvent(e);
+    emit visibleChanged(true);
+}

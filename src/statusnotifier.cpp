@@ -9,39 +9,22 @@
 #endif
 #include <stdlib.h>
 
-#ifdef Q_OS_UNIX
-void onAppIndicatorActivated(GtkMenuItem *item, gpointer data)
-{
-    MainWindow *w = reinterpret_cast<MainWindow *>(data);
-    if (w->isVisible()) {
-        w->hide();
-        gtk_menu_item_set_label(item, QObject::tr("Restore").toLocal8Bit().constData());
-    } else {
-        w->show();
-        gtk_menu_item_set_label(item, QObject::tr("Minimise").toLocal8Bit().constData());
-    }
-}
-
-void onQuit(GtkMenu *, gpointer data)
-{
-    static_cast<QApplication *>(data)->quit();
-}
-#endif
-
 StatusNotifier::StatusNotifier(MainWindow &w, QObject *parent) :
     QObject(parent),
-    systrayMenu(nullptr),
-    minimiseRestoreAction(nullptr),
     window(w)
 {
-    systray = new QSystemTrayIcon(this);
-    systray->setIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"));
-    systray->setToolTip(QString("Shadowsocks-Qt5"));
-    connect(systray, &QSystemTrayIcon::activated, [this](QSystemTrayIcon::ActivationReason r) {
+    systray.setIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"));
+    systray.setToolTip(QString("Shadowsocks-Qt5"));
+    connect(&systray, &QSystemTrayIcon::activated, [this](QSystemTrayIcon::ActivationReason r) {
         if (r != QSystemTrayIcon::Context) {
             this->activate();
         }
     });
+    minimiseRestoreAction = new QAction(tr("Minimise"), this);
+    connect(minimiseRestoreAction, &QAction::triggered, this, &StatusNotifier::activate);
+    systrayMenu.addAction(minimiseRestoreAction);
+    systrayMenu.addAction(QIcon::fromTheme("application-exit", QIcon::fromTheme("exit")), tr("Quit"), qApp, SLOT(quit()));
+    systray.setContextMenu(&systrayMenu);
 
 #ifdef Q_OS_UNIX
     QString de(getenv("XDG_CURRENT_DESKTOP"));
@@ -50,30 +33,40 @@ StatusNotifier::StatusNotifier(MainWindow &w, QObject *parent) :
         createAppIndicator();
     } else {
 #endif
-        createSystemTray();
+        systray.show();
 #ifdef Q_OS_UNIX
     }
 #endif
+
+    connect(&w, &MainWindow::visibleChanged, this, &StatusNotifier::onWindowVisibleChanged);
+    connect(&w, &MainWindow::messageArrived, this, &StatusNotifier::showNotification);
 }
 
 StatusNotifier::~StatusNotifier()
 {
 #ifdef Q_OS_WIN
-    systray->hide();
+    systray.hide();
 #endif
-    if (systrayMenu) {
-        systrayMenu->deleteLater();
-    }
 }
 
 const QStringList StatusNotifier::appIndicatorDE = QStringList() << "Unity" << "XFCE" << "Pantheon" << "GNOME" << "LXDE";
 
-bool StatusNotifier::isUsingAppIndicator() const
+#ifdef Q_OS_UNIX
+void onAppIndicatorActivated(GtkMenuItem *, gpointer data)
 {
-    return useAppIndicator;
+    MainWindow *w = reinterpret_cast<MainWindow *>(data);
+    if (w->isVisible()) {
+        w->hide();
+    } else {
+        w->show();
+    }
 }
 
-#ifdef Q_OS_UNIX
+void onQuit(GtkMenu *, gpointer data)
+{
+    reinterpret_cast<QApplication *>(data)->quit();
+}
+
 void StatusNotifier::createAppIndicator()
 {
     AppIndicator *indicator = app_indicator_new("Shadowsocks-Qt5", "shadowsocks-qt5", APP_INDICATOR_CATEGORY_OTHER);
@@ -86,7 +79,7 @@ void StatusNotifier::createAppIndicator()
 
     GtkWidget *exitItem = gtk_image_menu_item_new_from_stock(GTK_STOCK_QUIT, NULL);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), exitItem);
-    g_signal_connect(exitItem, "activate", G_CALLBACK(onQuit), &window);
+    g_signal_connect(exitItem, "activate", G_CALLBACK(onQuit), qApp);
     gtk_widget_show(exitItem);
 
     app_indicator_set_status(indicator, APP_INDICATOR_STATUS_ACTIVE);
@@ -94,27 +87,13 @@ void StatusNotifier::createAppIndicator()
 }
 #endif
 
+bool StatusNotifier::isUsingAppIndicator() const
+{
+    return useAppIndicator;
+}
+
 void StatusNotifier::createSystemTray()
-{
-    systrayMenu = new QMenu;
-    minimiseRestoreAction = new QAction(tr("Minimise"), this);
-    connect(minimiseRestoreAction, &QAction::triggered, this, &StatusNotifier::activate);
-    systrayMenu->addAction(minimiseRestoreAction);
-    systrayMenu->addAction(QIcon::fromTheme("application-exit", QIcon::fromTheme("exit")), tr("Quit"), qApp, SLOT(quit()));
-
-    systray->setContextMenu(systrayMenu);
-    systray->show();
-}
-
-void StatusNotifier::hideTopWindow()
-{
-    window.hide();
-}
-
-void StatusNotifier::showTopWindow()
-{
-    window.show();
-}
+{}
 
 void StatusNotifier::activate()
 {
@@ -123,9 +102,6 @@ void StatusNotifier::activate()
     } else {
         window.show();
         window.setFocus();
-    }
-    if (minimiseRestoreAction) {
-        minimiseRestoreAction->setText(window.isVisible() ? tr("Minimise") : tr("Restore"));
     }
 }
 
@@ -139,6 +115,19 @@ void StatusNotifier::showNotification(const QString &msg)
     method.setArguments(args);
     QDBusConnection::sessionBus().asyncCall(method);
 #else
-    systray->showMessage("Shadowsocks-Qt5", msg);
+    systray.showMessage("Shadowsocks-Qt5", msg);
+#endif
+}
+
+void StatusNotifier::onWindowVisibleChanged(bool visible)
+{
+#ifdef Q_OS_UNIX
+    if (useAppIndicator) {
+        gtk_menu_item_set_label(reinterpret_cast<GtkMenuItem *>(minimiseRestoreGtkItem), QObject::tr(visible ? "Minimise" : "Restore").toLocal8Bit().constData());
+    } else {
+#endif
+        minimiseRestoreAction->setText(visible ? tr("Minimise") : tr("Restore"));
+#ifdef Q_OS_UNIX
+    }
 #endif
 }
