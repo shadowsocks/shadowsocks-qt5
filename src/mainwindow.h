@@ -21,6 +21,7 @@
 
 #include <QMainWindow>
 #include "confighelper.h"
+#include "statusnotifier.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,13 +40,10 @@ public:
 
     void startAutoStartConnections();
 
-signals:
-    void messageArrived(const QString& msg);
-    void visibleChanged(bool visible);
-
 private:
     ConfigHelper *configHelper;
     Ui::MainWindow *ui;
+    StatusNotifier *notifier;
 
     void newProfile(Connection *);
     void editRow(int row);
@@ -81,6 +79,7 @@ private slots:
 protected slots:
     void hideEvent(QHideEvent *e);
     void showEvent(QShowEvent *e);
+    void closeEvent(QCloseEvent *e);
 };
 
 #endif // MAINWINDOW_H

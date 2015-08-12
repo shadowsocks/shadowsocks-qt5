@@ -15,7 +15,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QScreen>
-#include <QWindow>
+#include <QCloseEvent>
 #include <botan/version.h>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -35,12 +35,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->connectionView->resizeColumnsToContents();
     ui->toolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(configHelper->getToolbarStyle()));
 
+    notifier = new StatusNotifier(this, this);
+
     connect(configHelper, &ConfigHelper::toolbarStyleChanged, ui->toolBar, &QToolBar::setToolButtonStyle);
     connect(configHelper, &ConfigHelper::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
     connect(configHelper, &ConfigHelper::connectionStartFailed, [this] {
         QMessageBox::critical(this, tr("Connect Failed"), tr("Local address or port may be invalid or already in use."));
     });
-    connect(configHelper, &ConfigHelper::message, this, &MainWindow::messageArrived);
+    connect(configHelper, &ConfigHelper::message, notifier, &StatusNotifier::showNotification);
     connect(ui->actionSaveManually, &QAction::triggered, configHelper, &ConfigHelper::save);
     connect(ui->actionTestAllLatency, &QAction::triggered, configHelper, &ConfigHelper::testAllLatency);
 
@@ -332,11 +334,21 @@ void MainWindow::onCustomContextMenuRequested(const QPoint &pos)
 void MainWindow::hideEvent(QHideEvent *e)
 {
     QMainWindow::hideEvent(e);
-    emit visibleChanged(false);
+    notifier->onWindowVisibleChanged(false);
 }
 
 void MainWindow::showEvent(QShowEvent *e)
 {
     QMainWindow::showEvent(e);
-    emit visibleChanged(true);
+    notifier->onWindowVisibleChanged(true);
+}
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+#ifdef Q_OS_UNIX
+    QMainWindow::closeEvent(e);
+#else //but Windows will quit this application, so we have to ignore the event
+    e->ignore();
+    hide();
+#endif
 }

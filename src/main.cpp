@@ -7,7 +7,6 @@
 #include <QDebug>
 #include <signal.h>
 #include "mainwindow.h"
-#include "statusnotifier.h"
 
 MainWindow *mainWindow = nullptr;
 
@@ -55,7 +54,6 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     mainWindow = &w;
-    StatusNotifier notifier(w);
 
     QSharedMemory sharedMem;
     sharedMem.setKey("Shadowsocks-Qt5");
@@ -98,11 +96,7 @@ int main(int argc, char *argv[])
     w.startAutoStartConnections();
 
     if (w.isHideWindowOnStartup()) {
-        if (notifier.isUsingAppIndicator()) {
-            QTimer::singleShot(5, &w, SLOT(hide()));
-        } else {
-            w.hide();
-        }
+        QTimer::singleShot(5, &w, SLOT(hide()));
     }
 
     return a.exec();

@@ -1,19 +1,16 @@
 #include "statusnotifier.h"
+#include "mainwindow.h"
 #include <QApplication>
-#include <QEventLoop>
 #ifdef Q_OS_UNIX
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusPendingCall>
 #endif
 
-StatusNotifier::StatusNotifier(MainWindow &w, QObject *parent) :
+StatusNotifier::StatusNotifier(MainWindow *w, QObject *parent) :
     QObject(parent),
     window(w)
 {
-    connect(&w, &MainWindow::visibleChanged, this, &StatusNotifier::onWindowVisibleChanged);
-    connect(&w, &MainWindow::messageArrived, this, &StatusNotifier::showNotification);
-
     systray.setIcon(QIcon(":/icons/icons/shadowsocks-qt5.png"));
     systray.setToolTip(QString("Shadowsocks-Qt5"));
     connect(&systray, &QSystemTrayIcon::activated, [this](QSystemTrayIcon::ActivationReason r) {
@@ -72,7 +69,7 @@ void StatusNotifier::createAppIndicator()
 
     minimiseRestoreGtkItem = gtk_menu_item_new_with_label(tr("Minimise").toLocal8Bit().constData());
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), minimiseRestoreGtkItem);
-    g_signal_connect(minimiseRestoreGtkItem, "activate", G_CALLBACK(onAppIndicatorActivated), &window);
+    g_signal_connect(minimiseRestoreGtkItem, "activate", G_CALLBACK(onAppIndicatorActivated), window);
     gtk_widget_show(minimiseRestoreGtkItem);
 
     GtkWidget *exitItem = gtk_image_menu_item_new_from_stock(GTK_STOCK_QUIT, NULL);
@@ -92,11 +89,11 @@ bool StatusNotifier::isUsingAppIndicator() const
 
 void StatusNotifier::activate()
 {
-    if (window.isVisible()) {
-        window.hide();
+    if (window->isVisible()) {
+        window->hide();
     } else {
-        window.show();
-        window.setFocus();
+        window->show();
+        window->setFocus();
     }
 }
 

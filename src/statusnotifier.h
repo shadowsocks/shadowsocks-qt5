@@ -23,7 +23,6 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QStringList>
-#include "mainwindow.h"
 
 #ifdef Q_OS_UNIX
 #undef signals
@@ -35,11 +34,13 @@ extern "C"
 #define signals public
 #endif
 
+class MainWindow;
+
 class StatusNotifier : public QObject
 {
     Q_OBJECT
 public:
-    explicit StatusNotifier(MainWindow &w, QObject *parent = 0);
+    explicit StatusNotifier(MainWindow *w, QObject *parent = 0);
     ~StatusNotifier();
 
     bool isUsingAppIndicator() const;
@@ -58,7 +59,7 @@ private:
     QMenu systrayMenu;
     QAction *minimiseRestoreAction;
     QSystemTrayIcon systray;
-    MainWindow &window;
+    MainWindow *window;
 
     bool useAppIndicator;
 
