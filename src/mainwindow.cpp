@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->connectionView->resizeColumnsToContents();
     ui->toolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(configHelper->getToolbarStyle()));
 
-    notifier = new StatusNotifier(this, this);
+    notifier = new StatusNotifier(this, this->isHideWindowOnStartup(), this);
 
     connect(configHelper, &ConfigHelper::toolbarStyleChanged, ui->toolBar, &QToolBar::setToolButtonStyle);
     connect(configHelper, &ConfigHelper::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
@@ -123,8 +123,11 @@ void MainWindow::onAddScreenQRCode()
 {
     QString uri;
     QList<QScreen *> screens = qApp->screens();
+    int i = 0;
     for (QList<QScreen *>::iterator sc = screens.begin(); sc != screens.end(); ++sc) {
         QImage raw_sc = (*sc)->grabWindow(qApp->desktop()->winId()).toImage();
+        raw_sc.save("/home/glyme/"+QString::number(i)+".png");
+        i++;
         QString result = URIHelper::decodeImage(raw_sc);
         if (!result.isNull()) {
             uri = result;
