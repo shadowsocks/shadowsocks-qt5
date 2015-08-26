@@ -92,10 +92,11 @@ int main(int argc, char *argv[])
         }
     }
 
+    w.show();
     w.startAutoStartConnections();
 
-    if (!w.isHideWindowOnStartup()) {
-        w.show();
+    if (w.isHideWindowOnStartup()) {
+        QTimer::singleShot(5, &w, SLOT(hide()));
     }
 
     return a.exec();
