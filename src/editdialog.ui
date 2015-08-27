@@ -176,7 +176,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Auto connect on applicatioin start</string>
+         <string>Auto connect on application start</string>
         </property>
        </widget>
       </item>
