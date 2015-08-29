@@ -40,7 +40,7 @@ class StatusNotifier : public QObject
 {
     Q_OBJECT
 public:
-    explicit StatusNotifier(MainWindow *w, QObject *parent = 0);
+    explicit StatusNotifier(MainWindow *w, bool startHiden, QObject *parent = 0);
     ~StatusNotifier();
 
     bool isUsingAppIndicator() const;
@@ -53,7 +53,7 @@ public slots:
 private:
 #ifdef Q_OS_UNIX
     GtkWidget *minimiseRestoreGtkItem;
-    void createAppIndicator();
+    void createAppIndicator(bool startHiden);
 #endif
 
     QMenu systrayMenu;
