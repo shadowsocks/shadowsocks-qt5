@@ -26,7 +26,7 @@ StatusNotifier::StatusNotifier(MainWindow *w, bool startHiden, QObject *parent) 
 
 #ifdef Q_OS_UNIX
     QString de(getenv("XDG_CURRENT_DESKTOP"));
-    useAppIndicator = appIndicatorDE.contains(de, Qt::CaseInsensitive) && (QT_VERSION <= QT_VERSION_CHECK(5, 4, 2));
+    useAppIndicator = appIndicatorDE.contains(de, Qt::CaseInsensitive);
     if (useAppIndicator) {
         createAppIndicator(startHiden);
     } else {
