@@ -57,14 +57,7 @@ isEmpty(BOTAN_VER) {
 win32: {
     win32-msvc*: error("Doesn't Support MSVC! Please use MinGW GCC.")
     else: {
-        INCLUDEPATH +=  $$top_srcdir/3rdparty/zbar/include \
-                        D:/Projects/libQtShadowsocks/lib#just for convenience
-        contains(DEFINES, mingw64): {
-            LIBS += -L$$top_srcdir/3rdparty/zbar/mingw64
-        }
-        else {
-            LIBS += -L$$top_srcdir/3rdparty/zbar/mingw32
-        }
+        INCLUDEPATH += D:/Projects/libQtShadowsocks/lib#just for convenience
     }
     LIBS += -L./ -lqrencode -lQtShadowsocks -lbotan-$$BOTAN_VER -lzbar -liconv
 }
