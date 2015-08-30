@@ -345,10 +345,10 @@ void MainWindow::showEvent(QShowEvent *e)
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
-#ifdef Q_OS_UNIX
-    QMainWindow::closeEvent(e);
-#else //but Windows will quit this application, so we have to ignore the event
-    e->ignore();
-    hide();
-#endif
+    if (e->spontaneous()) {
+        e->ignore();
+        hide();
+    } else {
+        QMainWindow::closeEvent(e);
+    }
 }
