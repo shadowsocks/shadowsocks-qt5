@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->connectionView->resizeColumnsToContents();
     ui->toolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(configHelper->getToolbarStyle()));
 
-    notifier = new StatusNotifier(this, this);
+    notifier = new StatusNotifier(this, this->isHideWindowOnStartup(), this);
 
     connect(configHelper, &ConfigHelper::toolbarStyleChanged, ui->toolBar, &QToolBar::setToolButtonStyle);
     connect(configHelper, &ConfigHelper::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
