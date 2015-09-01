@@ -1,3 +1,11 @@
+shadowsocks-qt5 (2.4.2-1) stable; urgency=medium
+
+  * get focus after restored
+  * fix system tray menu
+  * fix logout issues in some desktop environment
+
+ -- Symeon Huang <hzwhuang@gmail>  Tue, 01 Sep 2015 20:54:00 +0000
+
 shadowsocks-qt5 (2.4.1-1) stable; urgency=medium
 
   * use mutex to avoid possible crashes #158
