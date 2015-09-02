@@ -80,6 +80,7 @@ private slots:
     void onAbout();
     void onReportBug();
     void onCustomContextMenuRequested(const QPoint &pos);
+    void onFilterTextChanged(const QString &text);
 
 protected slots:
     void hideEvent(QHideEvent *e);

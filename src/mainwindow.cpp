@@ -32,8 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
     configHelper = new ConfigHelper(model, this);
     proxyModel = new QSortFilterProxyModel(this);
     proxyModel->setSourceModel(model);
-    proxyModel->setSortRole(Qt::EditRole);
     proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxyModel->setFilterKeyColumn(-1);//read from all columns
     ui->connectionView->setModel(proxyModel);
     ui->connectionView->resizeColumnsToContents();
     ui->toolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(configHelper->getToolbarStyle()));
@@ -77,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionReportBug, &QAction::triggered, this, &MainWindow::onReportBug);
     connect(ui->actionShowFilterBar, &QAction::toggled, configHelper, &ConfigHelper::setShowFilterBar);
     connect(ui->toolBar, &QToolBar::visibilityChanged, configHelper, &ConfigHelper::setShowToolbar);
+    connect(ui->filterLineEdit, &QLineEdit::textChanged, this, &MainWindow::onFilterTextChanged);
 
     connect(ui->connectionView, &QTableView::clicked, this, static_cast<void (MainWindow::*)(const QModelIndex&)>(&MainWindow::checkCurrentIndex));
     connect(ui->connectionView, &QTableView::activated, this, static_cast<void (MainWindow::*)(const QModelIndex&)>(&MainWindow::checkCurrentIndex));
@@ -343,6 +344,11 @@ void MainWindow::onCustomContextMenuRequested(const QPoint &pos)
 {
     this->checkCurrentIndex(ui->connectionView->indexAt(pos));
     ui->menuConnection->popup(ui->connectionView->viewport()->mapToGlobal(pos));
+}
+
+void MainWindow::onFilterTextChanged(const QString &text)
+{
+    proxyModel->setFilterWildcard(text);
 }
 
 void MainWindow::hideEvent(QHideEvent *e)
