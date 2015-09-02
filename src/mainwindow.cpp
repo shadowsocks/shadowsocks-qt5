@@ -26,8 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //setup Settings menu
     ui->menuSettings->addAction(ui->toolBar->toggleViewAction());
-    ui->menuSettings->addSeparator();
-    ui->menuSettings->addAction(ui->actionGeneralSettings);
 
     //initialisation
     model = new ConnectionTableModel(this);
@@ -47,6 +45,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(model, &ConnectionTableModel::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
     connect(ui->actionSaveManually, &QAction::triggered, configHelper, &ConfigHelper::save);
     connect(ui->actionTestAllLatency, &QAction::triggered, configHelper, &ConfigHelper::testAllLatency);
+
+    //some UI changes accoding to config
+    ui->toolBar->setVisible(configHelper->isShowToolbar());
+    ui->actionShowFilterBar->setChecked(configHelper->isShowFilterBar());
 
     //Move to the center of the screen
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
@@ -73,6 +75,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
     connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReportBug, &QAction::triggered, this, &MainWindow::onReportBug);
+    connect(ui->actionShowFilterBar, &QAction::toggled, configHelper, &ConfigHelper::setShowFilterBar);
+    connect(ui->toolBar, &QToolBar::visibilityChanged, configHelper, &ConfigHelper::setShowToolbar);
 
     connect(ui->connectionView, &QTableView::clicked, this, static_cast<void (MainWindow::*)(const QModelIndex&)>(&MainWindow::checkCurrentIndex));
     connect(ui->connectionView, &QTableView::activated, this, static_cast<void (MainWindow::*)(const QModelIndex&)>(&MainWindow::checkCurrentIndex));

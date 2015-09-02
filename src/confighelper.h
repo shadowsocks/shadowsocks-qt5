@@ -41,11 +41,15 @@ public:
     int  getToolbarStyle() const;
     bool isHideWindowOnStartup() const;
     bool isOnlyOneInstance() const;
+    bool isShowToolbar() const;
+    bool isShowFilterBar() const;
     void setGeneralSettings(int ts, bool hide, bool oneInstance);
 
 public slots:
     void testAllLatency();
     void save();
+    void setShowToolbar(bool show);
+    void setShowFilterBar(bool show);
 
 signals:
     void toolbarStyleChanged(const Qt::ToolButtonStyle);
@@ -54,6 +58,8 @@ private:
     int toolbarStyle;
     bool hideWindowOnStartup;
     bool onlyOneInstace;
+    bool showToolbar;
+    bool showFilterBar;
     QSettings *settings;
     ConnectionTableModel *model;
     QString configFile;

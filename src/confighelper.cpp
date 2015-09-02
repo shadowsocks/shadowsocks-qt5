@@ -42,6 +42,8 @@ void ConfigHelper::save()
     settings->setValue("ToolbarStyle", QVariant(toolbarStyle));
     settings->setValue("HideWindowOnStartup", QVariant(hideWindowOnStartup));
     settings->setValue("OnlyOneInstance", QVariant(onlyOneInstace));
+    settings->setValue("ShowToolbar", QVariant(showToolbar));
+    settings->setValue("ShowFilterBar", QVariant(showFilterBar));
 }
 
 void ConfigHelper::importGuiConfigJson(const QString &file)
@@ -171,6 +173,16 @@ bool ConfigHelper::isOnlyOneInstance() const
     return onlyOneInstace;
 }
 
+bool ConfigHelper::isShowToolbar() const
+{
+    return showToolbar;
+}
+
+bool ConfigHelper::isShowFilterBar() const
+{
+    return showFilterBar;
+}
+
 void ConfigHelper::setGeneralSettings(int ts, bool hide, bool oneInstance)
 {
     if (toolbarStyle != ts) {
@@ -179,6 +191,16 @@ void ConfigHelper::setGeneralSettings(int ts, bool hide, bool oneInstance)
     toolbarStyle = ts;
     hideWindowOnStartup = hide;
     onlyOneInstace = oneInstance;
+}
+
+void ConfigHelper::setShowToolbar(bool show)
+{
+    showToolbar = show;
+}
+
+void ConfigHelper::setShowFilterBar(bool show)
+{
+    showFilterBar = show;
 }
 
 void ConfigHelper::readConfiguration()
@@ -197,6 +219,8 @@ void ConfigHelper::readConfiguration()
     toolbarStyle = settings->value("ToolbarStyle", QVariant(4)).toInt();
     hideWindowOnStartup = settings->value("HideWindowOnStartup").toBool();
     onlyOneInstace = settings->value("OnlyOneInstance", QVariant(true)).toBool();
+    showToolbar = settings->value("ShowToolbar", QVariant(true)).toBool();
+    showFilterBar = settings->value("ShowFilterBar", QVariant(true)).toBool();
 }
 
 void ConfigHelper::checkProfileDataUsageReset(SQProfile &profile)

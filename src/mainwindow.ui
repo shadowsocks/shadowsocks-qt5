@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>400</height>
+    <width>480</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -28,6 +28,16 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLineEdit" name="filterLineEdit">
+      <property name="placeholderText">
+       <string>Input to filter</string>
+      </property>
+      <property name="clearButtonEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
     <item>
      <widget class="QTableView" name="connectionView">
       <property name="editTriggers">
@@ -96,7 +106,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>480</width>
      <height>29</height>
     </rect>
    </property>
@@ -148,6 +158,9 @@
     <property name="title">
      <string>Settin&amp;gs</string>
     </property>
+    <addaction name="actionGeneralSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowFilterBar"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -393,10 +406,38 @@
     <string>Mo&amp;ve Down</string>
    </property>
   </action>
+  <action name="actionShowFilterBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Filter Bar</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionShowFilterBar</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>filterLineEdit</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>239</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
