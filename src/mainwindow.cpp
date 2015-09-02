@@ -289,7 +289,7 @@ void MainWindow::editRow(int row)
     EditDialog *editDlg = new EditDialog(con, this);
     connect(editDlg, &EditDialog::finished, editDlg, &EditDialog::deleteLater);
     if (editDlg->exec()) {
-        configHelper->updateNameAtRow(row);
+        configHelper->updateNamePortAtRow(row);
     }
 }
 

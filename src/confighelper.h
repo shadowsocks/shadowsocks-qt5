@@ -39,7 +39,7 @@ public:
     //The parent of con will be this ConfigHelper instance
     void addConnection(Connection *con);
     void deleteRow(int row);
-    void updateNameAtRow(int row);
+    void updateNamePortAtRow(int row);
     void updateTimeAtRow(int row);
     Connection *connectionAt(int row);
     void latencyTestAtRow(int row);//perform a latency test and update it in model

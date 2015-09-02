@@ -22,9 +22,9 @@ ConfigHelper::ConfigHelper(QObject *parent) :
 
     settings = new QSettings(configFile, QSettings::IniFormat, this);
 
-    QStringList headerLabels = QStringList() << tr("Name") << tr("Latency (ms)") << tr("Last used");
+    QStringList headerLabels = QStringList() << tr("Name") << tr("Latency (ms)") << tr("Local Port") << tr("Last Used");
 
-    model = new QStandardItemModel(0, 3, this);
+    model = new QStandardItemModel(0, 4, this);
     model->setHorizontalHeaderLabels(headerLabels);
     readConfiguration();
 }
@@ -168,16 +168,17 @@ void ConfigHelper::deleteRow(int row)
     model->removeRow(row);
 }
 
-void ConfigHelper::updateNameAtRow(int row)
+void ConfigHelper::updateNamePortAtRow(int row)
 {
     Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
     model->setData(model->index(row, 0), QVariant(con->profile.name));
+    model->setData(model->index(row, 2), QVariant(con->profile.localPort));
 }
 
 void ConfigHelper::updateTimeAtRow(int row)
 {
     Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
-    model->setData(model->index(row, 2), QVariant(con->profile.lastTime.toString()));
+    model->setData(model->index(row, 3), QVariant(con->profile.lastTime.toString()));
 }
 
 Connection* ConfigHelper::connectionAt(int row)
@@ -272,8 +273,10 @@ void ConfigHelper::appendConnectionToList(Connection *con)
     name->setData(QVariant::fromValue(con), Qt::UserRole);
     QStandardItem *latency = new QStandardItem;
     latency->setData(convertLatencyToVariant(con->profile.latency), Qt::DisplayRole);
+    QStandardItem *port = new QStandardItem;
+    port->setData(QVariant(con->profile.localPort), Qt::DisplayRole);
     QStandardItem *last = new QStandardItem(con->profile.lastTime.toString());
-    items << name << latency << last;
+    items << name << latency << port << last;
     model->appendRow(items);
 }
 
