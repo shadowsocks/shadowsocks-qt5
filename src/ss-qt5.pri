@@ -15,7 +15,9 @@ SOURCES      += src/main.cpp\
                 src/settingsdialog.cpp \
                 src/statusdialog.cpp \
                 src/controllerthread.cpp \
-                src/statusnotifier.cpp
+                src/statusnotifier.cpp \
+                src/connectiontablemodel.cpp \
+                src/connectionitem.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ip4validator.h \
@@ -33,7 +35,9 @@ HEADERS      += src/mainwindow.h \
                 src/settingsdialog.h \
                 src/statusdialog.h \
                 src/controllerthread.h \
-                src/statusnotifier.h
+                src/statusnotifier.h \
+                src/connectiontablemodel.h \
+                src/connectionitem.h
 
 FORMS        += src/mainwindow.ui \
                 src/sharedialog.ui \

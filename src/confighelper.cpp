@@ -7,8 +7,9 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-ConfigHelper::ConfigHelper(QObject *parent) :
-    QObject(parent)
+ConfigHelper::ConfigHelper(ConnectionTableModel *model, QObject *parent) :
+    QObject(parent),
+    model(model)
 {
 #ifdef Q_OS_WIN
     configFile = QCoreApplication::applicationDirPath() + "/config.ini";
@@ -21,25 +22,10 @@ ConfigHelper::ConfigHelper(QObject *parent) :
 #endif
 
     settings = new QSettings(configFile, QSettings::IniFormat, this);
-
-    QStringList headerLabels = QStringList() << tr("Name") << tr("Latency (ms)") << tr("Local Port") << tr("Last Used");
-
-    model = new QStandardItemModel(0, 4, this);
-    model->setHorizontalHeaderLabels(headerLabels);
     readConfiguration();
 }
 
-ConfigHelper::~ConfigHelper()
-{
-    save();
-}
-
 const QString ConfigHelper::profilePrefix = "Profile";
-
-QStandardItemModel *ConfigHelper::getModel() const
-{
-    return model;
-}
 
 void ConfigHelper::save()
 {
@@ -47,7 +33,7 @@ void ConfigHelper::save()
     settings->beginWriteArray(profilePrefix);
     for (int i = 0; i < size; ++i) {
         settings->setArrayIndex(i);
-        Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
+        Connection *con = model->getItem(i)->getConnection();
         QVariant value = QVariant::fromValue<SQProfile>(con->getProfile());
         settings->setValue("SQProfile", value);
     }
@@ -117,7 +103,7 @@ void ConfigHelper::importGuiConfigJson(const QString &file)
         p.method = json["method"].toString();
         p.password = json["password"].toString();
         Connection *con = new Connection(p, this);
-        appendConnectionToList(con);
+        model->appendConnection(con);
     }
 }
 
@@ -155,65 +141,17 @@ Connection* ConfigHelper::configJsonToConnection(const QString &file)
     return con;
 }
 
-void ConfigHelper::addConnection(Connection *con)
-{
-    con->setParent(this);
-    appendConnectionToList(con);
-}
-
-void ConfigHelper::deleteRow(int row)
-{
-    Connection *removed = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
-    removed->deleteLater();
-    model->removeRow(row);
-}
-
-void ConfigHelper::updateNamePortAtRow(int row)
-{
-    Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
-    model->setData(model->index(row, 0), QVariant(con->profile.name));
-    model->setData(model->index(row, 2), QVariant(con->profile.localPort));
-}
-
-void ConfigHelper::updateTimeAtRow(int row)
-{
-    Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
-    model->setData(model->index(row, 3), QVariant(con->profile.lastTime.toString()));
-}
-
-Connection* ConfigHelper::connectionAt(int row)
-{
-    return model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
-}
-
 void ConfigHelper::latencyTestAtRow(int row)
 {
-    Connection *con = model->data(model->index(row, 0), Qt::UserRole).value<Connection *>();
+    Connection *con = model->getItem(row)->getConnection();
     con->latencyTest();
-}
-
-QVariant ConfigHelper::convertLatencyToVariant(const int latency)
-{
-    QVariant latencyData;
-    switch (latency) {
-    case -1:
-        latencyData = QVariant(3000);//>= 3000 ms: timeout
-        break;
-    case -3://unknown
-        latencyData = QVariant(0);
-        break;
-    case -2://error
-    default:
-        latencyData = QVariant(latency);
-    }
-    return latencyData;
 }
 
 void ConfigHelper::testAllLatency()
 {
     int size = model->rowCount();
     for (int i = 0; i < size; ++i) {
-        Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
+        Connection *con = model->getItem(i)->getConnection();
         con->latencyTest();
     }
 }
@@ -243,43 +181,6 @@ void ConfigHelper::setGeneralSettings(int ts, bool hide, bool oneInstance)
     onlyOneInstace = oneInstance;
 }
 
-int ConfigHelper::size() const
-{
-    return model->rowCount();
-}
-
-QModelIndex ConfigHelper::moveUp(int row)
-{
-    QList<QStandardItem*> src = model->takeRow(row);
-    model->insertRow(row - 1, src);
-    return model->index(row - 1, 0);
-}
-
-QModelIndex ConfigHelper::moveDown(int row)
-{
-    QList<QStandardItem*> src = model->takeRow(row);
-    model->insertRow(row + 1, src);
-    return model->index(row + 1, 0);
-}
-
-void ConfigHelper::appendConnectionToList(Connection *con)
-{
-    connect(con, &Connection::stateChanged, this, &ConfigHelper::onConnectionStateChanged);
-    connect(con, &Connection::pingFinished, this, &ConfigHelper::onConnectionPingFinished);
-    connect(con, &Connection::startFailed, this, &ConfigHelper::connectionStartFailed);
-    QList<QStandardItem *> items;
-    QStandardItem *name = new QStandardItem();
-    name->setData(QVariant(con->profile.name), Qt::DisplayRole);
-    name->setData(QVariant::fromValue(con), Qt::UserRole);
-    QStandardItem *latency = new QStandardItem;
-    latency->setData(convertLatencyToVariant(con->profile.latency), Qt::DisplayRole);
-    QStandardItem *port = new QStandardItem;
-    port->setData(QVariant(con->profile.localPort), Qt::DisplayRole);
-    QStandardItem *last = new QStandardItem(con->profile.lastTime.toString());
-    items << name << latency << port << last;
-    model->appendRow(items);
-}
-
 void ConfigHelper::readConfiguration()
 {
     int size = settings->beginReadArray(profilePrefix);
@@ -289,7 +190,7 @@ void ConfigHelper::readConfiguration()
         SQProfile profile = value.value<SQProfile>();
         checkProfileDataUsageReset(profile);
         Connection *con = new Connection(profile, this);
-        appendConnectionToList(con);
+        model->appendConnection(con);
     }
     settings->endArray();
 
@@ -316,68 +217,11 @@ void ConfigHelper::checkProfileDataUsageReset(SQProfile &profile)
     }
 }
 
-void ConfigHelper::onConnectionStateChanged(bool running)
-{
-    Connection *c = qobject_cast<Connection*>(sender());
-    if (!c) {
-        return;
-    }
-
-    if (running) {
-        emit message(c->getName() + " " + tr("connected"));
-    } else {
-        emit message(c->getName() + " " + tr("disconnected"));
-    }
-
-    QFont font;
-    font.setBold(running);
-
-    int size = model->rowCount();
-    int row = 0;
-    for (; row < size; ++row) {
-        if(model->data(model->index(row, 0), Qt::UserRole).value<Connection *>() == c) {
-            break;
-        }
-    }
-    if(row == size) {
-        //row doesn't exist (already deleted)
-        return;
-    }
-    int cols = model->columnCount();
-    for (int i = 0; i < cols; ++i) {
-        model->item(row, i)->setFont(font);
-    }
-    emit rowStatusChanged(row, running);
-}
-
-void ConfigHelper::onConnectionPingFinished(const int latency)
-{
-    Connection *c = qobject_cast<Connection *>(sender());
-    if (!c) {
-        return;
-    }
-
-    int size = model->rowCount();
-    for (int i = 0; i < size; ++i) {
-        Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
-        if (con == c) {
-            model->setData(model->index(i, 1), convertLatencyToVariant(latency));
-            break;
-        }
-    }
-
-    if (latency == -1) {//TIMEOUT
-        emit message(c->getName() + " " + tr("timed out"));
-    } else if (latency == -2) {//ERROR
-        emit message(c->getName() + " " + tr("latency test failed"));
-    }
-}
-
 void ConfigHelper::startAllAutoStart()
 {
     int size = model->rowCount();
     for (int i = 0; i < size; ++i) {
-        Connection *con = model->data(model->index(i, 0), Qt::UserRole).value<Connection *>();
+        Connection *con = model->getItem(i)->getConnection();
         if (con->profile.autoStart) {
             con->start();
             //update time

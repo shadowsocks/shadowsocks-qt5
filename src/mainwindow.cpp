@@ -30,19 +30,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->menuSettings->addAction(ui->actionGeneralSettings);
 
     //initialisation
-    configHelper = new ConfigHelper(this);
-    ui->connectionView->setModel(configHelper->getModel());
+    model = new ConnectionTableModel(this);
+    configHelper = new ConfigHelper(model, this);
+    proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(model);
+    proxyModel->setSortRole(Qt::EditRole);
+    proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    ui->connectionView->setModel(proxyModel);
     ui->connectionView->resizeColumnsToContents();
     ui->toolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(configHelper->getToolbarStyle()));
 
     notifier = new StatusNotifier(this, this->isHideWindowOnStartup(), this);
 
     connect(configHelper, &ConfigHelper::toolbarStyleChanged, ui->toolBar, &QToolBar::setToolButtonStyle);
-    connect(configHelper, &ConfigHelper::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
-    connect(configHelper, &ConfigHelper::connectionStartFailed, [this] {
-        QMessageBox::critical(this, tr("Connect Failed"), tr("Local address or port may be invalid or already in use."));
-    });
-    connect(configHelper, &ConfigHelper::message, notifier, &StatusNotifier::showNotification);
+    connect(model, &ConnectionTableModel::message, notifier, &StatusNotifier::showNotification);
+    connect(model, &ConnectionTableModel::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
     connect(ui->actionSaveManually, &QAction::triggered, configHelper, &ConfigHelper::save);
     connect(ui->actionTestAllLatency, &QAction::triggered, configHelper, &ConfigHelper::testAllLatency);
 
@@ -72,20 +74,21 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReportBug, &QAction::triggered, this, &MainWindow::onReportBug);
 
-    connect(ui->connectionView, &QTableView::clicked, this, &MainWindow::checkCurrentIndex);
-    connect(ui->connectionView, &QTableView::activated, this, &MainWindow::checkCurrentIndex);
+    connect(ui->connectionView, &QTableView::clicked, this, static_cast<void (MainWindow::*)(const QModelIndex&)>(&MainWindow::checkCurrentIndex));
+    connect(ui->connectionView, &QTableView::activated, this, static_cast<void (MainWindow::*)(const QModelIndex&)>(&MainWindow::checkCurrentIndex));
     connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
 
     /* set custom context menu */
     ui->connectionView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->connectionView, &QTableView::customContextMenuRequested, this, &MainWindow::onCustomContextMenuRequested);
 
-    checkCurrentIndex(ui->connectionView->currentIndex());
+    checkCurrentIndex();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    configHelper->save();
 }
 
 const QUrl MainWindow::issueUrl = QUrl("https://github.com/librehat/shadowsocks-qt5/issues");
@@ -177,19 +180,19 @@ void MainWindow::onAddFromConfigJSON()
 
 void MainWindow::onDelete()
 {
-    configHelper->deleteRow(ui->connectionView->currentIndex().row());
-    checkCurrentIndex(ui->connectionView->currentIndex());
+    model->removeRow(proxyModel->mapToSource(ui->connectionView->currentIndex()).row());
+    checkCurrentIndex();
 }
 
 void MainWindow::onEdit()
 {
-    editRow(ui->connectionView->currentIndex().row());
+    editRow(proxyModel->mapToSource(ui->connectionView->currentIndex()).row());
 }
 
 void MainWindow::onDoubleClicked(const QModelIndex &index)
 {
-    int row = index.row();
-    if (configHelper->connectionAt(row)->isRunning()) {
+    int row = proxyModel->mapToSource(index).row();
+    if (model->data(model->index(row, 1), Qt::EditRole).toBool()) {
         onStatus();
     } else {
         editRow(row);
@@ -198,7 +201,7 @@ void MainWindow::onDoubleClicked(const QModelIndex &index)
 
 void MainWindow::onShare()
 {
-    QByteArray uri = configHelper->connectionAt(ui->connectionView->currentIndex().row())->getURI();
+    QByteArray uri = model->getItem(proxyModel->mapToSource(ui->connectionView->currentIndex()).row())->getConnection()->getURI();
     ShareDialog *shareDlg = new ShareDialog(uri, this);
     connect(shareDlg, &ShareDialog::finished, shareDlg, &ShareDialog::deleteLater);
     shareDlg->exec();
@@ -206,11 +209,10 @@ void MainWindow::onShare()
 
 void MainWindow::onConnect()
 {
-    int row = ui->connectionView->currentIndex().row();
-    Connection *con = configHelper->connectionAt(row);
+    int row = proxyModel->mapToSource(ui->connectionView->currentIndex()).row();
+    Connection *con = model->getItem(row)->getConnection();
     if (con->isValid()) {
         con->start();
-        configHelper->updateTimeAtRow(row);
     } else {
         QMessageBox::critical(this, tr("Invalid"), tr("The connection's profile is invalid!"));
     }
@@ -218,13 +220,13 @@ void MainWindow::onConnect()
 
 void MainWindow::onDisconnect()
 {
-    int row = ui->connectionView->currentIndex().row();
-    configHelper->connectionAt(row)->stop();
+    int row = proxyModel->mapToSource(ui->connectionView->currentIndex()).row();
+    model->getItem(row)->getConnection()->stop();
 }
 
 void MainWindow::onConnectionStatusChanged(const int row, const bool running)
 {
-    if (ui->connectionView->currentIndex().row() == row) {
+    if (proxyModel->mapToSource(ui->connectionView->currentIndex()).row() == row) {
         ui->actionConnect->setEnabled(!running);
         ui->actionDisconnect->setEnabled(running);
     }
@@ -232,12 +234,12 @@ void MainWindow::onConnectionStatusChanged(const int row, const bool running)
 
 void MainWindow::onLatencyTest()
 {
-    configHelper->latencyTestAtRow(ui->connectionView->currentIndex().row());
+    configHelper->latencyTestAtRow(proxyModel->mapToSource(ui->connectionView->currentIndex()).row());
 }
 
 void MainWindow::onViewLog()
 {
-    Connection *con = configHelper->connectionAt(ui->connectionView->currentIndex().row());
+    Connection *con = model->getItem(proxyModel->mapToSource(ui->connectionView->currentIndex()).row())->getConnection();
     LogDialog *logDlg = new LogDialog(con, this);
     connect(logDlg, &LogDialog::finished, logDlg, &LogDialog::deleteLater);
     logDlg->exec();
@@ -245,7 +247,7 @@ void MainWindow::onViewLog()
 
 void MainWindow::onStatus()
 {
-    Connection *con = configHelper->connectionAt(ui->connectionView->currentIndex().row());
+    Connection *con = model->getItem(proxyModel->mapToSource(ui->connectionView->currentIndex()).row())->getConnection();
     StatusDialog *statusDlg = new StatusDialog(con, this);
     connect(statusDlg, &StatusDialog::finished, statusDlg, &StatusDialog::deleteLater);
     statusDlg->exec();
@@ -253,16 +255,20 @@ void MainWindow::onStatus()
 
 void MainWindow::onMoveUp()
 {
-    QModelIndex index = configHelper->moveUp(ui->connectionView->currentIndex().row());
-    ui->connectionView->setCurrentIndex(index);
-    checkCurrentIndex(index);
+    QModelIndex proxyIndex = ui->connectionView->currentIndex();
+    int currentRow = proxyModel->mapToSource(proxyIndex).row();
+    int targetRow = proxyModel->mapToSource(proxyModel->index(proxyIndex.row() - 1, proxyIndex.column(), proxyIndex.parent())).row();
+    model->move(currentRow, targetRow);
+    checkCurrentIndex();
 }
 
 void MainWindow::onMoveDown()
 {
-    QModelIndex index = configHelper->moveDown(ui->connectionView->currentIndex().row());
-    ui->connectionView->setCurrentIndex(index);
-    checkCurrentIndex(index);
+    QModelIndex proxyIndex = ui->connectionView->currentIndex();
+    int currentRow = proxyModel->mapToSource(proxyIndex).row();
+    int targetRow = proxyModel->mapToSource(proxyModel->index(proxyIndex.row() + 1, proxyIndex.column(), proxyIndex.parent())).row();
+    model->move(currentRow, targetRow);
+    checkCurrentIndex();
 }
 
 void MainWindow::onGeneralSettings()
@@ -277,7 +283,7 @@ void MainWindow::newProfile(Connection *newCon)
     EditDialog *editDlg = new EditDialog(newCon, this);
     connect(editDlg, &EditDialog::finished, editDlg, &EditDialog::deleteLater);
     if (editDlg->exec()) {//accepted
-        configHelper->addConnection(newCon);
+        model->appendConnection(newCon);
     } else {
         newCon->deleteLater();
     }
@@ -285,16 +291,20 @@ void MainWindow::newProfile(Connection *newCon)
 
 void MainWindow::editRow(int row)
 {
-    Connection *con = configHelper->connectionAt(row);
+    Connection *con = model->getItem(row)->getConnection();
     EditDialog *editDlg = new EditDialog(con, this);
     connect(editDlg, &EditDialog::finished, editDlg, &EditDialog::deleteLater);
-    if (editDlg->exec()) {
-        configHelper->updateNamePortAtRow(row);
-    }
+    editDlg->exec();
 }
 
-void MainWindow::checkCurrentIndex(const QModelIndex &index)
+void MainWindow::checkCurrentIndex()
 {
+    checkCurrentIndex(ui->connectionView->currentIndex());
+}
+
+void MainWindow::checkCurrentIndex(const QModelIndex &_index)
+{
+    QModelIndex index = proxyModel->mapToSource(_index);
     const bool valid = index.isValid();
     ui->actionConnect->setEnabled(valid);
     ui->actionDisconnect->setEnabled(valid);
@@ -304,11 +314,11 @@ void MainWindow::checkCurrentIndex(const QModelIndex &index)
     ui->actionShare->setEnabled(valid);
     ui->actionViewLog->setEnabled(valid);
     ui->actionStatus->setEnabled(valid);
-    ui->actionMoveUp->setEnabled(valid ? index.row() > 0 : false);
-    ui->actionMoveDown->setEnabled(valid ? index.row() < configHelper->size() - 1 : false);
+    ui->actionMoveUp->setEnabled(valid ? _index.row() > 0 : false);
+    ui->actionMoveDown->setEnabled(valid ? _index.row() < model->rowCount() - 1 : false);
 
     if (valid) {
-        const bool &running = configHelper->connectionAt(index.row())->isRunning();
+        bool running = model->data(model->index(index.row(), 1), Qt::EditRole).toBool();
         ui->actionConnect->setEnabled(!running);
         ui->actionDisconnect->setEnabled(running);
     }

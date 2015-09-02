@@ -20,6 +20,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSortFilterProxyModel>
+#include "connectiontablemodel.h"
 #include "confighelper.h"
 #include "statusnotifier.h"
 
@@ -41,6 +43,8 @@ public:
     void startAutoStartConnections();
 
 private:
+    ConnectionTableModel *model;
+    QSortFilterProxyModel *proxyModel;
     ConfigHelper *configHelper;
     Ui::MainWindow *ui;
     StatusNotifier *notifier;
@@ -48,6 +52,7 @@ private:
     void newProfile(Connection *);
     void editRow(int row);
     void blockChildrenSignals(bool);
+    void checkCurrentIndex();
 
     static const QUrl issueUrl;
 

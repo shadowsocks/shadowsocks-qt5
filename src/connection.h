@@ -64,6 +64,7 @@ private:
     friend class ConfigHelper;
     friend class StatusDialog;
     friend class LogDialog;
+    friend class ConnectionItem;
 
 private slots:
     void onNewLog(const QString &);
