@@ -34,8 +34,6 @@ public:
     void importGuiConfigJson(const QString &file);
     void exportGuiConfigJson(const QString &file);//the format is only compatible with shadowsocks-csharp
     Connection* configJsonToConnection(const QString &file);
-    //The parent of con will be this ConfigHelper instance
-    void latencyTestAtRow(int row);//perform a latency test and update it in model
     void startAllAutoStart();//start those connections marked as auto-start
 
     /* some functions used to communicate with SettingsDialog */
@@ -47,7 +45,6 @@ public:
     void setGeneralSettings(int ts, bool hide, bool oneInstance);
 
 public slots:
-    void testAllLatency();
     void save();
     void setShowToolbar(bool show);
     void setShowFilterBar(bool show);

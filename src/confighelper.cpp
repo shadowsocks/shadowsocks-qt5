@@ -182,21 +182,6 @@ Connection* ConfigHelper::configJsonToConnection(const QString &file)
     return con;
 }
 
-void ConfigHelper::latencyTestAtRow(int row)
-{
-    Connection *con = model->getItem(row)->getConnection();
-    con->latencyTest();
-}
-
-void ConfigHelper::testAllLatency()
-{
-    int size = model->rowCount();
-    for (int i = 0; i < size; ++i) {
-        Connection *con = model->getItem(i)->getConnection();
-        con->latencyTest();
-    }
-}
-
 int ConfigHelper::getToolbarStyle() const
 {
     return toolbarStyle;
@@ -287,8 +272,6 @@ void ConfigHelper::startAllAutoStart()
         Connection *con = model->getItem(i)->getConnection();
         if (con->profile.autoStart) {
             con->start();
-            //update time
-            model->setData(model->index(i, 2), QVariant(con->profile.lastTime.toString()));
         }
     }
 }

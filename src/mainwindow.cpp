@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(model, &ConnectionTableModel::message, notifier, &StatusNotifier::showNotification);
     connect(model, &ConnectionTableModel::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
     connect(ui->actionSaveManually, &QAction::triggered, configHelper, &ConfigHelper::save);
-    connect(ui->actionTestAllLatency, &QAction::triggered, configHelper, &ConfigHelper::testAllLatency);
+    connect(ui->actionTestAllLatency, &QAction::triggered, model, &ConnectionTableModel::testAllLatency);
 
     //some UI changes accoding to config
     ui->toolBar->setVisible(configHelper->isShowToolbar());
@@ -248,7 +248,7 @@ void MainWindow::onConnectionStatusChanged(const int row, const bool running)
 
 void MainWindow::onLatencyTest()
 {
-    configHelper->latencyTestAtRow(proxyModel->mapToSource(ui->connectionView->currentIndex()).row());
+    model->getItem(proxyModel->mapToSource(ui->connectionView->currentIndex()).row())->testLatency();
 }
 
 void MainWindow::onViewLog()

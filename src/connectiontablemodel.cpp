@@ -101,6 +101,13 @@ bool ConnectionTableModel::appendConnection(Connection *con, const QModelIndex &
     return true;
 }
 
+void ConnectionTableModel::testAllLatency()
+{
+    for (auto &i : items) {
+        i->testLatency();
+    }
+}
+
 void ConnectionTableModel::onConnectionStateChanged(bool running)
 {
     ConnectionItem* item = qobject_cast<ConnectionItem*>(sender());

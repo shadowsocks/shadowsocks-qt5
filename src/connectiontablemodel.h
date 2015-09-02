@@ -31,7 +31,6 @@ public:
     explicit ConnectionTableModel(QObject *parent = nullptr);
     ~ConnectionTableModel();
 
-    ConnectionItem *getItem(const QModelIndex &index) const;
     ConnectionItem *getItem(const int &row) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
@@ -42,6 +41,9 @@ public:
     bool move(int row, int target, const QModelIndex &parent = QModelIndex());
 
     bool appendConnection(Connection *con, const QModelIndex &parent = QModelIndex());
+
+public slots:
+    void testAllLatency();
 
 signals:
     void message(const QString &);

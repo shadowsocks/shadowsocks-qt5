@@ -33,6 +33,7 @@ public:
     QVariant data(int column, int role = Qt::DisplayRole) const;
 
     Connection* getConnection();
+    void testLatency();
 
 signals:
     void message(const QString&);

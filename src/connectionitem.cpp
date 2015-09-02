@@ -71,6 +71,11 @@ QString ConnectionItem::convertLatencyToString(const int latency)
     return latencyStr;
 }
 
+void ConnectionItem::testLatency()
+{
+    con->latencyTest();
+}
+
 Connection* ConnectionItem::getConnection()
 {
     return con;
