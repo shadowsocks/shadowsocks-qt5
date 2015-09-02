@@ -52,9 +52,11 @@ void ConfigHelper::importGuiConfigJson(const QString &file)
     JSONFile.open(QIODevice::ReadOnly | QIODevice::Text);
     if (!JSONFile.isOpen()) {
         qCritical() << "Error: cannot open " << file;
+        return;
     }
     if(!JSONFile.isReadable()) {
         qCritical() << "Error: cannot read " << file;
+        return;
     }
 
     QJsonParseError pe;
@@ -107,6 +109,43 @@ void ConfigHelper::importGuiConfigJson(const QString &file)
         Connection *con = new Connection(p, this);
         model->appendConnection(con);
     }
+}
+
+void ConfigHelper::exportGuiConfigJson(const QString &file)
+{
+    QJsonArray confArray;
+    int size = model->rowCount();
+    for (int i = 0; i < size; ++i) {
+        Connection *con = model->getItem(i)->getConnection();
+        QJsonObject json;
+        json["remarks"] = QJsonValue(con->profile.name);
+        json["method"] = QJsonValue(con->profile.method.toLower());
+        json["password"] = QJsonValue(con->profile.password);
+        json["server_port"] = QJsonValue(con->profile.serverPort);
+        json["server"] = QJsonValue(con->profile.serverAddress);
+        confArray.append(QJsonValue(json));
+    }
+
+    QJsonObject JSONObj;
+    JSONObj["configs"] = QJsonValue(confArray);
+    JSONObj["localPort"] = QJsonValue(1080);
+    JSONObj["shareOverLan"] = QJsonValue(false);
+
+    QJsonDocument JSONDoc(JSONObj);
+
+    QFile JSONFile(file);
+    JSONFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    if (!JSONFile.isOpen()) {
+        qCritical() << "Error: cannot open " << file;
+        return;
+    }
+    if(!JSONFile.isWritable()) {
+        qCritical() << "Error: cannot write into " << file;
+        return;
+    }
+
+    JSONFile.write(JSONDoc.toJson());
+    JSONFile.close();
 }
 
 Connection* ConfigHelper::configJsonToConnection(const QString &file)

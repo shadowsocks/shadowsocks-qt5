@@ -32,6 +32,7 @@ public:
     ConfigHelper(ConnectionTableModel *model, QObject *parent);
 
     void importGuiConfigJson(const QString &file);
+    void exportGuiConfigJson(const QString &file);//the format is only compatible with shadowsocks-csharp
     Connection* configJsonToConnection(const QString &file);
     //The parent of con will be this ConfigHelper instance
     void latencyTestAtRow(int row);//perform a latency test and update it in model

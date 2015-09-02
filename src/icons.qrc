@@ -6,6 +6,7 @@
         <file alias="actions/document-revert.png">icons/Breeze/actions/document-revert.png</file>
         <file alias="actions/document-edit.png">icons/Breeze/actions/document-edit.png</file>
         <file alias="actions/document-import.png">icons/Breeze/actions/document-import.png</file>
+        <file alias="actions/document-export.png">icons/Breeze/actions/document-export.png</file>
         <file alias="actions/document-save.png">icons/Breeze/actions/document-save.png</file>
         <file alias="actions/document-share.png">icons/Breeze/actions/document-share.png</file>
         <file alias="actions/edit-guides.png">icons/Breeze/actions/edit-guides.png</file>

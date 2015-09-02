@@ -58,6 +58,7 @@ private:
 
 private slots:
     void onImportGuiJson();
+    void onExportGuiJson();
     void onAddManually();
     void onAddScreenQRCode();
     void onAddQRCodeFile();

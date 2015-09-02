@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //UI signals
     connect(ui->actionImportGUIJson, &QAction::triggered, this, &MainWindow::onImportGuiJson);
+    connect(ui->actionExportGUIJson, &QAction::triggered, this, &MainWindow::onExportGuiJson);
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
     connect(ui->actionManually, &QAction::triggered, this, &MainWindow::onAddManually);
     connect(ui->actionQRCode, &QAction::triggered, this, &MainWindow::onAddScreenQRCode);
@@ -118,6 +119,14 @@ void MainWindow::onImportGuiJson()
     QString file = QFileDialog::getOpenFileName(this, tr("Import Connections from gui-config.json"), QString(), "GUI Configuration (gui-config.json)");
     if (!file.isNull()) {
         configHelper->importGuiConfigJson(file);
+    }
+}
+
+void MainWindow::onExportGuiJson()
+{
+    QString file = QFileDialog::getSaveFileName(this, tr("Export Connections as gui-config.json"), QString("gui-config.json"), "GUI Configuration (gui-config.json)");
+    if (!file.isNull()) {
+        configHelper->exportGuiConfigJson(file);
     }
 }
 

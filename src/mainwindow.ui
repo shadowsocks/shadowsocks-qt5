@@ -150,6 +150,7 @@
      <string>Fi&amp;le</string>
     </property>
     <addaction name="actionImportGUIJson"/>
+    <addaction name="actionExportGUIJson"/>
     <addaction name="actionSaveManually"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
@@ -414,7 +415,15 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show Filter Bar</string>
+    <string>&amp;Show Filter Bar</string>
+   </property>
+  </action>
+  <action name="actionExportGUIJson">
+   <property name="icon">
+    <iconset theme="document-export"/>
+   </property>
+   <property name="text">
+    <string>Export as gui-config.json</string>
    </property>
   </action>
  </widget>
