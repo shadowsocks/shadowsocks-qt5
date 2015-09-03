@@ -79,6 +79,7 @@ private slots:
     void onAbout();
     void onReportBug();
     void onCustomContextMenuRequested(const QPoint &pos);
+    void onFilterToggled(bool);
     void onFilterTextChanged(const QString &text);
 
 protected slots:

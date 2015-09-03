@@ -75,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionReportBug, &QAction::triggered, this, &MainWindow::onReportBug);
     connect(ui->actionShowFilterBar, &QAction::toggled, configHelper, &ConfigHelper::setShowFilterBar);
+    connect(ui->actionShowFilterBar, &QAction::toggled, this, &MainWindow::onFilterToggled);
     connect(ui->toolBar, &QToolBar::visibilityChanged, configHelper, &ConfigHelper::setShowToolbar);
     connect(ui->filterLineEdit, &QLineEdit::textChanged, this, &MainWindow::onFilterTextChanged);
 
@@ -333,6 +334,14 @@ void MainWindow::onCustomContextMenuRequested(const QPoint &pos)
 {
     this->checkCurrentIndex(ui->connectionView->indexAt(pos));
     ui->menuConnection->popup(ui->connectionView->viewport()->mapToGlobal(pos));
+}
+
+void MainWindow::onFilterToggled(bool show)
+{
+    ui->filterLineEdit->setVisible(show);
+    if (show) {
+        ui->filterLineEdit->setFocus();
+    }
 }
 
 void MainWindow::onFilterTextChanged(const QString &text)

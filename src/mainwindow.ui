@@ -274,6 +274,9 @@
    <property name="text">
     <string>&amp;Quit</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="icon">
@@ -380,6 +383,9 @@
    <property name="text">
     <string>&amp;Save Manually</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
   </action>
   <action name="actionMoveUp">
    <property name="icon">
@@ -411,6 +417,9 @@
    <property name="text">
     <string>&amp;Show Filter Bar</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
   </action>
   <action name="actionExportGUIJson">
    <property name="icon">
@@ -427,22 +436,5 @@
  <resources>
   <include location="icons.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>actionShowFilterBar</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>filterLineEdit</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>239</x>
-     <y>88</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
