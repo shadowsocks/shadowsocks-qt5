@@ -436,5 +436,22 @@
  <resources>
   <include location="icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionShowFilterBar</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>filterLineEdit</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>239</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

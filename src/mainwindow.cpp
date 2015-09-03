@@ -338,7 +338,6 @@ void MainWindow::onCustomContextMenuRequested(const QPoint &pos)
 
 void MainWindow::onFilterToggled(bool show)
 {
-    ui->filterLineEdit->setVisible(show);
     if (show) {
         ui->filterLineEdit->setFocus();
     }
