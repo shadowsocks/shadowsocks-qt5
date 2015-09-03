@@ -20,6 +20,7 @@
 #define CONNECTIONITEM_H
 
 #include <QObject>
+#include <QStringList>
 #include "connection.h"
 
 class ConnectionItem : public QObject
@@ -43,6 +44,8 @@ private:
     Connection *con;
 
     static QString convertLatencyToString(const int latency);
+    static QString convertBytesToHumanReadable(quint64 bytes);
+    static const QStringList bytesUnits;
 
 private slots:
     void onConnectionStateChanged(bool running);

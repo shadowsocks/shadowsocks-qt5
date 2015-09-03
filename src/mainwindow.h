@@ -66,14 +66,12 @@ private slots:
     void onAddFromConfigJSON();
     void onDelete();
     void onEdit();
-    void onDoubleClicked(const QModelIndex &index);
     void onShare();
     void onConnect();
     void onDisconnect();
     void onConnectionStatusChanged(const int row, const bool running);
     void onLatencyTest();
     void onViewLog();
-    void onStatus();
     void onMoveUp();
     void onMoveDown();
     void onGeneralSettings();

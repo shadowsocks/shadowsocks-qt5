@@ -13,9 +13,11 @@ ConnectionItem::ConnectionItem(Connection *_con, QObject *parent) :
     }
 }
 
+const QStringList ConnectionItem::bytesUnits = QStringList() << " B" << " KiB" << " MiB" << " GiB" << " TiB" << " PiB" << " EiB" << " ZiB" << " YiB";
+
 int ConnectionItem::columnCount()
 {
-    return 5;
+    return 9;
 }
 
 QVariant ConnectionItem::data(int column, int role) const
@@ -31,22 +33,42 @@ QVariant ConnectionItem::data(int column, int role) const
     switch (column) {
     case 0://name
         return QVariant(con->profile.name);
-    case 1://status
-        if (role == Qt::DisplayRole) {
-            return con->isRunning() ? QVariant(tr("Connected")) : QVariant(tr("Disconnected"));
-        } else {
-            return QVariant(con->isRunning());
-        }
-    case 2://latency
+    case 1://server
+        return QVariant(con->profile.serverAddress);
+    case 2://status
+        return con->isRunning() ? QVariant(tr("Connected")) : QVariant(tr("Disconnected"));
+    case 3://latency
         if (role == Qt::DisplayRole) {
             return QVariant(convertLatencyToString(con->profile.latency));
         } else {
             return QVariant(con->profile.latency);
         }
-    case 3://local port
+    case 4://local port
         return QVariant(con->profile.localPort);
-    case 4://last used
-        return QVariant(con->profile.lastTime);
+    case 5://data usage (term)
+        if (role == Qt::DisplayRole) {
+            return QVariant(convertBytesToHumanReadable(con->profile.currentUsage));
+        } else {
+            return QVariant(con->profile.currentUsage);
+        }
+    case 6://data usage (total)
+        if (role == Qt::DisplayRole) {
+            return QVariant(convertBytesToHumanReadable(con->profile.totalUsage));
+        } else {
+            return QVariant(con->profile.totalUsage);
+        }
+    case 7://reset date
+        if (role == Qt::DisplayRole) {
+            return QVariant(con->profile.nextResetDate.toString(Qt::SystemLocaleShortDate));
+        } else {
+            return QVariant(con->profile.nextResetDate);
+        }
+    case 8://last used
+        if (role == Qt::DisplayRole) {
+            return QVariant(con->profile.lastTime.toString(Qt::SystemLocaleShortDate));
+        } else {
+            return QVariant(con->profile.lastTime);
+        }
     default:
         return QVariant();
     }
@@ -66,9 +88,21 @@ QString ConnectionItem::convertLatencyToString(const int latency)
         latencyStr = tr("Error");
         break;
     default:
-        latencyStr = QString::number(latency);
+        if (latency >= 1000) {
+            latencyStr = QString::number(static_cast<double>(latency) / 1000.0) + QStringLiteral(" ") + tr("s");
+        } else {
+            latencyStr = QString::number(latency) + QStringLiteral(" ") + tr("ms");
+        }
     }
     return latencyStr;
+}
+
+QString ConnectionItem::convertBytesToHumanReadable(quint64 bytes)
+{
+    int unitId = 0;
+    for (; bytes > 1024; bytes /= 1024, unitId++);
+    QString str = QString::number(bytes) + bytesUnits.at(unitId);
+    return str;
 }
 
 void ConnectionItem::testLatency()

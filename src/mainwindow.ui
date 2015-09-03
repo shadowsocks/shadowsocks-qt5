@@ -140,7 +140,6 @@
     <addaction name="actionTestAllLatency"/>
     <addaction name="separator"/>
     <addaction name="actionViewLog"/>
-    <addaction name="actionStatus"/>
     <addaction name="separator"/>
     <addaction name="actionMoveUp"/>
     <addaction name="actionMoveDown"/>
@@ -349,11 +348,6 @@
     <string>Test All C&amp;onnections Latency</string>
    </property>
   </action>
-  <action name="actionStatus">
-   <property name="text">
-    <string>Stat&amp;us</string>
-   </property>
-  </action>
   <action name="actionImportGUIJson">
    <property name="icon">
     <iconset theme="document-import">
@@ -420,10 +414,12 @@
   </action>
   <action name="actionExportGUIJson">
    <property name="icon">
-    <iconset theme="document-export"/>
+    <iconset theme="document-export">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Export as gui-config.json</string>
+    <string>&amp;Export as gui-config.json</string>
    </property>
   </action>
  </widget>

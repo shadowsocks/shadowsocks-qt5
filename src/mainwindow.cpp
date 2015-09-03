@@ -7,7 +7,6 @@
 #include "uriinputdialog.h"
 #include "sharedialog.h"
 #include "logdialog.h"
-#include "statusdialog.h"
 #include "settingsdialog.h"
 
 #include <QDesktopServices>
@@ -69,7 +68,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::onDisconnect);
     connect(ui->actionTestLatency, &QAction::triggered, this, &MainWindow::onLatencyTest);
     connect(ui->actionViewLog, &QAction::triggered, this, &MainWindow::onViewLog);
-    connect(ui->actionStatus, &QAction::triggered, this, &MainWindow::onStatus);
     connect(ui->actionMoveUp, &QAction::triggered, this, &MainWindow::onMoveUp);
     connect(ui->actionMoveDown, &QAction::triggered, this, &MainWindow::onMoveDown);
     connect(ui->actionGeneralSettings, &QAction::triggered, this, &MainWindow::onGeneralSettings);
@@ -82,7 +80,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->connectionView, &QTableView::clicked, this, static_cast<void (MainWindow::*)(const QModelIndex&)>(&MainWindow::checkCurrentIndex));
     connect(ui->connectionView, &QTableView::activated, this, static_cast<void (MainWindow::*)(const QModelIndex&)>(&MainWindow::checkCurrentIndex));
-    connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onDoubleClicked);
+    connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onEdit);
 
     /* set custom context menu */
     ui->connectionView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -203,16 +201,6 @@ void MainWindow::onEdit()
     editRow(proxyModel->mapToSource(ui->connectionView->currentIndex()).row());
 }
 
-void MainWindow::onDoubleClicked(const QModelIndex &index)
-{
-    int row = proxyModel->mapToSource(index).row();
-    if (model->data(model->index(row, 1), Qt::EditRole).toBool()) {
-        onStatus();
-    } else {
-        editRow(row);
-    }
-}
-
 void MainWindow::onShare()
 {
     QByteArray uri = model->getItem(proxyModel->mapToSource(ui->connectionView->currentIndex()).row())->getConnection()->getURI();
@@ -257,14 +245,6 @@ void MainWindow::onViewLog()
     LogDialog *logDlg = new LogDialog(con, this);
     connect(logDlg, &LogDialog::finished, logDlg, &LogDialog::deleteLater);
     logDlg->exec();
-}
-
-void MainWindow::onStatus()
-{
-    Connection *con = model->getItem(proxyModel->mapToSource(ui->connectionView->currentIndex()).row())->getConnection();
-    StatusDialog *statusDlg = new StatusDialog(con, this);
-    connect(statusDlg, &StatusDialog::finished, statusDlg, &StatusDialog::deleteLater);
-    statusDlg->exec();
 }
 
 void MainWindow::onMoveUp()
@@ -320,21 +300,21 @@ void MainWindow::checkCurrentIndex(const QModelIndex &_index)
 {
     QModelIndex index = proxyModel->mapToSource(_index);
     const bool valid = index.isValid();
-    ui->actionConnect->setEnabled(valid);
-    ui->actionDisconnect->setEnabled(valid);
     ui->actionTestLatency->setEnabled(valid);
     ui->actionEdit->setEnabled(valid);
     ui->actionDelete->setEnabled(valid);
     ui->actionShare->setEnabled(valid);
     ui->actionViewLog->setEnabled(valid);
-    ui->actionStatus->setEnabled(valid);
     ui->actionMoveUp->setEnabled(valid ? _index.row() > 0 : false);
     ui->actionMoveDown->setEnabled(valid ? _index.row() < model->rowCount() - 1 : false);
 
     if (valid) {
-        bool running = model->data(model->index(index.row(), 1), Qt::EditRole).toBool();
+        const bool &running = model->getItem(index.row())->getConnection()->isRunning();
         ui->actionConnect->setEnabled(!running);
         ui->actionDisconnect->setEnabled(running);
+    } else {
+        ui->actionConnect->setEnabled(false);
+        ui->actionDisconnect->setEnabled(false);
     }
 }
 

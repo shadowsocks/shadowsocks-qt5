@@ -13,7 +13,6 @@ SOURCES      += src/main.cpp\
                 src/uriinputdialog.cpp \
                 src/sqprofile.cpp \
                 src/settingsdialog.cpp \
-                src/statusdialog.cpp \
                 src/controllerthread.cpp \
                 src/statusnotifier.cpp \
                 src/connectiontablemodel.cpp \
@@ -33,7 +32,6 @@ HEADERS      += src/mainwindow.h \
                 src/uriinputdialog.h \
                 src/sqprofile.h \
                 src/settingsdialog.h \
-                src/statusdialog.h \
                 src/controllerthread.h \
                 src/statusnotifier.h \
                 src/connectiontablemodel.h \
@@ -44,8 +42,7 @@ FORMS        += src/mainwindow.ui \
                 src/editdialog.ui \
                 src/logdialog.ui \
                 src/uriinputdialog.ui \
-                src/settingsdialog.ui \
-                src/statusdialog.ui
+                src/settingsdialog.ui
 
 RESOURCES    += src/icons.qrc \
                 src/translations.qrc
