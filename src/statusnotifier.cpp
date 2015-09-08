@@ -94,7 +94,6 @@ void StatusNotifier::activate()
         window->hide();
     } else {
         window->show();
-        window->setFocus();
     }
 }
 

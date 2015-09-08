@@ -358,6 +358,7 @@ void MainWindow::showEvent(QShowEvent *e)
 {
     QMainWindow::showEvent(e);
     notifier->onWindowVisibleChanged(true);
+    this->setFocus();
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
