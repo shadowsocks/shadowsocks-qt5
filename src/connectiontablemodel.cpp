@@ -119,5 +119,8 @@ void ConnectionTableModel::testAllLatency()
 void ConnectionTableModel::onConnectionStateChanged(bool running)
 {
     ConnectionItem* item = qobject_cast<ConnectionItem*>(sender());
-    emit rowStatusChanged(items.indexOf(item), running);
+    int row = items.indexOf(item);
+    QModelIndex statusIndex = this->index(row, 2);
+    emit dataChanged(statusIndex, statusIndex);
+    emit rowStatusChanged(row, running);
 }
