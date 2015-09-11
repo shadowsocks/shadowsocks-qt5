@@ -61,6 +61,7 @@ private slots:
     void onExportGuiJson();
     void onAddManually();
     void onAddScreenQRCode();
+    void onAddScreenQRCodeCapturer();
     void onAddQRCodeFile();
     void onAddFromURI();
     void onAddFromConfigJSON();

@@ -127,6 +127,7 @@
      <addaction name="actionURI"/>
      <addaction name="actionQRCodeFromFile"/>
      <addaction name="actionQRCode"/>
+     <addaction name="actionScanQRCodeCapturer"/>
      <addaction name="actionFromConfigJson"/>
     </widget>
     <addaction name="menuAdd"/>
@@ -429,6 +430,17 @@
    </property>
    <property name="text">
     <string>&amp;Export as gui-config.json</string>
+   </property>
+  </action>
+  <action name="actionScanQRCodeCapturer">
+   <property name="icon">
+    <iconset theme="edit-image-face-recognize"/>
+   </property>
+   <property name="text">
+    <string>Scan QR Code using Capturer</string>
+   </property>
+   <property name="toolTip">
+    <string>Scan QR Code using Capturer</string>
    </property>
   </action>
  </widget>

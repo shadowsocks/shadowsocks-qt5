@@ -16,7 +16,8 @@ SOURCES      += src/main.cpp\
                 src/controllerthread.cpp \
                 src/statusnotifier.cpp \
                 src/connectiontablemodel.cpp \
-                src/connectionitem.cpp
+                src/connectionitem.cpp \
+                src/qrcodecapturer.cpp
 
 HEADERS      += src/mainwindow.h \
                 src/ip4validator.h \
@@ -35,14 +36,16 @@ HEADERS      += src/mainwindow.h \
                 src/controllerthread.h \
                 src/statusnotifier.h \
                 src/connectiontablemodel.h \
-                src/connectionitem.h
+                src/connectionitem.h \
+                src/qrcodecapturer.h
 
 FORMS        += src/mainwindow.ui \
                 src/sharedialog.ui \
                 src/editdialog.ui \
                 src/logdialog.ui \
                 src/uriinputdialog.ui \
-                src/settingsdialog.ui
+                src/settingsdialog.ui \
+                src/qrcodecapturer.ui
 
 RESOURCES    += src/icons.qrc \
                 src/translations.qrc

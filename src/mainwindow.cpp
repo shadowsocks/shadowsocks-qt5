@@ -8,6 +8,7 @@
 #include "sharedialog.h"
 #include "logdialog.h"
 #include "settingsdialog.h"
+#include "qrcodecapturer.h"
 
 #include <QDesktopServices>
 #include <QDesktopWidget>
@@ -58,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
     connect(ui->actionManually, &QAction::triggered, this, &MainWindow::onAddManually);
     connect(ui->actionQRCode, &QAction::triggered, this, &MainWindow::onAddScreenQRCode);
+    connect(ui->actionScanQRCodeCapturer, &QAction::triggered, this, &MainWindow::onAddScreenQRCodeCapturer);
     connect(ui->actionQRCodeFromFile, &QAction::triggered, this, &MainWindow::onAddQRCodeFile);
     connect(ui->actionURI, &QAction::triggered, this, &MainWindow::onAddFromURI);
     connect(ui->actionFromConfigJson, &QAction::triggered, this, &MainWindow::onAddFromConfigJSON);
@@ -152,6 +154,17 @@ void MainWindow::onAddScreenQRCode()
         Connection *newCon = new Connection(uri, this);
         newProfile(newCon);
     }
+}
+
+void MainWindow::onAddScreenQRCodeCapturer()
+{
+    QRCodeCapturer *capturer = new QRCodeCapturer(this);
+    connect(capturer, &QRCodeCapturer::finished, capturer, &QRCodeCapturer::deleteLater);
+    connect(capturer, &QRCodeCapturer::qrCodeFound, [this](const QString &uri){
+        Connection *newCon = new Connection(uri, this);
+        newProfile(newCon);
+    });
+    capturer->exec();
 }
 
 void MainWindow::onAddQRCodeFile()
