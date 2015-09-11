@@ -25,6 +25,7 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     ui->serverPortEdit->setText(QString::number(connection->profile.serverPort));
     ui->localAddrEdit->setText(connection->profile.localAddress);
     ui->localPortEdit->setText(QString::number(connection->profile.localPort));
+    ui->httpRadioButton->setChecked(connection->profile.httpMode);
     ui->pwdEdit->setText(connection->profile.password);
     ui->encryptComboBox->setCurrentText(connection->profile.method.toUpper());
     ui->timeoutSpinBox->setValue(connection->profile.timeout);
@@ -50,6 +51,7 @@ void EditDialog::save()
     connection->profile.serverPort = ui->serverPortEdit->text().toUShort();
     connection->profile.localAddress = ui->localAddrEdit->text();
     connection->profile.localPort = ui->localPortEdit->text().toUShort();
+    connection->profile.httpMode = ui->httpRadioButton->isChecked();
     connection->profile.password = ui->pwdEdit->text();
     connection->profile.method = ui->encryptComboBox->currentText();
     connection->profile.timeout = ui->timeoutSpinBox->value();

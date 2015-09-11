@@ -81,11 +81,11 @@ QString ConnectionItem::convertLatencyToString(const int latency)
     case -1:
         latencyStr = tr("Timeout");
         break;
-    case -3://unknown
-        latencyStr = tr("Unknown");
-        break;
     case -2://error
         latencyStr = tr("Error");
+        break;
+    case -3://unknown
+        latencyStr = tr("Unknown");
         break;
     default:
         if (latency >= 1000) {

@@ -44,6 +44,7 @@ void ConfigHelper::save()
     settings->setValue("OnlyOneInstance", QVariant(onlyOneInstace));
     settings->setValue("ShowToolbar", QVariant(showToolbar));
     settings->setValue("ShowFilterBar", QVariant(showFilterBar));
+    settings->setValue("ConfigVersion", QVariant(2.5));
 }
 
 void ConfigHelper::importGuiConfigJson(const QString &file)
@@ -229,12 +230,16 @@ void ConfigHelper::setShowFilterBar(bool show)
 
 void ConfigHelper::readConfiguration()
 {
+    float configVer = settings->value("ConfigVersion", QVariant(2.4)).toFloat();
     int size = settings->beginReadArray(profilePrefix);
     for (int i = 0; i < size; ++i) {
         settings->setArrayIndex(i);
         QVariant value = settings->value("SQProfile");
         SQProfile profile = value.value<SQProfile>();
         checkProfileDataUsageReset(profile);
+        if (configVer < 2.5) {
+            profile.httpMode = false;
+        }
         Connection *con = new Connection(profile, this);
         model->appendConnection(con);
     }

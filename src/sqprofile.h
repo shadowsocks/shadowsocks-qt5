@@ -42,6 +42,7 @@ struct SQProfile
     quint64 totalUsage;
     QDateTime lastTime;//last time this connection is used
     QDate nextResetDate;//next scheduled date to reset data usage
+    bool httpMode;
 };
 Q_DECLARE_METATYPE(SQProfile)
 

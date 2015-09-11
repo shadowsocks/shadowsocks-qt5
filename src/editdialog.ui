@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>473</height>
+    <height>493</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,14 +26,140 @@
       <property name="labelAlignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
-      <item row="10" column="0">
+      <item row="0" column="0">
+       <widget class="QLabel" name="nameLabel">
+        <property name="text">
+         <string>Profile Name</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="nameEdit"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="serverAddrLabel">
+        <property name="text">
+         <string>Server Address</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="serverAddrEdit"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="serverPortLabel">
+        <property name="text">
+         <string>Server Port</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="serverPortEdit">
+        <property name="inputMethodHints">
+         <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="pwdLabel">
+        <property name="text">
+         <string>Password</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="pwdEdit">
+        <property name="inputMethodHints">
+         <set>Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::PasswordEchoOnEdit</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="localAddrLabel">
+        <property name="text">
+         <string>Local Address</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="localAddrEdit"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="localPortLabel">
+        <property name="text">
+         <string>Local Port</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="localPortEdit">
+        <property name="inputMethodHints">
+         <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="localServerTypeLabel">
+        <property name="text">
+         <string>Local Server Type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <layout class="QHBoxLayout" name="localTypeHorizontalLayout" stretch="1,1">
+        <item>
+         <widget class="QRadioButton" name="socks5RadioButton">
+          <property name="text">
+           <string notr="true">SOCKS&amp;5</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="httpRadioButton">
+          <property name="text">
+           <string notr="true">HTTP(S)</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="encryptLabel">
+        <property name="text">
+         <string>Encryption Method</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QComboBox" name="encryptComboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
        <widget class="QLabel" name="timeoutLabel">
         <property name="text">
          <string>Timeout</string>
         </property>
        </widget>
       </item>
-      <item row="10" column="1">
+      <item row="8" column="1">
        <widget class="QSpinBox" name="timeoutSpinBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -55,119 +181,34 @@
         </property>
        </widget>
       </item>
-      <item row="9" column="1">
-       <widget class="QComboBox" name="encryptComboBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
       <item row="9" column="0">
-       <widget class="QLabel" name="encryptLabel">
+       <widget class="QLabel" name="resetDateLabel">
         <property name="text">
-         <string>Encryption Method</string>
+         <string>Reset Data Usage after</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="1">
-       <widget class="QLineEdit" name="localPortEdit">
-        <property name="inputMethodHints">
-         <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
-       <widget class="QLabel" name="localPortLabel">
-        <property name="text">
-         <string>Local Port</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QLineEdit" name="localAddrEdit"/>
-      </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="localAddrLabel">
-        <property name="text">
-         <string>Local Address</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="pwdEdit">
-        <property name="inputMethodHints">
-         <set>Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::PasswordEchoOnEdit</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="pwdLabel">
-        <property name="text">
-         <string>Password</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="serverPortEdit">
-        <property name="inputMethodHints">
-         <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="serverPortLabel">
-        <property name="text">
-         <string>Server Port</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="serverAddrEdit"/>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="serverAddrLabel">
-        <property name="text">
-         <string>Server Address</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="nameLabel">
-        <property name="text">
-         <string>Profile Name</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="nameEdit"/>
-      </item>
-      <item row="13" column="1">
-       <widget class="QCheckBox" name="debugCheckBox">
+      <item row="9" column="1">
+       <widget class="QDateEdit" name="resetDateEdit">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="text">
-         <string>Debug</string>
+        <property name="calendarPopup">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="13" column="0">
-       <widget class="QLabel" name="logLevelLabel">
+      <item row="10" column="0">
+       <widget class="QLabel" name="autoStartLabel">
         <property name="text">
-         <string>Log Level</string>
+         <string>Automation</string>
         </property>
        </widget>
       </item>
-      <item row="12" column="1">
+      <item row="10" column="1">
        <widget class="QCheckBox" name="autoStartCheckBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -180,30 +221,23 @@
         </property>
        </widget>
       </item>
-      <item row="12" column="0">
-       <widget class="QLabel" name="autoStartLabel">
-        <property name="text">
-         <string>Automation</string>
-        </property>
-       </widget>
-      </item>
       <item row="11" column="0">
-       <widget class="QLabel" name="resetDateLabel">
+       <widget class="QLabel" name="logLevelLabel">
         <property name="text">
-         <string>Reset Data Usage after</string>
+         <string>Log Level</string>
         </property>
        </widget>
       </item>
       <item row="11" column="1">
-       <widget class="QDateEdit" name="resetDateEdit">
+       <widget class="QCheckBox" name="debugCheckBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="calendarPopup">
-         <bool>true</bool>
+        <property name="text">
+         <string>Debug</string>
         </property>
        </widget>
       </item>
@@ -242,6 +276,8 @@
   <tabstop>pwdEdit</tabstop>
   <tabstop>localAddrEdit</tabstop>
   <tabstop>localPortEdit</tabstop>
+  <tabstop>socks5RadioButton</tabstop>
+  <tabstop>httpRadioButton</tabstop>
   <tabstop>encryptComboBox</tabstop>
   <tabstop>timeoutSpinBox</tabstop>
   <tabstop>resetDateEdit</tabstop>
@@ -267,4 +303,7 @@
    </hints>
   </connection>
  </connections>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

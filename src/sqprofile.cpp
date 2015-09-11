@@ -15,16 +15,17 @@ SQProfile::SQProfile()
     totalUsage = 0;
     QDate currentDate = QDate::currentDate();
     nextResetDate = QDate(currentDate.year(), currentDate.month() + 1, 1);
+    httpMode = false;
 }
 
 QDataStream& operator << (QDataStream &out, const SQProfile &p)
 {
-    out << p.autoStart << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.latency << p.currentUsage << p.totalUsage << p.lastTime << p.nextResetDate;
+    out << p.autoStart << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.latency << p.currentUsage << p.totalUsage << p.lastTime << p.nextResetDate << p.httpMode;
     return out;
 }
 
 QDataStream& operator >> (QDataStream &in, SQProfile &p)
 {
-    in >> p.autoStart >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.latency >> p.currentUsage >> p.totalUsage >> p.lastTime >> p.nextResetDate;
+    in >> p.autoStart >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.latency >> p.currentUsage >> p.totalUsage >> p.lastTime >> p.nextResetDate >> p.httpMode;
     return in;
 }
