@@ -11,7 +11,16 @@ QRCodeCapturer::QRCodeCapturer(QWidget *parent) :
     ui(new Ui::QRCodeCapturer)
 {
     ui->setupUi(this);
+#ifdef Q_OS_WIN
+    /*
+     * On Windows, it requires Qt::FramelessWindowHint to be set to make translucent background work, but we need a window with borders.
+     * Therefore, we set the entire window semi-transparent so that users are still able to see the region below while moving the
+     * capturer above the QR code image.
+     */
+    this->setWindowOpacity(0.75);
+#else
     this->setAttribute(Qt::WA_TranslucentBackground, true);
+#endif
 }
 
 QRCodeCapturer::~QRCodeCapturer()
