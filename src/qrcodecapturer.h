@@ -15,6 +15,8 @@ public:
     explicit QRCodeCapturer(QWidget *parent = 0);
     ~QRCodeCapturer();
 
+    static QString scanEntireScreen();
+
 signals:
     void qrCodeFound(const QString &result);
 

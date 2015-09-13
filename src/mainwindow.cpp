@@ -14,7 +14,6 @@
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QScreen>
 #include <QCloseEvent>
 #include <botan/version.h>
 
@@ -140,15 +139,7 @@ void MainWindow::onAddManually()
 
 void MainWindow::onAddScreenQRCode()
 {
-    QString uri;
-    QList<QScreen *> screens = qApp->screens();
-    for (QList<QScreen *>::iterator sc = screens.begin(); sc != screens.end(); ++sc) {
-        QImage raw_sc = (*sc)->grabWindow(qApp->desktop()->winId()).toImage();
-        QString result = URIHelper::decodeImage(raw_sc);
-        if (!result.isNull()) {
-            uri = result;
-        }
-    }
+    QString uri = QRCodeCapturer::scanEntireScreen();
     if (uri.isNull()) {
         QMessageBox::critical(this, tr("QR Code Not Found"), tr("Can't find any QR code image that contains valid URI on your screen(s)."));
     } else {

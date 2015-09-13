@@ -28,6 +28,20 @@ QRCodeCapturer::~QRCodeCapturer()
     delete ui;
 }
 
+QString QRCodeCapturer::scanEntireScreen()
+{
+    QString uri;
+    QList<QScreen *> screens = qApp->screens();
+    for (QList<QScreen *>::iterator sc = screens.begin(); sc != screens.end(); ++sc) {
+        QImage raw_sc = (*sc)->grabWindow(qApp->desktop()->winId()).toImage();
+        QString result = URIHelper::decodeImage(raw_sc);
+        if (!result.isNull()) {
+            uri = result;
+        }
+    }
+    return uri;
+}
+
 void QRCodeCapturer::moveEvent(QMoveEvent *e)
 {
     QDialog::moveEvent(e);
