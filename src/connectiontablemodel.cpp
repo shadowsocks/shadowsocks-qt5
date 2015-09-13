@@ -135,7 +135,6 @@ void ConnectionTableModel::onConnectionStateChanged(bool running)
 {
     ConnectionItem* item = qobject_cast<ConnectionItem*>(sender());
     int row = items.indexOf(item);
-    QModelIndex statusIndex = this->index(row, 2);
-    emit dataChanged(statusIndex, statusIndex);
+    emit dataChanged(this->index(row, 0), this->index(row, rowCount() - 1));
     emit rowStatusChanged(row, running);
 }

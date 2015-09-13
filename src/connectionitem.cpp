@@ -1,4 +1,5 @@
 #include "connectionitem.h"
+#include <QFont>
 
 ConnectionItem::ConnectionItem(Connection *_con, QObject *parent) :
     QObject(parent),
@@ -26,52 +27,56 @@ QVariant ConnectionItem::data(int column, int role) const
         return QVariant();
     }
 
-    if (role != Qt::DisplayRole && role != Qt::EditRole) {
-        return QVariant();
+    if (role == Qt::DisplayRole || role == Qt::EditRole) {
+        switch (column) {
+        case 0://name
+            return QVariant(con->profile.name);
+        case 1://server
+            return QVariant(con->profile.serverAddress);
+        case 2://status
+            return con->isRunning() ? QVariant(tr("Connected")) : QVariant(tr("Disconnected"));
+        case 3://latency
+            if (role == Qt::DisplayRole) {
+                return QVariant(convertLatencyToString(con->profile.latency));
+            } else {
+                return QVariant(con->profile.latency);
+            }
+        case 4://local port
+            return QVariant(con->profile.localPort);
+        case 5://data usage (term)
+            if (role == Qt::DisplayRole) {
+                return QVariant(convertBytesToHumanReadable(con->profile.currentUsage));
+            } else {
+                return QVariant(con->profile.currentUsage);
+            }
+        case 6://data usage (total)
+            if (role == Qt::DisplayRole) {
+                return QVariant(convertBytesToHumanReadable(con->profile.totalUsage));
+            } else {
+                return QVariant(con->profile.totalUsage);
+            }
+        case 7://reset date
+            if (role == Qt::DisplayRole) {
+                return QVariant(con->profile.nextResetDate.toString(Qt::SystemLocaleShortDate));
+            } else {
+                return QVariant(con->profile.nextResetDate);
+            }
+        case 8://last used
+            if (role == Qt::DisplayRole) {
+                return QVariant(con->profile.lastTime.toString(Qt::SystemLocaleShortDate));
+            } else {
+                return QVariant(con->profile.lastTime);
+            }
+        default:
+            return QVariant();
+        }
+    } else if (role == Qt::FontRole) {
+        QFont font;
+        font.setBold(con->isRunning());
+        return QVariant(font);
     }
 
-    switch (column) {
-    case 0://name
-        return QVariant(con->profile.name);
-    case 1://server
-        return QVariant(con->profile.serverAddress);
-    case 2://status
-        return con->isRunning() ? QVariant(tr("Connected")) : QVariant(tr("Disconnected"));
-    case 3://latency
-        if (role == Qt::DisplayRole) {
-            return QVariant(convertLatencyToString(con->profile.latency));
-        } else {
-            return QVariant(con->profile.latency);
-        }
-    case 4://local port
-        return QVariant(con->profile.localPort);
-    case 5://data usage (term)
-        if (role == Qt::DisplayRole) {
-            return QVariant(convertBytesToHumanReadable(con->profile.currentUsage));
-        } else {
-            return QVariant(con->profile.currentUsage);
-        }
-    case 6://data usage (total)
-        if (role == Qt::DisplayRole) {
-            return QVariant(convertBytesToHumanReadable(con->profile.totalUsage));
-        } else {
-            return QVariant(con->profile.totalUsage);
-        }
-    case 7://reset date
-        if (role == Qt::DisplayRole) {
-            return QVariant(con->profile.nextResetDate.toString(Qt::SystemLocaleShortDate));
-        } else {
-            return QVariant(con->profile.nextResetDate);
-        }
-    case 8://last used
-        if (role == Qt::DisplayRole) {
-            return QVariant(con->profile.lastTime.toString(Qt::SystemLocaleShortDate));
-        } else {
-            return QVariant(con->profile.lastTime);
-        }
-    default:
-        return QVariant();
-    }
+    return QVariant();
 }
 
 QString ConnectionItem::convertLatencyToString(const int latency)
