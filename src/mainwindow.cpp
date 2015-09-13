@@ -329,9 +329,11 @@ void MainWindow::checkCurrentIndex(const QModelIndex &_index)
     if (valid) {
         const bool &running = model->getItem(index.row())->getConnection()->isRunning();
         ui->actionConnect->setEnabled(!running);
+        ui->actionForceConnect->setEnabled(!running);
         ui->actionDisconnect->setEnabled(running);
     } else {
         ui->actionConnect->setEnabled(false);
+        ui->actionForceConnect->setEnabled(false);
         ui->actionDisconnect->setEnabled(false);
     }
 }
