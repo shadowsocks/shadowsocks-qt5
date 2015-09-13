@@ -136,6 +136,7 @@
     <addaction name="actionDelete"/>
     <addaction name="separator"/>
     <addaction name="actionConnect"/>
+    <addaction name="actionForceConnect"/>
     <addaction name="actionDisconnect"/>
     <addaction name="actionTestLatency"/>
     <addaction name="actionTestAllLatency"/>
@@ -434,13 +435,23 @@
   </action>
   <action name="actionScanQRCodeCapturer">
    <property name="icon">
-    <iconset theme="edit-image-face-recognize"/>
+    <iconset theme="edit-image-face-recognize">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Scan QR Code using Capturer</string>
+    <string>Scan &amp;QR Code using Capturer</string>
    </property>
    <property name="toolTip">
     <string>Scan QR Code using Capturer</string>
+   </property>
+  </action>
+  <action name="actionForceConnect">
+   <property name="text">
+    <string>Force Connect</string>
+   </property>
+   <property name="toolTip">
+    <string>Connect to this connection and disconnect any connections currently using  the same local port</string>
    </property>
   </action>
  </widget>

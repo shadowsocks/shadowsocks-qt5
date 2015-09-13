@@ -109,6 +109,21 @@ bool ConnectionTableModel::appendConnection(Connection *con, const QModelIndex &
     return true;
 }
 
+void ConnectionTableModel::disconnectConnectionsAt(const QString &addr, quint16 port)
+{
+    bool anyAddr = (addr.compare("0.0.0.0") == 0);
+    for (auto &i : items) {
+        Connection *con = i->getConnection();
+        if (con->isRunning()) {
+            if (con->getProfile().localPort == port) {
+                if ((con->getProfile().localAddress.compare("0.0.0.0") == 0) || (con->getProfile().localAddress == addr) || anyAddr) {
+                    con->stop();
+                }
+            }
+        }
+    }
+}
+
 void ConnectionTableModel::testAllLatency()
 {
     for (auto &i : items) {

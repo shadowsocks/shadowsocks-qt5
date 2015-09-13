@@ -42,6 +42,8 @@ public:
 
     bool appendConnection(Connection *con, const QModelIndex &parent = QModelIndex());
 
+    void disconnectConnectionsAt(const QString &addr, quint16 port);
+
 public slots:
     void testAllLatency();
 

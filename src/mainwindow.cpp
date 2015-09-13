@@ -67,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionEdit, &QAction::triggered, this, &MainWindow::onEdit);
     connect(ui->actionShare, &QAction::triggered, this, &MainWindow::onShare);
     connect(ui->actionConnect, &QAction::triggered, this, &MainWindow::onConnect);
+    connect(ui->actionForceConnect, &QAction::triggered, this, &MainWindow::onForceConnect);
     connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::onDisconnect);
     connect(ui->actionTestLatency, &QAction::triggered, this, &MainWindow::onLatencyTest);
     connect(ui->actionViewLog, &QAction::triggered, this, &MainWindow::onViewLog);
@@ -228,6 +229,18 @@ void MainWindow::onConnect()
     int row = proxyModel->mapToSource(ui->connectionView->currentIndex()).row();
     Connection *con = model->getItem(row)->getConnection();
     if (con->isValid()) {
+        con->start();
+    } else {
+        QMessageBox::critical(this, tr("Invalid"), tr("The connection's profile is invalid!"));
+    }
+}
+
+void MainWindow::onForceConnect()
+{
+    int row = proxyModel->mapToSource(ui->connectionView->currentIndex()).row();
+    Connection *con = model->getItem(row)->getConnection();
+    if (con->isValid()) {
+        model->disconnectConnectionsAt(con->getProfile().localAddress, con->getProfile().localPort);
         con->start();
     } else {
         QMessageBox::critical(this, tr("Invalid"), tr("The connection's profile is invalid!"));

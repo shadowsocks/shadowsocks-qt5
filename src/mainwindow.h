@@ -69,6 +69,7 @@ private slots:
     void onEdit();
     void onShare();
     void onConnect();
+    void onForceConnect();
     void onDisconnect();
     void onConnectionStatusChanged(const int row, const bool running);
     void onLatencyTest();
