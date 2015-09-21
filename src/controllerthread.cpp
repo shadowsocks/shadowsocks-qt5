@@ -6,9 +6,8 @@ ControllerThread::ControllerThread(QObject *parent) :
 
 QMutex ControllerThread::mutex;
 
-void ControllerThread::setup(bool _debug, const QSS::Profile &_profile)
+void ControllerThread::setup(const QSS::Profile &_profile)
 {
-    debug = _debug;
     profile = _profile;
 }
 
@@ -18,7 +17,7 @@ void ControllerThread::run()
     QSS::Controller controller(true);
     connect(&controller, &QSS::Controller::runningStateChanged, this, &ControllerThread::stateChanged);
     connect(&controller, &QSS::Controller::info, this, &ControllerThread::logAvailable);
-    if (debug) {
+    if (profile.debug) {
         connect(&controller, &QSS::Controller::debug, this, &ControllerThread::logAvailable);
     }
     connect(&controller, &QSS::Controller::newBytesReceived, this, &ControllerThread::newBytes);

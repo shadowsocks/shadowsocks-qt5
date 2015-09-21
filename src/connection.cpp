@@ -108,8 +108,10 @@ void Connection::start()
     qssprofile.method = profile.method;
     qssprofile.password = profile.password;
     qssprofile.timeout = profile.timeout;
+    qssprofile.http_proxy = profile.httpMode;
+    qssprofile.debug = profile.debug;
 
-    controllerThread->setup(profile.debug, qssprofile);
+    controllerThread->setup(qssprofile);
     controllerThread->start();
 }
 

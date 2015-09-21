@@ -28,7 +28,7 @@ class ControllerThread : public QThread
     Q_OBJECT
 public:
     ControllerThread(QObject *parent);
-    void setup(bool _debug, const QSS::Profile &_profile);
+    void setup(const QSS::Profile &_profile);
     void run() Q_DECL_OVERRIDE;
 
 signals:
@@ -38,7 +38,6 @@ signals:
     void failed();
 
 private:
-    bool debug;
     QSS::Profile profile;
 
     static QMutex mutex;
