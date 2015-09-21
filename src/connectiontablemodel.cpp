@@ -103,6 +103,7 @@ bool ConnectionTableModel::appendConnection(Connection *con, const QModelIndex &
     ConnectionItem* newItem = new ConnectionItem(con, this);
     connect(newItem, &ConnectionItem::message, this, &ConnectionTableModel::message);
     connect(newItem, &ConnectionItem::stateChanged, this, &ConnectionTableModel::onConnectionStateChanged);
+    connect(newItem, &ConnectionItem::latencyChanged, this, &ConnectionTableModel::onConnectionLatencyChanged);
     beginInsertRows(parent, items.count(), items.count() + 1);
     items.append(newItem);
     endInsertRows();
@@ -133,8 +134,15 @@ void ConnectionTableModel::testAllLatency()
 
 void ConnectionTableModel::onConnectionStateChanged(bool running)
 {
-    ConnectionItem* item = qobject_cast<ConnectionItem*>(sender());
+    ConnectionItem *item = qobject_cast<ConnectionItem*>(sender());
     int row = items.indexOf(item);
     emit dataChanged(this->index(row, 0), this->index(row, rowCount() - 1));
     emit rowStatusChanged(row, running);
+}
+
+void ConnectionTableModel::onConnectionLatencyChanged()
+{
+    ConnectionItem *item = qobject_cast<ConnectionItem*>(sender());
+    int row = items.indexOf(item);
+    emit dataChanged(this->index(row, 3), this->index(row, 3));
 }

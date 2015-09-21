@@ -39,6 +39,7 @@ public:
 signals:
     void message(const QString&);
     void stateChanged(bool);
+    void latencyChanged();
 
 private:
     Connection *con;
