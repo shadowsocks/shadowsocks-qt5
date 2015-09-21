@@ -1,3 +1,15 @@
+shadowsocks-qt5 (2.5.0-1) stable; urgency=medium
+
+  * update for libQtShadowsocks 1.7
+  * support HTTP proxy mode
+  * add "force connect" action
+  * add filter bar to filter the table view
+  * add an action to export settings as gui-config.json
+  * add a capturer to scan QR code (more precisely)
+  * other bug fixes and improvements
+
+ -- Symeon Huang <hzwhuang@gmail>  Mon, 21 Sep 2015 14:27:00 +0100
+
 shadowsocks-qt5 (2.4.2-1) stable; urgency=medium
 
   * get focus after restored
