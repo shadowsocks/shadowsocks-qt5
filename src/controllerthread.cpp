@@ -17,7 +17,10 @@ void ControllerThread::run()
     mutex.lock();
     QSS::Controller controller(true);
     connect(&controller, &QSS::Controller::runningStateChanged, this, &ControllerThread::stateChanged);
-    connect(&controller, debug ? &QSS::Controller::debug : &QSS::Controller::info, this, &ControllerThread::logAvailable);
+    connect(&controller, &QSS::Controller::info, this, &ControllerThread::logAvailable);
+    if (debug) {
+        connect(&controller, &QSS::Controller::debug, this, &ControllerThread::logAvailable);
+    }
     connect(&controller, &QSS::Controller::newBytesReceived, this, &ControllerThread::newBytes);
     connect(&controller, &QSS::Controller::newBytesSent, this, &ControllerThread::newBytes);
     controller.setup(profile);
