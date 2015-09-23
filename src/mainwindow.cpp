@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     configHelper = new ConfigHelper(model, this);
     proxyModel = new QSortFilterProxyModel(this);
     proxyModel->setSourceModel(model);
+    proxyModel->setSortRole(Qt::EditRole);
     proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     proxyModel->setFilterKeyColumn(-1);//read from all columns
     ui->connectionView->setModel(proxyModel);
