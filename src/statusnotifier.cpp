@@ -49,13 +49,13 @@ const QStringList StatusNotifier::appIndicatorDE = QStringList() << "Unity" << "
 #ifdef Q_OS_UNIX
 void onAppIndicatorActivated(GtkMenuItem *, gpointer data)
 {
-    MainWindow *w = reinterpret_cast<MainWindow *>(data);
+    MainWindow *window = reinterpret_cast<MainWindow *>(data);
     if (!window->isVisible() || window->isMinimized()) {
         window->showNormal();
         window->activateWindow();
         window->raise();
     } else {
-        w->hide();
+        window->hide();
     }
 }
 
