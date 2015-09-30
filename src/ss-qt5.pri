@@ -13,7 +13,6 @@ SOURCES      += src/main.cpp\
                 src/uriinputdialog.cpp \
                 src/sqprofile.cpp \
                 src/settingsdialog.cpp \
-                src/controllerthread.cpp \
                 src/statusnotifier.cpp \
                 src/connectiontablemodel.cpp \
                 src/connectionitem.cpp \
@@ -33,7 +32,6 @@ HEADERS      += src/mainwindow.h \
                 src/uriinputdialog.h \
                 src/sqprofile.h \
                 src/settingsdialog.h \
-                src/controllerthread.h \
                 src/statusnotifier.h \
                 src/connectiontablemodel.h \
                 src/connectionitem.h \

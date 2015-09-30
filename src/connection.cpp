@@ -5,21 +5,9 @@
 
 Connection::Connection(QObject *parent) :
     QObject(parent),
+    controller(nullptr),
     running(false)
-{
-    controllerThread = new ControllerThread(this);
-    connect(controllerThread, &ControllerThread::stateChanged, [&](bool run){
-        running = run;
-        emit stateChanged(run);
-    });
-    connect(controllerThread, &ControllerThread::newBytes, [&](const quint64 &b) {
-        profile.currentUsage += b;
-        profile.totalUsage += b;
-        emit dataUsageChanged(profile.currentUsage, profile.totalUsage);
-    });
-    connect(controllerThread, &ControllerThread::logAvailable, this, &Connection::onNewLog);
-    connect(controllerThread, &ControllerThread::failed, this, &Connection::startFailed);
-}
+{}
 
 Connection::Connection(const SQProfile &_profile, QObject *parent) :
     Connection(parent)
@@ -111,14 +99,35 @@ void Connection::start()
     qssprofile.http_proxy = profile.httpMode;
     qssprofile.debug = profile.debug;
 
-    controllerThread->setup(qssprofile);
-    controllerThread->start();
+    if (controller) {
+        controller->deleteLater();
+    }
+    controller = new QSS::Controller(true, false, this);
+    connect(controller, &QSS::Controller::runningStateChanged, [&](bool run){
+        running = run;
+        emit stateChanged(run);
+    });
+    connect(controller, &QSS::Controller::newBytesReceived, this, &Connection::onNewBytesTransmitted);
+    connect(controller, &QSS::Controller::newBytesSent, this, &Connection::onNewBytesTransmitted);
+    connect(controller, &QSS::Controller::info, this, &Connection::onNewLog);
+    if (profile.debug) {
+        connect(controller, &QSS::Controller::debug, this, &Connection::onNewLog);
+    }
+
+    controller->setup(qssprofile);
+    if (!controller->start()) {
+        emit startFailed();
+    }
 }
 
 void Connection::stop()
 {
-    controllerThread->quit();
-    controllerThread->wait();
+    if (controller) {
+        controller->stop();
+        controller->deleteLater();
+        controller = nullptr;
+    }
+
     if (running != false) {
         running = false;
         emit stateChanged(running);
@@ -131,6 +140,13 @@ void Connection::testAddressLatency(const QHostAddress &addr)
     connect(addrTester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLatencyTestFinished);
     connect(addrTester, &QSS::AddressTester::lagTestFinished, addrTester, &QSS::AddressTester::deleteLater);
     addrTester->startLagTest();
+}
+
+void Connection::onNewBytesTransmitted(const quint64 &b)
+{
+    profile.currentUsage += b;
+    profile.totalUsage += b;
+    emit dataUsageChanged(profile.currentUsage, profile.totalUsage);
 }
 
 void Connection::onNewLog(const QString &str)
