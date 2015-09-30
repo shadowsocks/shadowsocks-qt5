@@ -1,3 +1,12 @@
+shadowsocks-qt5 (2.5.1-1) stable; urgency=medium
+
+  * fix a UI issue when a connection is removed
+  * fix a minimize/restore issue
+  * fix a crash on Windows platform
+  * fix sorting issues
+
+ -- Symeon Huang <hzwhuang@gmail>  Wed, 30 Sep 2015 18:15:00 +0100
+
 shadowsocks-qt5 (2.5.0-1) stable; urgency=medium
 
   * update for libQtShadowsocks 1.7
