@@ -72,12 +72,14 @@ QModelIndex ConnectionTableModel::index(int row, int column, const QModelIndex &
     }
 }
 
-bool ConnectionTableModel::removeRows(int row, int count, const QModelIndex &)
+bool ConnectionTableModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (row < 0 || count <= 0 || count + row > items.count()) {
         return false;
     }
+    beginRemoveRows(parent, row, row + count - 1);
     items.erase(items.begin() + row, items.begin() + row + count);
+    endRemoveRows();
     return true;
 }
 
