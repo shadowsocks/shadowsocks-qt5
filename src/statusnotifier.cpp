@@ -90,10 +90,12 @@ bool StatusNotifier::isUsingAppIndicator() const
 
 void StatusNotifier::activate()
 {
-    if (window->isVisible()) {
-        window->hide();
+    if (!window->isVisible() || window->isMinimized()) {
+        window->showNormal();
+        window->activateWindow();
+        window->raise();
     } else {
-        window->show();
+        window->hide();
     }
 }
 
