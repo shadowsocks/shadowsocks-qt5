@@ -1,3 +1,11 @@
+shadowsocks-qt5 (2.6.0-1) stable; urgency=medium
+
+  * support one-time authentication
+  * drop support for RC4 and TABLE
+  * real-time latency update
+
+ -- Symeon Huang <hzwhuang@gmail>  Sun, 08 Nov 2015 17:22:00 +0000
+
 shadowsocks-qt5 (2.5.1-1) stable; urgency=medium
 
   * fix a UI issue when a connection is removed
