@@ -124,15 +124,10 @@ void Connection::start()
 
 void Connection::stop()
 {
-    if (controller) {
-        controller->stop();
-        controller->deleteLater();
-        controller = nullptr;
-    }
-
-    if (running != false) {
-        running = false;
-        emit stateChanged(running);
+    if (running) {
+        if (controller) {
+            controller->stop();
+        }
     }
 }
 
