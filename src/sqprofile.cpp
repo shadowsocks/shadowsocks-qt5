@@ -16,16 +16,17 @@ SQProfile::SQProfile()
     QDate currentDate = QDate::currentDate();
     nextResetDate = QDate(currentDate.year(), currentDate.month() + 1, 1);
     httpMode = false;
+    onetimeAuth = false;
 }
 
 QDataStream& operator << (QDataStream &out, const SQProfile &p)
 {
-    out << p.autoStart << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.latency << p.currentUsage << p.totalUsage << p.lastTime << p.nextResetDate << p.httpMode;
+    out << p.autoStart << p.debug << p.serverPort << p.localPort << p.name << p.serverAddress << p.localAddress << p.method << p.password << p.timeout << p.latency << p.currentUsage << p.totalUsage << p.lastTime << p.nextResetDate << p.httpMode << p.onetimeAuth;
     return out;
 }
 
 QDataStream& operator >> (QDataStream &in, SQProfile &p)
 {
-    in >> p.autoStart >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.latency >> p.currentUsage >> p.totalUsage >> p.lastTime >> p.nextResetDate >> p.httpMode;
+    in >> p.autoStart >> p.debug >> p.serverPort >> p.localPort >> p.name >> p.serverAddress >> p.localAddress >> p.method >> p.password >> p.timeout >> p.latency >> p.currentUsage >> p.totalUsage >> p.lastTime >> p.nextResetDate >> p.httpMode >> p.onetimeAuth;
     return in;
 }

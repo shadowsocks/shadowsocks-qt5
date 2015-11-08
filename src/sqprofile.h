@@ -43,6 +43,7 @@ struct SQProfile
     QDateTime lastTime;//last time this connection is used
     QDate nextResetDate;//next scheduled date to reset data usage
     bool httpMode;
+    bool onetimeAuth;
 };
 Q_DECLARE_METATYPE(SQProfile)
 

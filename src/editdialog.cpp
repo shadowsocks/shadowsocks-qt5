@@ -28,6 +28,7 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     ui->httpRadioButton->setChecked(connection->profile.httpMode);
     ui->pwdEdit->setText(connection->profile.password);
     ui->encryptComboBox->setCurrentText(connection->profile.method.toUpper());
+    ui->otaCheckBox->setChecked(connection->profile.onetimeAuth);
     ui->timeoutSpinBox->setValue(connection->profile.timeout);
     ui->resetDateEdit->setDate(connection->profile.nextResetDate);
     ui->resetDateEdit->setMinimumDate(QDate::currentDate());
@@ -58,6 +59,7 @@ void EditDialog::save()
     connection->profile.nextResetDate = ui->resetDateEdit->date();
     connection->profile.autoStart = ui->autoStartCheckBox->isChecked();
     connection->profile.debug = ui->debugCheckBox->isChecked();
+    connection->profile.onetimeAuth = ui->otaCheckBox->isChecked();
 
     this->accept();
 }

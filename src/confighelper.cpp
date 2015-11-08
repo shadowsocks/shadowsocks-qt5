@@ -44,7 +44,7 @@ void ConfigHelper::save()
     settings->setValue("OnlyOneInstance", QVariant(onlyOneInstace));
     settings->setValue("ShowToolbar", QVariant(showToolbar));
     settings->setValue("ShowFilterBar", QVariant(showFilterBar));
-    settings->setValue("ConfigVersion", QVariant(2.5));
+    settings->setValue("ConfigVersion", QVariant(2.6));
 }
 
 void ConfigHelper::importGuiConfigJson(const QString &file)
@@ -230,7 +230,7 @@ void ConfigHelper::setShowFilterBar(bool show)
 
 void ConfigHelper::readConfiguration()
 {
-    float configVer = settings->value("ConfigVersion", QVariant(2.4)).toFloat();
+    qreal configVer = settings->value("ConfigVersion", QVariant(2.4)).toReal();
     int size = settings->beginReadArray(profilePrefix);
     for (int i = 0; i < size; ++i) {
         settings->setArrayIndex(i);
@@ -239,6 +239,10 @@ void ConfigHelper::readConfiguration()
         checkProfileDataUsageReset(profile);
         if (configVer < 2.5) {
             profile.httpMode = false;
+        }
+        if (configVer < 2.6) {
+            qCritical() << "configVer" << configVer << " < 2.6";
+            profile.onetimeAuth = false;
         }
         Connection *con = new Connection(profile, this);
         model->appendConnection(con);
