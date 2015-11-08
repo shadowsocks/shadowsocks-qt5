@@ -1,6 +1,6 @@
 #include "ssvalidator.h"
 
-const QStringList SSValidator::supportedMethod = QStringList() << "TABLE" << "RC4" << "RC4-MD5" << "AES-128-CFB" << "AES-192-CFB" << "AES-256-CFB" << "BF-CFB" << "CAMELLIA-128-CFB" << "CAMELLIA-192-CFB" << "CAMELLIA-256-CFB" << "CAST5-CFB" << "CHACHA20"<< "DES-CFB" << "IDEA-CFB" << "RC2-CFB" << "SALSA20" << "SEED-CFB";//all upper-case
+const QStringList SSValidator::supportedMethod = QStringList() << "RC4-MD5" << "AES-128-CFB" << "AES-192-CFB" << "AES-256-CFB" << "BF-CFB" << "CAMELLIA-128-CFB" << "CAMELLIA-192-CFB" << "CAMELLIA-256-CFB" << "CAST5-CFB" << "CHACHA20"<< "DES-CFB" << "IDEA-CFB" << "RC2-CFB" << "SALSA20" << "SEED-CFB";//all upper-case
 
 bool SSValidator::validate(QString input)
 {
