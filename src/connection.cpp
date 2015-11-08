@@ -98,6 +98,7 @@ void Connection::start()
     qssprofile.timeout = profile.timeout;
     qssprofile.http_proxy = profile.httpMode;
     qssprofile.debug = profile.debug;
+    qssprofile.auth = profile.onetimeAuth;
 
     if (controller) {
         controller->deleteLater();
@@ -107,6 +108,7 @@ void Connection::start()
         running = run;
         emit stateChanged(run);
     });
+    connect(controller, &QSS::Controller::tcpLatencyAvailable, this, &Connection::onLatencyAvailable);
     connect(controller, &QSS::Controller::newBytesReceived, this, &Connection::onNewBytesTransmitted);
     connect(controller, &QSS::Controller::newBytesSent, this, &Connection::onNewBytesTransmitted);
     connect(controller, &QSS::Controller::info, this, &Connection::onNewLog);
@@ -137,7 +139,7 @@ void Connection::stop()
 void Connection::testAddressLatency(const QHostAddress &addr)
 {
     QSS::AddressTester *addrTester = new QSS::AddressTester(addr, profile.serverPort, this);
-    connect(addrTester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLatencyTestFinished);
+    connect(addrTester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLatencyAvailable);
     connect(addrTester, &QSS::AddressTester::lagTestFinished, addrTester, &QSS::AddressTester::deleteLater);
     addrTester->startLagTest();
 }
@@ -163,12 +165,12 @@ void Connection::onServerAddressLookedUp(const QHostInfo &host)
     if (host.error() == QHostInfo::NoError) {
         testAddressLatency(host.addresses().first());
     } else {
-        onLatencyTestFinished(-2);
+        onLatencyAvailable(-2);
     }
 }
 
-void Connection::onLatencyTestFinished(int latency)
+void Connection::onLatencyAvailable(const int &latency)
 {
     profile.latency = latency;
-    emit pingFinished(latency);
+    emit latencyAvailable(latency);
 }

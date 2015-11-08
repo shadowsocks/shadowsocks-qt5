@@ -42,7 +42,7 @@ public:
 
 signals:
     void stateChanged(bool started);
-    void pingFinished(const int);
+    void latencyAvailable(const int);
     void newLogAvailable(const QString &);
     void dataUsageChanged(const quint64 &current, const quint64 &total);
     void startFailed();
@@ -69,7 +69,7 @@ private slots:
     void onNewBytesTransmitted(const quint64 &);
     void onNewLog(const QString &);
     void onServerAddressLookedUp(const QHostInfo &host);
-    void onLatencyTestFinished(int);
+    void onLatencyAvailable(const int &);
 };
 Q_DECLARE_METATYPE(Connection*)
 
