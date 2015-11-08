@@ -130,6 +130,16 @@
         <translation>超时</translation>
     </message>
     <message>
+        <location filename="../editdialog.ui" line="247"/>
+        <source>Turn on one-time authentication and header verification (need server support)</source>
+        <translation>开启一次验证和消息头验证（需要服务器支持）</translation>
+    </message>
+    <message>
+        <location filename="../editdialog.ui" line="250"/>
+        <source>One-time authentication</source>
+        <translation>一次验证</translation>
+    </message>
+    <message>
         <location filename="../editdialog.ui" line="141"/>
         <source>Encryption Method</source>
         <translation>加密方式</translation>
@@ -221,51 +231,51 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="344"/>
+        <location filename="../mainwindow.cpp" line="345"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="120"/>
+        <location filename="../mainwindow.cpp" line="121"/>
         <source>Import Connections from gui-config.json</source>
         <translation>从gui-config.json导入连接</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="128"/>
+        <location filename="../mainwindow.cpp" line="129"/>
         <source>Export Connections as gui-config.json</source>
         <translation>将所有连接信息导出为gui-config.json</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="144"/>
-        <location filename="../mainwindow.cpp" line="169"/>
+        <location filename="../mainwindow.cpp" line="145"/>
+        <location filename="../mainwindow.cpp" line="170"/>
         <source>QR Code Not Found</source>
         <translation>未找到二维码</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="144"/>
-        <location filename="../mainwindow.cpp" line="169"/>
+        <location filename="../mainwindow.cpp" line="145"/>
+        <location filename="../mainwindow.cpp" line="170"/>
         <source>Can&apos;t find any QR code image that contains valid URI on your screen(s).</source>
         <translation>无法在您的屏幕上找到任何包含有效URI的二维码图像。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="164"/>
+        <location filename="../mainwindow.cpp" line="165"/>
         <source>Open QR Code Image File</source>
         <translation>打开二维码图像文件</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="190"/>
+        <location filename="../mainwindow.cpp" line="191"/>
         <source>Open config.json</source>
         <translation>打开 config.json</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="225"/>
-        <location filename="../mainwindow.cpp" line="237"/>
+        <location filename="../mainwindow.cpp" line="226"/>
+        <location filename="../mainwindow.cpp" line="238"/>
         <source>Invalid</source>
         <translation>无效</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="225"/>
-        <location filename="../mainwindow.cpp" line="237"/>
+        <location filename="../mainwindow.cpp" line="226"/>
+        <location filename="../mainwindow.cpp" line="238"/>
         <source>The connection&apos;s profile is invalid!</source>
         <translation>当前连接的配置无效！</translation>
     </message>
@@ -600,7 +610,7 @@
     <name>StatusNotifier</name>
     <message>
         <location filename="../statusnotifier.cpp" line="21"/>
-        <location filename="../statusnotifier.cpp" line="121"/>
+        <location filename="../statusnotifier.cpp" line="125"/>
         <source>Minimise</source>
         <translation>最小化</translation>
     </message>
@@ -611,7 +621,7 @@
     </message>
     <message>
         <location filename="../statusnotifier.cpp" line="21"/>
-        <location filename="../statusnotifier.cpp" line="121"/>
+        <location filename="../statusnotifier.cpp" line="125"/>
         <source>Restore</source>
         <translation>恢复</translation>
     </message>
