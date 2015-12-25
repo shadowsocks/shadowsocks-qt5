@@ -42,7 +42,8 @@ public:
     bool isOnlyOneInstance() const;
     bool isShowToolbar() const;
     bool isShowFilterBar() const;
-    void setGeneralSettings(int ts, bool hide, bool oneInstance);
+    bool isNativeMenuBar() const;
+    void setGeneralSettings(int ts, bool hide, bool oneInstance, bool nativeMB);
 
 public slots:
     void save();
@@ -58,6 +59,7 @@ private:
     bool onlyOneInstace;
     bool showToolbar;
     bool showFilterBar;
+    bool nativeMenuBar;
     QSettings *settings;
     ConnectionTableModel *model;
     QString configFile;

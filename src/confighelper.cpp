@@ -44,6 +44,7 @@ void ConfigHelper::save()
     settings->setValue("OnlyOneInstance", QVariant(onlyOneInstace));
     settings->setValue("ShowToolbar", QVariant(showToolbar));
     settings->setValue("ShowFilterBar", QVariant(showFilterBar));
+    settings->setValue("NativeMenuBar", QVariant(nativeMenuBar));
     settings->setValue("ConfigVersion", QVariant(2.6));
 }
 
@@ -208,7 +209,12 @@ bool ConfigHelper::isShowFilterBar() const
     return showFilterBar;
 }
 
-void ConfigHelper::setGeneralSettings(int ts, bool hide, bool oneInstance)
+bool ConfigHelper::isNativeMenuBar() const
+{
+    return nativeMenuBar;
+}
+
+void ConfigHelper::setGeneralSettings(int ts, bool hide, bool oneInstance, bool nativeMB)
 {
     if (toolbarStyle != ts) {
         emit toolbarStyleChanged(static_cast<Qt::ToolButtonStyle>(ts));
@@ -216,6 +222,7 @@ void ConfigHelper::setGeneralSettings(int ts, bool hide, bool oneInstance)
     toolbarStyle = ts;
     hideWindowOnStartup = hide;
     onlyOneInstace = oneInstance;
+    nativeMenuBar = nativeMB;
 }
 
 void ConfigHelper::setShowToolbar(bool show)
@@ -254,6 +261,7 @@ void ConfigHelper::readConfiguration()
     onlyOneInstace = settings->value("OnlyOneInstance", QVariant(true)).toBool();
     showToolbar = settings->value("ShowToolbar", QVariant(true)).toBool();
     showFilterBar = settings->value("ShowFilterBar", QVariant(true)).toBool();
+    nativeMenuBar = settings->value("NativeMenuBar", QVariant(false)).toBool();
 }
 
 void ConfigHelper::checkProfileDataUsageReset(SQProfile &profile)

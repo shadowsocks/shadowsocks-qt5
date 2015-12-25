@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //some UI changes accoding to config
     ui->toolBar->setVisible(configHelper->isShowToolbar());
     ui->actionShowFilterBar->setChecked(configHelper->isShowFilterBar());
+    ui->menuBar->setNativeMenuBar(configHelper->isNativeMenuBar());
 
     //Move to the center of the screen
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());

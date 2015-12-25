@@ -110,7 +110,7 @@
      <x>0</x>
      <y>0</y>
      <width>480</width>
-     <height>29</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConnection">
@@ -123,8 +123,7 @@
      </property>
      <property name="icon">
       <iconset theme="list-add">
-       <normaloff/>
-      </iconset>
+       <normaloff>.</normaloff>.</iconset>
      </property>
      <addaction name="actionManually"/>
      <addaction name="actionURI"/>
@@ -184,8 +183,7 @@
   <action name="actionManually">
    <property name="icon">
     <iconset theme="edit-guides">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Manually</string>
@@ -197,8 +195,7 @@
   <action name="actionQRCode">
    <property name="icon">
     <iconset theme="edit-image-face-recognize">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Scan QR Code on Screen</string>
@@ -207,8 +204,7 @@
   <action name="actionQRCodeFromFile">
    <property name="icon">
     <iconset theme="document-open">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;From QR Code Image File</string>
@@ -220,8 +216,7 @@
   <action name="actionURI">
    <property name="icon">
     <iconset theme="text-field">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;URI</string>
@@ -233,8 +228,7 @@
   <action name="actionDelete">
    <property name="icon">
     <iconset theme="list-remove">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Delete</string>
@@ -243,8 +237,7 @@
   <action name="actionEdit">
    <property name="icon">
     <iconset theme="document-edit">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Edit</string>
@@ -253,8 +246,7 @@
   <action name="actionConnect">
    <property name="icon">
     <iconset theme="network-connect">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Connect</string>
@@ -263,8 +255,7 @@
   <action name="actionDisconnect">
    <property name="icon">
     <iconset theme="network-disconnect">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>D&amp;isconnect</string>
@@ -273,8 +264,7 @@
   <action name="actionQuit">
    <property name="icon">
     <iconset theme="application-exit">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Quit</string>
@@ -286,8 +276,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset theme="help-about">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;About</string>
@@ -301,8 +290,7 @@
   <action name="actionGeneralSettings">
    <property name="icon">
     <iconset theme="configure">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;General Settings</string>
@@ -311,8 +299,7 @@
   <action name="actionShare">
    <property name="icon">
     <iconset theme="document-share">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Share</string>
@@ -321,8 +308,7 @@
   <action name="actionReportBug">
    <property name="icon">
     <iconset theme="tools-report-bug">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Report Bug</string>
@@ -331,8 +317,7 @@
   <action name="actionViewLog">
    <property name="icon">
     <iconset theme="view-list-text">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>View &amp;Log</string>
@@ -341,8 +326,7 @@
   <action name="actionTestLatency">
    <property name="icon">
     <iconset theme="flag">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Test Latency</string>
@@ -359,8 +343,7 @@
   <action name="actionImportGUIJson">
    <property name="icon">
     <iconset theme="document-import">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Import Connections from gui-config.json</string>
@@ -372,8 +355,7 @@
   <action name="actionFromConfigJson">
    <property name="icon">
     <iconset theme="document-open">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>From &amp;config.json</string>
@@ -382,8 +364,7 @@
   <action name="actionSaveManually">
    <property name="icon">
     <iconset theme="document-save">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Save Manually</string>
@@ -395,8 +376,7 @@
   <action name="actionMoveUp">
    <property name="icon">
     <iconset theme="go-up">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Move Up</string>
@@ -405,8 +385,7 @@
   <action name="actionMoveDown">
    <property name="icon">
     <iconset theme="go-down">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Mo&amp;ve Down</string>
@@ -429,8 +408,7 @@
   <action name="actionExportGUIJson">
    <property name="icon">
     <iconset theme="document-export">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Export as gui-config.json</string>
@@ -439,8 +417,7 @@
   <action name="actionScanQRCodeCapturer">
    <property name="icon">
     <iconset theme="edit-image-face-recognize">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Scan &amp;QR Code using Capturer</string>
