@@ -117,11 +117,11 @@ void ConnectionTableModel::disconnectConnectionsAt(const QString &addr, quint16 
     bool anyAddr = (addr.compare("0.0.0.0") == 0);
     for (auto &i : items) {
         Connection *con = i->getConnection();
-        if (con->isRunning()) {
-            if (con->getProfile().localPort == port) {
-                if ((con->getProfile().localAddress.compare("0.0.0.0") == 0) || (con->getProfile().localAddress == addr) || anyAddr) {
-                    con->stop();
-                }
+        if (con->isRunning() && con->getProfile().localPort == port) {
+            if ((con->getProfile().localAddress == addr) ||
+                (con->getProfile().localAddress.compare("0.0.0.0") == 0) ||
+                anyAddr) {
+                con->stop();
             }
         }
     }

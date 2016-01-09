@@ -15,7 +15,9 @@ ConnectionItem::ConnectionItem(Connection *_con, QObject *parent) :
     }
 }
 
-const QStringList ConnectionItem::bytesUnits = QStringList() << " B" << " KiB" << " MiB" << " GiB" << " TiB" << " PiB" << " EiB" << " ZiB" << " YiB";
+const QStringList ConnectionItem::bytesUnits = QStringList()
+        << " B" << " KiB" << " MiB" << " GiB" << " TiB"
+        << " PiB" << " EiB" << " ZiB" << " YiB";
 
 int ConnectionItem::columnCount()
 {
@@ -35,7 +37,8 @@ QVariant ConnectionItem::data(int column, int role) const
         case 1://server
             return QVariant(con->profile.serverAddress);
         case 2://status
-            return con->isRunning() ? QVariant(tr("Connected")) : QVariant(tr("Disconnected"));
+            return con->isRunning() ? QVariant(tr("Connected"))
+                                    : QVariant(tr("Disconnected"));
         case 3://latency
             if (role == Qt::DisplayRole) {
                 return QVariant(convertLatencyToString(con->profile.latency));
@@ -95,7 +98,8 @@ QString ConnectionItem::convertLatencyToString(const int latency)
         break;
     default:
         if (latency >= 1000) {
-            latencyStr = QString::number(static_cast<double>(latency) / 1000.0) + QStringLiteral(" ") + tr("s");
+            latencyStr = QString::number(static_cast<double>(latency) / 1000.0)
+                       + QStringLiteral(" ") + tr("s");
         } else {
             latencyStr = QString::number(latency) + QStringLiteral(" ") + tr("ms");
         }
