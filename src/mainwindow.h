@@ -83,6 +83,7 @@ private slots:
     void onCustomContextMenuRequested(const QPoint &pos);
     void onFilterToggled(bool);
     void onFilterTextChanged(const QString &text);
+    void onQRCodeCapturerResultFound(const QString &uri);
 
 protected slots:
     void hideEvent(QHideEvent *e);

@@ -19,13 +19,9 @@
 #ifndef QRCODECAPTURER_H
 #define QRCODECAPTURER_H
 
-#include <QDialog>
+#include <QMainWindow>
 
-namespace Ui {
-class QRCodeCapturer;
-}
-
-class QRCodeCapturer : public QDialog
+class QRCodeCapturer : public QMainWindow
 {
     Q_OBJECT
 
@@ -37,13 +33,14 @@ public:
 
 signals:
     void qrCodeFound(const QString &result);
+    void closed();
 
 protected slots:
     void moveEvent(QMoveEvent *e);
     void resizeEvent(QResizeEvent *e);
+    void closeEvent(QCloseEvent *e);
 
 private:
-    Ui::QRCodeCapturer *ui;
     void decodeCurrentRegion();
 };
 

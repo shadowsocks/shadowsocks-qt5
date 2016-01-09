@@ -36,15 +36,21 @@ MainWindow::MainWindow(QWidget *parent) :
     proxyModel->setFilterKeyColumn(-1);//read from all columns
     ui->connectionView->setModel(proxyModel);
     ui->connectionView->resizeColumnsToContents();
-    ui->toolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(configHelper->getToolbarStyle()));
+    ui->toolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>
+                                    (configHelper->getToolbarStyle()));
 
     notifier = new StatusNotifier(this, this->isHideWindowOnStartup(), this);
 
-    connect(configHelper, &ConfigHelper::toolbarStyleChanged, ui->toolBar, &QToolBar::setToolButtonStyle);
-    connect(model, &ConnectionTableModel::message, notifier, &StatusNotifier::showNotification);
-    connect(model, &ConnectionTableModel::rowStatusChanged, this, &MainWindow::onConnectionStatusChanged);
-    connect(ui->actionSaveManually, &QAction::triggered, configHelper, &ConfigHelper::save);
-    connect(ui->actionTestAllLatency, &QAction::triggered, model, &ConnectionTableModel::testAllLatency);
+    connect(configHelper, &ConfigHelper::toolbarStyleChanged,
+            ui->toolBar, &QToolBar::setToolButtonStyle);
+    connect(model, &ConnectionTableModel::message,
+            notifier, &StatusNotifier::showNotification);
+    connect(model, &ConnectionTableModel::rowStatusChanged,
+            this, &MainWindow::onConnectionStatusChanged);
+    connect(ui->actionSaveManually, &QAction::triggered,
+            configHelper, &ConfigHelper::save);
+    connect(ui->actionTestAllLatency, &QAction::triggered,
+            model, &ConnectionTableModel::testAllLatency);
 
     //some UI changes accoding to config
     ui->toolBar->setVisible(configHelper->isShowToolbar());
@@ -52,44 +58,72 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->menuBar->setNativeMenuBar(configHelper->isNativeMenuBar());
 
     //Move to the center of the screen
-    this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
+    this->move(QApplication::desktop()->screen()->rect().center() -
+               this->rect().center());
 
     //UI signals
-    connect(ui->actionImportGUIJson, &QAction::triggered, this, &MainWindow::onImportGuiJson);
-    connect(ui->actionExportGUIJson, &QAction::triggered, this, &MainWindow::onExportGuiJson);
+    connect(ui->actionImportGUIJson, &QAction::triggered,
+            this, &MainWindow::onImportGuiJson);
+    connect(ui->actionExportGUIJson, &QAction::triggered,
+            this, &MainWindow::onExportGuiJson);
     connect(ui->actionQuit, &QAction::triggered, qApp, &QApplication::quit);
-    connect(ui->actionManually, &QAction::triggered, this, &MainWindow::onAddManually);
-    connect(ui->actionQRCode, &QAction::triggered, this, &MainWindow::onAddScreenQRCode);
-    connect(ui->actionScanQRCodeCapturer, &QAction::triggered, this, &MainWindow::onAddScreenQRCodeCapturer);
-    connect(ui->actionQRCodeFromFile, &QAction::triggered, this, &MainWindow::onAddQRCodeFile);
-    connect(ui->actionURI, &QAction::triggered, this, &MainWindow::onAddFromURI);
-    connect(ui->actionFromConfigJson, &QAction::triggered, this, &MainWindow::onAddFromConfigJSON);
+    connect(ui->actionManually, &QAction::triggered,
+            this, &MainWindow::onAddManually);
+    connect(ui->actionQRCode, &QAction::triggered,
+            this, &MainWindow::onAddScreenQRCode);
+    connect(ui->actionScanQRCodeCapturer, &QAction::triggered,
+            this, &MainWindow::onAddScreenQRCodeCapturer);
+    connect(ui->actionQRCodeFromFile, &QAction::triggered,
+            this, &MainWindow::onAddQRCodeFile);
+    connect(ui->actionURI, &QAction::triggered,
+            this, &MainWindow::onAddFromURI);
+    connect(ui->actionFromConfigJson, &QAction::triggered,
+            this, &MainWindow::onAddFromConfigJSON);
     connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::onDelete);
     connect(ui->actionEdit, &QAction::triggered, this, &MainWindow::onEdit);
     connect(ui->actionShare, &QAction::triggered, this, &MainWindow::onShare);
-    connect(ui->actionConnect, &QAction::triggered, this, &MainWindow::onConnect);
-    connect(ui->actionForceConnect, &QAction::triggered, this, &MainWindow::onForceConnect);
-    connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::onDisconnect);
-    connect(ui->actionTestLatency, &QAction::triggered, this, &MainWindow::onLatencyTest);
-    connect(ui->actionViewLog, &QAction::triggered, this, &MainWindow::onViewLog);
+    connect(ui->actionConnect, &QAction::triggered,
+            this, &MainWindow::onConnect);
+    connect(ui->actionForceConnect, &QAction::triggered,
+            this, &MainWindow::onForceConnect);
+    connect(ui->actionDisconnect, &QAction::triggered,
+            this, &MainWindow::onDisconnect);
+    connect(ui->actionTestLatency, &QAction::triggered,
+            this, &MainWindow::onLatencyTest);
+    connect(ui->actionViewLog, &QAction::triggered,
+            this, &MainWindow::onViewLog);
     connect(ui->actionMoveUp, &QAction::triggered, this, &MainWindow::onMoveUp);
-    connect(ui->actionMoveDown, &QAction::triggered, this, &MainWindow::onMoveDown);
-    connect(ui->actionGeneralSettings, &QAction::triggered, this, &MainWindow::onGeneralSettings);
+    connect(ui->actionMoveDown, &QAction::triggered,
+            this, &MainWindow::onMoveDown);
+    connect(ui->actionGeneralSettings, &QAction::triggered,
+            this, &MainWindow::onGeneralSettings);
     connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::onAbout);
-    connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
-    connect(ui->actionReportBug, &QAction::triggered, this, &MainWindow::onReportBug);
-    connect(ui->actionShowFilterBar, &QAction::toggled, configHelper, &ConfigHelper::setShowFilterBar);
-    connect(ui->actionShowFilterBar, &QAction::toggled, this, &MainWindow::onFilterToggled);
-    connect(ui->toolBar, &QToolBar::visibilityChanged, configHelper, &ConfigHelper::setShowToolbar);
-    connect(ui->filterLineEdit, &QLineEdit::textChanged, this, &MainWindow::onFilterTextChanged);
+    connect(ui->actionAboutQt, &QAction::triggered,
+            qApp, &QApplication::aboutQt);
+    connect(ui->actionReportBug, &QAction::triggered,
+            this, &MainWindow::onReportBug);
+    connect(ui->actionShowFilterBar, &QAction::toggled,
+            configHelper, &ConfigHelper::setShowFilterBar);
+    connect(ui->actionShowFilterBar, &QAction::toggled,
+            this, &MainWindow::onFilterToggled);
+    connect(ui->toolBar, &QToolBar::visibilityChanged,
+            configHelper, &ConfigHelper::setShowToolbar);
+    connect(ui->filterLineEdit, &QLineEdit::textChanged,
+            this, &MainWindow::onFilterTextChanged);
 
-    connect(ui->connectionView, &QTableView::clicked, this, static_cast<void (MainWindow::*)(const QModelIndex&)>(&MainWindow::checkCurrentIndex));
-    connect(ui->connectionView, &QTableView::activated, this, static_cast<void (MainWindow::*)(const QModelIndex&)>(&MainWindow::checkCurrentIndex));
-    connect(ui->connectionView, &QTableView::doubleClicked, this, &MainWindow::onEdit);
+    connect(ui->connectionView, &QTableView::clicked,
+            this, static_cast<void (MainWindow::*)(const QModelIndex&)>
+                  (&MainWindow::checkCurrentIndex));
+    connect(ui->connectionView, &QTableView::activated,
+            this, static_cast<void (MainWindow::*)(const QModelIndex&)>
+                  (&MainWindow::checkCurrentIndex));
+    connect(ui->connectionView, &QTableView::doubleClicked,
+            this, &MainWindow::onEdit);
 
     /* set custom context menu */
     ui->connectionView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->connectionView, &QTableView::customContextMenuRequested, this, &MainWindow::onCustomContextMenuRequested);
+    connect(ui->connectionView, &QTableView::customContextMenuRequested,
+            this, &MainWindow::onCustomContextMenuRequested);
 
     checkCurrentIndex();
 }
@@ -100,7 +134,8 @@ MainWindow::~MainWindow()
     configHelper->save();
 }
 
-const QUrl MainWindow::issueUrl = QUrl("https://github.com/shadowsocks/shadowsocks-qt5/issues");
+const QUrl MainWindow::issueUrl =
+        QUrl("https://github.com/shadowsocks/shadowsocks-qt5/issues");
 
 bool MainWindow::isOnlyOneInstance() const
 {
@@ -119,7 +154,11 @@ void MainWindow::startAutoStartConnections()
 
 void MainWindow::onImportGuiJson()
 {
-    QString file = QFileDialog::getOpenFileName(this, tr("Import Connections from gui-config.json"), QString(), "GUI Configuration (gui-config.json)");
+    QString file = QFileDialog::getOpenFileName(
+                   this,
+                   tr("Import Connections from gui-config.json"),
+                   QString(),
+                   "GUI Configuration (gui-config.json)");
     if (!file.isNull()) {
         configHelper->importGuiConfigJson(file);
     }
@@ -127,7 +166,11 @@ void MainWindow::onImportGuiJson()
 
 void MainWindow::onExportGuiJson()
 {
-    QString file = QFileDialog::getSaveFileName(this, tr("Export Connections as gui-config.json"), QString("gui-config.json"), "GUI Configuration (gui-config.json)");
+    QString file = QFileDialog::getSaveFileName(
+                   this,
+                   tr("Export Connections as gui-config.json"),
+                   QString("gui-config.json"),
+                   "GUI Configuration (gui-config.json)");
     if (!file.isNull()) {
         configHelper->exportGuiConfigJson(file);
     }
@@ -143,7 +186,11 @@ void MainWindow::onAddScreenQRCode()
 {
     QString uri = QRCodeCapturer::scanEntireScreen();
     if (uri.isNull()) {
-        QMessageBox::critical(this, tr("QR Code Not Found"), tr("Can't find any QR code image that contains valid URI on your screen(s)."));
+        QMessageBox::critical(
+                    this,
+                    tr("QR Code Not Found"),
+                    tr("Can't find any QR code image that contains "
+                       "valid URI on your screen(s)."));
     } else {
         Connection *newCon = new Connection(uri, this);
         newProfile(newCon);
@@ -153,12 +200,12 @@ void MainWindow::onAddScreenQRCode()
 void MainWindow::onAddScreenQRCodeCapturer()
 {
     QRCodeCapturer *capturer = new QRCodeCapturer(this);
-    connect(capturer, &QRCodeCapturer::finished, capturer, &QRCodeCapturer::deleteLater);
-    connect(capturer, &QRCodeCapturer::qrCodeFound, [this](const QString &uri){
-        Connection *newCon = new Connection(uri, this);
-        newProfile(newCon);
-    });
-    capturer->exec();
+    connect(capturer, &QRCodeCapturer::closed,
+            capturer, &QRCodeCapturer::deleteLater);
+    connect(capturer, &QRCodeCapturer::qrCodeFound,
+            this, &MainWindow::onQRCodeCapturerResultFound,
+            Qt::DirectConnection);
+    capturer->show();
 }
 
 void MainWindow::onAddQRCodeFile()
@@ -381,6 +428,16 @@ void MainWindow::onFilterToggled(bool show)
 void MainWindow::onFilterTextChanged(const QString &text)
 {
     proxyModel->setFilterWildcard(text);
+}
+
+void MainWindow::onQRCodeCapturerResultFound(const QString &uri)
+{
+    QRCodeCapturer* capturer = qobject_cast<QRCodeCapturer*>(sender());
+    // Disconnect immediately to avoid duplicate signals
+    disconnect(capturer, &QRCodeCapturer::qrCodeFound,
+               this, &MainWindow::onQRCodeCapturerResultFound);
+    Connection *newCon = new Connection(uri, this);
+    newProfile(newCon);
 }
 
 void MainWindow::hideEvent(QHideEvent *e)

@@ -42,8 +42,7 @@ FORMS        += src/mainwindow.ui \
                 src/editdialog.ui \
                 src/logdialog.ui \
                 src/uriinputdialog.ui \
-                src/settingsdialog.ui \
-                src/qrcodecapturer.ui
+                src/settingsdialog.ui
 
 RESOURCES    += src/icons.qrc \
                 src/translations.qrc
