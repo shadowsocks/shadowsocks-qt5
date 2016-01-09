@@ -44,7 +44,12 @@ StatusNotifier::~StatusNotifier()
 #endif
 }
 
-const QStringList StatusNotifier::appIndicatorDE = QStringList() << "Unity" << "XFCE" << "Pantheon" << "LXDE";
+const QStringList StatusNotifier::appIndicatorDE = QStringList()
+                                                 << "Unity"
+                                                 << "XFCE"
+                                                 << "Pantheon"
+                                                 << "LXDE"
+                                                 << "MATE";
 
 #ifdef Q_OS_UNIX
 void onAppIndicatorActivated(GtkMenuItem *, gpointer data)
