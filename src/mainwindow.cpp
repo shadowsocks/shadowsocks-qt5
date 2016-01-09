@@ -210,12 +210,19 @@ void MainWindow::onAddScreenQRCodeCapturer()
 
 void MainWindow::onAddQRCodeFile()
 {
-    QString qrFile = QFileDialog::getOpenFileName(this, tr("Open QR Code Image File"), QString(), "Images (*.png *jpg *jpeg *xpm)");
+    QString qrFile =
+            QFileDialog::getOpenFileName(this,
+                                         tr("Open QR Code Image File"),
+                                         QString(),
+                                         "Images (*.png *jpg *jpeg *xpm)");
     if (!qrFile.isNull()) {
         QImage img(qrFile);
         QString uri = URIHelper::decodeImage(img);
         if (uri.isNull()) {
-            QMessageBox::critical(this, tr("QR Code Not Found"), tr("Can't find any QR code image that contains valid URI on your screen(s)."));
+            QMessageBox::critical(this,
+                                  tr("QR Code Not Found"),
+                                  tr("Can't find any QR code image that "
+                                     "contains valid URI on your screen(s)."));
         } else {
             Connection *newCon = new Connection(uri, this);
             newProfile(newCon);
@@ -226,7 +233,8 @@ void MainWindow::onAddQRCodeFile()
 void MainWindow::onAddFromURI()
 {
     URIInputDialog *inputDlg = new URIInputDialog(this);
-    connect(inputDlg, &URIInputDialog::finished, inputDlg, &URIInputDialog::deleteLater);
+    connect(inputDlg, &URIInputDialog::finished,
+            inputDlg, &URIInputDialog::deleteLater);
     connect(inputDlg, &URIInputDialog::acceptedURI, [&](const QString &uri){
         Connection *newCon = new Connection(uri, this);
         newProfile(newCon);
@@ -236,7 +244,8 @@ void MainWindow::onAddFromURI()
 
 void MainWindow::onAddFromConfigJSON()
 {
-    QString file = QFileDialog::getOpenFileName(this, tr("Open config.json"), QString(), "JSON (*.json)");
+    QString file = QFileDialog::getOpenFileName(this, tr("Open config.json"),
+                                                QString(), "JSON (*.json)");
     if (!file.isNull()) {
         Connection *con = configHelper->configJsonToConnection(file);
         if (con) {
@@ -247,7 +256,8 @@ void MainWindow::onAddFromConfigJSON()
 
 void MainWindow::onDelete()
 {
-    model->removeRow(proxyModel->mapToSource(ui->connectionView->currentIndex()).row());
+    model->removeRow(proxyModel->mapToSource(
+                         ui->connectionView->currentIndex()).row());
     checkCurrentIndex();
 }
 
@@ -258,9 +268,12 @@ void MainWindow::onEdit()
 
 void MainWindow::onShare()
 {
-    QByteArray uri = model->getItem(proxyModel->mapToSource(ui->connectionView->currentIndex()).row())->getConnection()->getURI();
+    QByteArray uri = model->getItem(
+                proxyModel->mapToSource(ui->connectionView->currentIndex()).
+                row())->getConnection()->getURI();
     ShareDialog *shareDlg = new ShareDialog(uri, this);
-    connect(shareDlg, &ShareDialog::finished, shareDlg, &ShareDialog::deleteLater);
+    connect(shareDlg, &ShareDialog::finished,
+            shareDlg, &ShareDialog::deleteLater);
     shareDlg->exec();
 }
 
@@ -271,7 +284,8 @@ void MainWindow::onConnect()
     if (con->isValid()) {
         con->start();
     } else {
-        QMessageBox::critical(this, tr("Invalid"), tr("The connection's profile is invalid!"));
+        QMessageBox::critical(this, tr("Invalid"),
+                              tr("The connection's profile is invalid!"));
     }
 }
 
@@ -280,10 +294,12 @@ void MainWindow::onForceConnect()
     int row = proxyModel->mapToSource(ui->connectionView->currentIndex()).row();
     Connection *con = model->getItem(row)->getConnection();
     if (con->isValid()) {
-        model->disconnectConnectionsAt(con->getProfile().localAddress, con->getProfile().localPort);
+        model->disconnectConnectionsAt(con->getProfile().localAddress,
+                                       con->getProfile().localPort);
         con->start();
     } else {
-        QMessageBox::critical(this, tr("Invalid"), tr("The connection's profile is invalid!"));
+        QMessageBox::critical(this, tr("Invalid"),
+                              tr("The connection's profile is invalid!"));
     }
 }
 
@@ -295,7 +311,8 @@ void MainWindow::onDisconnect()
 
 void MainWindow::onConnectionStatusChanged(const int row, const bool running)
 {
-    if (proxyModel->mapToSource(ui->connectionView->currentIndex()).row() == row) {
+    if (proxyModel->mapToSource(
+                ui->connectionView->currentIndex()).row() == row) {
         ui->actionConnect->setEnabled(!running);
         ui->actionDisconnect->setEnabled(running);
     }
@@ -303,12 +320,15 @@ void MainWindow::onConnectionStatusChanged(const int row, const bool running)
 
 void MainWindow::onLatencyTest()
 {
-    model->getItem(proxyModel->mapToSource(ui->connectionView->currentIndex()).row())->testLatency();
+    model->getItem(proxyModel->mapToSource(ui->connectionView->currentIndex()).
+                   row())->testLatency();
 }
 
 void MainWindow::onViewLog()
 {
-    Connection *con = model->getItem(proxyModel->mapToSource(ui->connectionView->currentIndex()).row())->getConnection();
+    Connection *con = model->getItem(
+                proxyModel->mapToSource(ui->connectionView->currentIndex()).
+                row())->getConnection();
     LogDialog *logDlg = new LogDialog(con, this);
     connect(logDlg, &LogDialog::finished, logDlg, &LogDialog::deleteLater);
     logDlg->exec();
@@ -318,7 +338,11 @@ void MainWindow::onMoveUp()
 {
     QModelIndex proxyIndex = ui->connectionView->currentIndex();
     int currentRow = proxyModel->mapToSource(proxyIndex).row();
-    int targetRow = proxyModel->mapToSource(proxyModel->index(proxyIndex.row() - 1, proxyIndex.column(), proxyIndex.parent())).row();
+    int targetRow = proxyModel->mapToSource(
+                proxyModel->index(proxyIndex.row() - 1,
+                                  proxyIndex.column(),
+                                  proxyIndex.parent())
+                                           ).row();
     model->move(currentRow, targetRow);
     checkCurrentIndex();
 }
@@ -327,7 +351,11 @@ void MainWindow::onMoveDown()
 {
     QModelIndex proxyIndex = ui->connectionView->currentIndex();
     int currentRow = proxyModel->mapToSource(proxyIndex).row();
-    int targetRow = proxyModel->mapToSource(proxyModel->index(proxyIndex.row() + 1, proxyIndex.column(), proxyIndex.parent())).row();
+    int targetRow = proxyModel->mapToSource(
+                proxyModel->index(proxyIndex.row() + 1,
+                                  proxyIndex.column(),
+                                  proxyIndex.parent())
+                                           ).row();
     model->move(currentRow, targetRow);
     checkCurrentIndex();
 }
@@ -335,7 +363,8 @@ void MainWindow::onMoveDown()
 void MainWindow::onGeneralSettings()
 {
     SettingsDialog *sDlg = new SettingsDialog(configHelper, this);
-    connect(sDlg, &SettingsDialog::finished, sDlg, &SettingsDialog::deleteLater);
+    connect(sDlg, &SettingsDialog::finished,
+            sDlg, &SettingsDialog::deleteLater);
     sDlg->exec();
 }
 
@@ -373,10 +402,13 @@ void MainWindow::checkCurrentIndex(const QModelIndex &_index)
     ui->actionShare->setEnabled(valid);
     ui->actionViewLog->setEnabled(valid);
     ui->actionMoveUp->setEnabled(valid ? _index.row() > 0 : false);
-    ui->actionMoveDown->setEnabled(valid ? _index.row() < model->rowCount() - 1 : false);
+    ui->actionMoveDown->setEnabled(valid ?
+                                   _index.row() < model->rowCount() - 1 :
+                                   false);
 
     if (valid) {
-        const bool &running = model->getItem(index.row())->getConnection()->isRunning();
+        const bool &running =
+                model->getItem(index.row())->getConnection()->isRunning();
         ui->actionConnect->setEnabled(!running);
         ui->actionForceConnect->setEnabled(!running);
         ui->actionDisconnect->setEnabled(running);
@@ -398,7 +430,8 @@ void MainWindow::onAbout()
             "<p>License: <a href='http://www.gnu.org/licenses/lgpl.html'>"
             "GNU Lesser General Public License Version 3</a><br />"
             "Project Hosted at "
-            "<a href='https://github.com/librehat/shadowsocks-qt5'>GitHub</a></p>")
+            "<a href='https://github.com/shadowsocks/shadowsocks-qt5'>"
+            "GitHub</a></p>")
             .arg(QStringLiteral(APP_VERSION))
             .arg(QSS::Common::version().data())
             .arg(Botan::version_major())
