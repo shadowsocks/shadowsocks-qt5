@@ -1,7 +1,7 @@
 Shadowsocks-Qt5
 ===============
 
-Please check [project's wiki](https://github.com/librehat/shadowsocks-qt5/wiki) for "how-tos".
+Please check [project's wiki](https://github.com/shadowsocks/shadowsocks-qt5/wiki) for "how-tos".
 
 Introduction
 ------------
@@ -27,6 +27,6 @@ LICENSE
 
 ![](http://www.gnu.org/graphics/lgplv3-147x51.png)
 
-Copyright © 2014-2015 Symeon Huang
+Copyright © 2014-2016 Symeon Huang
 
 This project is licensed under version 3 of the GNU Lesser General Public License.
