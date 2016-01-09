@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->connectionView->resizeColumnsToContents();
     ui->toolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>
                                     (configHelper->getToolbarStyle()));
+    setupActionIcon();
 
     notifier = new StatusNotifier(this, this->isHideWindowOnStartup(), this);
 
@@ -494,4 +495,35 @@ void MainWindow::closeEvent(QCloseEvent *e)
     } else {
         QMainWindow::closeEvent(e);
     }
+}
+
+void MainWindow::setupActionIcon()
+{
+    ui->actionConnect->setIcon(QIcon::fromTheme("network-connect",
+                               QIcon::fromTheme("network-vpn")));
+    ui->actionDisconnect->setIcon(QIcon::fromTheme("network-disconnect",
+                                  QIcon::fromTheme("network-offline")));
+    ui->actionEdit->setIcon(QIcon::fromTheme("document-edit",
+                            QIcon::fromTheme("accessories-text-editor")));
+    ui->actionShare->setIcon(QIcon::fromTheme("document-share",
+                     QIcon::fromTheme("preferences-system-sharing")));
+    ui->actionTestLatency->setIcon(QIcon::fromTheme("flag",
+                                   QIcon::fromTheme("starred")));
+    ui->actionImportGUIJson->setIcon(QIcon::fromTheme("document-import",
+                                     QIcon::fromTheme("insert-text")));
+    ui->actionExportGUIJson->setIcon(QIcon::fromTheme("document-export",
+                                     QIcon::fromTheme("document-save-as")));
+    ui->actionManually->setIcon(QIcon::fromTheme("edit-guides",
+                                QIcon::fromTheme("accessories-text-editor")));
+    ui->actionURI->setIcon(QIcon::fromTheme("text-field",
+                           QIcon::fromTheme("insert-link")));
+    ui->actionQRCode->setIcon(QIcon::fromTheme("edit-image-face-recognize",
+                              QIcon::fromTheme("insert-image")));
+    ui->actionScanQRCodeCapturer->setIcon(ui->actionQRCode->icon());
+    ui->actionViewLog->setIcon(QIcon::fromTheme("view-list-text",
+                               QIcon::fromTheme("text-x-preview")));
+    ui->actionGeneralSettings->setIcon(QIcon::fromTheme("configure",
+                                   QIcon::fromTheme("preferences-desktop")));
+    ui->actionReportBug->setIcon(QIcon::fromTheme("tools-report-bug",
+                                 QIcon::fromTheme("help-faq")));
 }

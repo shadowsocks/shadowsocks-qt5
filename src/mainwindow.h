@@ -53,6 +53,7 @@ private:
     void editRow(int row);
     void blockChildrenSignals(bool);
     void checkCurrentIndex();
+    void setupActionIcon();
 
     static const QUrl issueUrl;
 

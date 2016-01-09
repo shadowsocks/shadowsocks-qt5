@@ -181,10 +181,6 @@
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionManually">
-   <property name="icon">
-    <iconset theme="edit-guides">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;Manually</string>
    </property>
@@ -193,10 +189,6 @@
    </property>
   </action>
   <action name="actionQRCode">
-   <property name="icon">
-    <iconset theme="edit-image-face-recognize">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;Scan QR Code on Screen</string>
    </property>
@@ -214,10 +206,6 @@
    </property>
   </action>
   <action name="actionURI">
-   <property name="icon">
-    <iconset theme="text-field">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;URI</string>
    </property>
@@ -235,28 +223,16 @@
    </property>
   </action>
   <action name="actionEdit">
-   <property name="icon">
-    <iconset theme="document-edit">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;Edit</string>
    </property>
   </action>
   <action name="actionConnect">
-   <property name="icon">
-    <iconset theme="network-connect">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;Connect</string>
    </property>
   </action>
   <action name="actionDisconnect">
-   <property name="icon">
-    <iconset theme="network-disconnect">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>D&amp;isconnect</string>
    </property>
@@ -288,46 +264,26 @@
    </property>
   </action>
   <action name="actionGeneralSettings">
-   <property name="icon">
-    <iconset theme="configure">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;General Settings</string>
    </property>
   </action>
   <action name="actionShare">
-   <property name="icon">
-    <iconset theme="document-share">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;Share</string>
    </property>
   </action>
   <action name="actionReportBug">
-   <property name="icon">
-    <iconset theme="tools-report-bug">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;Report Bug</string>
    </property>
   </action>
   <action name="actionViewLog">
-   <property name="icon">
-    <iconset theme="view-list-text">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>View &amp;Log</string>
    </property>
   </action>
   <action name="actionTestLatency">
-   <property name="icon">
-    <iconset theme="flag">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;Test Latency</string>
    </property>
@@ -341,10 +297,6 @@
    </property>
   </action>
   <action name="actionImportGUIJson">
-   <property name="icon">
-    <iconset theme="document-import">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;Import Connections from gui-config.json</string>
    </property>
@@ -406,19 +358,11 @@
    </property>
   </action>
   <action name="actionExportGUIJson">
-   <property name="icon">
-    <iconset theme="document-export">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;Export as gui-config.json</string>
    </property>
   </action>
   <action name="actionScanQRCodeCapturer">
-   <property name="icon">
-    <iconset theme="edit-image-face-recognize">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>Scan &amp;QR Code using Capturer</string>
    </property>
