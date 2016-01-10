@@ -20,7 +20,11 @@ Features
 Note
 ----
 
-If `ss-qt5` crashes and the **only one instance** mode is checked, you may need to manually delete `/tmp/qipc_sharedmemory_ShadowsocksQt*` and `/tmp/qipc_systemsem_ShadowsocksQt*`. Otherwise, `ss-qt5` will complain that another instance is already running.
+If `ss-qt5` crashes and the **only one instance** mode is checked,
+you may need to manually delete `/tmp/qipc_sharedmemory_ShadowsocksQt*`
+and `/tmp/qipc_systemsem_ShadowsocksQt*`.
+Otherwise, `ss-qt5` will complain that another instance is already running.
+Run `ss-qt5` again is also expected to work.
 
 LICENSE
 -------
