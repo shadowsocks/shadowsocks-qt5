@@ -1,3 +1,12 @@
+shadowsocks-qt5 (2.6.1-1) stable; urgency=medium
+
+  * add an option to set native menubar
+  * use appindicator on MATE
+  * add fallback icons for actions (improve visual style on non-KDE)
+  * automatically save config.ini after profile or settings changed
+
+ -- Symeon Huang <hzwhuang@gmail>  Sun, 10 Jan 2016 15:31:00 +0000
+
 shadowsocks-qt5 (2.6.0-1) stable; urgency=medium
 
   * support one-time authentication
