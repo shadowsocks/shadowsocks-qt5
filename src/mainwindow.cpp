@@ -257,8 +257,10 @@ void MainWindow::onAddFromConfigJSON()
 
 void MainWindow::onDelete()
 {
-    model->removeRow(proxyModel->mapToSource(
-                         ui->connectionView->currentIndex()).row());
+    if (model->removeRow(proxyModel->mapToSource(
+                         ui->connectionView->currentIndex()).row())) {
+        configHelper->save();
+    }
     checkCurrentIndex();
 }
 
@@ -366,7 +368,9 @@ void MainWindow::onGeneralSettings()
     SettingsDialog *sDlg = new SettingsDialog(configHelper, this);
     connect(sDlg, &SettingsDialog::finished,
             sDlg, &SettingsDialog::deleteLater);
-    sDlg->exec();
+    if (sDlg->exec()) {
+        configHelper->save();
+    }
 }
 
 void MainWindow::newProfile(Connection *newCon)
@@ -375,6 +379,7 @@ void MainWindow::newProfile(Connection *newCon)
     connect(editDlg, &EditDialog::finished, editDlg, &EditDialog::deleteLater);
     if (editDlg->exec()) {//accepted
         model->appendConnection(newCon);
+        configHelper->save();
     } else {
         newCon->deleteLater();
     }
@@ -385,7 +390,9 @@ void MainWindow::editRow(int row)
     Connection *con = model->getItem(row)->getConnection();
     EditDialog *editDlg = new EditDialog(con, this);
     connect(editDlg, &EditDialog::finished, editDlg, &EditDialog::deleteLater);
-    editDlg->exec();
+    if (editDlg->exec()) {
+        configHelper->save();
+    }
 }
 
 void MainWindow::checkCurrentIndex()
