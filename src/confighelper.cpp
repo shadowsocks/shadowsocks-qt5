@@ -292,3 +292,23 @@ void ConfigHelper::startAllAutoStart()
         }
     }
 }
+
+QByteArray ConfigHelper::getMainWindowGeometry() const
+{
+    return settings->value("MainWindowGeometry").toByteArray();
+}
+
+void ConfigHelper::setMainWindowGeometry(const QByteArray &geometry)
+{
+    settings->setValue("MainWindowGeometry", QVariant(geometry));
+}
+
+QByteArray ConfigHelper::getMainWindowState() const
+{
+    return settings->value("MainWindowState").toByteArray();
+}
+
+void ConfigHelper::setMainWindowState(const QByteArray &state)
+{
+    settings->setValue("MainWindowState", QVariant(state));
+}

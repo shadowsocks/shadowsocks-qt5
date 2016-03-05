@@ -127,12 +127,18 @@ MainWindow::MainWindow(QWidget *parent) :
             this, &MainWindow::onCustomContextMenuRequested);
 
     checkCurrentIndex();
+
+    // Restore mainWindow's geometry and state
+    restoreGeometry(configHelper->getMainWindowGeometry());
+    restoreState(configHelper->getMainWindowState());
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     configHelper->save();
+    configHelper->setMainWindowGeometry(saveGeometry());
+    configHelper->setMainWindowState(saveState());
 }
 
 const QUrl MainWindow::issueUrl =
