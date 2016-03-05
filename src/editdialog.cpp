@@ -12,7 +12,9 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     ui->setupUi(this);
 
     /* initialisation and validator setup */
-    ui->encryptComboBox->addItems(SSValidator::supportedMethod);
+    static const QStringList supportedMethodList =
+            SSValidator::supportedMethodList();
+    ui->encryptComboBox->addItems(supportedMethodList);
     IP4Validator *addrValidator = new IP4Validator(this);
     PortValidator *portValidator = new PortValidator(this);
     ui->serverPortEdit->setValidator(portValidator);

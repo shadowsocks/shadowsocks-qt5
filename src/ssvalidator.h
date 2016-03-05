@@ -27,7 +27,12 @@ public:
     static bool validate(QString input);
     static bool validatePort(const QString &port);
     static bool validateMethod(const QString &method);
-    static const QStringList supportedMethod;
+
+    /*
+     * Return supported encryption method list at run-time
+     * To avoid repetitive query, please store return result as static.
+     */
+    static QStringList supportedMethodList();
 };
 
 #endif // SSVALIDATOR_H

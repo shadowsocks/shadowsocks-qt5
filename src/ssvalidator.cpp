@@ -1,6 +1,15 @@
 #include "ssvalidator.h"
+#include <QtShadowsocks>
 
-const QStringList SSValidator::supportedMethod = QStringList() << "RC4-MD5" << "AES-128-CFB" << "AES-192-CFB" << "AES-256-CFB" << "BF-CFB" << "CAMELLIA-128-CFB" << "CAMELLIA-192-CFB" << "CAMELLIA-256-CFB" << "CAST5-CFB" << "CHACHA20"<< "DES-CFB" << "IDEA-CFB" << "RC2-CFB" << "SALSA20" << "SEED-CFB";//all upper-case
+QStringList SSValidator::supportedMethodList()
+{
+    QList<QByteArray> methodBA = QSS::Cipher::getSupportedMethodList();
+    QStringList methodList;
+    for (const QByteArray &method : methodBA) {
+        methodList.push_back(QString(method).toUpper());
+    }
+    return methodList;
+}
 
 bool SSValidator::validate(QString input)
 {
@@ -48,5 +57,6 @@ bool SSValidator::validatePort(const QString &port)
 
 bool SSValidator::validateMethod(const QString &method)
 {
-    return supportedMethod.contains(method, Qt::CaseInsensitive);
+    static const QStringList validMethodList = supportedMethodList();
+    return validMethodList.contains(method, Qt::CaseInsensitive);
 }
