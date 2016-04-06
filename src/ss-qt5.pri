@@ -62,7 +62,14 @@ win32: {
     }
     LIBS += -L./ -lqrencode -lQtShadowsocks -lbotan-$$BOTAN_VER -lzbar -liconv
 }
-unix : {
+macx: {
+    QT_CONFIG -= no-pkg-config
+}
+unix: {
     CONFIG    += link_pkgconfig
-    PKGCONFIG += libqrencode QtShadowsocks botan-$$BOTAN_VER zbar gtk+-2.0 appindicator-0.1
+    PKGCONFIG += libqrencode QtShadowsocks botan-$$BOTAN_VER zbar
+    !macx: {
+        PKGCONFIG += gtk+-2.0 appindicator-0.1
+        DEFINES   += USE_APP_INDICATOR
+    }
 }

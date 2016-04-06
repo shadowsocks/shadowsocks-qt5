@@ -1,7 +1,7 @@
 #include "statusnotifier.h"
 #include "mainwindow.h"
 #include <QApplication>
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusPendingCall>
@@ -24,7 +24,7 @@ StatusNotifier::StatusNotifier(MainWindow *w, bool startHiden, QObject *parent) 
     systrayMenu.addAction(QIcon::fromTheme("application-exit", QIcon::fromTheme("exit")), tr("Quit"), qApp, SLOT(quit()));
     systray.setContextMenu(&systrayMenu);
 
-#ifdef Q_OS_UNIX
+#ifdef USE_APP_INDICATOR
     QString de(getenv("XDG_CURRENT_DESKTOP"));
     useAppIndicator = appIndicatorDE.contains(de, Qt::CaseInsensitive);
     if (useAppIndicator) {
@@ -32,7 +32,7 @@ StatusNotifier::StatusNotifier(MainWindow *w, bool startHiden, QObject *parent) 
     } else {
 #endif
         systray.show();
-#ifdef Q_OS_UNIX
+#ifdef USE_APP_INDICATOR
     }
 #endif
 }
@@ -51,7 +51,7 @@ const QStringList StatusNotifier::appIndicatorDE = QStringList()
                                                  << "LXDE"
                                                  << "MATE";
 
-#ifdef Q_OS_UNIX
+#ifdef USE_APP_INDICATOR
 void onAppIndicatorActivated(GtkMenuItem *, gpointer data)
 {
     MainWindow *window = reinterpret_cast<MainWindow *>(data);
@@ -108,7 +108,7 @@ void StatusNotifier::activate()
 
 void StatusNotifier::showNotification(const QString &msg)
 {
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
     //Using DBus to send message.
     QDBusMessage method = QDBusMessage::createMethodCall("org.freedesktop.Notifications","/org/freedesktop/Notifications", "org.freedesktop.Notifications", "Notify");
     QVariantList args;
@@ -122,13 +122,13 @@ void StatusNotifier::showNotification(const QString &msg)
 
 void StatusNotifier::onWindowVisibleChanged(bool visible)
 {
-#ifdef Q_OS_UNIX
+#ifdef USE_APP_INDICATOR
     if (useAppIndicator) {
         gtk_menu_item_set_label(reinterpret_cast<GtkMenuItem *>(minimiseRestoreGtkItem), QObject::tr(visible ? "Minimise" : "Restore").toLocal8Bit().constData());
     } else {
 #endif
         minimiseRestoreAction->setText(visible ? tr("Minimise") : tr("Restore"));
-#ifdef Q_OS_UNIX
+#ifdef USE_APP_INDICATOR
     }
 #endif
 }

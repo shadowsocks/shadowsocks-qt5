@@ -24,7 +24,7 @@
 #include <QMenu>
 #include <QStringList>
 
-#ifdef Q_OS_UNIX
+#ifdef USE_APP_INDICATOR
 #undef signals
 extern "C"
 {
@@ -51,7 +51,7 @@ public slots:
     void onWindowVisibleChanged(bool visible);
 
 private:
-#ifdef Q_OS_UNIX
+#ifdef USE_APP_INDICATOR
     GtkWidget *minimiseRestoreGtkItem;
     void createAppIndicator(bool startHiden);
 #endif
