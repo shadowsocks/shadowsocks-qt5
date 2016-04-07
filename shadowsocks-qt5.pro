@@ -4,8 +4,8 @@
 #
 #-------------------------------------------------
 
-QT        += core gui widgets network
-unix: QT  += dbus
+QT               += core gui widgets network
+unix: !macx: QT  += dbus
 
 CONFIG    += c++11
 
