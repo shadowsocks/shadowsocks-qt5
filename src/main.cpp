@@ -45,6 +45,8 @@ int main(int argc, char *argv[])
     else {
         a.setFont(QFont("Segoe UI", 9, QFont::Normal, false));
     }
+#endif
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     QIcon::setThemeName("Breeze");
 #endif
 

@@ -27,6 +27,9 @@ isEmpty(INSTALL_PREFIX) {
     else: INSTALL_PREFIX = ..
 }
 
+macx: {
+    ICON = src/icons/shadowsocks-qt5.icns
+}
 unix: {
     desktop.path  = $$INSTALL_PREFIX/share/applications
     ssicon.path   = $$INSTALL_PREFIX/share/icons/hicolor/512x512/apps
