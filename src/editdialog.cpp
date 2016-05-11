@@ -50,7 +50,7 @@ EditDialog::~EditDialog()
 void EditDialog::save()
 {
     connection->profile.name = ui->nameEdit->text();
-    connection->profile.serverAddress = ui->serverAddrEdit->text();
+    connection->profile.serverAddress = ui->serverAddrEdit->text().trimmed();
     connection->profile.serverPort = ui->serverPortEdit->text().toUShort();
     connection->profile.localAddress = ui->localAddrEdit->text();
     connection->profile.localPort = ui->localPortEdit->text().toUShort();
