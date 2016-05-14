@@ -23,7 +23,10 @@ bool SSValidator::validate(QString input)
         }
 
         //Validate Method
-        QString method = decList.first();
+        QString method = decList.first().toUpper();
+        if (method.endsWith("-AUTH")) {
+            method.remove("-AUTH");
+        }
         if (!validateMethod(method)) {
             return false;
         }

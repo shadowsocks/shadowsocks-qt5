@@ -22,10 +22,15 @@
 #include <QDataStream>
 #include <QDate>
 #include <QDateTime>
+#include <QtShadowsocks>
 
 struct SQProfile
 {
     SQProfile();
+    SQProfile(const QSS::Profile& profile); // Copy values from QSS Profile
+    SQProfile(const QString& uri); // Construct it using ss protocol
+
+    QSS::Profile toProfile() const; // Convert it into a QSS Profile
 
     bool autoStart;
     bool debug;
