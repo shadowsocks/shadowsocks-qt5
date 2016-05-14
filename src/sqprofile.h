@@ -49,6 +49,10 @@ struct SQProfile
     QDate nextResetDate;//next scheduled date to reset data usage
     bool httpMode;
     bool onetimeAuth;
+
+    static const int LATENCY_TIMEOUT = -1;
+    static const int LATENCY_ERROR = -2;
+    static const int LATENCY_UNKNOWN = -3;
 };
 Q_DECLARE_METATYPE(SQProfile)
 

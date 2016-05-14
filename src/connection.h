@@ -69,7 +69,7 @@ private slots:
     void onNewBytesTransmitted(const quint64 &);
     void onNewLog(const QString &);
     void onServerAddressLookedUp(const QHostInfo &host);
-    void onLatencyAvailable(const int &);
+    void onLatencyAvailable(const int);
 };
 Q_DECLARE_METATYPE(Connection*)
 

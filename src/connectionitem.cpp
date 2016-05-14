@@ -87,13 +87,13 @@ QString ConnectionItem::convertLatencyToString(const int latency)
 {
     QString latencyStr;
     switch (latency) {
-    case -1:
+    case SQProfile::LATENCY_TIMEOUT:
         latencyStr = tr("Timeout");
         break;
-    case -2://error
+    case SQProfile::LATENCY_ERROR:
         latencyStr = tr("Error");
         break;
-    case -3://unknown
+    case SQProfile::LATENCY_UNKNOWN:
         latencyStr = tr("Unknown");
         break;
     default:
@@ -136,9 +136,9 @@ void ConnectionItem::onConnectionStateChanged(bool running)
 
 void ConnectionItem::onConnectionPingFinished(const int latency)
 {
-    if (latency == -1) {//TIMEOUT
+    if (latency == SQProfile::LATENCY_TIMEOUT) {
         emit message(con->getName() + " " + tr("timed out"));
-    } else if (latency == -2) {//ERROR
+    } else if (latency == SQProfile::LATENCY_ERROR) {
         emit message(con->getName() + " " + tr("latency test failed"));
     }
 }

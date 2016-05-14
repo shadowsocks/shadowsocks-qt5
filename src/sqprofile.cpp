@@ -10,7 +10,7 @@ SQProfile::SQProfile()
     localAddress = QString("127.0.0.1");
     method = QString("RC4-MD5");
     timeout = 600;
-    latency = -3;//-1: timeout, -2: error, -3: unknown(untested)
+    latency = LATENCY_UNKNOWN;
     currentUsage = 0;
     totalUsage = 0;
     QDate currentDate = QDate::currentDate();

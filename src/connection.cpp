@@ -75,7 +75,7 @@ void Connection::start()
 {
     profile.lastTime = QDateTime::currentDateTime();
     //perform a latency test if the latency is unknown
-    if (profile.latency == -3) {
+    if (profile.latency == SQProfile::LATENCY_UNKNOWN) {
         latencyTest();
     }
 
@@ -141,11 +141,11 @@ void Connection::onServerAddressLookedUp(const QHostInfo &host)
     if (host.error() == QHostInfo::NoError) {
         testAddressLatency(host.addresses().first());
     } else {
-        onLatencyAvailable(-2);
+        onLatencyAvailable(SQProfile::LATENCY_ERROR);
     }
 }
 
-void Connection::onLatencyAvailable(const int &latency)
+void Connection::onLatencyAvailable(const int latency)
 {
     profile.latency = latency;
     emit latencyAvailable(latency);
