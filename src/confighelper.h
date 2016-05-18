@@ -20,7 +20,6 @@
 #define CONFIGHELPER_H
 
 #include <QSettings>
-#include <QList>
 #include "connectiontablemodel.h"
 #include "connection.h"
 
@@ -29,12 +28,20 @@ class ConfigHelper : public QObject
     Q_OBJECT
 
 public:
-    ConfigHelper(ConnectionTableModel *model, QObject *parent);
+    explicit ConfigHelper(const QString &configuration, QObject *parent = nullptr);
 
-    void importGuiConfigJson(const QString &file);
-    void exportGuiConfigJson(const QString &file);//the format is only compatible with shadowsocks-csharp
+    void read(ConnectionTableModel *model);
+    void save(const ConnectionTableModel &model);
+
+    void importGuiConfigJson(ConnectionTableModel *model, const QString &file);
+
+    //the format is only compatible with shadowsocks-csharp (shadowsocks-windows)
+    void exportGuiConfigJson(const ConnectionTableModel& model, const QString &file);
+
     Connection* configJsonToConnection(const QString &file);
-    void startAllAutoStart();//start those connections marked as auto-start
+
+    //start those connections marked as auto-start
+    void startAllAutoStart(const ConnectionTableModel& model);
 
     /* some functions used to communicate with SettingsDialog */
     int  getToolbarStyle() const;
@@ -50,7 +57,6 @@ public:
     void setMainWindowState(const QByteArray &state);
 
 public slots:
-    void save();
     void setShowToolbar(bool show);
     void setShowFilterBar(bool show);
 
@@ -65,10 +71,8 @@ private:
     bool showFilterBar;
     bool nativeMenuBar;
     QSettings *settings;
-    ConnectionTableModel *model;
     QString configFile;
 
-    void readConfiguration();
     void checkProfileDataUsageReset(SQProfile &profile);
 
     static const QString profilePrefix;

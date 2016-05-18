@@ -17,10 +17,13 @@
 #include <QCloseEvent>
 #include <botan/version.h>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(ConfigHelper *confHelper, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    configHelper(confHelper)
 {
+    Q_ASSERT(configHelper);
+
     ui->setupUi(this);
 
     //setup Settings menu
@@ -28,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //initialisation
     model = new ConnectionTableModel(this);
-    configHelper = new ConfigHelper(model, this);
+    configHelper->read(model);
     proxyModel = new QSortFilterProxyModel(this);
     proxyModel->setSourceModel(model);
     proxyModel->setSortRole(Qt::EditRole);
@@ -49,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(model, &ConnectionTableModel::rowStatusChanged,
             this, &MainWindow::onConnectionStatusChanged);
     connect(ui->actionSaveManually, &QAction::triggered,
-            configHelper, &ConfigHelper::save);
+            this, &MainWindow::onSaveManually);
     connect(ui->actionTestAllLatency, &QAction::triggered,
             model, &ConnectionTableModel::testAllLatency);
 
@@ -136,7 +139,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    configHelper->save();
+    configHelper->save(*model);
     configHelper->setMainWindowGeometry(saveGeometry());
     configHelper->setMainWindowState(saveState());
 }
@@ -156,7 +159,7 @@ bool MainWindow::isHideWindowOnStartup() const
 
 void MainWindow::startAutoStartConnections()
 {
-    configHelper->startAllAutoStart();
+    configHelper->startAllAutoStart(*model);
 }
 
 void MainWindow::onImportGuiJson()
@@ -167,7 +170,7 @@ void MainWindow::onImportGuiJson()
                    QString(),
                    "GUI Configuration (gui-config.json)");
     if (!file.isNull()) {
-        configHelper->importGuiConfigJson(file);
+        configHelper->importGuiConfigJson(model, file);
     }
 }
 
@@ -179,8 +182,13 @@ void MainWindow::onExportGuiJson()
                    QString("gui-config.json"),
                    "GUI Configuration (gui-config.json)");
     if (!file.isNull()) {
-        configHelper->exportGuiConfigJson(file);
+        configHelper->exportGuiConfigJson(*model, file);
     }
+}
+
+void MainWindow::onSaveManually()
+{
+    configHelper->save(*model);
 }
 
 void MainWindow::onAddManually()
@@ -265,7 +273,7 @@ void MainWindow::onDelete()
 {
     if (model->removeRow(proxyModel->mapToSource(
                          ui->connectionView->currentIndex()).row())) {
-        configHelper->save();
+        configHelper->save(*model);
     }
     checkCurrentIndex();
 }
@@ -375,7 +383,7 @@ void MainWindow::onGeneralSettings()
     connect(sDlg, &SettingsDialog::finished,
             sDlg, &SettingsDialog::deleteLater);
     if (sDlg->exec()) {
-        configHelper->save();
+        configHelper->save(*model);
     }
 }
 
@@ -385,7 +393,7 @@ void MainWindow::newProfile(Connection *newCon)
     connect(editDlg, &EditDialog::finished, editDlg, &EditDialog::deleteLater);
     if (editDlg->exec()) {//accepted
         model->appendConnection(newCon);
-        configHelper->save();
+        configHelper->save(*model);
     } else {
         newCon->deleteLater();
     }
@@ -397,7 +405,7 @@ void MainWindow::editRow(int row)
     EditDialog *editDlg = new EditDialog(con, this);
     connect(editDlg, &EditDialog::finished, editDlg, &EditDialog::deleteLater);
     if (editDlg->exec()) {
-        configHelper->save();
+        configHelper->save(*model);
     }
 }
 

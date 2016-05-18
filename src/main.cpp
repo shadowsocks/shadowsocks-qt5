@@ -5,8 +5,10 @@
 #include <QMessageBox>
 #include <QSharedMemory>
 #include <QDebug>
+#include <QDir>
 #include <signal.h>
 #include "mainwindow.h"
+#include "confighelper.h"
 
 MainWindow *mainWindow = nullptr;
 
@@ -77,7 +79,20 @@ int main(int argc, char *argv[])
     ssqt5t.load(QLocale::system(), "ss-qt5", "_", ":/i18n");
     a.installTranslator(&ssqt5t);
 
-    MainWindow w;
+
+    QString configFile;
+#ifdef Q_OS_WIN
+    configFile = a.applicationDirPath() + "/config.ini";
+#else
+    QDir configDir = QDir::homePath() + "/.config/shadowsocks-qt5";
+    configFile = configDir.absolutePath() + "/config.ini";
+    if (!configDir.exists()) {
+        configDir.mkpath(configDir.absolutePath());
+    }
+#endif
+    ConfigHelper conf(configFile);
+
+    MainWindow w(&conf);
     mainWindow = &w;
 
     QSharedMemory sharedMem;

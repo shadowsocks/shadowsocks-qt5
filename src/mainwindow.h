@@ -34,7 +34,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(ConfigHelper *confHelper, QWidget *parent = 0);
     ~MainWindow();
 
     bool isOnlyOneInstance() const;
@@ -43,10 +43,11 @@ public:
     void startAutoStartConnections();
 
 private:
+    Ui::MainWindow *ui;
+
     ConnectionTableModel *model;
     QSortFilterProxyModel *proxyModel;
     ConfigHelper *configHelper;
-    Ui::MainWindow *ui;
     StatusNotifier *notifier;
 
     void newProfile(Connection *);
@@ -60,6 +61,7 @@ private:
 private slots:
     void onImportGuiJson();
     void onExportGuiJson();
+    void onSaveManually();
     void onAddManually();
     void onAddScreenQRCode();
     void onAddScreenQRCodeCapturer();
