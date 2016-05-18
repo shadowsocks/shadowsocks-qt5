@@ -70,6 +70,7 @@ private slots:
     void onNewLog(const QString &);
     void onServerAddressLookedUp(const QHostInfo &host);
     void onLatencyAvailable(const int);
+    void onConnectivityTestFinished(bool);
 };
 Q_DECLARE_METATYPE(Connection*)
 
