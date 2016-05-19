@@ -6,6 +6,7 @@
 #include <QSharedMemory>
 #include <QDebug>
 #include <QDir>
+#include <QCommandLineParser>
 #include <signal.h>
 #include "mainwindow.h"
 #include "confighelper.h"
@@ -47,12 +48,8 @@ void contactPreviousInstance(QSharedMemory& sharedMem)
 #endif
 }
 
-int main(int argc, char *argv[])
+void setupApplication(QApplication &a)
 {
-    qRegisterMetaTypeStreamOperators<SQProfile>("SQProfile");
-
-    QApplication a(argc, argv);
-
     signal(SIGINT, onSignalRecv);
     signal(SIGTERM, onSignalRecv);
 #ifdef Q_OS_UNIX
@@ -75,21 +72,39 @@ int main(int argc, char *argv[])
     QIcon::setThemeName("Breeze");
 #endif
 
-    QTranslator ssqt5t;
-    ssqt5t.load(QLocale::system(), "ss-qt5", "_", ":/i18n");
-    a.installTranslator(&ssqt5t);
+    QTranslator *ssqt5t = new QTranslator(&a);
+    ssqt5t->load(QLocale::system(), "ss-qt5", "_", ":/i18n");
+    a.installTranslator(ssqt5t);
+}
 
+int main(int argc, char *argv[])
+{
+    qRegisterMetaTypeStreamOperators<SQProfile>("SQProfile");
 
-    QString configFile;
+    QApplication a(argc, argv);
+    setupApplication(a);
+
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addVersionOption();
+    QCommandLineOption configFileOption("c",
+                                        "specify configuration file.",
+                                        "config.ini");
+    parser.addOption(configFileOption);
+    parser.process(a);
+
+    QString configFile = parser.value(configFileOption);
+    if (configFile.isEmpty()) {
 #ifdef Q_OS_WIN
-    configFile = a.applicationDirPath() + "/config.ini";
+        configFile = a.applicationDirPath() + "/config.ini";
 #else
-    QDir configDir = QDir::homePath() + "/.config/shadowsocks-qt5";
-    configFile = configDir.absolutePath() + "/config.ini";
-    if (!configDir.exists()) {
-        configDir.mkpath(configDir.absolutePath());
-    }
+        QDir configDir = QDir::homePath() + "/.config/shadowsocks-qt5";
+        configFile = configDir.absolutePath() + "/config.ini";
+        if (!configDir.exists()) {
+            configDir.mkpath(configDir.absolutePath());
+        }
 #endif
+    }
     ConfigHelper conf(configFile);
 
     MainWindow w(&conf);
