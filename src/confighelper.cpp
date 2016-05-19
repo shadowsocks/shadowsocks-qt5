@@ -10,6 +10,7 @@ ConfigHelper::ConfigHelper(const QString &configuration, QObject *parent) :
     configFile(configuration)
 {
     settings = new QSettings(configFile, QSettings::IniFormat, this);
+    readGeneralSettings();
 }
 
 const QString ConfigHelper::profilePrefix = "Profile";
@@ -242,7 +243,11 @@ void ConfigHelper::read(ConnectionTableModel *model)
         model->appendConnection(con);
     }
     settings->endArray();
+    readGeneralSettings();
+}
 
+void ConfigHelper::readGeneralSettings()
+{
     toolbarStyle = settings->value("ToolbarStyle", QVariant(4)).toInt();
     hideWindowOnStartup = settings->value("HideWindowOnStartup").toBool();
     onlyOneInstace = settings->value("OnlyOneInstance", QVariant(true)).toBool();

@@ -37,9 +37,6 @@ public:
     explicit MainWindow(ConfigHelper *confHelper, QWidget *parent = 0);
     ~MainWindow();
 
-    bool isOnlyOneInstance() const;
-    bool isHideWindowOnStartup() const;
-
     void startAutoStartConnections();
 
 private:

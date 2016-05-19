@@ -25,27 +25,44 @@ static void onSignalRecv(int sig)
     if (sig == SIGINT || sig == SIGTERM) qApp->quit();
 }
 
-void contactPreviousInstance(QSharedMemory& sharedMem)
+bool isConflictWithPreviousInstance(QApplication &a)
 {
+    QSharedMemory *sharedMem = new QSharedMemory("Shadowsocks-Qt5", &a);
     qint64 pid = -1;
-    if (!sharedMem.attach(QSharedMemory::ReadOnly)) {
-        qCritical() << sharedMem.errorString();
-    } else if (sharedMem.lock()) {
-        pid = *reinterpret_cast<qint64*>(sharedMem.data());
-        sharedMem.unlock();
+
+    if (sharedMem->create(sizeof(qint64))) {
+        pid = QCoreApplication::applicationPid();
+        if (sharedMem->lock()) {
+            *reinterpret_cast<qint64*>(sharedMem->data()) = pid;
+            sharedMem->unlock();
+            // we can only run a new instance of ss-qt5 if the shared memory
+            // is created and written successfully
+            return false;
+        } else {
+            qCritical() << sharedMem->errorString();
+        }
     } else {
-        qCritical() << sharedMem.errorString();
-    }
+        if (!sharedMem->attach(QSharedMemory::ReadOnly)) {
+            qCritical() << sharedMem->errorString();
+        } else if (sharedMem->lock()) {
+            pid = *reinterpret_cast<qint64*>(sharedMem->data());
+            sharedMem->unlock();
+        } else {
+            qCritical() << sharedMem->errorString();
+        }
 
 #ifdef Q_OS_UNIX
-    //try to send a signal to show previous process's main window
-    if (kill(pid, SIGUSR1) != 0) {
-        QString errStr = QObject::tr("Failed to communicate with previously running instance of Shadowsocks-Qt5 (PID: %1). It might already crashed.").arg(pid);
-        QMessageBox::critical(mainWindow, QObject::tr("Error"), errStr);
-    }
+        //try to send a signal to show previous process's main window
+        if (kill(pid, SIGUSR1) != 0) {
+            QString errStr = QObject::tr("Failed to communicate with previously running instance of Shadowsocks-Qt5 (PID: %1). It might already crashed.").arg(pid);
+            QMessageBox::critical(mainWindow, QObject::tr("Error"), errStr);
+        }
 #else
-    QMessageBox::critical(mainWindow, QObject::tr("Error"), QObject::tr("Another instance of Shadowsocks-Qt5 (PID: %1) is already running.").arg(pid));
+        QMessageBox::critical(mainWindow, QObject::tr("Error"), QObject::tr("Another instance of Shadowsocks-Qt5 (PID: %1) is already running.").arg(pid));
 #endif
+    }
+    // Can't run a new instance under all other situations
+    return true;
 }
 
 void setupApplication(QApplication &a)
@@ -107,29 +124,16 @@ int main(int argc, char *argv[])
     }
     ConfigHelper conf(configFile);
 
+    if (conf.isOnlyOneInstance() && isConflictWithPreviousInstance(a)) {
+        return -1;
+    }
+
     MainWindow w(&conf);
     mainWindow = &w;
 
-    QSharedMemory sharedMem;
-    sharedMem.setKey("Shadowsocks-Qt5");
-    if (w.isOnlyOneInstance()) {
-        if (sharedMem.create(sizeof(qint64))) {
-            qint64 pid = a.applicationPid();
-            if (sharedMem.lock()) {
-                *reinterpret_cast<qint64*>(sharedMem.data()) = pid;
-                sharedMem.unlock();
-            } else {
-                qCritical() << sharedMem.errorString();
-            }
-        } else {
-            contactPreviousInstance(sharedMem);
-            return -1;
-        }
-    }
-
     w.startAutoStartConnections();
 
-    if (!w.isHideWindowOnStartup()) {
+    if (!conf.isHideWindowOnStartup()) {
         w.show();
     }
 

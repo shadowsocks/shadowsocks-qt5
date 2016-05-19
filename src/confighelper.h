@@ -28,9 +28,25 @@ class ConfigHelper : public QObject
     Q_OBJECT
 
 public:
+    /*
+     * Construct a ConfigHelper object using specified configuration file
+     * This constructor will call readGeneralSettings().
+     */
     explicit ConfigHelper(const QString &configuration, QObject *parent = nullptr);
 
+    /*
+     * Call read() function to read all connection profiles into
+     * specified ConnectionTableModel.
+     * This function also calls readGeneralSettings().
+     */
     void read(ConnectionTableModel *model);
+
+    /*
+     * readGeneralSettings() only reads General settings and store them into
+     * member variables.
+     */
+    void readGeneralSettings();
+
     void save(const ConnectionTableModel &model);
 
     void importGuiConfigJson(ConnectionTableModel *model, const QString &file);

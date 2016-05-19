@@ -43,7 +43,7 @@ MainWindow::MainWindow(ConfigHelper *confHelper, QWidget *parent) :
                                     (configHelper->getToolbarStyle()));
     setupActionIcon();
 
-    notifier = new StatusNotifier(this, this->isHideWindowOnStartup(), this);
+    notifier = new StatusNotifier(this, configHelper->isHideWindowOnStartup(), this);
 
     connect(configHelper, &ConfigHelper::toolbarStyleChanged,
             ui->toolBar, &QToolBar::setToolButtonStyle);
@@ -146,16 +146,6 @@ MainWindow::~MainWindow()
 
 const QUrl MainWindow::issueUrl =
         QUrl("https://github.com/shadowsocks/shadowsocks-qt5/issues");
-
-bool MainWindow::isOnlyOneInstance() const
-{
-    return configHelper->isOnlyOneInstance();
-}
-
-bool MainWindow::isHideWindowOnStartup() const
-{
-    return configHelper->isHideWindowOnStartup();
-}
 
 void MainWindow::startAutoStartConnections()
 {
