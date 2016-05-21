@@ -1,3 +1,13 @@
+shadowsocks-qt5 (2.7.0-1) stable; urgency=medium
+
+  * run-time method support detection (chacha20-ietf support added)
+  * support ota in ss:// uri
+  * remember mainwindow's geometry and state
+  * fix build issues on Mac OS X
+  * test internet connectivity during latency test
+
+ -- Symeon Huang <hzwhuang@gmail>  Sat, 21 May 2016 21:21:00 +0100
+
 shadowsocks-qt5 (2.6.1-1) stable; urgency=medium
 
   * add an option to set native menubar
