@@ -27,7 +27,9 @@ MainWindow::MainWindow(ConfigHelper *confHelper, QWidget *parent) :
     ui->setupUi(this);
 
     //setup Settings menu
-    ui->menuSettings->addAction(ui->toolBar->toggleViewAction());
+#ifndef Q_OS_DARWIN
+	ui->menuSettings->addAction(ui->toolBar->toggleViewAction());
+#endif
 
     //initialisation
     model = new ConnectionTableModel(this);
