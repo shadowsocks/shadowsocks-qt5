@@ -6,7 +6,7 @@ SQProfile::SQProfile()
     debug = false;
     serverPort = 8388;
     localPort = 1080;
-    name = QObject::tr("Unamed Profile");
+    name = QObject::tr("Unnamed Profile");
     localAddress = QString("127.0.0.1");
     method = QString("RC4-MD5");
     timeout = 600;
