@@ -520,7 +520,7 @@
     </message>
     <message>
         <location filename="../sqprofile.cpp" line="9"/>
-        <source>Unamed Profile</source>
+        <source>Unnamed Profile</source>
         <translation>未命名配置</translation>
     </message>
 </context>
