@@ -67,10 +67,15 @@ public:
     bool isShowFilterBar() const;
     bool isNativeMenuBar() const;
     void setGeneralSettings(int ts, bool hide, bool oneInstance, bool nativeMB);
-    QByteArray getMainWindowGeometry() const;
     void setMainWindowGeometry(const QByteArray &geometry);
-    QByteArray getMainWindowState() const;
     void setMainWindowState(const QByteArray &state);
+    void setTableGeometry(const QByteArray &geometry);
+    void setTableState(const QByteArray &state);
+
+    QByteArray getMainWindowGeometry() const;
+    QByteArray getMainWindowState() const;
+    QByteArray getTableGeometry() const;
+    QByteArray getTableState() const;
 
 public slots:
     void setShowToolbar(bool show);

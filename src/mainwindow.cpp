@@ -40,7 +40,6 @@ MainWindow::MainWindow(ConfigHelper *confHelper, QWidget *parent) :
     proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     proxyModel->setFilterKeyColumn(-1);//read from all columns
     ui->connectionView->setModel(proxyModel);
-    ui->connectionView->resizeColumnsToContents();
     ui->toolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>
                                     (configHelper->getToolbarStyle()));
     setupActionIcon();
@@ -136,14 +135,21 @@ MainWindow::MainWindow(ConfigHelper *confHelper, QWidget *parent) :
     // Restore mainWindow's geometry and state
     restoreGeometry(configHelper->getMainWindowGeometry());
     restoreState(configHelper->getMainWindowState());
+    ui->connectionView->horizontalHeader()->restoreGeometry(configHelper->getTableGeometry());
+    ui->connectionView->horizontalHeader()->restoreState(configHelper->getTableState());
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
     configHelper->save(*model);
+    configHelper->setTableGeometry(ui->connectionView->horizontalHeader()->saveGeometry());
+    configHelper->setTableState(ui->connectionView->horizontalHeader()->saveState());
     configHelper->setMainWindowGeometry(saveGeometry());
     configHelper->setMainWindowState(saveState());
+
+    // delete ui after everything in case it's deleted while still needed for
+    // the functions written above
+    delete ui;
 }
 
 const QUrl MainWindow::issueUrl =

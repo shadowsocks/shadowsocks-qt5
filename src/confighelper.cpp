@@ -290,17 +290,37 @@ QByteArray ConfigHelper::getMainWindowGeometry() const
     return settings->value("MainWindowGeometry").toByteArray();
 }
 
-void ConfigHelper::setMainWindowGeometry(const QByteArray &geometry)
-{
-    settings->setValue("MainWindowGeometry", QVariant(geometry));
-}
-
 QByteArray ConfigHelper::getMainWindowState() const
 {
     return settings->value("MainWindowState").toByteArray();
 }
 
+QByteArray ConfigHelper::getTableGeometry() const
+{
+    return settings->value("MainTableGeometry").toByteArray();
+}
+
+QByteArray ConfigHelper::getTableState() const
+{
+    return settings->value("MainTableState").toByteArray();
+}
+
+void ConfigHelper::setMainWindowGeometry(const QByteArray &geometry)
+{
+    settings->setValue("MainWindowGeometry", QVariant(geometry));
+}
+
 void ConfigHelper::setMainWindowState(const QByteArray &state)
 {
     settings->setValue("MainWindowState", QVariant(state));
+}
+
+void ConfigHelper::setTableGeometry(const QByteArray &geometry)
+{
+    settings->setValue("MainTableGeometry", QVariant(geometry));
+}
+
+void ConfigHelper::setTableState(const QByteArray &state)
+{
+    settings->setValue("MainTableState", QVariant(state));
 }
