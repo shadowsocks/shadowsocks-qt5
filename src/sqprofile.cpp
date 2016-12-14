@@ -21,6 +21,7 @@ SQProfile::SQProfile()
 
 SQProfile::SQProfile(const QSS::Profile &profile) : SQProfile()
 {
+    name = profile.nameTag;
     localAddress = profile.local_address;
     localPort = profile.local_port;
     serverPort = profile.server_port;
@@ -35,12 +36,13 @@ SQProfile::SQProfile(const QSS::Profile &profile) : SQProfile()
 
 SQProfile::SQProfile(const QString &uri)
 {
-    *this = SQProfile(QSS::Profile(uri.toLocal8Bit()));
+    *this = SQProfile(QSS::Profile(uri.toUtf8()));
 }
 
 QSS::Profile SQProfile::toProfile() const
 {
     QSS::Profile qssprofile;
+    qssprofile.nameTag = name;
     qssprofile.server = serverAddress;
     qssprofile.server_port = serverPort;
     qssprofile.local_address = localAddress;

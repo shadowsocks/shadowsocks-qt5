@@ -36,7 +36,7 @@ void LogDialog::onSaveClicked()
         QString log = ui->logBrowser->toPlainText();
         QFile logFile(file);
         logFile.open(QIODevice::WriteOnly);
-        logFile.write(log.toLocal8Bit());
+        logFile.write(log.toUtf8());
         logFile.close();
     }
 }
