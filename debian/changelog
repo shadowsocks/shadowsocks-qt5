@@ -1,3 +1,13 @@
+shadowsocks-qt5 (2.8.0-1) stable; urgency=medium
+
+  * remember table's geometry and state
+  * precise data usage
+  * support tag/name in ss:// uri
+  * bump requirement for libQtShadowsocks
+  * fix a typo
+
+ -- Symeon Huang <hzwhuang@gmail>  Wed, 14 Dec 2016 21:55:00 +0000
+
 shadowsocks-qt5 (2.7.0-1) stable; urgency=medium
 
   * run-time method support detection (chacha20-ietf support added)
