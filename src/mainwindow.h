@@ -21,6 +21,7 @@
 
 #include <QMainWindow>
 #include <QSortFilterProxyModel>
+#include <QLocalServer>
 #include "connectiontablemodel.h"
 #include "confighelper.h"
 #include "statusnotifier.h"
@@ -38,6 +39,7 @@ public:
     ~MainWindow();
 
     void startAutoStartConnections();
+    bool isInstanceRunning() const;
 
 private:
     Ui::MainWindow *ui;
@@ -46,6 +48,10 @@ private:
     QSortFilterProxyModel *proxyModel;
     ConfigHelper *configHelper;
     StatusNotifier *notifier;
+
+    QLocalServer* instanceServer;
+    bool instanceRunning;
+    void initSingleInstance();
 
     void newProfile(Connection *);
     void editRow(int row);
@@ -84,6 +90,7 @@ private slots:
     void onFilterToggled(bool);
     void onFilterTextChanged(const QString &text);
     void onQRCodeCapturerResultFound(const QString &uri);
+    void onSingleInstanceConnect();
 
 protected slots:
     void hideEvent(QHideEvent *e);

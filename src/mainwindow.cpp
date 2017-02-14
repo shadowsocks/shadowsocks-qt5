@@ -15,6 +15,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QLocalSocket>
 #include <botan/version.h>
 
 MainWindow::MainWindow(ConfigHelper *confHelper, QWidget *parent) :
@@ -24,11 +25,13 @@ MainWindow::MainWindow(ConfigHelper *confHelper, QWidget *parent) :
 {
     Q_ASSERT(configHelper);
 
+    initSingleInstance();
+
     ui->setupUi(this);
 
     //setup Settings menu
 #ifndef Q_OS_DARWIN
-	ui->menuSettings->addAction(ui->toolBar->toggleViewAction());
+    ui->menuSettings->addAction(ui->toolBar->toggleViewAction());
 #endif
 
     //initialisation
@@ -118,10 +121,10 @@ MainWindow::MainWindow(ConfigHelper *confHelper, QWidget *parent) :
 
     connect(ui->connectionView, &QTableView::clicked,
             this, static_cast<void (MainWindow::*)(const QModelIndex&)>
-                  (&MainWindow::checkCurrentIndex));
+            (&MainWindow::checkCurrentIndex));
     connect(ui->connectionView, &QTableView::activated,
             this, static_cast<void (MainWindow::*)(const QModelIndex&)>
-                  (&MainWindow::checkCurrentIndex));
+            (&MainWindow::checkCurrentIndex));
     connect(ui->connectionView, &QTableView::doubleClicked,
             this, &MainWindow::onEdit);
 
@@ -525,7 +528,7 @@ void MainWindow::setupActionIcon()
     ui->actionEdit->setIcon(QIcon::fromTheme("document-edit",
                             QIcon::fromTheme("accessories-text-editor")));
     ui->actionShare->setIcon(QIcon::fromTheme("document-share",
-                     QIcon::fromTheme("preferences-system-sharing")));
+                             QIcon::fromTheme("preferences-system-sharing")));
     ui->actionTestLatency->setIcon(QIcon::fromTheme("flag",
                                    QIcon::fromTheme("starred")));
     ui->actionImportGUIJson->setIcon(QIcon::fromTheme("document-import",
@@ -542,7 +545,71 @@ void MainWindow::setupActionIcon()
     ui->actionViewLog->setIcon(QIcon::fromTheme("view-list-text",
                                QIcon::fromTheme("text-x-preview")));
     ui->actionGeneralSettings->setIcon(QIcon::fromTheme("configure",
-                                   QIcon::fromTheme("preferences-desktop")));
+                                       QIcon::fromTheme("preferences-desktop")));
     ui->actionReportBug->setIcon(QIcon::fromTheme("tools-report-bug",
                                  QIcon::fromTheme("help-faq")));
+}
+
+bool MainWindow::isInstanceRunning() const
+{
+    return instanceRunning;
+}
+
+void MainWindow::initSingleInstance()
+{
+    instanceRunning = false;
+
+    QString username = qgetenv("USER");
+    if (username.isEmpty()) {
+        username = qgetenv("USERNAME");
+    }
+
+    QString serverName = QCoreApplication::applicationName() + "_" + username;
+    QLocalSocket socket;
+    socket.connectToServer(serverName);
+    if (socket.waitForConnected(500)) {
+        instanceRunning = true;
+        if (configHelper->isOnlyOneInstance()) {
+            qWarning() << "A instance from the same user is already running";
+        }
+        socket.write(serverName.toUtf8());
+        socket.waitForBytesWritten();
+        return;
+    }
+
+    /* Cann't connect to server, indicating it's the first instance of the user */
+    instanceServer = new QLocalServer(this);
+    instanceServer->setSocketOptions(QLocalServer::UserAccessOption);
+    connect(instanceServer, &QLocalServer::newConnection,
+            this,&MainWindow::onSingleInstanceConnect);
+    if (instanceServer->listen(serverName)) {
+        /* Remove server in case of crashes */
+        if (instanceServer->serverError() == QAbstractSocket::AddressInUseError &&
+                QFile::exists(instanceServer->serverName())) {
+            QFile::remove(instanceServer->serverName());
+            instanceServer->listen(serverName);
+        }
+    }
+}
+
+void MainWindow::onSingleInstanceConnect()
+{
+    QLocalSocket *socket = instanceServer->nextPendingConnection();
+    if (!socket) {
+        return;
+    }
+
+    if (socket->waitForReadyRead(1000)) {
+        QString username = qgetenv("USER");
+        if (username.isEmpty()) {
+            username = qgetenv("USERNAME");
+        }
+
+        QByteArray byteArray = socket->readAll();
+        QString magic(byteArray);
+        if (magic == QCoreApplication::applicationName() + "_" + username) {
+            show();
+        }
+    }
+    delete socket;
 }
