@@ -560,17 +560,17 @@ void MainWindow::initSingleInstance()
     instanceRunning = false;
 
     QString username = qgetenv("USER");
-    if (username.isEmpty()){
+    if (username.isEmpty()) {
         username = qgetenv("USERNAME");
     }
 
     QString serverName = QCoreApplication::applicationName() + "_" + username;
     QLocalSocket socket;
     socket.connectToServer(serverName);
-    if(socket.waitForConnected(500)){
+    if (socket.waitForConnected(500)) {
         instanceRunning = true;
-        if(configHelper->isOnlyOneInstance()){
-            qWarning()<<"A instance from the same user is already running";
+        if (configHelper->isOnlyOneInstance()) {
+            qWarning() << "A instance from the same user is already running";
         }
         socket.write(serverName.toUtf8());
         socket.waitForBytesWritten();
@@ -580,11 +580,12 @@ void MainWindow::initSingleInstance()
     /* Cann't connect to server, indicating it's the first instance of the user */
     instanceServer = new QLocalServer(this);
     instanceServer->setSocketOptions(QLocalServer::UserAccessOption);
-    connect(instanceServer, SIGNAL(newConnection()), this,SLOT(onSingleInstanceConnect()));
-    if(instanceServer->listen(serverName)){
+    connect(instanceServer, &QLocalServer::newConnection,
+            this,&MainWindow::onSingleInstanceConnect);
+    if (instanceServer->listen(serverName)) {
         /* Remove server in case of crashes */
-        if(instanceServer->serverError() == QAbstractSocket::AddressInUseError\
-                &&QFile::exists(instanceServer->serverName())){
+        if (instanceServer->serverError() == QAbstractSocket::AddressInUseError &&
+                QFile::exists(instanceServer->serverName())) {
             QFile::remove(instanceServer->serverName());
             instanceServer->listen(serverName);
         }
@@ -594,19 +595,19 @@ void MainWindow::initSingleInstance()
 void MainWindow::onSingleInstanceConnect()
 {
     QLocalSocket *socket = instanceServer->nextPendingConnection();
-    if(!socket){
+    if (!socket) {
         return;
     }
 
-    if(socket->waitForReadyRead(1000)){
+    if (socket->waitForReadyRead(1000)) {
         QString username = qgetenv("USER");
-        if (username.isEmpty()){
+        if (username.isEmpty()) {
             username = qgetenv("USERNAME");
         }
 
         QByteArray byteArray = socket->readAll();
         QString magic(byteArray);
-        if(magic == QCoreApplication::applicationName() + "_" + username){
+        if (magic == QCoreApplication::applicationName() + "_" + username) {
             show();
         }
     }
