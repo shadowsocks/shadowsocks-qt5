@@ -29,6 +29,7 @@ void ConfigHelper::save(const ConnectionTableModel &model)
 
     settings->setValue("ToolbarStyle", QVariant(toolbarStyle));
     settings->setValue("HideWindowOnStartup", QVariant(hideWindowOnStartup));
+    settings->setValue("StartAtLogin", QVariant(startAtLogin));
     settings->setValue("OnlyOneInstance", QVariant(onlyOneInstace));
     settings->setValue("ShowToolbar", QVariant(showToolbar));
     settings->setValue("ShowFilterBar", QVariant(showFilterBar));
@@ -182,6 +183,11 @@ bool ConfigHelper::isHideWindowOnStartup() const
     return hideWindowOnStartup;
 }
 
+bool ConfigHelper::isStartAtLogin() const
+{
+    return startAtLogin;
+}
+
 bool ConfigHelper::isOnlyOneInstance() const
 {
     return onlyOneInstace;
@@ -202,13 +208,14 @@ bool ConfigHelper::isNativeMenuBar() const
     return nativeMenuBar;
 }
 
-void ConfigHelper::setGeneralSettings(int ts, bool hide, bool oneInstance, bool nativeMB)
+void ConfigHelper::setGeneralSettings(int ts, bool hide, bool sal, bool oneInstance, bool nativeMB)
 {
     if (toolbarStyle != ts) {
         emit toolbarStyleChanged(static_cast<Qt::ToolButtonStyle>(ts));
     }
     toolbarStyle = ts;
     hideWindowOnStartup = hide;
+    startAtLogin = sal;
     onlyOneInstace = oneInstance;
     nativeMenuBar = nativeMB;
 }
@@ -249,6 +256,7 @@ void ConfigHelper::read(ConnectionTableModel *model)
 void ConfigHelper::readGeneralSettings()
 {
     toolbarStyle = settings->value("ToolbarStyle", QVariant(4)).toInt();
+    startAtLogin = settings->value("StartAtLogin").toBool();
     hideWindowOnStartup = settings->value("HideWindowOnStartup").toBool();
     onlyOneInstace = settings->value("OnlyOneInstance", QVariant(true)).toBool();
     showToolbar = settings->value("ShowToolbar", QVariant(true)).toBool();
