@@ -28,7 +28,8 @@ isEmpty(INSTALL_PREFIX) {
 }
 
 macx: {
-    ICON = src/icons/shadowsocks-qt5.icns
+    ICON     = src/icons/shadowsocks-qt5.icns
+    CONFIG  += link_pkgconfig
 }
 unix: {
     desktop.path  = $$INSTALL_PREFIX/share/applications

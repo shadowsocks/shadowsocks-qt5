@@ -313,28 +313,26 @@ void ConfigHelper::setStartAtLogin()
 #elif defined(Q_OS_MAC)
     QFile file(QDir::homePath() + "/Library/LaunchAgents/org.shadowsocks.shadowsocks-qt5.launcher.plist");
     QString fileContent(
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-            "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd\">"
-            "<plist version=\"1.0\">"
-            "<dict>"
-            "   <key>Label</key>"
-            "   <string>org.shadowsocks.shadowsocks-qt5.launcher</string>"
-            "   <key>LimitLoadToSessionType</key>"
-            "   <string>Aqua</string>"
-            "   <key>ProgramArguments</key>"
-            "   <array>"
-            "     <string>%2</string>"
-            "   </array>"
-            "   <key>RunAtLoad</key>"
-            "   <true/>"
-            "   <key>KeepAlive</key>"
-            "   <true/>"
-            "   <key>StandardErrorPath</key>"
-            "   <string>/dev/null</string>"
-            "   <key>StandardOutPath</key>"
-            "   <string>/dev/null</string>"
-            "</dict>"
-            "</plist>");
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+            "<plist version=\"1.0\">\n"
+            "<dict>\n"
+            "  <key>Label</key>\n"
+            "  <string>org.shadowsocks.shadowsocks-qt5.launcher</string>\n"
+            "  <key>LimitLoadToSessionType</key>\n"
+            "  <string>Aqua</string>\n"
+            "  <key>ProgramArguments</key>\n"
+            "  <array>\n"
+            "    <string>%2</string>\n"
+            "  </array>\n"
+            "  <key>RunAtLoad</key>\n"
+            "  <true/>\n"
+            "  <key>StandardErrorPath</key>\n"
+            "  <string>/dev/null</string>\n"
+            "  <key>StandardOutPath</key>\n"
+            "  <string>/dev/null</string>\n"
+            "</dict>\n"
+            "</plist>\n");
 #else
     QFile file;
     QString fileContent;
