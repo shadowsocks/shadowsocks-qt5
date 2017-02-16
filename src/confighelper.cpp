@@ -1,4 +1,6 @@
 #include "confighelper.h"
+#include <QCoreApplication>
+#include <QDir>
 #include <QFile>
 #include <QJsonParseError>
 #include <QJsonDocument>
@@ -29,6 +31,7 @@ void ConfigHelper::save(const ConnectionTableModel &model)
 
     settings->setValue("ToolbarStyle", QVariant(toolbarStyle));
     settings->setValue("HideWindowOnStartup", QVariant(hideWindowOnStartup));
+    settings->setValue("StartAtLogin", QVariant(startAtLogin));
     settings->setValue("OnlyOneInstance", QVariant(onlyOneInstace));
     settings->setValue("ShowToolbar", QVariant(showToolbar));
     settings->setValue("ShowFilterBar", QVariant(showFilterBar));
@@ -182,6 +185,11 @@ bool ConfigHelper::isHideWindowOnStartup() const
     return hideWindowOnStartup;
 }
 
+bool ConfigHelper::isStartAtLogin() const
+{
+    return startAtLogin;
+}
+
 bool ConfigHelper::isOnlyOneInstance() const
 {
     return onlyOneInstace;
@@ -202,13 +210,14 @@ bool ConfigHelper::isNativeMenuBar() const
     return nativeMenuBar;
 }
 
-void ConfigHelper::setGeneralSettings(int ts, bool hide, bool oneInstance, bool nativeMB)
+void ConfigHelper::setGeneralSettings(int ts, bool hide, bool sal, bool oneInstance, bool nativeMB)
 {
     if (toolbarStyle != ts) {
         emit toolbarStyleChanged(static_cast<Qt::ToolButtonStyle>(ts));
     }
     toolbarStyle = ts;
     hideWindowOnStartup = hide;
+    startAtLogin = sal;
     onlyOneInstace = oneInstance;
     nativeMenuBar = nativeMB;
 }
@@ -249,6 +258,7 @@ void ConfigHelper::read(ConnectionTableModel *model)
 void ConfigHelper::readGeneralSettings()
 {
     toolbarStyle = settings->value("ToolbarStyle", QVariant(4)).toInt();
+    startAtLogin = settings->value("StartAtLogin").toBool();
     hideWindowOnStartup = settings->value("HideWindowOnStartup").toBool();
     onlyOneInstace = settings->value("OnlyOneInstance", QVariant(true)).toBool();
     showToolbar = settings->value("ShowToolbar", QVariant(true)).toBool();
@@ -282,6 +292,73 @@ void ConfigHelper::startAllAutoStart(const ConnectionTableModel& model)
         if (con->profile.autoStart) {
             con->start();
         }
+    }
+}
+
+void ConfigHelper::setStartAtLogin()
+{
+    QString applicationName = "Shadowsocks-Qt5";
+    QString applicationFilePath = QCoreApplication::applicationFilePath();
+#if defined(Q_OS_WIN)
+    QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+#elif defined(Q_OS_LINUX)
+    QFile file(QDir::homePath() + "/.config/autostart/shadowsocks-qt5.desktop");
+    QString fileContent(
+            "[Desktop Entry]\n"
+            "Name=%1\n"
+            "Exec=%2\n"
+            "Type=Application\n"
+            "Terminal=false\n"
+            "X-GNOME-Autostart-enabled=true\n");
+#elif defined(Q_OS_MAC)
+    QFile file(QDir::homePath() + "/Library/LaunchAgents/org.shadowsocks.shadowsocks-qt5.launcher.plist");
+    QString fileContent(
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+            "<plist version=\"1.0\">\n"
+            "<dict>\n"
+            "  <key>Label</key>\n"
+            "  <string>org.shadowsocks.shadowsocks-qt5.launcher</string>\n"
+            "  <key>LimitLoadToSessionType</key>\n"
+            "  <string>Aqua</string>\n"
+            "  <key>ProgramArguments</key>\n"
+            "  <array>\n"
+            "    <string>%2</string>\n"
+            "  </array>\n"
+            "  <key>RunAtLoad</key>\n"
+            "  <true/>\n"
+            "  <key>StandardErrorPath</key>\n"
+            "  <string>/dev/null</string>\n"
+            "  <key>StandardOutPath</key>\n"
+            "  <string>/dev/null</string>\n"
+            "</dict>\n"
+            "</plist>\n");
+#else
+    QFile file;
+    QString fileContent;
+#endif
+
+    if (this->isStartAtLogin()) {
+        // Create start up item
+    #if defined(Q_OS_WIN)
+        settings.setValue(applicationName, applicationFilePath);
+    #else
+        fileContent.replace("%1", applicationName);
+        fileContent.replace("%2", applicationFilePath);
+        if ( file.open(QIODevice::WriteOnly) ) {
+            file.write(fileContent.toUtf8());
+            file.close();
+        }
+    #endif
+    } else {
+        // Delete start up item
+        #if defined(Q_OS_WIN)
+            settings.remove(applicationName);
+        #else
+            if ( file.exists() ) {
+                file.remove();
+            }
+        #endif
     }
 }
 

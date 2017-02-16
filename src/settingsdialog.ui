@@ -14,7 +14,7 @@
    <string>General Settings</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
-   <item row="6" column="0" colspan="2">
+   <item row="8" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -73,20 +73,27 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="QCheckBox" name="hideCheckBox">
      <property name="text">
       <string>Hide window on startup</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="2">
+   <item row="6" column="0" colspan="2">
     <widget class="QCheckBox" name="nativeMenuBarCheckBox">
      <property name="toolTip">
       <string>Need to restart the application for this change to take effect</string>
      </property>
      <property name="text">
       <string>Use native menu bar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QCheckBox" name="startAtLoginCheckbox">
+     <property name="text">
+      <string>Start at login</string>
      </property>
     </widget>
    </item>

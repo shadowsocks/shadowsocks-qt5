@@ -59,14 +59,18 @@ public:
     //start those connections marked as auto-start
     void startAllAutoStart(const ConnectionTableModel& model);
 
+    //create or delete start up item for shadowsocks-qt5
+    void setStartAtLogin();
+
     /* some functions used to communicate with SettingsDialog */
     int  getToolbarStyle() const;
     bool isHideWindowOnStartup() const;
+    bool isStartAtLogin() const;
     bool isOnlyOneInstance() const;
     bool isShowToolbar() const;
     bool isShowFilterBar() const;
     bool isNativeMenuBar() const;
-    void setGeneralSettings(int ts, bool hide, bool oneInstance, bool nativeMB);
+    void setGeneralSettings(int ts, bool hide, bool automaticStartUp, bool oneInstance, bool nativeMB);
     void setMainWindowGeometry(const QByteArray &geometry);
     void setMainWindowState(const QByteArray &state);
     void setTableGeometry(const QByteArray &geometry);
@@ -87,6 +91,7 @@ signals:
 private:
     int toolbarStyle;
     bool hideWindowOnStartup;
+    bool startAtLogin;
     bool onlyOneInstace;
     bool showToolbar;
     bool showFilterBar;
