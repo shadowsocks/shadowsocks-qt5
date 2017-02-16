@@ -1,4 +1,6 @@
 #include "confighelper.h"
+#include <QCoreApplication>
+#include <QDir>
 #include <QFile>
 #include <QJsonParseError>
 #include <QJsonDocument>
@@ -290,6 +292,75 @@ void ConfigHelper::startAllAutoStart(const ConnectionTableModel& model)
         if (con->profile.autoStart) {
             con->start();
         }
+    }
+}
+
+void ConfigHelper::setStartAtLogin()
+{
+    QString applicationName = "Shadowsocks-Qt5";
+    QString applicationFilePath = QCoreApplication::applicationFilePath();
+#if defined(Q_OS_WIN)
+    QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+#elif defined(Q_OS_LINUX)
+    QFile file(QDir::homePath() + "/.config/autostart/shadowsocks-qt5.desktop");
+    QString fileContent(
+            "[Desktop Entry]\n"
+            "Name=%1\n"
+            "Exec=%2\n"
+            "Type=Application\n"
+            "Terminal=false\n"
+            "X-GNOME-Autostart-enabled=true\n");
+#elif defined(Q_OS_MAC)
+    QFile file(QDir::homePath() + "/Library/LaunchAgents/org.shadowsocks.shadowsocks-qt5.launcher.plist");
+    QString fileContent(
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+            "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd\">"
+            "<plist version=\"1.0\">"
+            "<dict>"
+            "   <key>Label</key>"
+            "   <string>org.shadowsocks.shadowsocks-qt5.launcher</string>"
+            "   <key>LimitLoadToSessionType</key>"
+            "   <string>Aqua</string>"
+            "   <key>ProgramArguments</key>"
+            "   <array>"
+            "     <string>%2</string>"
+            "   </array>"
+            "   <key>RunAtLoad</key>"
+            "   <true/>"
+            "   <key>KeepAlive</key>"
+            "   <true/>"
+            "   <key>StandardErrorPath</key>"
+            "   <string>/dev/null</string>"
+            "   <key>StandardOutPath</key>"
+            "   <string>/dev/null</string>"
+            "</dict>"
+            "</plist>");
+#else
+    QFile file;
+    QString fileContent;
+#endif
+
+    if (this->isStartAtLogin()) {
+        // Create start up item
+    #if defined(Q_OS_WIN)
+        settings.setValue(applicationName, applicationFilePath);
+    #else
+        fileContent.replace("%1", applicationName);
+        fileContent.replace("%2", applicationFilePath);
+        if ( file.open(QIODevice::WriteOnly) ) {
+            file.write(fileContent.toUtf8());
+            file.close();
+        }
+    #endif
+    } else {
+        // Delete start up item
+        #if defined(Q_OS_WIN)
+            settings.remove(applicationName);
+        #else
+            if ( file.exists() ) {
+                file.remove();
+            }
+        #endif
     }
 }
 

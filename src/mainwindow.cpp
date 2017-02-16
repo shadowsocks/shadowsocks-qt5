@@ -385,6 +385,7 @@ void MainWindow::onGeneralSettings()
             sDlg, &SettingsDialog::deleteLater);
     if (sDlg->exec()) {
         configHelper->save(*model);
+        configHelper->setStartAtLogin();
     }
 }
 

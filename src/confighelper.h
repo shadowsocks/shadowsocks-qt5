@@ -59,6 +59,9 @@ public:
     //start those connections marked as auto-start
     void startAllAutoStart(const ConnectionTableModel& model);
 
+    //create or delete start up item for shadowsocks-qt5
+    void setStartAtLogin();
+
     /* some functions used to communicate with SettingsDialog */
     int  getToolbarStyle() const;
     bool isHideWindowOnStartup() const;
