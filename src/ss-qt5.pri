@@ -47,7 +47,7 @@ FORMS        += src/mainwindow.ui \
 RESOURCES    += src/icons.qrc \
                 src/translations.qrc
 
-TRANSLATIONS += src/i18n/ss-qt5_zh_CN.ts
+TRANSLATIONS += src/i18n/ss-qt5_zh_CN.ts \
                 src/i18n/ss-qt5_zh_TW.ts
                 
 win32: RC_FILE = src/ss-qt5.rc
