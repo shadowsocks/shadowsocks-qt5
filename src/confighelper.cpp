@@ -92,11 +92,20 @@ void ConfigHelper::importGuiConfigJson(ConnectionTableModel *model, const QStrin
         } else {
             p.name = json["profile"].toString();
             p.serverPort = json["server_port"].toString().toUShort();
-            p.localAddress = json["local_address"].toString();
-            p.localPort = json["local_port"].toString().toUShort();
-            p.timeout = json["timeout"].toString().toInt();
+            p.localAddress = QString("127.0.0.1");
+            if (json.contains("local_address")) {
+                p.localAddress = json["local_address"].toString();
+            }
+            p.localPort = json["local_port"].toInt();
+            p.timeout = 10;
+            if(json.contains("timeout")) {
+                p.timeout = json["timeout"].toString().toInt();
+            }
         }
         p.serverAddress = json["server"].toString();
+        if (p.name.isEmpty()) {
+            p.name = p.serverAddress;
+        }
         p.method = json["method"].toString();
         p.password = json["password"].toString();
         Connection *con = new Connection(p, this);
