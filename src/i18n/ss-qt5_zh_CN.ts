@@ -396,7 +396,7 @@
     <message>
         <location filename="../mainwindow.ui" line="258"/>
         <source>&amp;About</source>
-        <translation>&amp;关于(&amp;A)</translation>
+        <translation>关于(&amp;A)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="263"/>
@@ -431,7 +431,7 @@
     <message>
         <location filename="../mainwindow.ui" line="354"/>
         <source>&amp;Show Filter Bar</source>
-        <translation>&amp;显示过滤栏(&amp;S)</translation>
+        <translation>显示过滤栏(&amp;S)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="357"/>
