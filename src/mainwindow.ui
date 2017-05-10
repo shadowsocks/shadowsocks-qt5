@@ -168,7 +168,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
     <addaction name="actionAboutQt"/>
@@ -372,7 +372,7 @@
   </action>
   <action name="actionForceConnect">
    <property name="text">
-    <string>Force Connect</string>
+    <string>&amp;Force Connect</string>
    </property>
    <property name="toolTip">
     <string>Connect to this connection and disconnect any connections currently using  the same local port</string>
