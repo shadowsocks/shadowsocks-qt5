@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 export QT_SELECT := qt5
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 %:
 	dh $@ --parallel
