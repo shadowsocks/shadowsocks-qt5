@@ -16,7 +16,6 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QLocalSocket>
-#include <botan/version.h>
 
 MainWindow::MainWindow(ConfigHelper *confHelper, QWidget *parent) :
     QMainWindow(parent),
@@ -447,8 +446,7 @@ void MainWindow::checkCurrentIndex(const QModelIndex &_index)
 void MainWindow::onAbout()
 {
     QString text = QString("<h1>Shadowsocks-Qt5</h1><p><b>Version %1</b><br />"
-            "Using libQtShadowsocks %2<br />"
-            "Using Botan %3.%4.%5</p>"
+            "Using libQtShadowsocks %2</p>"
             "<p>Copyright © 2014-2017 Symeon Huang "
             "(<a href='https://twitter.com/librehat'>"
             "@librehat</a>)</p>"
@@ -458,10 +456,7 @@ void MainWindow::onAbout()
             "<a href='https://github.com/shadowsocks/shadowsocks-qt5'>"
             "GitHub</a></p>")
             .arg(QStringLiteral(APP_VERSION))
-            .arg(QSS::Common::version().data())
-            .arg(Botan::version_major())
-            .arg(Botan::version_minor())
-            .arg(Botan::version_patch());
+            .arg(QSS::Common::version().data());
     QMessageBox::about(this, tr("About"), text);
 }
 
