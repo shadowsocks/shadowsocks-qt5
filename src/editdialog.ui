@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>510</height>
+    <width>462</width>
+    <height>524</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -244,7 +244,7 @@
       <item row="8" column="1">
        <widget class="QCheckBox" name="otaCheckBox">
         <property name="toolTip">
-         <string>Turn on one-time authentication and header verification (need server support)</string>
+         <string>[Deprecated] Turn on one-time authentication and header verification (need server support)</string>
         </property>
         <property name="text">
          <string>One-time authentication</string>
