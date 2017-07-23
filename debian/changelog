@@ -1,3 +1,12 @@
+shadowsocks-qt5 (2.9.0-1) stable; urgency=medium
+
+  * re-implement single instance with QLocalSocket
+  * add an option in general settings: Start at login
+  * updated translation to keep shortcuts available
+  * fix a tableview bug when a new connection is added
+
+ -- Symeon Huang <hzwhuang@gmail.com>  Sun, 23 Jul 2017 20:36:00 +0100
+
 shadowsocks-qt5 (2.8.0-1) stable; urgency=medium
 
   * remember table's geometry and state
