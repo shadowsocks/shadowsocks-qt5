@@ -131,8 +131,12 @@
     </message>
     <message>
         <location filename="../editdialog.ui" line="247"/>
+        <source>[Deprecated] Turn on one-time authentication and header verification (need server support)</source>
+        <translation>[棄用]開啟單次驗證與標頭驗證（需要伺服器支援）</translation>
+    </message>
+    <message>
         <source>Turn on one-time authentication and header verification (need server support)</source>
-        <translation>開啟單次驗證與標頭驗證（需要伺服器支援）</translation>
+        <translation type="vanished">開啟單次驗證與標頭驗證（需要伺服器支援）</translation>
     </message>
     <message>
         <location filename="../editdialog.ui" line="250"/>
@@ -231,7 +235,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="464"/>
+        <location filename="../mainwindow.cpp" line="460"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
@@ -351,7 +355,7 @@
     <message>
         <location filename="../mainwindow.ui" line="171"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>說明(&amp;H)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="210"/>
@@ -456,7 +460,7 @@
     <message>
         <location filename="../mainwindow.ui" line="375"/>
         <source>&amp;Force Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>強迫連線(&amp;E)</translation>
     </message>
     <message>
         <source>Force Connect</source>
@@ -633,7 +637,7 @@
     <name>StatusNotifier</name>
     <message>
         <location filename="../statusnotifier.cpp" line="21"/>
-        <location filename="../statusnotifier.cpp" line="130"/>
+        <location filename="../statusnotifier.cpp" line="131"/>
         <source>Minimise</source>
         <translation>最小化</translation>
     </message>
@@ -644,7 +648,7 @@
     </message>
     <message>
         <location filename="../statusnotifier.cpp" line="21"/>
-        <location filename="../statusnotifier.cpp" line="130"/>
+        <location filename="../statusnotifier.cpp" line="131"/>
         <source>Restore</source>
         <translation>還原</translation>
     </message>

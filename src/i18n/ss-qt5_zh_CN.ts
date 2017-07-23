@@ -131,8 +131,12 @@
     </message>
     <message>
         <location filename="../editdialog.ui" line="247"/>
+        <source>[Deprecated] Turn on one-time authentication and header verification (need server support)</source>
+        <translation>[弃用]开启一次验证和消息头验证（需要服务器支持）</translation>
+    </message>
+    <message>
         <source>Turn on one-time authentication and header verification (need server support)</source>
-        <translation>开启一次验证和消息头验证（需要服务器支持）</translation>
+        <translation type="vanished">开启一次验证和消息头验证（需要服务器支持）</translation>
     </message>
     <message>
         <location filename="../editdialog.ui" line="250"/>
@@ -231,7 +235,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="464"/>
+        <location filename="../mainwindow.cpp" line="460"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
@@ -633,7 +637,7 @@
     <name>StatusNotifier</name>
     <message>
         <location filename="../statusnotifier.cpp" line="21"/>
-        <location filename="../statusnotifier.cpp" line="130"/>
+        <location filename="../statusnotifier.cpp" line="131"/>
         <source>Minimise</source>
         <translation>最小化</translation>
     </message>
@@ -644,7 +648,7 @@
     </message>
     <message>
         <location filename="../statusnotifier.cpp" line="21"/>
-        <location filename="../statusnotifier.cpp" line="130"/>
+        <location filename="../statusnotifier.cpp" line="131"/>
         <source>Restore</source>
         <translation>恢复</translation>
     </message>
