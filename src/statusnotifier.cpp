@@ -49,7 +49,8 @@ const QStringList StatusNotifier::appIndicatorDE = QStringList()
                                                  << "XFCE"
                                                  << "Pantheon"
                                                  << "LXDE"
-                                                 << "MATE";
+                                                 << "MATE"
+                                                 << "X-Cinnamon";
 
 #ifdef USE_APP_INDICATOR
 void onAppIndicatorActivated(GtkMenuItem *, gpointer data)
