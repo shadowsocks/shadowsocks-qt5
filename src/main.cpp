@@ -3,7 +3,6 @@
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QMessageBox>
-#include <QSharedMemory>
 #include <QDebug>
 #include <QDir>
 #include <QCommandLineParser>
@@ -15,23 +14,17 @@ MainWindow *mainWindow = nullptr;
 
 static void onSignalRecv(int sig)
 {
-#ifdef Q_OS_UNIX
-    if (sig == SIGUSR1) {
-        if (mainWindow) {
-            mainWindow->show();
-        }
+    if (sig == SIGINT || sig == SIGTERM) {
+        qApp->quit();
+    } else {
+        qWarning("Unhandled signal %d", sig);
     }
-#endif
-    if (sig == SIGINT || sig == SIGTERM) qApp->quit();
 }
 
 void setupApplication(QApplication &a)
 {
     signal(SIGINT, onSignalRecv);
     signal(SIGTERM, onSignalRecv);
-#ifdef Q_OS_UNIX
-    signal(SIGUSR1, onSignalRecv);
-#endif
 
     a.setApplicationName(QString("shadowsocks-qt5"));
     a.setApplicationDisplayName(QString("Shadowsocks-Qt5"));
