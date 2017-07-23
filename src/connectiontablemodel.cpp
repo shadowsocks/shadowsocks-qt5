@@ -106,7 +106,7 @@ bool ConnectionTableModel::appendConnection(Connection *con, const QModelIndex &
     connect(newItem, &ConnectionItem::message, this, &ConnectionTableModel::message);
     connect(newItem, &ConnectionItem::stateChanged, this, &ConnectionTableModel::onConnectionStateChanged);
     connect(newItem, &ConnectionItem::latencyChanged, this, &ConnectionTableModel::onConnectionLatencyChanged);
-    beginInsertRows(parent, items.count(), items.count() + 1);
+    beginInsertRows(parent, items.count(), items.count());
     items.append(newItem);
     endInsertRows();
     return true;
