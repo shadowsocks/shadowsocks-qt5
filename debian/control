@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Symeon Huang <hzwhuang@gmail.com>
 Build-Depends: debhelper (>= 9),
                pkg-config,
-               qt5-qmake,
+               cmake (>= 3.1.0) | cmake3 (>= 3.1.0),
                qtbase5-dev,
                libqrencode-dev,
                libqtshadowsocks-dev (>= 1.10.0),

@@ -1,2 +1,4 @@
-*.pro.user*
+*.user*
+*.swp
 .directory
+build/
