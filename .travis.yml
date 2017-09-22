@@ -2,18 +2,34 @@ sudo: required
 dist: trusty
 language: cpp
 cache: apt
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - sourceline: 'ppa:hedges/qt5.5'
+    packages:
+      - cmake
+      - qt55base
+      - libbotan1.10-dev
+      - libqrencode-dev
+      - libzbar-dev
+      - libappindicator-dev
 
 branches:
   only:
     - 'master'
 
 before_install:
-  - sudo add-apt-repository ppa:hzwhuang/ss-qt5 -y
-  - sudo apt-get -qq update
-  - sudo apt-get -qq install -y qt5-default qtbase5-dev libbotan1.10-dev gcc-4.8 libqrencode-dev libzbar-dev libappindicator-dev libqtshadowsocks-dev cmake3
+  # Use the latest libQtShadowsocks code
+  - git clone https://github.com/shadowsocks/libQtShadowsocks.git
+  - cd libQtShadowsocks
+  - mkdir build && cd build
+  - cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DQt5Core_DIR="/opt/qt55/lib/cmake/Qt5Core" -DQt5Network_DIR="/opt/qt55/lib/cmake/Qt5Network" -DQt5Test_DIR="/opt/qt55/lib/cmake/Qt5Test"
+  - make
+  - sudo make install
 
 script:
   - mkdir build && cd build
-  - cmake ..
+  - cmake .. -DQt5Core_DIR="/opt/qt55/lib/cmake/Qt5Core" -DQt5Network_DIR="/opt/qt55/lib/cmake/Qt5Network" -DQt5Gui_DIR="/opt/qt55/lib/cmake/Qt5Gui" -DQt5Widgets_DIR="/opt/qt55/lib/cmake/Qt5Widgets" -DQt5DBus_DIR="/opt/qt55/lib/cmake/Qt5DBus"
   - make
 
