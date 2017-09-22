@@ -241,13 +241,6 @@ void ConfigHelper::read(ConnectionTableModel *model)
         QVariant value = settings->value("SQProfile");
         SQProfile profile = value.value<SQProfile>();
         checkProfileDataUsageReset(profile);
-        if (configVer < 2.5) {
-            profile.httpMode = false;
-        }
-        if (configVer < 2.6) {
-            qCritical() << "configVer" << configVer << " < 2.6";
-            profile.onetimeAuth = false;
-        }
         Connection *con = new Connection(profile, this);
         model->appendConnection(con);
     }

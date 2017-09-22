@@ -344,10 +344,7 @@ void MainWindow::onLatencyTest()
 
 void MainWindow::onViewLog()
 {
-    Connection *con = model->getItem(
-                proxyModel->mapToSource(ui->connectionView->currentIndex()).
-                row())->getConnection();
-    LogDialog *logDlg = new LogDialog(con, this);
+    LogDialog *logDlg = new LogDialog(this);
     connect(logDlg, &LogDialog::finished, logDlg, &LogDialog::deleteLater);
     logDlg->exec();
 }
@@ -456,7 +453,7 @@ void MainWindow::onAbout()
             "<a href='https://github.com/shadowsocks/shadowsocks-qt5'>"
             "GitHub</a></p>")
             .arg(QStringLiteral(APP_VERSION))
-            .arg(QSS::Common::version().data());
+            .arg(QSS::Common::version());
     QMessageBox::about(this, tr("About"), text);
 }
 

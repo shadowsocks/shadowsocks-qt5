@@ -31,15 +31,13 @@ class LogDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit LogDialog(Connection *c, QWidget *parent = 0);
+    explicit LogDialog(QWidget *parent = 0);
     ~LogDialog();
 
 private:
     Ui::LogDialog *ui;
-    Connection *con;
 
 private slots:
-    void append(const QString &);
     void onSaveClicked();
     void onClearClicked();
 };

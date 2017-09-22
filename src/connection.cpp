@@ -36,14 +36,10 @@ const QString& Connection::getName() const
     return profile.name;
 }
 
-const QString& Connection::getLog() const
-{
-    return log;
-}
-
 QByteArray Connection::getURI() const
 {
-    return profile.toProfile().toURI();
+    std::string uri = profile.toProfile().toUriSip002();
+    return QByteArray(uri.data(), uri.length());
 }
 
 bool Connection::isValid() const
@@ -84,7 +80,7 @@ void Connection::start()
     if (controller) {
         controller->deleteLater();
     }
-    controller = new QSS::Controller(true, false, this);
+    controller = new QSS::Controller(qssprofile, true, false, this);
     connect(controller, &QSS::Controller::runningStateChanged, [&](bool run){
         running = run;
         emit stateChanged(run);
@@ -92,12 +88,7 @@ void Connection::start()
     connect(controller, &QSS::Controller::tcpLatencyAvailable, this, &Connection::onLatencyAvailable);
     connect(controller, &QSS::Controller::newBytesReceived, this, &Connection::onNewBytesTransmitted);
     connect(controller, &QSS::Controller::newBytesSent, this, &Connection::onNewBytesTransmitted);
-    connect(controller, &QSS::Controller::info, this, &Connection::onNewLog);
-    if (profile.debug) {
-        connect(controller, &QSS::Controller::debug, this, &Connection::onNewLog);
-    }
 
-    controller->setup(qssprofile);
     if (!controller->start()) {
         emit startFailed();
     }
@@ -117,7 +108,8 @@ void Connection::testAddressLatency(const QHostAddress &addr)
     QSS::AddressTester *addrTester = new QSS::AddressTester(addr, profile.serverPort, this);
     connect(addrTester, &QSS::AddressTester::connectivityTestFinished, this, &Connection::onConnectivityTestFinished, Qt::QueuedConnection);
     connect(addrTester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLatencyAvailable, Qt::QueuedConnection);
-    addrTester->startConnectivityTest(profile.method, profile.password, profile.onetimeAuth);
+    QSS::Profile qProfile = profile.toProfile();
+    addrTester->startConnectivityTest(qProfile.method(), qProfile.password());
 }
 
 void Connection::onNewBytesTransmitted(const quint64 &b)
@@ -125,15 +117,6 @@ void Connection::onNewBytesTransmitted(const quint64 &b)
     profile.currentUsage += b;
     profile.totalUsage += b;
     emit dataUsageChanged(profile.currentUsage, profile.totalUsage);
-}
-
-void Connection::onNewLog(const QString &str)
-{
-    if(!log.endsWith('\n') && !log.isEmpty()) {
-        log.append('\n');
-    }
-    log.append(str);
-    emit newLogAvailable(str);
 }
 
 void Connection::onServerAddressLookedUp(const QHostInfo &host)
@@ -157,7 +140,7 @@ void Connection::onConnectivityTestFinished(bool con)
     if (!con) {
         disconnect(tester, &QSS::AddressTester::lagTestFinished, this, &Connection::onLatencyAvailable);
         this->onLatencyAvailable(SQProfile::LATENCY_ERROR);
-        onNewLog(QStringLiteral("Internet connectivity test failed. Please check the connection's profile and your firewall settings."));
+        qWarning("Internet connectivity test failed. Please check the connection's profile and your firewall settings.");
     }
     tester->deleteLater();
 }

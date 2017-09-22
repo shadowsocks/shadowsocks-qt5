@@ -3,10 +3,11 @@
 
 QStringList SSValidator::supportedMethodList()
 {
-    QList<QByteArray> methodBA = QSS::Cipher::getSupportedMethodList();
+    std::vector<std::string> methodBA = QSS::Cipher::supportedMethods();
+    std::sort(methodBA.begin(), methodBA.end());
     QStringList methodList;
-    for (const QByteArray &method : methodBA) {
-        methodList.push_back(QString(method).toUpper());
+    for (const std::string& method : methodBA) {
+        methodList.push_back(QString::fromStdString(method).toUpper());
     }
     return methodList;
 }

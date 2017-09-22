@@ -34,7 +34,6 @@ public:
 
     const SQProfile &getProfile() const;
     const QString &getName() const;
-    const QString &getLog() const;
     QByteArray getURI() const;
     bool isValid() const;
     const bool &isRunning() const;
@@ -55,19 +54,16 @@ private:
     QSS::Controller *controller;
     SQProfile profile;
     bool running;
-    QString log;
 
     void testAddressLatency(const QHostAddress &addr);
 
     friend class EditDialog;
     friend class ConfigHelper;
     friend class StatusDialog;
-    friend class LogDialog;
     friend class ConnectionItem;
 
 private slots:
     void onNewBytesTransmitted(const quint64 &);
-    void onNewLog(const QString &);
     void onServerAddressLookedUp(const QHostInfo &host);
     void onLatencyAvailable(const int);
     void onConnectivityTestFinished(bool);
