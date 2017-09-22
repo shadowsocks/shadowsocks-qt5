@@ -22,11 +22,12 @@ branches:
 before_install:
   # Use the latest libQtShadowsocks code
   - git clone https://github.com/shadowsocks/libQtShadowsocks.git
-  - cd libQtShadowsocks
-  - mkdir build && cd build
+  - mkdir libQtShadowsocks/build
+  - cd libQtShadowsocks/build
   - cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DQt5Core_DIR="/opt/qt55/lib/cmake/Qt5Core" -DQt5Network_DIR="/opt/qt55/lib/cmake/Qt5Network" -DQt5Test_DIR="/opt/qt55/lib/cmake/Qt5Test"
   - make
   - sudo make install
+  - cd -
 
 script:
   - mkdir build && cd build
