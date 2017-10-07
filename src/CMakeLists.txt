@@ -44,10 +44,7 @@ target_include_directories(${APP_NAME}
     PRIVATE ${ZBAR_INCLUDE_DIRS})
 
 if (UNIX AND NOT APPLE)
-    target_link_libraries(${APP_NAME}
-        PRIVATE Qt5::DBus
-        PRIVATE ${APPINDICATOR_LIBRARY_VAR})
-    target_include_directories(${APP_NAME} PRIVATE ${APPINDICATOR_INCLUDE_DIRS})
+    target_link_libraries(${APP_NAME} PRIVATE Qt5::DBus)
 endif()
 
 install(TARGETS ${APP_NAME}

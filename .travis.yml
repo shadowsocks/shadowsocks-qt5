@@ -14,7 +14,6 @@ addons:
       - libbotan1.10-dev
       - libqrencode-dev
       - libzbar-dev
-      - libappindicator-dev
 
 env:
   - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
