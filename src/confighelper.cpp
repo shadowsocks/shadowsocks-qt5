@@ -72,12 +72,10 @@ void ConfigHelper::importGuiConfigJson(ConnectionTableModel *model, const QStrin
     for (QJsonArray::iterator it = CONFArray.begin(); it != CONFArray.end(); ++it) {
         QJsonObject json = (*it).toObject();
         SQProfile p;
-        /*
-         * shadowsocks-csharp uses remarks to store profile name, which is different from
-         * old shadowsocks-qt5's implementation. It also uses int to store ports directly
-         * and it doesn't have some certain keys.
-         */
-        if (json.contains("remarks")) {
+        if (!json["server_port"].isString()) {
+            /*
+             * shadowsocks-csharp uses integers to store ports directly.
+             */
             p.name = json["remarks"].toString();
             p.serverPort = json["server_port"].toInt();
             //shadowsocks-csharp has only global local port (all profiles use the same port)
@@ -90,6 +88,9 @@ void ConfigHelper::importGuiConfigJson(ConnectionTableModel *model, const QStrin
                 p.localAddress = QString("0.0.0.0");
             }
         } else {
+            /*
+             * Otherwise, the gui-config is from legacy shadowsocks-qt5 (v0.x)
+             */
             p.name = json["profile"].toString();
             p.serverPort = json["server_port"].toString().toUShort();
             p.localAddress = json["local_address"].toString();
