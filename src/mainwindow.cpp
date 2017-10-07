@@ -6,7 +6,6 @@
 #include "urihelper.h"
 #include "uriinputdialog.h"
 #include "sharedialog.h"
-#include "logdialog.h"
 #include "settingsdialog.h"
 #include "qrcodecapturer.h"
 
@@ -98,8 +97,6 @@ MainWindow::MainWindow(ConfigHelper *confHelper, QWidget *parent) :
             this, &MainWindow::onDisconnect);
     connect(ui->actionTestLatency, &QAction::triggered,
             this, &MainWindow::onLatencyTest);
-    connect(ui->actionViewLog, &QAction::triggered,
-            this, &MainWindow::onViewLog);
     connect(ui->actionMoveUp, &QAction::triggered, this, &MainWindow::onMoveUp);
     connect(ui->actionMoveDown, &QAction::triggered,
             this, &MainWindow::onMoveDown);
@@ -342,13 +339,6 @@ void MainWindow::onLatencyTest()
                    row())->testLatency();
 }
 
-void MainWindow::onViewLog()
-{
-    LogDialog *logDlg = new LogDialog(this);
-    connect(logDlg, &LogDialog::finished, logDlg, &LogDialog::deleteLater);
-    logDlg->exec();
-}
-
 void MainWindow::onMoveUp()
 {
     QModelIndex proxyIndex = ui->connectionView->currentIndex();
@@ -421,7 +411,6 @@ void MainWindow::checkCurrentIndex(const QModelIndex &_index)
     ui->actionEdit->setEnabled(valid);
     ui->actionDelete->setEnabled(valid);
     ui->actionShare->setEnabled(valid);
-    ui->actionViewLog->setEnabled(valid);
     ui->actionMoveUp->setEnabled(valid ? _index.row() > 0 : false);
     ui->actionMoveDown->setEnabled(valid ?
                                    _index.row() < model->rowCount() - 1 :
@@ -536,8 +525,6 @@ void MainWindow::setupActionIcon()
     ui->actionQRCode->setIcon(QIcon::fromTheme("edit-image-face-recognize",
                               QIcon::fromTheme("insert-image")));
     ui->actionScanQRCodeCapturer->setIcon(ui->actionQRCode->icon());
-    ui->actionViewLog->setIcon(QIcon::fromTheme("view-list-text",
-                               QIcon::fromTheme("text-x-preview")));
     ui->actionGeneralSettings->setIcon(QIcon::fromTheme("configure",
                                        QIcon::fromTheme("preferences-desktop")));
     ui->actionReportBug->setIcon(QIcon::fromTheme("tools-report-bug",

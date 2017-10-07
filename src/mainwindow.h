@@ -79,7 +79,6 @@ private slots:
     void onDisconnect();
     void onConnectionStatusChanged(const int row, const bool running);
     void onLatencyTest();
-    void onViewLog();
     void onMoveUp();
     void onMoveDown();
     void onGeneralSettings();

@@ -12,7 +12,6 @@ set(SOURCE
     qrwidget.cpp
     sharedialog.cpp
     editdialog.cpp
-    logdialog.cpp
     connection.cpp
     confighelper.cpp
     urihelper.cpp

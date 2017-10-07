@@ -110,7 +110,7 @@
      <x>0</x>
      <y>0</y>
      <width>480</width>
-     <height>30</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConnection">
@@ -143,7 +143,6 @@
     <addaction name="actionTestLatency"/>
     <addaction name="actionTestAllLatency"/>
     <addaction name="separator"/>
-    <addaction name="actionViewLog"/>
     <addaction name="separator"/>
     <addaction name="actionMoveUp"/>
     <addaction name="actionMoveDown"/>
@@ -276,11 +275,6 @@
   <action name="actionReportBug">
    <property name="text">
     <string>&amp;Report Bug</string>
-   </property>
-  </action>
-  <action name="actionViewLog">
-   <property name="text">
-    <string>View &amp;Log</string>
    </property>
   </action>
   <action name="actionTestLatency">
