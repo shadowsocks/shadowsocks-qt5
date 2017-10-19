@@ -292,7 +292,7 @@ void ConfigHelper::startAllAutoStart(const ConnectionTableModel& model)
 void ConfigHelper::setStartAtLogin()
 {
     QString applicationName = "Shadowsocks-Qt5";
-    QString applicationFilePath = QCoreApplication::applicationFilePath();
+    QString applicationFilePath = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
 #if defined(Q_OS_WIN)
     QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
 #elif defined(Q_OS_LINUX)
