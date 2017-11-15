@@ -1,7 +1,0 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: shadowsocks-qt5
-Source: https://github.com/librehat/shadowsocks-qt5
-
-Files: *
-Copyright: 2014, 2015 Symeon Huang (librehat) <hzwhuang@gmail.com>
-License: LGPL-3+
