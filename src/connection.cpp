@@ -5,7 +5,6 @@
 
 Connection::Connection(QObject *parent) :
     QObject(parent),
-    controller(nullptr),
     running(false)
 {}
 
@@ -75,19 +74,14 @@ void Connection::start()
         latencyTest();
     }
 
-    QSS::Profile qssprofile = profile.toProfile();
-
-    if (controller) {
-        controller->deleteLater();
-    }
-    controller = new QSS::Controller(qssprofile, true, false, this);
-    connect(controller, &QSS::Controller::runningStateChanged, [&](bool run){
+    controller = std::make_unique<QSS::Controller>(profile.toProfile(), true, false);
+    connect(controller.get(), &QSS::Controller::runningStateChanged, [&](bool run){
         running = run;
         emit stateChanged(run);
     });
-    connect(controller, &QSS::Controller::tcpLatencyAvailable, this, &Connection::onLatencyAvailable);
-    connect(controller, &QSS::Controller::newBytesReceived, this, &Connection::onNewBytesTransmitted);
-    connect(controller, &QSS::Controller::newBytesSent, this, &Connection::onNewBytesTransmitted);
+    connect(controller.get(), &QSS::Controller::tcpLatencyAvailable, this, &Connection::onLatencyAvailable);
+    connect(controller.get(), &QSS::Controller::newBytesReceived, this, &Connection::onNewBytesTransmitted);
+    connect(controller.get(), &QSS::Controller::newBytesSent, this, &Connection::onNewBytesTransmitted);
 
     if (!controller->start()) {
         emit startFailed();
@@ -97,9 +91,7 @@ void Connection::start()
 void Connection::stop()
 {
     if (running) {
-        if (controller) {
-            controller->stop();
-        }
+        controller.reset();
     }
 }
 

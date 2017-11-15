@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QtShadowsocks>
+#include <memory>
 #include "sqprofile.h"
 
 class Connection : public QObject
@@ -31,6 +32,9 @@ public:
     Connection(const SQProfile &_profile, QObject *parent = 0);
     Connection(QString uri, QObject *parent = 0);
     ~Connection();
+
+    Connection(const Connection&) = delete;
+    Connection(Connection&&) = default;
 
     const SQProfile &getProfile() const;
     const QString &getName() const;
@@ -51,7 +55,7 @@ public slots:
     void stop();
 
 private:
-    QSS::Controller *controller;
+    std::unique_ptr<QSS::Controller> controller;
     SQProfile profile;
     bool running;
 
