@@ -28,7 +28,7 @@ QString URIHelper::decodeImage(const QImage &img)
 
     //use zbar to decode the QR code
     zbar::ImageScanner scanner;
-    zbar::Image image(gimg.width(), gimg.height(), "Y800", gimg.bits(), gimg.byteCount());
+    zbar::Image image(gimg.bytesPerLine(), gimg.height(), "Y800", gimg.bits(), gimg.byteCount());
     scanner.scan(image);
     zbar::SymbolSet res_set = scanner.get_results();
     for (zbar::SymbolIterator it = res_set.symbol_begin(); it != res_set.symbol_end(); ++it) {
