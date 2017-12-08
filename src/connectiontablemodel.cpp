@@ -149,3 +149,15 @@ void ConnectionTableModel::onConnectionLatencyChanged()
     int row = items.indexOf(item);
     emit dataChanged(this->index(row, 3), this->index(row, 3));
 }
+
+ConnectionItem* ConnectionTableModel::getRunningItem() const
+{
+    for (auto &i : items) {
+        Connection *conn = i->getConnection();
+        if (conn && conn->isRunning()) {
+            return i;
+        }
+    }
+
+    return NULL;
+}
