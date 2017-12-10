@@ -296,6 +296,12 @@ void MainWindow::onConnect()
 {
     int row = proxyModel->mapToSource(ui->connectionView->currentIndex()).row();
     Connection *con = model->getItem(row)->getConnection();
+
+    ConnectionItem* item = model->getRunningItem();
+    if (item && item != model->getItem(row)) {
+        item->getConnection()->stop();
+    }
+
     if (con->isValid()) {
         con->start();
     } else {
