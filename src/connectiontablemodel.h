@@ -58,6 +58,7 @@ private:
 private slots:
     void onConnectionStateChanged(bool running);
     void onConnectionLatencyChanged();
+    void onConnectionDataUsageChanged();
 };
 
 #endif // CONNECTIONTABLEMODEL_H

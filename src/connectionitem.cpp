@@ -10,6 +10,7 @@ ConnectionItem::ConnectionItem(Connection *_con, QObject *parent) :
         con->setParent(this);
         connect(con, &Connection::stateChanged, this, &ConnectionItem::onConnectionStateChanged);
         connect(con, &Connection::stateChanged, this, &ConnectionItem::stateChanged);
+        connect(con, &Connection::dataUsageChanged, this, &ConnectionItem::dataUsageChanged);
         connect(con, &Connection::latencyAvailable, this, &ConnectionItem::onConnectionPingFinished);
         connect(con, &Connection::latencyAvailable, this, &ConnectionItem::latencyChanged);
         connect(con, &Connection::startFailed, this, &ConnectionItem::onStartFailed);
