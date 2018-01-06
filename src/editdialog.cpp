@@ -34,7 +34,6 @@ EditDialog::EditDialog(Connection *_connection, QWidget *parent) :
     ui->resetDateEdit->setDate(connection->profile.nextResetDate);
     ui->resetDateEdit->setMinimumDate(QDate::currentDate());
     ui->autoStartCheckBox->setChecked(connection->profile.autoStart);
-    ui->debugCheckBox->setChecked(connection->profile.debug);
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &EditDialog::save);
 
@@ -59,7 +58,6 @@ void EditDialog::save()
     connection->profile.timeout = ui->timeoutSpinBox->value();
     connection->profile.nextResetDate = ui->resetDateEdit->date();
     connection->profile.autoStart = ui->autoStartCheckBox->isChecked();
-    connection->profile.debug = ui->debugCheckBox->isChecked();
 
     this->accept();
 }

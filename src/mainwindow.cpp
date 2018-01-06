@@ -433,7 +433,7 @@ void MainWindow::onAbout()
 {
     QString text = QString("<h1>Shadowsocks-Qt5</h1><p><b>Version %1</b><br />"
             "Using libQtShadowsocks %2</p>"
-            "<p>Copyright © 2014-2017 Symeon Huang "
+            "<p>Copyright © 2014-2018 Symeon Huang "
             "(<a href='https://twitter.com/librehat'>"
             "@librehat</a>)</p>"
             "<p>License: <a href='http://www.gnu.org/licenses/lgpl.html'>"

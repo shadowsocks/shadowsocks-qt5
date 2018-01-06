@@ -221,26 +221,6 @@
         </property>
        </widget>
       </item>
-      <item row="11" column="0">
-       <widget class="QLabel" name="logLevelLabel">
-        <property name="text">
-         <string>Log Level</string>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="1">
-       <widget class="QCheckBox" name="debugCheckBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Debug</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -282,7 +262,6 @@
   <tabstop>timeoutSpinBox</tabstop>
   <tabstop>resetDateEdit</tabstop>
   <tabstop>autoStartCheckBox</tabstop>
-  <tabstop>debugCheckBox</tabstop>
  </tabstops>
  <resources/>
  <connections>
