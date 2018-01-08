@@ -28,7 +28,7 @@ if (WIN32)
     list(APPEND SOURCE ss-qt5.rc)
 endif()
 
-add_executable(${APP_NAME} ${SOURCE})
+add_executable(${APP_NAME} WIN32 ${SOURCE})
 
 target_link_libraries(${APP_NAME}
     PUBLIC Qt5::Core
