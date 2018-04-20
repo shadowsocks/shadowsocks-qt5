@@ -12,45 +12,15 @@ QStringList SSValidator::supportedMethodList()
     return methodList;
 }
 
-bool SSValidator::validate(QString input)
+bool SSValidator::validate(const QString &input)
 {
-    //must begin with ss:// to distinguish from random base64 encoded strings
-    if (input.startsWith("ss://")) {
-        input.remove(0, 5);
-        QStringList tagList = input.split('#');
-        QString decode(QByteArray::fromBase64(tagList.first().toUtf8()));
-        QStringList decList = decode.split(':');
-        if (decList.size() < 3) {
-            return false;
-        }
-
-        //Validate Method
-        QString method = decList.first().toUpper();
-        if (method.endsWith("-AUTH")) {
-            method.remove("-AUTH");
-        }
-        if (!validateMethod(method)) {
-            return false;
-        }
-
-        //Validate Port
-        QString port = decList.last();
-        if (!validatePort(port)) {
-            return false;
-        }
-
-        //Validate whether server and password exist
-        QStringList pwdServer = decList.at(1).split('@');
-        if (pwdServer.size() < 2) {
-            return false;
-        }
-
-        //it seems acceptable now
-        return true;
+    bool valid = true;
+    try {
+        QSS::Profile::fromUri(input.toStdString());
+    } catch(const std::exception&) {
+        valid = false;
     }
-    else {
-        return false;
-    }
+    return valid;
 }
 
 bool SSValidator::validatePort(const QString &port)
