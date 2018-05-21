@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 
 project(Shadowsocks-Qt5
-        VERSION 3.0.0
+        VERSION 3.0.1
         LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
