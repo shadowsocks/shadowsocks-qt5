@@ -26,6 +26,8 @@ void setupApplication(QApplication &a)
     signal(SIGINT, onSignalRecv);
     signal(SIGTERM, onSignalRecv);
 
+    QApplication::setFallbackSessionManagementEnabled(false);
+
     a.setApplicationName(QString("shadowsocks-qt5"));
     a.setApplicationDisplayName(QString("Shadowsocks-Qt5"));
     a.setApplicationVersion(APP_VERSION);
