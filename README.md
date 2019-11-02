@@ -1,6 +1,8 @@
 Shadowsocks-Qt5
 ===============
 
+**This project is no longer being maintained**
+
 [![Build Status](https://travis-ci.org/shadowsocks/shadowsocks-qt5.svg?branch=master)](https://travis-ci.org/shadowsocks/shadowsocks-qt5)
 
 Please check [project's wiki](https://github.com/shadowsocks/shadowsocks-qt5/wiki) for "how-tos".
