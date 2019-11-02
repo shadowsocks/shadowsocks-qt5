@@ -6,11 +6,11 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-      - sourceline: 'ppa:hedges/qt5.5'
+      - sourceline: 'ppa:beineri/opt-qt562-trusty'
     packages:
       - g++-7
       - cmake
-      - qt55base
+      - qt56base
       - libbotan1.10-dev
       - libqrencode-dev
       - libzbar-dev
@@ -28,13 +28,13 @@ before_install:
   - git clone https://github.com/shadowsocks/libQtShadowsocks.git
   - mkdir libQtShadowsocks/build
   - cd libQtShadowsocks/build
-  - cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DQt5Core_DIR="/opt/qt55/lib/cmake/Qt5Core" -DQt5Network_DIR="/opt/qt55/lib/cmake/Qt5Network" -DQt5Test_DIR="/opt/qt55/lib/cmake/Qt5Test"
+  - cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DQt5Core_DIR="/opt/qt56/lib/cmake/Qt5Core" -DQt5Network_DIR="/opt/qt56/lib/cmake/Qt5Network" -DQt5Test_DIR="/opt/qt56/lib/cmake/Qt5Test"
   - make
   - sudo make install
   - cd -
 
 script:
   - mkdir build && cd build
-  - cmake .. -DQt5Core_DIR="/opt/qt55/lib/cmake/Qt5Core" -DQt5Network_DIR="/opt/qt55/lib/cmake/Qt5Network" -DQt5Gui_DIR="/opt/qt55/lib/cmake/Qt5Gui" -DQt5Widgets_DIR="/opt/qt55/lib/cmake/Qt5Widgets" -DQt5DBus_DIR="/opt/qt55/lib/cmake/Qt5DBus"
+  - cmake .. -DQt5Core_DIR="/opt/qt56/lib/cmake/Qt5Core" -DQt5Network_DIR="/opt/qt56/lib/cmake/Qt5Network" -DQt5Gui_DIR="/opt/qt56/lib/cmake/Qt5Gui" -DQt5Widgets_DIR="/opt/qt56/lib/cmake/Qt5Widgets" -DQt5DBus_DIR="/opt/qt56/lib/cmake/Qt5DBus"
   - make
 
